@@ -1,5 +1,22 @@
 <resources>
     <string name="app_name">Shopy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting">Setting</string>
+    <string name="shopping_bag">Shopping Bag</string>
+    <string name="hi">Hi,  </string>
+    <string name="name_of_profile">Name Of Profile</string>
+    <string name="_1">1</string>
+    <string name="coupons">coupons</string>
+    <string name="points">Points</string>
+    <string name="wallet">Wallet</string>
+    <string name="gift_card">Gift Card</string>
+    <string name="my_orders">My Orders</string>
+    <string name="unpaid">Unpaid</string>
+    <string name="processing">Processing</string>
+    <string name="shipping">Shipping</string>
+    <string name="returns">Returns</string>
+    <string name="wish_list">Wish list</string>
     ////////////////esraa/////////////
 
     ////////////////fayza/////////////

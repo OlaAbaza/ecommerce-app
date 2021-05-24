@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/backgroung"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
+    tools:context=".ui.meScreen.MeFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:background="@color/white"
+            android:id="@+id/hiText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/hi"
+            android:textSize="18sp"
+            android:fontFamily="serif"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:id="@+id/nameOfProfile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/hiText"
+            android:text="@string/name_of_profile"
+            android:textSize="18sp"
+            android:fontFamily="serif"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:id="@+id/layoutOfPayment"
+            app:layout_constraintTop_toBottomOf="@id/hiText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/coupons"
+                app:layout_constraintTop_toBottomOf="@id/hiText">
+
+                <TextView
+                    android:id="@+id/couponsNumbers"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/_1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/coupons"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/points"
+                app:layout_constraintTop_toBottomOf="@id/hiText">
+                <TextView
+                    android:id="@+id/pointsNumbers"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/_1"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/points"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/wallet"
+                app:layout_constraintTop_toBottomOf="@id/hiText"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/walletIcon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/_1"
+                    android:src="@drawable/ic_wallet_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/wallet" />
+
+                <TextView
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/wallet"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/gift_card"
+                app:layout_constraintTop_toBottomOf="@id/hiText"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/gift_card_icon"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/_1"
+                    android:src="@drawable/ic_gift_card_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/wallet" />
+
+                <TextView
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/gift_card"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/MyOrders"
+            app:layout_constraintTop_toBottomOf="@id/layoutOfPayment"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/my_orders"
+            android:textSize="18sp"
+            android:fontFamily="serif"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"/>
+
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="0dp"
+            android:orientation="horizontal"
+            android:id="@+id/layoutOfMyOrders"
+            app:layout_constraintTop_toBottomOf="@id/MyOrders"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/unPaied"
+                app:layout_constraintTop_toBottomOf="@id/hiText"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:src="@drawable/ic_unpaied"
+                    android:text="@string/_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/unpaid" />
+
+                <TextView
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    android:text="@string/unpaid"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/processing"
+                app:layout_constraintTop_toBottomOf="@id/hiText"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:src="@drawable/ic_processing"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/processing" />
+
+                <TextView
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    android:text="@string/processing"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/shipping"
+                app:layout_constraintTop_toBottomOf="@id/hiText"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:src="@drawable/ic_shipping"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/wallet" />
+
+                <TextView
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/shipping"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/returnsLayout"
+                app:layout_constraintTop_toBottomOf="@id/hiText"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:text="@string/_1"
+                    android:src="@drawable/ic_returns"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/returns" />
+
+                <TextView
+                    android:gravity="bottom"
+                    android:paddingTop="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="@string/returns"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:fontFamily="serif"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:background="@color/white"
+            android:layout_marginTop="10dp"
+            android:id="@+id/wishList"
+            app:layout_constraintTop_toBottomOf="@id/layoutOfMyOrders"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/wish_list"
+            android:textSize="18sp"
+            android:fontFamily="serif"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/white"
+            android:layout_width="0dp"
+            app:layout_constraintTop_toBottomOf="@id/wishList"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="0dp"
+            />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
