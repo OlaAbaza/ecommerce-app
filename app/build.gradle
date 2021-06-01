@@ -44,6 +44,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.room:room-runtime:2.3.0'
+    annotationProcessor 'androidx.room:room-compiler:2.3.0'
     def lifecycle_version = "2.3.0"
     def nav_version = "2.3.3"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
