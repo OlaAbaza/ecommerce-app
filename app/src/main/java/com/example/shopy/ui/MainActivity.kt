@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val a = ProuductDetailsReposatory(NetWorking.productDetailsDao)
         val b = WishRoomRepositry(this.application)
-        a.getProuduct(6687367823558)
+        a.getProuduct(6687367364806)
         a.prouductDetaild.observe(this,{
-            Log.d("TAG", it.toString())
+            Log.d("TAG", it.product.title.toString())
             b.saveWishList(it.product)
         })
 

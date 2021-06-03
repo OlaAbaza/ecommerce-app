@@ -46,16 +46,12 @@ class Converter {
         return Gson().fromJson(gson, type)
     }
 
-    @TypeConverter
-    fun fromImageToGesonx(list: Image): String {
-        return Gson().toJson(list)
-    }
 
     @TypeConverter
-    fun fromJsonTOImage(gson: String): Image {
-        val type = object : TypeToken<List<Variants>>() {}.type
-        return Gson().fromJson(gson, type)
-    }
+    fun fromImageToGesonx(app: Image): String = Gson().toJson(app)
+
+    @TypeConverter
+    fun fromJsonTOImage(string: String): Image = Gson().fromJson(string, Image::class.java)
 
 
 }

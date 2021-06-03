@@ -19,13 +19,13 @@ class WishListAdaper(prouductList: List<Product>) : RecyclerView.Adapter<WishLis
         this.jobList = prouductList
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListAdaper.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = LayoutInflater.from(parent.context).
         inflate(R.layout.wish_list_item, parent, false)
 
         return ViewHolder(binding)    }
 
-    override fun onBindViewHolder(holder: WishListAdaper.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding(jobList[position],position)
     }
 
@@ -38,15 +38,13 @@ class WishListAdaper(prouductList: List<Product>) : RecyclerView.Adapter<WishLis
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val companyLogo = itemView.findViewById<ImageView>(R.id.itemImage)
         private val jobTitle = itemView.findViewById<TextView>(R.id.title)
-        private val decription = itemView.findViewById<TextView>(R.id.decrption)
-        fun binding(jobsItem: Product, position: Int){
+        fun binding(item: Product, position: Int){
             Glide.with(companyLogo)
-                .load(jobsItem.image?:"")
+                .load(item.image.src?:"")
                 .fitCenter()
                 .placeholder(R.drawable.ic_loading)
                 .into(companyLogo)
-            jobTitle.text = jobsItem.title?:"Title name is unknown"
-            decription.text = jobsItem.product_type?:"Description is unknown"
+            jobTitle.text = item.title?:"Title name is unknown"
         }
     }
 
