@@ -10,6 +10,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,145 +26,176 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-
             <TextView
 
-                android:padding="10dp"
                 android:id="@+id/prise"
-                android:layout_margin="10dp"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/_70_00"
-                style="@style/text_style"
+                android:layout_margin="10dp"
                 android:background="@drawable/prise_background"
-                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/add_to_wish_list"
+                android:padding="10dp"
+                android:text="@string/_70_00"
                 app:layout_constraintBottom_toBottomOf="@id/viewPagerMain"
-                android:contentDescription="@string/add_to_wish_list" />
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <ImageButton
-                android:layout_margin="10dp"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_margin="10dp"
                 android:background="@color/white"
+                android:contentDescription="@string/add_to_wish_list"
                 android:src="@drawable/ic__favorite_border_24"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/viewPagerMain"
-                android:contentDescription="@string/add_to_wish_list" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
                 android:id="@+id/descriptionNotEditable"
-                android:layout_marginTop="10dp"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewPagerMain"
+                android:layout_marginTop="10dp"
                 android:text="@string/description"
-                style="@style/text_style"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewPagerMain" />
 
             <TextView
                 android:id="@+id/descriptionEditable"
+                style="@style/text_style"
                 android:layout_width="0dp"
-                android:textColor="@color/gray"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/descriptionNotEditable"
                 android:text="@string/description"
+                android:textColor="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/text_style"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/descriptionNotEditable" />
 
 
             <TextView
                 android:id="@+id/stateNotEditable"
-                android:layout_marginTop="10dp"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/descriptionEditable"
+                android:layout_marginTop="10dp"
                 android:text="@string/status"
-                style="@style/text_style"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/descriptionEditable" />
 
             <TextView
                 android:id="@+id/stateEditable"
+                style="@style/text_style"
                 android:layout_width="0dp"
-                android:textColor="#C60B0B"
-                android:layout_marginHorizontal="20dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/stateNotEditable"
-                app:layout_constraintTop_toTopOf="@id/stateNotEditable"
+                android:layout_marginHorizontal="20dp"
                 android:text="@string/description"
+                android:textColor="#C60B0B"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/text_style"/>
+                app:layout_constraintStart_toEndOf="@id/stateNotEditable"
+                app:layout_constraintTop_toTopOf="@id/stateNotEditable" />
 
 
             <TextView
                 android:id="@+id/vendorNotEditable"
-                android:layout_marginTop="10dp"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/stateEditable"
+                android:layout_marginTop="10dp"
                 android:text="@string/vendor"
-                style="@style/text_style"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stateEditable" />
 
             <TextView
                 android:id="@+id/vendorEditable"
+                style="@style/text_style"
                 android:layout_width="0dp"
-                android:textColor="@color/blue"
-                android:layout_marginHorizontal="20dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/vendorNotEditable"
-                app:layout_constraintTop_toTopOf="@id/vendorNotEditable"
+                android:layout_marginHorizontal="20dp"
                 android:text="@string/description"
+                android:textColor="@color/blue"
                 app:layout_constraintEnd_toEndOf="parent"
-                style="@style/text_style"/>
+                app:layout_constraintStart_toEndOf="@id/vendorNotEditable"
+                app:layout_constraintTop_toTopOf="@id/vendorNotEditable" />
 
 
             <TextView
                 android:id="@+id/colorNotEditable"
-                android:layout_marginTop="20dp"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/vendorEditable"
+                android:layout_marginTop="20dp"
                 android:text="@string/color"
-                style="@style/text_style"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vendorEditable" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:orientation="horizontal"
                 android:id="@+id/colorEditable"
                 android:layout_width="0dp"
-                android:layout_marginStart="20dp"
-                tools:listitem="@layout/options_item"
                 android:layout_height="43dp"
+                android:layout_marginStart="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/colorNotEditable"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/colorNotEditable"
                 app:layout_constraintTop_toTopOf="@id/colorNotEditable"
-                app:layout_constraintBottom_toBottomOf="@id/colorNotEditable"
-                app:layout_constraintEnd_toEndOf="parent" />
-
+                tools:listitem="@layout/options_item" />
 
 
             <TextView
                 android:id="@+id/sizeNotEditable"
-                android:layout_marginTop="20dp"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/colorEditable"
+                android:layout_marginTop="20dp"
                 android:text="@string/size"
-                style="@style/text_style"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/colorEditable" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:orientation="horizontal"
                 android:id="@+id/sizeEditable"
                 android:layout_width="0dp"
-                android:layout_marginStart="20dp"
-                tools:listitem="@layout/options_item"
                 android:layout_height="43dp"
+                android:layout_marginStart="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/sizeNotEditable"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/sizeNotEditable"
                 app:layout_constraintTop_toTopOf="@id/sizeNotEditable"
-                app:layout_constraintBottom_toBottomOf="@id/sizeNotEditable"
-                app:layout_constraintEnd_toEndOf="parent" />
+                tools:listitem="@layout/options_item" />
+
+
+            <LinearLayout
+                android:layout_marginBottom="13dp"
+                android:id="@+id/addToCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/prise_background"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sizeEditable"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/add_to_cart"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add_shopping_cart_24" />
+
+                <TextView
+                    style="@style/text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_to_cart"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/colorEditable" />
+
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

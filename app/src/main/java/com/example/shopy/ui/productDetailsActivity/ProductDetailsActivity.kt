@@ -74,14 +74,14 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         bindingProductDetailsActivity.colorEditable.apply {
 //            val lay : RecyclerView.LayoutManager=
-            this.layoutManager = LinearLayoutManager(context)
+            this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             this.adapter = product.options?.get(1)?.values?.let { OptionsAdapter(it) }
         }
 
 
         bindingProductDetailsActivity.sizeEditable.apply {
 //            val lay : RecyclerView.LayoutManager=
-            this.layoutManager = LinearLayoutManager(context)
+            this.layoutManager =  LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 //            this.adapter = OptionsAdapter(product.options?.get(0)?.values ?:ArrayList(),0)
             this.adapter = product.options?.get(0)?.values?.let { OptionsAdapter(it) }
         }
