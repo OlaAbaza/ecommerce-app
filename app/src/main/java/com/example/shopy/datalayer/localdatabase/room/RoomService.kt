@@ -1,14 +1,14 @@
 package com.example.shopy.datalayer.localdatabase.room
 
-import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.shopy.AppContextUtility
-import com.example.shopy.datalayer.entity.WishItem
+import com.example.shopy.datalayer.entity.itemPojo.Product
 
-
-@Database(entities = [WishItem::class], version = 1,exportSchema = false)
+@TypeConverters(Converter::class)
+@Database(entities = [Product::class], version = 2,exportSchema = false)
 abstract class RoomService : RoomDatabase() {
     companion object{
         @Volatile

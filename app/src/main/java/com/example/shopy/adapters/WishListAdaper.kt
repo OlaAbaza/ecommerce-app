@@ -8,15 +8,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.shopy.datalayer.entity.WishItem
+import com.example.shopy.datalayer.entity.itemPojo.Product
 
-class WishListAdaper( jobList: List<WishItem>) : RecyclerView.Adapter<WishListAdaper.ViewHolder>() {
-    var jobList: List<WishItem> = ArrayList()
+class WishListAdaper(prouductList: List<Product>) : RecyclerView.Adapter<WishListAdaper.ViewHolder>() {
+    var jobList: List<Product> = ArrayList()
         set(value) {
             field = value
         }
     init {
-        this.jobList = jobList
+        this.jobList = prouductList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WishListAdaper.ViewHolder {
@@ -39,14 +39,14 @@ class WishListAdaper( jobList: List<WishItem>) : RecyclerView.Adapter<WishListAd
         private val companyLogo = itemView.findViewById<ImageView>(R.id.itemImage)
         private val jobTitle = itemView.findViewById<TextView>(R.id.title)
         private val decription = itemView.findViewById<TextView>(R.id.decrption)
-        fun binding(jobsItem: WishItem, position: Int){
+        fun binding(jobsItem: Product, position: Int){
             Glide.with(companyLogo)
                 .load(jobsItem.image?:"")
                 .fitCenter()
                 .placeholder(R.drawable.ic_loading)
                 .into(companyLogo)
             jobTitle.text = jobsItem.title?:"Title name is unknown"
-            decription.text = jobsItem.description?:"Description is unknown"
+            decription.text = jobsItem.product_type?:"Description is unknown"
         }
     }
 

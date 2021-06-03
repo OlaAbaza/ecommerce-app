@@ -1,11 +1,6 @@
 package com.example.shopy.datalayer.localdatabase.room
 
-import android.app.Application
-import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import com.example.shopy.datalayer.entity.WishItem
+import com.example.shopy.datalayer.entity.itemPojo.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,16 +11,16 @@ class WishRoomRepositry() {
 
     fun getAllWishList() = wishDao.getAllWishList()
 
-    fun saveWishList(withItem: WishItem) {
+    fun saveWishList(wishItem: Product) {
         CoroutineScope(Dispatchers.IO).launch {
-            wishDao.saveWishList(withItem)
+            wishDao.saveWishList(wishItem)
         }
     }
 
 
-    fun deleteOneWishItem(withItem: WishItem) {
+    fun deleteOneWishItem(wishItem: Product) {
         CoroutineScope(Dispatchers.IO).launch {
-            wishDao.deleteOneWithItem(withItem)
+            wishDao.deleteOneWithItem(wishItem)
         }
     }
 
