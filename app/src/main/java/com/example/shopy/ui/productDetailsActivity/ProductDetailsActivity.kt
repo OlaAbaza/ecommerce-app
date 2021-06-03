@@ -3,6 +3,7 @@ package com.example.shopy.ui.productDetailsActivity
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -73,16 +74,13 @@ class ProductDetailsActivity : AppCompatActivity() {
         bindingProductDetailsActivity.vendorEditable.text = product.vendor
 
         bindingProductDetailsActivity.colorEditable.apply {
-//            val lay : RecyclerView.LayoutManager=
             this.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
             this.adapter = product.options?.get(1)?.values?.let { OptionsAdapter(it) }
         }
 
 
         bindingProductDetailsActivity.sizeEditable.apply {
-//            val lay : RecyclerView.LayoutManager=
             this.layoutManager =  LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
-//            this.adapter = OptionsAdapter(product.options?.get(0)?.values ?:ArrayList(),0)
             this.adapter = product.options?.get(0)?.values?.let { OptionsAdapter(it) }
         }
 
