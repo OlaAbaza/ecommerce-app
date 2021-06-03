@@ -1,11 +1,10 @@
-package com.example.shopy.datalayer.onlineDataLayer
+package com.example.shopy.datalayer.onlineDataLayer.productDetailsService
 
 import androidx.lifecycle.LiveData
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 
 interface ProuductDetailsDataSource {
-//    fun getProuduct(id : Long) : LiveData<Product>
-    fun getProuduct(id : Long) : LiveData<ProductItem>
+    fun getProuduct(id : Long)
 
 }

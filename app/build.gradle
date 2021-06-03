@@ -4,8 +4,9 @@ plugins {
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-android-extensions'
-
 }
+
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -44,15 +45,11 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.room:room-runtime:2.3.0'
-    annotationProcessor 'androidx.room:room-compiler:2.3.0'
     def lifecycle_version = "2.3.0"
     def nav_version = "2.3.3"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    def room_version = "2.2.6"
-
     //navigation arch component
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -95,10 +92,38 @@ dependencies {
     ////////////////esraa/////////////
     implementation 'androidx.fragment:fragment-ktx:1.3.4'
     //glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
 
     //circle image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //room
+    def room_version = "2.3.0"
+    implementation "androidx.room:room-runtime:$room_version"
+//    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // optional - RxJava support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$room_version"
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+    implementation 'androidx.room:room-ktx:2.3.0'
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    kapt "android.arch.lifecycle:compiler:1.1.1"
+    kapt "androidx.room:room-compiler:$room_version"
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+
+
+
+
+
+
+
+
+
+
+
+
 
     ////////////////fayza/////////////
 

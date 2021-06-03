@@ -24,5 +24,5 @@ data class Product (
 	@SerializedName("variants") val variants : List<Variants>?,
 	@SerializedName("options") val options : List<Options>?,
 	@SerializedName("images") val images : List<Images>?,
-	@SerializedName("image") val image : Image?
+	@SerializedName("image") val image : Image
 )

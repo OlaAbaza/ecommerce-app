@@ -9,7 +9,7 @@ import com.example.shopy.datalayer.localdatabase.room.WishRoomRepositry
 class MeViewModel(application : Application): ViewModel() {
     private var wishListLiveData : MutableLiveData<List<Product>> = MutableLiveData()
 
-    private val wishRoomRepo = WishRoomRepositry()
+    private val wishRoomRepo = WishRoomRepositry(application)
 
     fun getAllData() = wishRoomRepo.getAllWishList()
 

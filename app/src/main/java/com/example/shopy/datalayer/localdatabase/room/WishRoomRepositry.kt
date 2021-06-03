@@ -1,12 +1,13 @@
 package com.example.shopy.datalayer.localdatabase.room
 
+import android.app.Application
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class WishRoomRepositry() {
-    val database :RoomService?=RoomService.getInstance()
+class WishRoomRepositry(application: Application) {
+    val database :RoomService?=RoomService.getInstance(application)
     val wishDao :WishDao= database!!.wishDao()
 
     fun getAllWishList() = wishDao.getAllWishList()
@@ -18,9 +19,9 @@ class WishRoomRepositry() {
     }
 
 
-    fun deleteOneWishItem(wishItem: Product) {
+    fun deleteOneWishItem(id: Long) {
         CoroutineScope(Dispatchers.IO).launch {
-            wishDao.deleteOneWithItem(wishItem)
+            wishDao.deleteOneWithItem(id)
         }
     }
 

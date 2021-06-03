@@ -1,4 +1,4 @@
-package com.example.shopy.datalayer.onlineDataLayer
+package com.example.shopy.datalayer.onlineDataLayer.productDetailsService
 
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem

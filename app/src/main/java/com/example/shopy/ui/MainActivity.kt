@@ -5,17 +5,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import com.example.shopy.R
-import com.example.shopy.datalayer.onlineDataLayer.ProductDetailsServise
-import com.example.shopy.datalayer.onlineDataLayer.ProuductDetailsReposatory
+import com.example.shopy.datalayer.localdatabase.room.WishRoomRepositry
+import com.example.shopy.datalayer.onlineDataLayer.NetWorking
+import com.example.shopy.datalayer.onlineDataLayer.productDetailsService.ProuductDetailsReposatory
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val a : ProuductDetailsReposatory = ProuductDetailsReposatory(ProductDetailsServise.productDetailsDao)
-
-        a.getProuduct(6687367823558).observe(this,{
+        val a = ProuductDetailsReposatory(NetWorking.productDetailsDao)
+        val b = WishRoomRepositry(this.application)
+        a.getProuduct(6687367823558)
+        a.prouductDetaild.observe(this,{
             Log.d("TAG", it.toString())
+            b.saveWishList(it.product)
         })
 
     }
