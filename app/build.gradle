@@ -13,6 +13,8 @@ android {
     buildFeatures {
        // viewBinding true
         dataBinding=true
+
+
     }
     defaultConfig {
         applicationId "com.example.shopy"
@@ -93,7 +95,10 @@ dependencies {
     ////////////////fayza/////////////
 
     ////////////////ola/////////////
-
+    implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
     ////////////////abdelrahman/////////////
 
 }
+apply plugin: 'com.google.gms.google-services'
