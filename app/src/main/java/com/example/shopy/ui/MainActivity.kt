@@ -2,12 +2,8 @@ package com.example.shopy.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import com.example.shopy.R
-import com.example.shopy.datalayer.localdatabase.room.WishRoomRepositry
-import com.example.shopy.datalayer.onlineDataLayer.NetWorking
-import com.example.shopy.datalayer.onlineDataLayer.productDetailsService.ProuductDetailsReposatory
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

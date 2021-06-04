@@ -1,4 +1,4 @@
-package com.example.shopy.datalayer.localdatabase.room
+package com.example.shopy.datalayer.localdatabase.room.wishBag
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -18,4 +18,9 @@ interface WishDao {
 
     @Query("DELETE FROM wishList WHERE id LIKE:id")
     suspend fun deleteOneWithItem(id: Long)
+
+
+
+    @Query("SELECT * FROM wishList WHERE id LIKE:id LIMIT 1")
+    fun getOneWithItem(id: Long) : LiveData<Product>
 }

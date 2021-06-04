@@ -28,6 +28,11 @@
     <string name="color">Color</string>
     <string name="size">Size</string>
     <string name="add_to_cart">Add To Cart</string>
+    <string name="ok">OK</string>
+    <string name="you_are_not_signed">You Are Not Signed</string>
+    <string name="sign_in_and_try_again">If You Wont To Add To Cart Please Signing And try Again</string>
+    <string name="signin">SignIn</string>
+    <string name="item_saved_in_cart">Item Saved in Cart</string>
     ////////////////esraa/////////////
 
     ////////////////fayza/////////////
