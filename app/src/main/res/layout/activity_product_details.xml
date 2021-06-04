@@ -17,6 +17,7 @@
             android:layout_margin="10dp"
             tools:context=".ui.productDetailsActivity.ProductDetailsActivity">
 
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPagerMain"
                 android:layout_width="0dp"
@@ -36,7 +37,6 @@
                 android:background="@drawable/prise_background"
                 android:contentDescription="@string/add_to_wish_list"
                 android:padding="10dp"
-                android:text="@string/_70_00"
                 app:layout_constraintBottom_toBottomOf="@id/viewPagerMain"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -90,7 +90,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:text="@string/description"
                 android:textColor="#C60B0B"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/stateNotEditable"
@@ -113,7 +112,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
-                android:text="@string/description"
                 android:textColor="@color/blue"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/vendorNotEditable"
@@ -197,6 +195,18 @@
                     app:layout_constraintTop_toBottomOf="@id/colorEditable" />
 
             </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressPar"
+                android:background="@color/white"
+                android:padding="130dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:indeterminateTint="@color/yello"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>

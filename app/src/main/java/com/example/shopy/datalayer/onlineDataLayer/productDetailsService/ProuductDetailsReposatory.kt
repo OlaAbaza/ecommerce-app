@@ -16,8 +16,8 @@ class ProuductDetailsReposatory(val productDetailsDao : ProductDetailsDao) :
     override fun getProuduct(id: Long){
         productDetailsDao.getOneProduct(id).enqueue(object : Callback<ProductItem?> {
             override fun onResponse(call: Call<ProductItem?>, response: Response<ProductItem?>) {
-                    prouductDetaild.value = response.body()
-                    Log.d("TAG","data here")
+                Log.d("TAG","data here")
+                prouductDetaild.value = response.body()
             }
             override fun onFailure(call: Call<ProductItem?>, t: Throwable) {
                 t.printStackTrace()

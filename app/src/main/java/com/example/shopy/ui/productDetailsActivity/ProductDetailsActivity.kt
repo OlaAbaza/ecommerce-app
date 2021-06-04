@@ -4,9 +4,11 @@ import android.content.Context
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
@@ -47,7 +49,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         } else {
             //todo from Intent
-            id = 6687367364806
+            id = intent?.getLongExtra("ID",0)
             checkWishListStored(id ?: 0)
         }
 
@@ -62,9 +64,15 @@ class ProductDetailsActivity : AppCompatActivity() {
         productDetailsViewMode.observeProductDetails().observe(this, {
             product = it.product
             updateUI(product)
+            productDetailsViewMode.progressPar.value = true
+
+
         })
 
-
+        productDetailsViewMode.progressPar.observe(this,{
+            if (productDetailsViewMode.progressPar.value == true)
+            bindingProductDetailsActivity.progressPar.visibility = View.GONE
+        })
 
 
 
@@ -212,5 +220,10 @@ class ProductDetailsActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        productDetailsViewMode.progressPar.value=false
     }
 }

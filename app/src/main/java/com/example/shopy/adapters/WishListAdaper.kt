@@ -9,14 +9,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopy.datalayer.entity.itemPojo.Product
+import com.example.shopy.ui.meScreen.MeViewModel
 
-class WishListAdaper(prouductList: List<Product>) : RecyclerView.Adapter<WishListAdaper.ViewHolder>() {
-    var jobList: List<Product> = ArrayList()
+class WishListAdaper(prouductList: List<Product> , meViewModel: MeViewModel) : RecyclerView.Adapter<WishListAdaper.ViewHolder>() {
+    val meViewModel: MeViewModel =meViewModel
+
+    var productList: List<Product> = ArrayList()
         set(value) {
             field = value
         }
     init {
-        this.jobList = prouductList
+        this.productList = prouductList
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,16 +30,20 @@ class WishListAdaper(prouductList: List<Product>) : RecyclerView.Adapter<WishLis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding(jobList[position],position)
+        holder.binding(productList[position],position)
+        holder.itemView.setOnClickListener {
+            meViewModel.intentTOProductDetails.value= productList[position]
+        }
     }
 
     override fun getItemCount(): Int {
-        return jobList.count()
+        return productList.count()
     }
 
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private var itemViewa: View = itemView
         private val companyLogo = itemView.findViewById<ImageView>(R.id.itemImage)
         private val itemTitle = itemView.findViewById<TextView>(R.id.title)
         fun binding(item: Product, position: Int){
@@ -46,6 +53,9 @@ class WishListAdaper(prouductList: List<Product>) : RecyclerView.Adapter<WishLis
                 .placeholder(R.drawable.ic_loading)
                 .into(companyLogo)
             itemTitle.text = item.title?:"Title name is unknown"
+
+
+
         }
     }
 

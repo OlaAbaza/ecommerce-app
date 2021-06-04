@@ -22,6 +22,7 @@ class ProductDetailsViewModel(application: Application) : AndroidViewModel(appli
     private  var saveToCartJob : Job? = null
 
      val signInBoolesn : MutableLiveData<Boolean> = MutableLiveData()
+     val progressPar : MutableLiveData<Boolean> = MutableLiveData()
 
     fun getProductByIdFromNetwork(id: Long) {
         networkingReposatory.getProuduct(id)
