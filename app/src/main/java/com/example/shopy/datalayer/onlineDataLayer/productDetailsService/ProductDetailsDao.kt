@@ -8,7 +8,6 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ProductDetailsDao {
-//    fun getOneProduct(@Path("id") id: Long) : Call<Product>
     @GET("products/{id}.json")
     fun getOneProduct(@Path("id") id: Long) : Call<ProductItem>
 }

@@ -4,11 +4,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
 import com.example.shopy.R
+import com.example.shopy.datalayer.localdatabase.room.wishBag.WishRoomRepositry
+import com.example.shopy.datalayer.onlineDataLayer.NetWorking
+import com.example.shopy.datalayer.onlineDataLayer.productDetailsService.ProuductDetailsReposatory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
 
 

@@ -6,5 +6,4 @@ import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 
 interface ProuductDetailsDataSource {
     fun getProuduct(id : Long)
-
 }
