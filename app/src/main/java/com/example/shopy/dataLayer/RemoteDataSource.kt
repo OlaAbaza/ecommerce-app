@@ -36,7 +36,7 @@ class RemoteDataSource : RemoteInterface {
                     val jObjError =
                         JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
                             .getJSONArray("email").get(0).toString()
-                   Timber.i("This email " + jObjError)
+                    Timber.i("This email " + jObjError)
                 }
             }
 
@@ -115,6 +115,24 @@ class RemoteDataSource : RemoteInterface {
 
     override suspend fun setDafaultCustomerAddress(id: String, addressID: String): CreateAddressX? {
         val response = ServiceBuilder.getApi().setDafaultCustomerAddress(id, addressID)
+        try {
+            if (response.isSuccessful) {
+                Timber.i("This  " + "isSuccessful")
+                return response.body()
+            } else {
+                val jObjError =
+                    JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
+                Timber.i("This  " + jObjError)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
+        return null
+    }
+
+    override suspend fun createOrder(order: Orders): OrderResponse? {
+        val response = ServiceBuilder.getApi().createOrder(order)
         try {
             if (response.isSuccessful) {
                 Timber.i("This  " + "isSuccessful")

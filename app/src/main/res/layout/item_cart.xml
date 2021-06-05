@@ -28,7 +28,7 @@
         android:textSize="10dp"
         app:layout_constraintStart_toEndOf="@id/itemCartImage"
         app:layout_constraintTop_toTopOf="@id/itemCartImage"
-        tools:text=" Disney Donald Duck T-Shirt" />
+        android:text=" Disney Donald Duck T-Shirt" />
 
     <TextView
         android:id="@+id/itemCartPrice"
@@ -37,7 +37,7 @@
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/itemCartTitle"
         app:layout_constraintTop_toBottomOf="@id/itemCartTitle"
-        tools:text="US$6.00" />
+        android:text="US$6.00" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="120dp"
@@ -71,7 +71,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                tools:text="2" />
+                android:text="2" />
 
             <ImageButton
                 android:id="@+id/decreaseButton"

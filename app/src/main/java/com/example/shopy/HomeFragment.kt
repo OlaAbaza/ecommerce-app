@@ -37,6 +37,11 @@ class HomeFragment : Fragment() {
 
             view?.findNavController()?.navigate(HomeFragmentDirections.actionHomeFragmentToAddressFragment())
         }
+        binding.orderBtn.setOnClickListener {
+
+
+            view?.findNavController()?.navigate(HomeFragmentDirections.actionHomeFragmentToCartFragment2())
+        }
 
         return binding.root
     }

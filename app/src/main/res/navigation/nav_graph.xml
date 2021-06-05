@@ -74,10 +74,18 @@
             app:exitAnim="@anim/slide_in_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_in_left"/>
+        <action
+            android:id="@+id/action_homeFragment_to_cartFragment2"
+            app:destination="@id/cartFragment2" />
     </fragment>
     <fragment
         android:id="@+id/addressFragment"
         android:name="com.example.shopy.customerAddress.AddressFragment"
         android:label="AddressFragment"
         tools:layout="@layout/fragment_address"/>
+    <fragment
+        android:id="@+id/cartFragment2"
+        android:name="com.example.shopy.CartFragment"
+        android:label="CartFragment"
+        tools:layout="@layout/fragment_cart"/>
 </navigation>

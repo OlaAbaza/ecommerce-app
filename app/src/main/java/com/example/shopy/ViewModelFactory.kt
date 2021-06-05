@@ -34,6 +34,9 @@ class ViewModelFactory(
         if (modelClass.isAssignableFrom(AddressViewModel::class.java)) {
             return AddressViewModel(remoteDataSource,application) as T
         }
+        if (modelClass.isAssignableFrom(OrderViewModel::class.java)) {
+            return OrderViewModel(remoteDataSource,application) as T
+        }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

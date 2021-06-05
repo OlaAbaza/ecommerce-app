@@ -41,4 +41,9 @@ interface RestApi {
         @Path("address_id") addressID: String
     ): Response<CreateAddressX>
 
+    @POST("orders.json")
+    suspend fun createOrder(
+        @Body order: Orders
+    ): Response<OrderResponse>
+
 }

@@ -1,6 +1,5 @@
 package com.example.shopy.dataLayer
 
-import com.example.shopy.dataLayer.RestApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

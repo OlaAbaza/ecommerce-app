@@ -4,6 +4,7 @@ package com.example.shopy.dataLayer
 import android.content.Context
 import com.example.shopy.models.*
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.Path
 
@@ -21,5 +22,7 @@ interface RemoteInterface {
 
     suspend fun delCustomerAddresses(id: String, addressID: String)
     suspend fun setDafaultCustomerAddress(id: String, addressID: String): CreateAddressX?
+    suspend fun createOrder(order: Orders): OrderResponse?
+
     fun isOnline(context: Context): Boolean
 }
