@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/shopTabFragment2">
+
+    <fragment
+        android:id="@+id/shopTabFragment2"
+        android:name="com.example.shopy.ui.shopTab.ShopTabFragment"
+        android:label="fragment_shop_tab"
+        tools:layout="@layout/fragment_shop_tab" />
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.shopy.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" />
+    <fragment
+        android:id="@+id/meFragment"
+        android:name="com.example.shopy.MeFragment"
+        android:label="fragment_me"
+        tools:layout="@layout/fragment_me" />
 
 </navigation>
