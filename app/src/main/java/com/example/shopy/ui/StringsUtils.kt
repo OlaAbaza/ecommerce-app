@@ -8,5 +8,7 @@ class StringsUtils {
         val Processing : String = "Processing"
         val Shipping : String = "Shipping"
         val Returns : String = "Returns"
+        val coupons : String = "coupons"
+        val points : String = "points"
     }
 }
