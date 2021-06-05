@@ -2,11 +2,77 @@
     <string name="app_name">Shopy</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    ////////////////esraa/////////////
 
+
+    ////////////////esraa/////////////
+    <string name="setting">Setting</string>
+    <string name="shopping_bag">Shopping Bag</string>
+    <string name="hi">Hi,  </string>
+    <string name="name_of_profile">Name Of Profile</string>
+    <string name="_1">1</string>
+    <string name="coupons">coupons</string>
+    <string name="points">Points</string>
+    <string name="wallet">Wallet</string>
+    <string name="gift_card">Gift Card</string>
+    <string name="my_orders">My Orders</string>
+    <string name="unpaid">Unpaid</string>
+    <string name="processing">Processing</string>
+    <string name="shipping">Shipping</string>
+    <string name="returns">Returns</string>
+    <string name="wish_list">Wish list</string>
     ////////////////fayza/////////////
 
     ////////////////ola/////////////
+    <string name="login_unsuccessful_msg">Login unsuccessful</string>
+    <string name="fact_type_android">Android</string>
+    <string name="fact_type_california">California</string>
+    <string name="preference_fact_type_key">fact_type_pref</string>
+    <string name="welcome_message_authed">Hi %1$s! Did you know that %2$s.</string>
+    <string name="facebook_app_id">286383829856335</string>
+    <string name="facebook_application_id" translatable="false">286383829856335</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb286383829856335</string>
+    <string name="sign_in_Underlined"><u>SIGN IN</u></string>
+    <string name="register_Underlined"><u>REGISTER</u></string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="register">REGISTER</string>
+    <string name="or_join_with">__ Or join with __</string>
+    <string name="password">PASSWORD</string>
+    <string name="email_address">EMAIL ADDRESS</string>
+    <string name="App_name">SHOPY</string>
+    <string name="full_name">FULL NAME</string>
+    <string name="me">Me</string>
+    <string name="category">Category</string>
+    <string name="shop">Shop</string>
+    <string name="checkout">CHECKOUT</string>
+    <string name="total">Total: </string>
+    <string name="save">save</string>
+    <string name="phone_number">*Phone Number</string>
+    <string name="city">*City</string>
+    <string name="address_line_2">Address Line 2</string>
+    <string name="post_zip_code">*Post/Zip Code</string>
+    <string name="address_line_1">*Address Line 1</string>
+    <string name="state_province_optional">*State/province</string>
+    <string name="country">*Country</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="make_default">Make Default</string>
+    <string name="at_least_one_letter">At least one letter</string>
+    <string name="at_least_one_number">At least one number</string>
+    <string name="_8_characters_minimum">8 characters minimum</string>
+    <string name="add_address">Add Address</string>
+    <string name="my_addresses">My Addresses</string>
 
     ////////////////abdelrahman/////////////
 </resources>

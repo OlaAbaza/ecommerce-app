@@ -4,7 +4,8 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.datalayer.Repository
+import com.example.shopy.dataLayer.RemoteDataSource
+import com.example.shopy.datalayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.allproducts.allProduct
@@ -12,9 +13,9 @@ import com.example.shopy.datalayer.entity.custom_product.ProductsList
 
 class ShopTabViewModel(application: Application) : AndroidViewModel(application) {
 
-    var repository: Repository
+    var remoteDataSource: RemoteDataSourceImpl
     init {
-        repository = Repository(application)
+        remoteDataSource = RemoteDataSourceImpl()
         Log.i("output","viewModel")
     }
     val error = MutableLiveData<Boolean>()
@@ -24,33 +25,33 @@ class ShopTabViewModel(application: Application) : AndroidViewModel(application)
 
 
     fun fetchWomanProductsList() : MutableLiveData<ProductsList> {
-        repository.getWomanProductsListFromApi()
-       return repository.womanProductsList
+        remoteDataSource.getWomanProductsList()
+       return remoteDataSource.womanProductsList
     }
 
     fun fetchMenProductsList() : MutableLiveData<ProductsList> {
-        repository.getMenProductsListFromApi()
-        return repository.menProductsList
+        remoteDataSource.getMenProductsList()
+        return remoteDataSource.menProductsList
     }
 
     fun fetchOnSaleProductsList() : MutableLiveData<ProductsList> {
-        repository.getOnSaleProductsListFromApi()
-        return repository.onSaleProductsList
+        remoteDataSource.getOnSaleProductsList()
+        return remoteDataSource.onSaleProductsList
     }
 
     fun fetchKidsProductsList() : MutableLiveData<ProductsList> {
-        repository.getKidProductsListFromApi()
-        return repository.kidsProductsList
+        remoteDataSource.getKidsProductsList()
+        return remoteDataSource.kidsProductsList
     }
 
     fun fetchallProductsList() : MutableLiveData<AllProducts> {
-        repository.getAllProductsListFromApi()
-        return repository.allProductsList
+        remoteDataSource.getAllProductsList()
+        return remoteDataSource.allProductsList
     }
 
     fun fetchallDiscountCodeList() : MutableLiveData<AllCodes> {
-        repository.getAllDiscountCodeList()
-        return repository.allDiscountCodeList
+        remoteDataSource.getAllDiscountCodeList()
+        return remoteDataSource.allDiscountCodeList
     }
 
 

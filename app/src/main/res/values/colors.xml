@@ -8,10 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     ////////////////esraa/////////////
-
+    <color name="backgroung">#66FAEED6</color>
     ////////////////fayza/////////////
 
     ////////////////ola/////////////
-
+    <color name="gray">#757777</color>
+    <color name="light_gray">#DFDFDF</color>
     ////////////////abdelrahman/////////////
 </resources>
