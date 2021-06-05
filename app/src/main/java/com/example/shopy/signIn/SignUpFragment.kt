@@ -1,4 +1,4 @@
-package com.example.shopy
+package com.example.shopy.signIn
 
 import android.app.Activity
 import android.content.Intent
@@ -15,7 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import com.example.shopy.RemoteDataSource
+import com.example.shopy.R
+import com.example.shopy.Utils
+import com.example.shopy.ViewModelFactory
+import com.example.shopy.dataLayer.RemoteDataSource
+import com.example.shopy.models.CustomerX
 
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -25,12 +29,12 @@ import timber.log.Timber
 class SignUpFragment : Fragment() {
     private lateinit var prefs: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
-    private lateinit var signinViewModel : SignInViewModel
+    private lateinit var signinViewModel: SignInViewModel
     private lateinit var binding: FragmentSignUpBinding
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         prefs = PreferenceManager.getDefaultSharedPreferences(activity)
         editor = prefs.edit()
@@ -38,11 +42,11 @@ class SignUpFragment : Fragment() {
         binding = FragmentSignUpBinding.inflate(layoutInflater)
         val application = requireNotNull(this.activity).application
         val remoteDataSource = RemoteDataSource()
-        val viewModelFactory = SignInViewModelFactory(remoteDataSource, application)
+        val viewModelFactory = ViewModelFactory(remoteDataSource,application)
         signinViewModel =
-                ViewModelProvider(
-                        this, viewModelFactory
-                ).get(SignInViewModel::class.java)
+            ViewModelProvider(
+                this, viewModelFactory
+            ).get(SignInViewModel::class.java)
         return binding.root
     }
 
@@ -50,25 +54,55 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvSignin.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_signUpFragment_to_signInFragment))
+            Navigation.createNavigateOnClickListener(R.id.action_signUpFragment_to_signInFragment)
+        )
 
-        binding.registerBtn.setOnClickListener{
-            signinViewModel.createCustomers(binding.nameEdt.text.toString(),binding.emailEdt.text.toString(),binding.passwordEdt.text.toString())
+        binding.registerBtn.setOnClickListener {
+            if (!(Utils.validateEmail(binding.emailEdt.text.toString())))
+                Toast.makeText(
+                    context,
+                    "Please check your email and try again ",
+                    Toast.LENGTH_SHORT
+                ).show()
+            else if (!(Utils.validatePassword(binding.passwordEdt.text.toString())))
+                Toast.makeText(
+                    context,
+                    "Please check your password and try again ",
+                    Toast.LENGTH_SHORT
+                ).show()
+            else {
+                signinViewModel.createCustomers(
+                    binding.nameEdt.text.toString(),
+                    binding.emailEdt.text.toString(),
+                    binding.passwordEdt.text.toString()
+                )
+            }
+        }
+        binding.tvPassField.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus)
+                binding.group.setVisibility(View.VISIBLE)
+            else
+                binding.group.setVisibility(View.GONE)
         }
 
-        signinViewModel.getPostResult().observe(viewLifecycleOwner, Observer<String> {
-            Timber.i("isLogged+"+ it)
-         if (it=="true") {
-             editor.putBoolean("isLogged", true)
-             editor.commit()
-             view.findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
-         }
-         else { Toast.makeText(context,  it , Toast.LENGTH_SHORT).show()} })
+        signinViewModel.getPostResult().observe(viewLifecycleOwner, Observer<CustomerX?> {
+            Timber.i("isLogged+" + it)
+            if (it != null) {
+                editor.putBoolean("isLogged", true)
+                editor.putString("customerID", it.customer.id.toString())
+                editor.commit()
+                view.findNavController()
+                    .navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
+            } else {
+                Toast.makeText(context, "This mail is already exits", Toast.LENGTH_SHORT).show()
+            }
+        })
         binding.googleButton.setOnClickListener {
             val providers = arrayListOf(AuthUI.IdpConfig.GoogleBuilder().build())
-            launchSignInFlow(providers) }
-        binding.facebookButton.setOnClickListener{
-            val providers = arrayListOf(  AuthUI.IdpConfig.FacebookBuilder().build())
+            launchSignInFlow(providers)
+        }
+        binding.facebookButton.setOnClickListener {
+            val providers = arrayListOf(AuthUI.IdpConfig.FacebookBuilder().build())
             launchSignInFlow(providers)
         }
 
@@ -91,7 +125,7 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun launchSignInFlow( provider: List<AuthUI.IdpConfig>) {
+    private fun launchSignInFlow(provider: List<AuthUI.IdpConfig>) {
         // Create and launch sign-in intent.
         // We listen to the response of this activity with the
         // SIGN_IN_REQUEST_CODE
@@ -112,11 +146,11 @@ class SignUpFragment : Fragment() {
                     SignInViewModel.AuthenticationState.AUTHENTICATED -> {
                         editor.putBoolean("isLogged", true)
                         editor.commit()
-                        Timber.i("isLogged+"+FirebaseAuth.getInstance().currentUser?.displayName+FirebaseAuth.getInstance().currentUser?.email)
+                        Timber.i("isLogged+" + FirebaseAuth.getInstance().currentUser?.displayName + FirebaseAuth.getInstance().currentUser?.email)
                         FirebaseAuth.getInstance().currentUser?.displayName?.let {
                             FirebaseAuth.getInstance().currentUser?.email?.let { it1 ->
                                 signinViewModel.createCustomers(
-                                    it, it1,"123"
+                                    it, it1, "123"
                                 )
                             }
                         }

@@ -1,22 +1,21 @@
-package com.example.shopy
+package com.example.shopy.signIn
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.shopy.RemoteDataSource
+import com.example.shopy.FirebaseUserLiveData
+import com.example.shopy.SingleLiveEvent
+import com.example.shopy.dataLayer.RemoteDataSource
 
 import kotlinx.coroutines.launch
 
 import com.example.shopy.models.Customer
 import com.example.shopy.models.CustomerX
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 import timber.log.Timber
 
-class SignInViewModel(val remoteDataSource: RemoteDataSource, application: Application) : AndroidViewModel(application) {
+class SignInViewModel(val remoteDataSource: RemoteDataSource,application: Application) : AndroidViewModel(application) {
     private val customerList = SingleLiveEvent<List<Customer>>()
-    private val postResult = SingleLiveEvent<String>()
-    fun getPostResult(): LiveData<String> {
+    private val postResult = SingleLiveEvent<CustomerX?>()
+    fun getPostResult(): LiveData<CustomerX?> {
         return postResult
     }
 
@@ -45,12 +44,15 @@ class SignInViewModel(val remoteDataSource: RemoteDataSource, application: Appli
 
     fun createCustomers(firstName: String, email: String, pass: String) {
         var customer = Customer(firstName, email, pass)
-        var customerx = CustomerX(customer)
-        var result = ""
-        val jop = viewModelScope.launch { result = remoteDataSource.createCustomers(customerx) }
+        var customerx :CustomerX?= CustomerX(customer)
+
+        val jop = viewModelScope.launch { customerx =
+            customerx?.let { remoteDataSource.createCustomers(it) }
+        }
         jop.invokeOnCompletion {
-            postResult.postValue(result)
-            Timber.i("isLoggedjk+" + result)
+                postResult.postValue(customerx)
+                Timber.i("isLoggedjk+" + customerx)
+
         }
     }
 }

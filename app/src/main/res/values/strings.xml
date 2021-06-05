@@ -50,8 +50,28 @@
     <string name="address_line_2">Address Line 2</string>
     <string name="post_zip_code">*Post/Zip Code</string>
     <string name="address_line_1">*Address Line 1</string>
-    <string name="state_province_optional">State/province(Optional)</string>
+    <string name="state_province_optional">*State/province</string>
     <string name="country">*Country</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="make_default">Make Default</string>
+    <string name="at_least_one_letter">At least one letter</string>
+    <string name="at_least_one_number">At least one number</string>
+    <string name="_8_characters_minimum">8 characters minimum</string>
+    <string name="add_address">Add Address</string>
+    <string name="my_addresses">My Addresses</string>
 
     ////////////////abdelrahman/////////////
 </resources>

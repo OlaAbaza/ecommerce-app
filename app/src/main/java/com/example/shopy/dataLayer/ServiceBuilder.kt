@@ -1,22 +1,26 @@
-package com.example.shopy
+package com.example.shopy.dataLayer
 
-import com.example.shopy.RestApi
+import com.example.shopy.dataLayer.RestApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-private const val BASE_URL = "https://ce751b18c7156bf720ea405ad19614f4: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@itiana.myshopify.com/admin/api/2021-04/"
+private const val BASE_URL =
+    "https://ce751b18c7156bf720ea405ad19614f4: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@itiana.myshopify.com/admin/api/2021-04/"
+
 object ServiceBuilder {
-    private val  retrofit=Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(buildAuthClient())
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-        fun getApi() = retrofit.create(RestApi::class.java)
+
+    fun getApi() = retrofit.create(RestApi::class.java)
 
 }
+
 private fun buildAuthClient(): OkHttpClient {
     val httpClient = OkHttpClient.Builder()
     httpClient.addInterceptor { chain ->
@@ -32,4 +36,3 @@ private fun buildAuthClient(): OkHttpClient {
     httpClient.writeTimeout(30, TimeUnit.SECONDS);
     return httpClient.build()
 }
-//https://ce751b18c7156bf720ea405ad19614f4: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@itiana.myshopify.com/admin/api/2021-04/customers.json

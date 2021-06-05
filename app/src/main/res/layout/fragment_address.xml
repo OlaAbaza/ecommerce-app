@@ -3,207 +3,69 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
-
-    <androidx.core.widget.NestedScrollView
+    android:layout_height="match_parent">
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="-82dp">
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        app:titleTextColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageButton
+            android:id="@+id/btn_del"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="@drawable/ic_baseline_arrow_back_ios_24" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:text="@string/my_addresses"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:padding="10dp">
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topguid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".07" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_address"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
+        android:background="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@id/add_address_btn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topguid"
+        tools:listitem="@layout/item_address" />
 
+    <Button
+        android:id="@+id/add_address_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:text="+ Add a shipping address"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-<View
-    android:id="@+id/line1"
-    android:layout_width="match_parent"
-    android:layout_height="10dp"
-    android:orientation="horizontal"
-    android:background="@color/backgroung"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_nameField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line1"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/name_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/full_name"
-                    android:textColorHint="@color/gray" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_phoneField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_nameField"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/phone_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/phone_number"
-                    android:textColorHint="@color/gray" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_cityField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_phoneField"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/city_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/city"
-                    android:textColorHint="@color/gray" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <View
-                android:id="@+id/line2"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:orientation="horizontal"
-                android:background="@color/backgroung"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_cityField"/>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_stateField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line2"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/state_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/state_province_optional"
-                    android:textColorHint="@color/gray" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_postCodeField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_stateField"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/postCode_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/post_zip_code"
-                    android:textColorHint="@color/gray" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_addressField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_postCodeField"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/address_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/address_line_1"
-                    android:textColorHint="@color/gray" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_address2Field"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_addressField"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/address2_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/address_line_2"
-                    android:textColorHint="@color/gray" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tv_countryField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_address2Field"
-                tools:ignore="MissingConstraints">
-
-                <EditText
-                    android:id="@+id/country_edt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="@color/white"
-                    android:hint="@string/country"
-                    android:textColorHint="@color/gray" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/register_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:padding="10dp"
-                android:text="@string/save"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                app:backgroundTint="@null"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_countryField" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

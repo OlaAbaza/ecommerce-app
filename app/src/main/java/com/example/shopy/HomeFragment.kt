@@ -32,6 +32,11 @@ class HomeFragment : Fragment() {
             editor.commit()
             view?.findNavController()?.navigate(HomeFragmentDirections.actionHomeFragmentToSignUpFragment())
         }
+        binding.addressBtn.setOnClickListener {
+
+
+            view?.findNavController()?.navigate(HomeFragmentDirections.actionHomeFragmentToAddressFragment())
+        }
 
         return binding.root
     }

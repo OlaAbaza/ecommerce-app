@@ -1,4 +1,4 @@
-package com.example.shopy
+package com.example.shopy.signIn
 
 import android.app.Activity
 import android.content.Intent
@@ -13,9 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.shopy.ViewModelFactory
+import com.example.shopy.dataLayer.RemoteDataSource
 import com.example.shopy.databinding.FragmentSignInBinding
 import com.example.shopy.models.Customer
-import com.example.shopy.RemoteDataSource
 import com.facebook.*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -45,7 +46,7 @@ class SignInFragment : Fragment() {
         binding = FragmentSignInBinding.inflate(layoutInflater)
         val application = requireNotNull(this.activity).application
         val remoteDataSource = RemoteDataSource()
-        val viewModelFactory = SignInViewModelFactory(remoteDataSource, application)
+        val viewModelFactory = ViewModelFactory(remoteDataSource,application)
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
         signinViewModel =
@@ -68,10 +69,17 @@ class SignInFragment : Fragment() {
             if (customer.isEmpty()) {
                 Toast.makeText(context, "you do not have an account", Toast.LENGTH_SHORT).show()
             } else {
-                editor.putBoolean("isLogged", true)
-                editor.commit()
-                view.findNavController()
-                    .navigate(SignInFragmentDirections.actionSignInFragmentToHomeFragment())
+                if(customer.get(0).note==binding.passwordEdt.text.toString()) {
+                    editor.putBoolean("isLogged", true)
+                    Timber.i("olaakjhd" + customer.get(0).id.toString())
+                    editor.putString("customerID", customer.get(0).id.toString())
+                    editor.commit()
+                    view.findNavController()
+                        .navigate(SignInFragmentDirections.actionSignInFragmentToHomeFragment())
+                }
+                else{
+                    Toast.makeText(context, "incorrect password", Toast.LENGTH_SHORT).show()
+                }
             }
         })
 
