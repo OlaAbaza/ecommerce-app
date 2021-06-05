@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.adapters.WishListAdaper
 import com.example.shopy.databinding.FragmentMeBinding
@@ -58,14 +60,17 @@ lateinit var meViewModel : MeViewModel
 
         meViewModel.intentTOProductDetails.observe(requireActivity(), {
             if (it!= null) {
-                val nextFrag = ProuductDetailsFragment()
-                val bundle  =Bundle()
-                bundle.putLong(StringsUtils.OrderID, it.id)
-                nextFrag.arguments = bundle
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentHost, nextFrag)
-                    .addToBackStack(null)
-                    .commit()
+//                val nextFrag = ProuductDetailsFragment()
+//                val bundle  =Bundle()
+//                bundle.putLong(StringsUtils.OrderID, it.id)
+//                nextFrag.arguments = bundle
+//                requireActivity().supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fragment, nextFrag)
+//                    .addToBackStack(null)
+//                    .commit()
+
+                val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id)
+                findNavController().navigate(action)
             }
 
         })
@@ -88,11 +93,17 @@ lateinit var meViewModel : MeViewModel
 
     private fun startAnotherFragment() {
 
-        val nextFrag = AllWishListFragment()
-        requireActivity().supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentHost, nextFrag)
-            .addToBackStack(null)
-            .commit()
+//        val nextFrag = AllWishListFragment()
+//        requireActivity().supportFragmentManager.beginTransaction()
+//            .replace(R.id.fragment, nextFrag)
+//            .addToBackStack(null)
+//            .commit()
+
+//        val action = NavGraphDirections.actionGlobalHoursFragment(weather!!)
+//        findNavController().navigate(action)
+
+        val action = NavGraphDirections.actionGlobalAllWishListFragment()
+        findNavController().navigate(action)
     }
 
 }

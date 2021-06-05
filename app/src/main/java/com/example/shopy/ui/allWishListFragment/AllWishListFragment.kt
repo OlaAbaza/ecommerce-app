@@ -62,7 +62,7 @@ class AllWishListFragment : Fragment() {
             bundle.putLong(StringsUtils.OrderID, it.id)
             nextFrag.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentHost, nextFrag)
+                .replace(R.id.fragment, nextFrag)
                 .addToBackStack(null)
                 .commit()
         })

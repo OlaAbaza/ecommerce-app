@@ -91,8 +91,8 @@ class SignUpFragment : Fragment() {
                 editor.putBoolean("isLogged", true)
                 editor.putString("customerID", it.customer.id.toString())
                 editor.commit()
-                view.findNavController()
-                    .navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
+//                view.findNavController()
+//                    .navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
             } else {
                 Toast.makeText(context, "This mail is already exits", Toast.LENGTH_SHORT).show()
             }

@@ -13,6 +13,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
 import com.example.shopy.adapters.ImageSilderAdapter
@@ -58,9 +59,11 @@ class ProuductDetailsFragment : Fragment() {
 
             } else {
                 //todo from Intent
+                 val args: ProuductDetailsFragmentArgs by navArgs()
                 val bundle = arguments
-                id = bundle!!.getLong(StringsUtils.OrderID, 0)
+//                id = bundle!!.getLong(StringsUtils.OrderID, 0)
 //            id = requireActivity().intent?.getLongExtra(StringsUtils.OrderID,0)
+                id = args.productID
                 checkWishListStored(id ?: 0)
                 Log.d("TAG", "id = $id")
             }

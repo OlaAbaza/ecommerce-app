@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_category" />
     <fragment
         android:id="@+id/meFragment"
-        android:name="com.example.shopy.MeFragment"
+        android:name="com.example.shopy.ui.meScreen.MeFragment"
         android:label="fragment_me"
         tools:layout="@layout/fragment_me" />
 
@@ -36,15 +36,15 @@
             app:popExitAnim="@anim/slide_in_right"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_signInFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_in_left"
-            app:popUpTo="@id/signInFragment"
-            app:popUpToInclusive="true"/>
+<!--        <action-->
+<!--            android:id="@+id/action_signInFragment_to_homeFragment"-->
+<!--            app:destination="@id/homeFragment"-->
+<!--            app:enterAnim="@anim/slide_in_right"-->
+<!--            app:exitAnim="@anim/slide_in_left"-->
+<!--            app:popEnterAnim="@anim/slide_in_right"-->
+<!--            app:popExitAnim="@anim/slide_in_left"-->
+<!--            app:popUpTo="@id/signInFragment"-->
+<!--            app:popUpToInclusive="true"/>-->
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -60,41 +60,41 @@
             app:popExitAnim="@anim/slide_in_left"
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_signUpFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_in_left"
-            app:popUpTo="@id/signUpFragment"
-            app:popUpToInclusive="true" />
+<!--        <action-->
+<!--            android:id="@+id/action_signUpFragment_to_homeFragment"-->
+<!--            app:destination="@id/homeFragment"-->
+<!--            app:enterAnim="@anim/slide_in_right"-->
+<!--            app:exitAnim="@anim/slide_in_left"-->
+<!--            app:popEnterAnim="@anim/slide_in_right"-->
+<!--            app:popExitAnim="@anim/slide_in_left"-->
+<!--            app:popUpTo="@id/signUpFragment"-->
+<!--            app:popUpToInclusive="true" />-->
     </fragment>
-    <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.example.shopy.HomeFragment"
-        android:label="SignUpFragment"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_in_left"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true"/>
-        <action
-            android:id="@+id/action_homeFragment_to_addressFragment"
-            app:destination="@id/addressFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_in_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_in_left"/>
-        <action
-            android:id="@+id/action_homeFragment_to_cartFragment2"
-            app:destination="@id/cartFragment2" />
-    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/homeFragment"-->
+<!--        android:name="com.example.shopy.HomeFragment"-->
+<!--        android:label="SignUpFragment"-->
+<!--        tools:layout="@layout/fragment_home">-->
+<!--        <action-->
+<!--            android:id="@+id/action_homeFragment_to_signUpFragment"-->
+<!--            app:destination="@id/signUpFragment"-->
+<!--            app:enterAnim="@anim/slide_in_right"-->
+<!--            app:exitAnim="@anim/slide_in_left"-->
+<!--            app:popEnterAnim="@anim/slide_in_right"-->
+<!--            app:popExitAnim="@anim/slide_in_left"-->
+<!--            app:popUpTo="@id/homeFragment"-->
+<!--            app:popUpToInclusive="true"/>-->
+<!--        <action-->
+<!--            android:id="@+id/action_homeFragment_to_addressFragment"-->
+<!--            app:destination="@id/addressFragment"-->
+<!--            app:enterAnim="@anim/slide_in_right"-->
+<!--            app:exitAnim="@anim/slide_in_left"-->
+<!--            app:popEnterAnim="@anim/slide_in_right"-->
+<!--            app:popExitAnim="@anim/slide_in_left"/>-->
+<!--        <action-->
+<!--            android:id="@+id/action_homeFragment_to_cartFragment2"-->
+<!--            app:destination="@id/cartFragment2" />-->
+<!--    </fragment>-->
     <fragment
         android:id="@+id/addressFragment"
         android:name="com.example.shopy.ui.customerAddress.AddressFragment"
@@ -105,4 +105,18 @@
         android:name="com.example.shopy.ui.shoppingBag.CartFragment"
         android:label="CartFragment"
         tools:layout="@layout/fragment_cart"/>
+    <fragment
+        android:id="@+id/prouductDetailsFragment"
+        android:name="com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment"
+        android:label="ProuductDetailsFragment" >
+        <argument
+            android:name="productID"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/allWishListFragment"
+        android:name="com.example.shopy.ui.allWishListFragment.AllWishListFragment"
+        android:label="AllWishListFragment" />
+    <action android:id="@+id/action_global_prouductDetailsFragment" app:destination="@id/prouductDetailsFragment" />
+    <action android:id="@+id/action_global_allWishListFragment" app:destination="@id/allWishListFragment" />
 </navigation>

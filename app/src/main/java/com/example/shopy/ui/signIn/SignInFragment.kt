@@ -74,8 +74,8 @@ class SignInFragment : Fragment() {
                     Timber.i("olaakjhd" + customer.get(0).id.toString())
                     editor.putString("customerID", customer.get(0).id.toString())
                     editor.commit()
-                    view.findNavController()
-                        .navigate(SignInFragmentDirections.actionSignInFragmentToHomeFragment())
+//                    view.findNavController()
+//                        .navigate(SignInFragmentDirections.actionSignInFragmentToHomeFragment())
                 }
                 else{
                     Toast.makeText(context, "incorrect password", Toast.LENGTH_SHORT).show()
