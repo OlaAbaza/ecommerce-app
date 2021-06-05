@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -11,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroung"
+        android:background="#FBF9F2"
         android:padding="10dp"
         tools:context=".ui.meScreen.MeFragment">
 
@@ -362,17 +361,42 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutOfMyOrders" />
 
+            <TextView
+                android:id="@+id/seeAllText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="serif"
+                android:text="@string/see_all"
+                android:textColor="@color/yello"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@id/seeAllArrow"
+                app:layout_constraintTop_toTopOf="@id/seeAllArrow"
+                app:layout_constraintBottom_toBottomOf="@id/seeAllArrow"/>
+
+            <ImageView
+                android:id="@+id/seeAllArrow"
+                android:src="@drawable/ic_double_arrow_24"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutOfMyOrders"
+                android:contentDescription="@string/see_all" />
+
             <androidx.recyclerview.widget.RecyclerView
+                android:paddingTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@color/white"
+                android:id="@+id/wishRecyclerView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wishList"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
+                tools:listitem="@layout/wish_list_item"
                 android:layout_height="0dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>
 </layout>
-
