@@ -361,7 +361,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutOfMyOrders" />
 
+            <TextView
+                android:id="@+id/seeAllText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:fontFamily="serif"
+                android:text="@string/see_all"
+                android:textColor="@color/yello"
+                android:textSize="13sp"
+                app:layout_constraintEnd_toStartOf="@id/seeAllArrow"
+                app:layout_constraintTop_toTopOf="@id/seeAllArrow"
+                app:layout_constraintBottom_toBottomOf="@id/seeAllArrow"/>
+
+            <ImageView
+                android:id="@+id/seeAllArrow"
+                android:src="@drawable/ic_double_arrow_24"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutOfMyOrders"
+                android:contentDescription="@string/see_all" />
+
             <androidx.recyclerview.widget.RecyclerView
+                android:paddingTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@color/white"
                 android:id="@+id/wishRecyclerView"

@@ -20,8 +20,7 @@ import com.example.shopy.adapters.ImageSilderAdapter
 import com.example.shopy.adapters.OptionsAdapter
 import com.example.shopy.databinding.ActivityProductDetailsBinding
 import com.example.shopy.datalayer.entity.itemPojo.*
-
-
+import com.example.shopy.ui.StringsUtils
 
 
 class ProductDetailsActivity : AppCompatActivity() {
@@ -43,15 +42,18 @@ class ProductDetailsActivity : AppCompatActivity() {
         )[ProductDetailsViewModel::class.java]
 
         if (savedInstanceState != null) {
-            id = savedInstanceState.getLong("ID")
-            stored = savedInstanceState.getBoolean("STORED")
+            id = savedInstanceState.getLong(StringsUtils.OrderID)
+            stored = savedInstanceState.getBoolean(StringsUtils.STORED)
             setStoredButton(stored)
 
         } else {
             //todo from Intent
-            id = intent?.getLongExtra("ID",0)
-            checkWishListStored(id ?: 0)
+            id = intent?.getLongExtra(StringsUtils.OrderID,0)
+            checkWishListStored(id ?: 6687367823558)
         }
+
+
+
 
 
         productDetailsViewMode.getProductByIdFromNetwork(id = id ?: 0)
@@ -93,6 +95,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                 ProductCartModule(
                     product.id,
                     product.title,
+                    order_state = StringsUtils.Unpaid,
                     product.body_html,
                     product.vendor,
                     product.product_type,
@@ -170,8 +173,8 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        id?.let { outState.putLong("ID", it) }
-        outState.putBoolean("STORED", stored)
+        id?.let { outState.putLong(StringsUtils.OrderID, it) }
+        outState.putBoolean(StringsUtils.STORED, stored)
     }
 
     fun setStoredButton(stored: Boolean) {
@@ -181,6 +184,10 @@ class ProductDetailsActivity : AppCompatActivity() {
             bindingProductDetailsActivity.addToWishList.setImageResource(R.drawable.ic__favorite_border_24)
         }
     }
+
+
+
+
 
     fun createAlertToSignIn(context: Context) {
         val alertDialogBuilder = AlertDialog.Builder(context)

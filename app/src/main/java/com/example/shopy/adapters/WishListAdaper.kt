@@ -1,18 +1,20 @@
 package com.example.shopy.adapters
 
+import android.util.Log
 import com.example.shopy.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.ui.meScreen.MeViewModel
 
-class WishListAdaper(prouductList: List<Product> , meViewModel: MeViewModel) : RecyclerView.Adapter<WishListAdaper.ViewHolder>() {
-    val meViewModel: MeViewModel =meViewModel
+class WishListAdaper(prouductList: List<Product> , intentTOProductDetails: MutableLiveData<Product>) : RecyclerView.Adapter<WishListAdaper.ViewHolder>() {
+    val intentTOProductDetails: MutableLiveData<Product> =intentTOProductDetails
 
     var productList: List<Product> = ArrayList()
         set(value) {
@@ -32,7 +34,8 @@ class WishListAdaper(prouductList: List<Product> , meViewModel: MeViewModel) : R
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding(productList[position],position)
         holder.itemView.setOnClickListener {
-            meViewModel.intentTOProductDetails.value= productList[position]
+            intentTOProductDetails.value= productList[position]
+            Log.d("TAG","onBindViewHolder fired")
         }
     }
 

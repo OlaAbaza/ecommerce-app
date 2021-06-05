@@ -11,6 +11,9 @@ import com.example.shopy.datalayer.entity.itemPojo.Product
 interface WishDao {
 
     @Query("SELECT * FROM wishList LIMIT 4")
+    fun getFourFromWishList(): LiveData<List<Product>>
+
+    @Query("SELECT * FROM wishList")
     fun getAllWishList(): LiveData<List<Product>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -9,6 +9,7 @@ data class ProductCartModule(
     @PrimaryKey
     @SerializedName("id") val id : Long,
     @SerializedName("title") val title : String?,
+    @SerializedName("order_state") val order_state : String?,
     @SerializedName("body_html") val body_html : String?,
     @SerializedName("vendor") val vendor : String?,
     @SerializedName("product_type") val product_type : String?,

@@ -8,6 +8,7 @@ class WishRoomRepositry(application: Application) {
     val database : RoomService?= RoomService.getInstance(application)
     val wishDao : WishDao = database!!.wishDao()
 
+    fun getFourWishList() = wishDao.getFourFromWishList()
     fun getAllWishList() = wishDao.getAllWishList()
 
     suspend fun saveWishList(wishItem: Product) = wishDao.saveWishList(wishItem)
