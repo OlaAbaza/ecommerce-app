@@ -43,9 +43,13 @@
         app:layout_constraintGuide_percent=".08" />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="-82dp">
+        tools:layout_editor_absoluteY="-82dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/topguid1"
+        app:layout_constraintBottom_toBottomOf ="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -57,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".06" />
+                app:layout_constraintGuide_percent=".03" />
 
 
             <com.google.android.material.textfield.TextInputLayout
