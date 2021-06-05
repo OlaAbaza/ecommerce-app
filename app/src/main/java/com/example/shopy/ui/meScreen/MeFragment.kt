@@ -50,6 +50,7 @@ lateinit var meViewModel : MeViewModel
         }
 
 
+        requireActivity().title = resources.getString(R.string.app_name)
 
         meViewModel.getFourWishList().observe(requireActivity(), {
             wishListData = it

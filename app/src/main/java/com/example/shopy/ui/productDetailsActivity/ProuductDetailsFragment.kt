@@ -137,16 +137,7 @@ class ProuductDetailsFragment : Fragment() {
                 createAlertToSignIn(activity)
             })
 
-
-
-
-
-
-
-
-
-
-            Toast.makeText(requireContext(), "Show message", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(requireContext(), "Show message", Toast.LENGTH_SHORT).show();
         }
         return bindingProductDetailsFragment.root
     }
