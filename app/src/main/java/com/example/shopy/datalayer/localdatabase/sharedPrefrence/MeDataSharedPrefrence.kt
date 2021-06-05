@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.shopy.ui.StringsUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MeDataSharedPrefrence(context: Context) {
@@ -17,7 +18,6 @@ class MeDataSharedPrefrence(context: Context) {
    val points: MutableLiveData<Int> = MutableLiveData<Int>()
     val coupons: MutableLiveData<Int> = MutableLiveData<Int>()
     private val sharedPreferences: SharedPreferences = context.getSharedPreferences(fileName,Context.MODE_PRIVATE)
-
 
     fun saveMeCoupons(coupons:Int){
         CoroutineScope(Dispatchers.IO).launch {
