@@ -1,6 +1,5 @@
 package com.example.shopy.ui.allWishListFragment
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,11 +11,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.R
 import com.example.shopy.adapters.WishListAdaper
 import com.example.shopy.databinding.FragmentAllWishListBinding
-import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.ui.StringsUtils
-import com.example.shopy.ui.meScreen.MeViewModel
-import com.example.shopy.ui.productDetailsActivity.ProductDetailsActivity
 import com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment
 
 class AllWishListFragment : Fragment() {

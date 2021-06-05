@@ -2,13 +2,14 @@ package com.example.shopy.ui
 
 class StringsUtils {
     companion object{
-        val STORED: String = "STORED"
-        val OrderID: String = "ID"
-        val Unpaid : String = "Unpaid"
-        val Processing : String = "Processing"
-        val Shipping : String = "Shipping"
-        val Returns : String = "Returns"
-        val coupons : String = "coupons"
-        val points : String = "points"
+        const val accessToken: String ="X-Shopify-Access-Token"
+        const val STORED: String = "STORED"
+        const val OrderID: String = "ID"
+        const val Unpaid : String = "Unpaid"
+        const val Processing : String = "Processing"
+        const val Shipping : String = "Shipping"
+        const val Returns : String = "Returns"
+        const val coupons : String = "coupons"
+        const val points : String = "points"
     }
 }

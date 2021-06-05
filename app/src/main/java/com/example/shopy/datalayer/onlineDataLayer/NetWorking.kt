@@ -25,16 +25,14 @@ object NetWorking {
         return httpClient.build()
     }
 
-   // private const val BASE_URL = "https://ce751b18c7156bf720ea405ad19614f4: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@itiana.myshopify.com/admin/api/2021-04/"
-    var gson = GsonBuilder()
-        .setLenient()
-        .create()
+    //val gson = GsonBuilder().setLenient().create()
+
     private fun getProudctDetailsRetrofit(): Retrofit {
         return Retrofit.Builder()
             .client(buildAuthClient())
             .baseUrl(StaticUrls.BASE_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
             .build()
     }
 

@@ -1,8 +1,6 @@
 package com.example.shopy.ui.meScreen
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,6 @@ import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.ui.StringsUtils
 import com.example.shopy.ui.allWishListFragment.AllWishListFragment
-import com.example.shopy.ui.productDetailsActivity.ProductDetailsActivity
 import com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment
 
 
