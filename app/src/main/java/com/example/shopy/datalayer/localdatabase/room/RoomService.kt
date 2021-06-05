@@ -9,6 +9,7 @@ import com.example.shopy.datalayer.entity.itemPojo.OrderObject
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.cartBag.CartDao
+import com.example.shopy.datalayer.localdatabase.room.order.OrderDao
 import com.example.shopy.datalayer.localdatabase.room.wishBag.WishDao
 
 @TypeConverters(Converter::class)
@@ -33,5 +34,6 @@ abstract class RoomService : RoomDatabase() {
 
     abstract fun wishDao(): WishDao
     abstract fun caerDao(): CartDao
+    abstract fun orderDao(): OrderDao
 
 }
