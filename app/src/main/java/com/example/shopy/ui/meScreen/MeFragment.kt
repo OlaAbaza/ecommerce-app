@@ -1,5 +1,6 @@
 package com.example.shopy.ui.meScreen
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,10 +17,7 @@ import com.example.shopy.adapters.WishListAdaper
 import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
-import com.example.shopy.ui.StringsUtils
-import com.example.shopy.ui.allWishListFragment.AllWishListFragment
-import com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment
-import com.firebase.ui.auth.AuthUI
+
 
 
 class MeFragment : Fragment() {
@@ -31,16 +29,11 @@ class MeFragment : Fragment() {
     lateinit var meViewModel: MeViewModel
     private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
@@ -106,6 +99,7 @@ class MeFragment : Fragment() {
         return bindingMeScreen.root
     }
 
+    @SuppressLint("LogNotTimber")
     private fun handelVisability() {
         if (isLoged()){
             bindingMeScreen.hiText.text = meDataSourceReo.loadUsertName()
