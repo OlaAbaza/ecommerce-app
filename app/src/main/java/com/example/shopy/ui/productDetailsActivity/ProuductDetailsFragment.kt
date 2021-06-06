@@ -27,10 +27,8 @@ import com.example.shopy.ui.StringsUtils
 
 class ProuductDetailsFragment : Fragment() {
     lateinit var bindingProductDetailsFragment: FragmentProuductDetailsBinding
-    lateinit var images: List<Images>
     lateinit var productDetailsViewMode: ProductDetailsViewModel
     lateinit var imageSliderAdaper: ImageSilderAdapter
-    lateinit var product: Product
     var id: Long? = null
     var stored = false
 
@@ -41,13 +39,13 @@ class ProuductDetailsFragment : Fragment() {
         bindingProductDetailsFragment =
             FragmentProuductDetailsBinding.inflate(inflater, container, false)
 
-        images = ArrayList()
+//        val images: List<Images> = ArrayList()
         productDetailsViewMode = ViewModelProvider(
             requireActivity(),
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[ProductDetailsViewModel::class.java]
 
-
+        lateinit var product: Product
         val activity = getActivity();
 
         if (activity != null && isAdded) {
@@ -60,12 +58,8 @@ class ProuductDetailsFragment : Fragment() {
             } else {
                 //todo from Intent
                  val args: ProuductDetailsFragmentArgs by navArgs()
-                val bundle = arguments
-//                id = bundle!!.getLong(StringsUtils.OrderID, 0)
-//            id = requireActivity().intent?.getLongExtra(StringsUtils.OrderID,0)
                 id = args.productID
                 checkWishListStored(id ?: 0)
-                Log.d("TAG", "id = $id")
             }
 
 
@@ -73,7 +67,7 @@ class ProuductDetailsFragment : Fragment() {
 
             productDetailsViewMode.getProductByIdFromNetwork(id = id ?: 0)
 
-            imageSliderAdaper = ImageSilderAdapter(images)
+            imageSliderAdaper = ImageSilderAdapter(ArrayList())
             bindingProductDetailsFragment.viewPagerMain.adapter = imageSliderAdaper
 
 
@@ -89,6 +83,9 @@ class ProuductDetailsFragment : Fragment() {
             productDetailsViewMode.progressPar.observe(activity, {
                 if (productDetailsViewMode.progressPar.value == true)
                     bindingProductDetailsFragment.progressPar.visibility = View.GONE
+                else
+                    bindingProductDetailsFragment.progressPar.visibility = View.VISIBLE
+
             })
 
 
@@ -161,6 +158,7 @@ class ProuductDetailsFragment : Fragment() {
         imageSliderAdaper.notifyDataSetChanged()
 
 
+
         bindingProductDetailsFragment.prise.text = product.variants?.get(0)?.price.toString()
 
         bindingProductDetailsFragment.descriptionEditable.text = product.body_html
@@ -222,10 +220,15 @@ class ProuductDetailsFragment : Fragment() {
     }
 
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         productDetailsViewMode.progressPar.value = false
+
     }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//    }
+
 
 
 }

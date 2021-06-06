@@ -1,6 +1,6 @@
 package com.example.shopy.adapters
 
-import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.example.shopy.R
-import com.example.shopy.datalayer.entity.itemPojo.Image
 import com.example.shopy.datalayer.entity.itemPojo.Images
 import java.util.*
 import kotlin.collections.ArrayList
@@ -50,7 +49,7 @@ class ImageSilderAdapter(images: List<Images>) : PagerAdapter(){
         val t = "${position + 1} / ${images.size}"
         text.text = t
         Glide.with(imageView)
-            .load(images[position].src?: "")
+            .load(images[position].src ?: "")
             .fitCenter()
             .placeholder(R.drawable.ic_loading)
             .into(imageView)
@@ -62,5 +61,10 @@ class ImageSilderAdapter(images: List<Images>) : PagerAdapter(){
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as LinearLayout)
     }
+
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
+    }
+
 
 }
