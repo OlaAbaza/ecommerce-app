@@ -3,7 +3,6 @@ package com.example.shopy.ui.productDetailsActivity
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,23 +17,22 @@ import com.example.shopy.R
 import com.example.shopy.adapters.ImageSilderAdapter
 import com.example.shopy.adapters.OptionsAdapter
 import com.example.shopy.databinding.FragmentProuductDetailsBinding
-import com.example.shopy.datalayer.entity.itemPojo.Images
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.ui.StringsUtils
 
 
 class ProuductDetailsFragment : Fragment() {
-    lateinit var bindingProductDetailsFragment: FragmentProuductDetailsBinding
-    lateinit var productDetailsViewMode: ProductDetailsViewModel
-    lateinit var imageSliderAdaper: ImageSilderAdapter
+    private lateinit var bindingProductDetailsFragment: FragmentProuductDetailsBinding
+    private lateinit var productDetailsViewMode: ProductDetailsViewModel
+    private lateinit var imageSliderAdaper: ImageSilderAdapter
     var id: Long? = null
-    var stored = false
+    private var stored = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         bindingProductDetailsFragment =
             FragmentProuductDetailsBinding.inflate(inflater, container, false)
 
@@ -46,7 +43,7 @@ class ProuductDetailsFragment : Fragment() {
         )[ProductDetailsViewModel::class.java]
 
         lateinit var product: Product
-        val activity = getActivity();
+        val activity = activity
 
         if (activity != null && isAdded) {
 
@@ -74,7 +71,7 @@ class ProuductDetailsFragment : Fragment() {
 
             productDetailsViewMode.observeProductDetails().observe(activity, {
                 product = it.product
-                updateUI(product,activity)
+                updateUI(product, activity)
                 productDetailsViewMode.progressPar.value = true
 
 
@@ -151,7 +148,7 @@ class ProuductDetailsFragment : Fragment() {
         })
     }
 
-    private fun updateUI(product: Product,activity : Activity) {
+    private fun updateUI(product: Product, activity: Activity) {
         activity.title = product.title ?: "null"
 
         imageSliderAdaper.images = product.images ?: ArrayList()
@@ -177,14 +174,14 @@ class ProuductDetailsFragment : Fragment() {
 
         bindingProductDetailsFragment.colorEditable.apply {
             this.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             this.adapter = product.options?.get(1)?.values?.let { OptionsAdapter(it) }
         }
 
 
         bindingProductDetailsFragment.sizeEditable.apply {
             this.layoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             this.adapter = product.options?.get(0)?.values?.let { OptionsAdapter(it) }
         }
 
@@ -196,7 +193,7 @@ class ProuductDetailsFragment : Fragment() {
         outState.putBoolean(StringsUtils.STORED, stored)
     }
 
-    fun setStoredButton(stored: Boolean) {
+    private fun setStoredButton(stored: Boolean) {
         if (stored) {
             bindingProductDetailsFragment.addToWishList.setImageResource(R.drawable.ic_favorite_24)
         } else {
@@ -205,7 +202,7 @@ class ProuductDetailsFragment : Fragment() {
     }
 
 
-    fun createAlertToSignIn(context: Context) {
+    private fun createAlertToSignIn(context: Context) {
         val alertDialogBuilder = AlertDialog.Builder(context)
         alertDialogBuilder.setTitle(getString(R.string.you_are_not_signed))
         alertDialogBuilder.setMessage(getString(R.string.sign_in_and_try_again))
@@ -225,10 +222,6 @@ class ProuductDetailsFragment : Fragment() {
         productDetailsViewMode.progressPar.value = false
 
     }
-//    override fun onDestroy() {
-//        super.onDestroy()
-//    }
-
 
 
 }
