@@ -17,9 +17,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.util.Utils
 import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.localdatabase.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentAddAddressBinding
 import com.example.shopy.databinding.FragmentAddressBinding
-import com.example.shopy.datalayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.models.*
 import kotlinx.android.synthetic.main.fragment_add_address.view.*
 import timber.log.Timber
@@ -42,7 +45,8 @@ class AddressFragment : Fragment() {
         prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val application = requireNotNull(this.activity).application
         val remoteDataSource = RemoteDataSourceImpl()
-        val viewModelFactory = ViewModelFactory(remoteDataSource,application)
+        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(application)))
+        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,application)
         addressViewModel =
             ViewModelProvider(
                 this, viewModelFactory
@@ -60,6 +64,7 @@ class AddressFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customerID = prefs.getString("customerID", "").toString()
         addressViewModel.getCustomersAddressList(customerID)
+
 
         addressViewModel.getAddressList().observe(viewLifecycleOwner, Observer<List<Addresse>?> {
             addressAdapter.addNewList(it)

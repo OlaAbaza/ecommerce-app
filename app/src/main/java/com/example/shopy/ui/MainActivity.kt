@@ -8,11 +8,16 @@ import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.ui.allWishListFragment.AllWishListFragment
 import com.example.shopy.ui.shopTab.search.ShopSearchFragment
@@ -23,9 +28,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
-
+    //    private lateinit var navController: NavController
+//    private lateinit var appBarConfiguration: AppBarConfiguration
+    private var navHostFragment: Fragment? = null
+    private var navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +39,10 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment)
-        val navController = navHostFragment?.findNavController()
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment)
+        navController = navHostFragment?.findNavController()
         if (navController != null) {
-            bottomNavigationView.setupWithNavController(navController)
+            bottomNavigationView.setupWithNavController(navController!!)
         }
 
         setSupportActionBar(toolbar)
@@ -46,11 +52,12 @@ class MainActivity : AppCompatActivity() {
         val imageButton = toolbar.findViewById(R.id.favourite) as ImageButton
 
         imageButton.setOnClickListener {
-            val manager: FragmentManager = supportFragmentManager
-            val transaction = manager.beginTransaction()
-            transaction.replace(R.id.fragment, AllWishListFragment())
-            transaction.addToBackStack(null)
-            transaction.commit()
+            navHostFragment = fragment as NavHostFragment
+            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
+            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+            navController = (navHostFragment as NavHostFragment).navController
+            navGraph.startDestination = R.id.allWishListFragment
+            navController!!.graph = navGraph
         }
 
     }
@@ -80,11 +87,13 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.cart -> {
-                val manager: FragmentManager = supportFragmentManager
-                val transaction = manager.beginTransaction()
-                transaction.replace(R.id.fragment, CartFragment())
-                transaction.addToBackStack(null)
-                transaction.commit()
+
+                navHostFragment = fragment as NavHostFragment
+                val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
+                val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+                navController = (navHostFragment as NavHostFragment).navController
+                navGraph.startDestination = R.id.cartFragment2
+                navController!!.graph = navGraph
                 true
             }
             else -> super.onOptionsItemSelected(item)

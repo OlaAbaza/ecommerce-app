@@ -2,7 +2,6 @@ package com.example.shopy.ui.shoppingBag
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +11,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.localdatabase.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCartBinding
-import com.example.shopy.datalayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.datalayer.localdatabase.room.RoomService
+import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.*
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 
@@ -24,17 +28,23 @@ class CartFragment : Fragment() {
     private lateinit var binding: FragmentCartBinding
     private lateinit var prefs: SharedPreferences
     private lateinit var cartAdapter: CartAdapter
-    private var customerID=""
+    private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
+
+    private var customerID = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
         binding = FragmentCartBinding.inflate(layoutInflater)
         val application = requireNotNull(this.activity).application
         val remoteDataSource = RemoteDataSourceImpl()
-        val viewModelFactory = ViewModelFactory(remoteDataSource,application)
+        val repository = Repository(
+            RemoteDataSourceImpl(),
+            RoomDataSourceImpl(RoomService.getInstance(application))
+        )
+        val viewModelFactory = ViewModelFactory(repository, remoteDataSource, application)
         orderViewModel =
             ViewModelProvider(
                 this, viewModelFactory
@@ -49,13 +59,16 @@ class CartFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = cartAdapter
         }
-       // cartAdapter.addNewList(it)
-        customerID = prefs.getString("customerID", "").toString()
-        var customerOrder=CustomerOrder(customerID.toLong())
-        var lineItem:MutableList<LineItem> = arrayListOf()
-        lineItem.add(LineItem(1,39853306642630))
-        var order= Order(customerOrder,"pending",lineItem)
-        var orders= Orders(order)
+        // cartAdapter.addNewList(it)
+
+        requireActivity().toolbar_title.text = "Card Bag"
+
+        customerID = meDataSourceReo.loadUsertId()
+        var customerOrder = CustomerOrder(customerID.toLong())
+        var lineItem: MutableList<LineItem> = arrayListOf()
+        lineItem.add(LineItem(1, 39853306642630))
+        var order = Order(customerOrder, "pending", lineItem)
+        var orders = Orders(order)
         binding.checkoutButton.setOnClickListener {
             orderViewModel.createOrder(orders)
         }
@@ -68,6 +81,12 @@ class CartFragment : Fragment() {
                 Toast.makeText(context, "eror null", Toast.LENGTH_SHORT).show()
             }
         })
+
+        orderViewModel.getAllCartList().observe(viewLifecycleOwner, {
+            cartAdapter.addNewList(it)
+        })
+
     }
+
 
 }

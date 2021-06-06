@@ -20,6 +20,7 @@ import com.example.shopy.databinding.FragmentProuductDetailsBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.ui.StringsUtils
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class ProuductDetailsFragment : Fragment() {
@@ -149,8 +150,10 @@ class ProuductDetailsFragment : Fragment() {
     }
 
     private fun updateUI(product: Product, activity: Activity) {
-        activity.title = product.title ?: "null"
+        //activity.title = product.title ?: "null"
 
+        activity.toolbar_title.text = product.title ?: "null"
+//        toolbar.title =product.title ?: "null"
         imageSliderAdaper.images = product.images ?: ArrayList()
         imageSliderAdaper.notifyDataSetChanged()
 

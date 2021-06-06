@@ -17,7 +17,7 @@ import com.example.shopy.adapters.WishListAdaper
 import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
-
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MeFragment : Fragment() {
@@ -48,6 +48,7 @@ class MeFragment : Fragment() {
         )[MeViewModel::class.java]
         wishListData = ArrayList()
 
+        requireActivity().toolbar_title.text = "Me"
 
         bindingMeScreen.regesterAndLogin.setOnClickListener {
             val action = NavGraphDirections.actionGlobalSignInFragment()

@@ -19,7 +19,10 @@ import androidx.navigation.findNavController
 import com.example.shopy.R
 import com.example.shopy.util.Utils
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.datalayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.localdatabase.room.RoomDataSourceImpl
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.CustomerX
 
@@ -45,7 +48,9 @@ class SignUpFragment : Fragment() {
         binding = FragmentSignUpBinding.inflate(layoutInflater)
         val application = requireNotNull(this.activity).application
         val remoteDataSource = RemoteDataSourceImpl()
-        val viewModelFactory = ViewModelFactory(remoteDataSource,application)
+        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(application)))
+
+        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,application)
         signinViewModel =
             ViewModelProvider(
                 this, viewModelFactory

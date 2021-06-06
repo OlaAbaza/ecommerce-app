@@ -1,4 +1,4 @@
-package com.example.shopy.dataLayer
+package com.example.shopy.dataLayer.remoteDataLayer
 
 
 import android.content.Context

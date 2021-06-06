@@ -15,8 +15,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.localdatabase.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentSignInBinding
-import com.example.shopy.datalayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.Customer
 import com.facebook.*
@@ -50,8 +53,11 @@ class SignInFragment : Fragment() {
         binding = FragmentSignInBinding.inflate(inflater, container, false)
         val application = requireNotNull(this.activity).application
         val remoteDataSource = RemoteDataSourceImpl()
-        val viewModelFactory = ViewModelFactory(remoteDataSource,application)
+
+        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(application)))
+        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,application)
         // Initialize Firebase Auth
+
         auth = FirebaseAuth.getInstance()
         signinViewModel =
             ViewModelProvider(
@@ -66,6 +72,7 @@ class SignInFragment : Fragment() {
 
         signinViewModel.getCustomerList().observe(viewLifecycleOwner, Observer<List<Customer>?> {
             Log.d("Tag","we lodged")
+
 
             val customer: List<Customer> =
                 it.filter {

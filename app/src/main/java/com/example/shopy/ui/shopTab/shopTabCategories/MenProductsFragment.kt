@@ -15,6 +15,7 @@ import com.example.shopy.R
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_woman_products.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -49,6 +50,7 @@ class MenProductsFragment : Fragment() {
 
         })
 
+        requireActivity().toolbar_title.text = "Men Products"
 
         shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{
             shopTabViewModel.intentTOProductDetails= MutableLiveData()

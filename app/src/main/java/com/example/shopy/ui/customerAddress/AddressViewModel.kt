@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.datalayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.models.Addresse
 import com.example.shopy.models.CreateAddress
 import com.example.shopy.models.CreateAddressX
@@ -13,7 +13,7 @@ import com.example.shopy.models.UpdateAddresse
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class AddressViewModel(val remoteDataSource: RemoteDataSourceImpl,application: Application) : AndroidViewModel(application) {
+class AddressViewModel(val remoteDataSource: RemoteDataSourceImpl, application: Application) : AndroidViewModel(application) {
 
     private val postCustomerAddress = SingleLiveEvent<Addresse?>()
     private val defaultCustomerAddress = SingleLiveEvent<Addresse?>()

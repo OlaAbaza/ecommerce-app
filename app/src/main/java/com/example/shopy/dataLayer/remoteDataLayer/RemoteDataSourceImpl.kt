@@ -1,4 +1,4 @@
-package com.example.shopy.datalayer
+package com.example.shopy.dataLayer.remoteDataLayer
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -7,7 +7,6 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.dataLayer.RemoteDataSource
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.ProductsList

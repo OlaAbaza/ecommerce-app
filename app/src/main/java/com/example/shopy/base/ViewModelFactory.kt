@@ -19,12 +19,14 @@ package com.example.shopy.base
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.shopy.datalayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.ui.customerAddress.AddressViewModel
 import com.example.shopy.ui.shoppingBag.OrderViewModel
 import com.example.shopy.ui.signIn.SignInViewModel
 
 class ViewModelFactory(
+    private val repository: Repository,
     private val remoteDataSource: RemoteDataSourceImpl,
     private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
@@ -36,7 +38,7 @@ class ViewModelFactory(
             return AddressViewModel(remoteDataSource,application) as T
         }
         if (modelClass.isAssignableFrom(OrderViewModel::class.java)) {
-            return OrderViewModel(remoteDataSource,application) as T
+            return OrderViewModel(repository,application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

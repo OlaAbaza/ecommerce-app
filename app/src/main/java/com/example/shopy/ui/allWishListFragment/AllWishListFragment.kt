@@ -1,12 +1,14 @@
 package com.example.shopy.ui.allWishListFragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
@@ -16,6 +18,7 @@ import com.example.shopy.databinding.FragmentAllWishListBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.ui.StringsUtils
 import com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 class AllWishListFragment : Fragment() {
 
@@ -50,18 +53,23 @@ class AllWishListFragment : Fragment() {
             this.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
+        requireActivity().toolbar_title.text = "All Wish List"
 
         allWishListFragmentViewModel.getAllWishList().observe(requireActivity(), {
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()
         })
+//        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+//        val navController = navHostFragment.navController
 
         allWishListFragmentViewModel.intentTOProductDetails.observe(requireActivity(), {
 
             if (it != null) {
+                Log.d("TAG","${it.id}")
                 val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id)
                 findNavController().navigate(action)
+
             }
         })
 
