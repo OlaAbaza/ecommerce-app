@@ -20,6 +20,8 @@ import com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment
 
 
 class MeFragment : Fragment() {
+
+
 lateinit var bindingMeScreen : FragmentMeBinding
 lateinit var withListAdapter : WishListAdaper
 lateinit var wishListData : List<Product>
@@ -83,8 +85,6 @@ lateinit var meViewModel : MeViewModel
     }
 
     private fun startAnotherFragment() {
-
-        //todo for fayza
         val action = NavGraphDirections.actionGlobalAllWishListFragment()
         findNavController().navigate(action)
     }

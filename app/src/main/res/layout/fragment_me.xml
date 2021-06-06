@@ -20,28 +20,31 @@
 
             <TextView
                 android:id="@+id/hiText"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:fontFamily="serif"
                 android:text="@string/hi"
                 android:textColor="@color/black"
                 android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <TextView
-                android:id="@+id/nameOfProfile"
+                android:visibility="gone"
+                android:id="@+id/regesterAndLogin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:fontFamily="serif"
-                android:text="@string/name_of_profile"
+                android:text="@string/register_login"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/hiText"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
 
             <LinearLayout
