@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.adapters.WishListAdaper
 import com.example.shopy.databinding.FragmentAllWishListBinding
@@ -57,14 +59,10 @@ class AllWishListFragment : Fragment() {
 
         allWishListFragmentViewModel.intentTOProductDetails.observe(requireActivity(), {
 
-            val nextFrag = ProuductDetailsFragment()
-            val bundle  =Bundle()
-            bundle.putLong(StringsUtils.OrderID, it.id)
-            nextFrag.arguments = bundle
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment, nextFrag)
-                .addToBackStack(null)
-                .commit()
+            if (it != null) {
+                val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id)
+                findNavController().navigate(action)
+            }
         })
 
         return bindingAllWishListFragment.root

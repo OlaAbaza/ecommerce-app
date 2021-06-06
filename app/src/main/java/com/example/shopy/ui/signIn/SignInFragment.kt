@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import androidx.navigation.findNavController
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.databinding.FragmentSignInBinding
 import com.example.shopy.datalayer.RemoteDataSourceImpl
+import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.Customer
 import com.facebook.*
 import com.firebase.ui.auth.AuthUI
@@ -36,6 +38,8 @@ class SignInFragment : Fragment() {
     private var email = ""
     lateinit var callbackManager: CallbackManager
     private lateinit var auth: FirebaseAuth
+    private lateinit var  meDataSourceReo : MeDataSharedPrefrenceReposatory
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +47,7 @@ class SignInFragment : Fragment() {
     ): View? {
         prefs = PreferenceManager.getDefaultSharedPreferences(activity)
         editor = prefs.edit()
-        binding = FragmentSignInBinding.inflate(layoutInflater)
+        binding = FragmentSignInBinding.inflate(inflater, container, false)
         val application = requireNotNull(this.activity).application
         val remoteDataSource = RemoteDataSourceImpl()
         val viewModelFactory = ViewModelFactory(remoteDataSource,application)
@@ -58,8 +62,11 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
         signinViewModel.getCustomerList().observe(viewLifecycleOwner, Observer<List<Customer>?> {
+            Log.d("Tag","we lodged")
+
             val customer: List<Customer> =
                 it.filter {
                     it.email?.toLowerCase() ?: 0 == email
@@ -70,11 +77,18 @@ class SignInFragment : Fragment() {
                 Toast.makeText(context, "you do not have an account", Toast.LENGTH_SHORT).show()
             } else {
                 if(customer.get(0).note==binding.passwordEdt.text.toString()) {
-                    editor.putBoolean("isLogged", true)
-                    Timber.i("olaakjhd" + customer.get(0).id.toString())
-                    editor.putString("customerID", customer.get(0).id.toString())
-                    editor.commit()
-//                    view.findNavController()
+
+                    meDataSourceReo.saveUsertState(true)
+                    meDataSourceReo.saveUsertId(customer[0].id.toString())
+                    meDataSourceReo.saveUsertName(customer[0].firstName.toString())
+                    Log.d("Tag","we lodged")
+//                    view.findNavController().currentBackStackEntry
+
+//                    editor.putBoolean("isLogged", true)
+//                    Timber.i("olaakjhd" + customer.get(0).id.toString())
+//                    editor.putString("customerID", customer.get(0).id.toString())
+//                    editor.commit()
+                    view.findNavController().popBackStack()
 //                        .navigate(SignInFragmentDirections.actionSignInFragmentToHomeFragment())
                 }
                 else{
@@ -143,8 +157,9 @@ class SignInFragment : Fragment() {
                         signinViewModel.getAllCustomers()
                     }
                     else -> {
-                        editor.putBoolean("isLogged", false)
-                        editor.commit()
+                        meDataSourceReo.saveUsertState(false)
+//                        editor.putBoolean("isLogged", false)
+//                        editor.commit()
                     }
                 }
             })

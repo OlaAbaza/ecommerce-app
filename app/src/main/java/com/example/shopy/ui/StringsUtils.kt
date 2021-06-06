@@ -11,5 +11,8 @@ class StringsUtils {
         const val Returns : String = "Returns"
         const val coupons : String = "coupons"
         const val points : String = "points"
+        const val customerId : String = "customerId"
+        const val customerName : String = "customerName"
+        const val customerStat : String = "customerStat"
     }
 }

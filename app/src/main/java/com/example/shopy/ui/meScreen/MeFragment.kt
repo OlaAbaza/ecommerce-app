@@ -1,6 +1,7 @@
 package com.example.shopy.ui.meScreen
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,18 +15,21 @@ import com.example.shopy.R
 import com.example.shopy.adapters.WishListAdaper
 import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
+import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.ui.StringsUtils
 import com.example.shopy.ui.allWishListFragment.AllWishListFragment
 import com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment
+import com.firebase.ui.auth.AuthUI
 
 
 class MeFragment : Fragment() {
 
 
-lateinit var bindingMeScreen : FragmentMeBinding
-lateinit var withListAdapter : WishListAdaper
-lateinit var wishListData : List<Product>
-lateinit var meViewModel : MeViewModel
+    lateinit var bindingMeScreen: FragmentMeBinding
+    lateinit var withListAdapter: WishListAdaper
+    lateinit var wishListData: List<Product>
+    lateinit var meViewModel: MeViewModel
+    private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,17 +41,31 @@ lateinit var meViewModel : MeViewModel
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bindingMeScreen= FragmentMeBinding.inflate(inflater, container, false)
-        meViewModel =  ViewModelProvider(
+        bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
+        meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
+
+
+        handelVisability()
+
+//        bindingMeScreen.regesterAndLogin.visibility=View.VISIBLE
+
+        meViewModel = ViewModelProvider(
             requireActivity(),
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         )[MeViewModel::class.java]
         wishListData = ArrayList()
 
-        withListAdapter= WishListAdaper(wishListData, meViewModel.intentTOProductDetails)
-        bindingMeScreen.wishRecyclerView.apply{
+
+        bindingMeScreen.regesterAndLogin.setOnClickListener {
+            val action = NavGraphDirections.actionGlobalSignInFragment()
+            findNavController().navigate(action)
+        }
+
+
+        withListAdapter = WishListAdaper(wishListData, meViewModel.intentTOProductDetails)
+        bindingMeScreen.wishRecyclerView.apply {
             this.adapter = withListAdapter
-            this.layoutManager =  GridLayoutManager(requireContext(), 2)
+            this.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
 
@@ -61,7 +79,7 @@ lateinit var meViewModel : MeViewModel
 
 
         meViewModel.intentTOProductDetails.observe(requireActivity(), {
-            if (it!= null) {
+            if (it != null) {
                 val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id)
                 findNavController().navigate(action)
             }
@@ -72,11 +90,39 @@ lateinit var meViewModel : MeViewModel
             startAnotherFragment()
         }
         bindingMeScreen.seeAllArrow.setOnClickListener {
-        startAnotherFragment()
+            startAnotherFragment()
+        }
+
+
+        bindingMeScreen.unPaied.setOnClickListener {
+            meDataSourceReo.saveUsertState(false)
+            meDataSourceReo.saveUsertName("")
+            meDataSourceReo.saveUsertId("")
+            handelVisability()
+//            AuthUI.getInstance().signOut(requireContext())
         }
 
 
         return bindingMeScreen.root
+    }
+
+    private fun handelVisability() {
+        if (isLoged()){
+            bindingMeScreen.hiText.text = meDataSourceReo.loadUsertName()
+            bindingMeScreen.hiText.visibility = View.VISIBLE
+            bindingMeScreen.wishRecyclerView.visibility= View.VISIBLE
+            bindingMeScreen.regesterAndLogin.visibility=View.INVISIBLE
+            Log.d("TAG","VISIBLE")
+        }else{
+            Log.d("TAG","GONE")
+            bindingMeScreen.regesterAndLogin.visibility=View.VISIBLE
+            bindingMeScreen.hiText.visibility = View.INVISIBLE
+            bindingMeScreen.wishRecyclerView.visibility= View.INVISIBLE
+        }
+    }
+
+    private fun isLoged(): Boolean {
+      return meDataSourceReo.loadUsertstate()
     }
 
     override fun onStop() {

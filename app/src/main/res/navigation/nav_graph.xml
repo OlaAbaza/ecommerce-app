@@ -119,4 +119,5 @@
         android:label="AllWishListFragment" />
     <action android:id="@+id/action_global_prouductDetailsFragment" app:destination="@id/prouductDetailsFragment" />
     <action android:id="@+id/action_global_allWishListFragment" app:destination="@id/allWishListFragment" />
+    <action android:id="@+id/action_global_signInFragment" app:destination="@id/signInFragment"/>
 </navigation>

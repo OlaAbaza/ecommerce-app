@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,7 @@ import com.example.shopy.R
 import com.example.shopy.util.Utils
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.datalayer.RemoteDataSourceImpl
+import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.CustomerX
 
 import com.firebase.ui.auth.AuthUI
@@ -31,6 +33,7 @@ class SignUpFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var signinViewModel: SignInViewModel
     private lateinit var binding: FragmentSignUpBinding
+    private lateinit var  meDataSourceReo : MeDataSharedPrefrenceReposatory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +55,8 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
         binding.tvSignin.setOnClickListener(
             Navigation.createNavigateOnClickListener(R.id.action_signUpFragment_to_signInFragment)
@@ -86,11 +91,20 @@ class SignUpFragment : Fragment() {
         }
 
         signinViewModel.getPostResult().observe(viewLifecycleOwner, Observer<CustomerX?> {
+            Log.d("Tag","signin")
+
             Timber.i("isLogged+" + it)
             if (it != null) {
-                editor.putBoolean("isLogged", true)
-                editor.putString("customerID", it.customer.id.toString())
-                editor.commit()
+
+                meDataSourceReo.saveUsertId(it.customer.id.toString())
+                meDataSourceReo.saveUsertName(it.customer.firstName.toString())
+                meDataSourceReo.saveUsertState(true)
+                view.findNavController().popBackStack()
+                Log.d("Tag","firstName != nul${it.customer.firstName.toString()}l")
+
+//                editor.putBoolean("isLogged", true)
+//                editor.putString("customerID", it.customer.id.toString())
+//                editor.commit()
 //                view.findNavController()
 //                    .navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
             } else {
@@ -144,8 +158,10 @@ class SignUpFragment : Fragment() {
             Observer { authenticationState ->
                 when (authenticationState) {
                     SignInViewModel.AuthenticationState.AUTHENTICATED -> {
-                        editor.putBoolean("isLogged", true)
-                        editor.commit()
+                        meDataSourceReo.saveUsertState(true)
+
+//                        editor.putBoolean("isLogged", true)
+//                        editor.commit()
                         Timber.i("isLogged+" + FirebaseAuth.getInstance().currentUser?.displayName + FirebaseAuth.getInstance().currentUser?.email)
                         FirebaseAuth.getInstance().currentUser?.displayName?.let {
                             FirebaseAuth.getInstance().currentUser?.email?.let { it1 ->
@@ -156,8 +172,10 @@ class SignUpFragment : Fragment() {
                         }
                     }
                     else -> {
-                        editor.putBoolean("isLogged", false)
-                        editor.commit()
+                        meDataSourceReo.saveUsertState(false)
+
+//                        editor.putBoolean("isLogged", false)
+//                        editor.commit()
                     }
                 }
             })
