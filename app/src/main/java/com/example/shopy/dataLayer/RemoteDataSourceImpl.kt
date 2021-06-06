@@ -11,6 +11,7 @@ import com.example.shopy.dataLayer.RemoteDataSource
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.ProductsList
+import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.datalayer.network.Network
 import com.example.shopy.models.*
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +31,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
     var onSaleProductsList = MutableLiveData<ProductsList>()
     var allProductsList = MutableLiveData<AllProducts>()
     var allDiscountCodeList = MutableLiveData<AllCodes>()
+    var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
+
 
 
     override suspend fun fetchCustomersData(): List<Customer>? {
@@ -325,6 +328,22 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
     }
 
+
+
+        override fun getProuduct(id: Long){
+            Network.apiService.getOneProduct(id).enqueue(object : Callback<ProductItem?> {
+                override fun onResponse(call: Call<ProductItem?>, response: Response<ProductItem?>) {
+                    Log.d("TAG","data here")
+                    prouductDetaild.value = response.body()
+                }
+                override fun onFailure(call: Call<ProductItem?>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+        }
+
+
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun isOnline(context: Context): Boolean {
         val connectivityManager =
@@ -347,4 +366,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
         return false
     }
+
+
+
+
 }

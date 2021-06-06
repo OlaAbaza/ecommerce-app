@@ -3,6 +3,7 @@ package com.example.shopy.datalayer.network
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.ProductsList
+import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.models.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -71,5 +72,9 @@ interface NetworkService {
         @Body order: Orders
     ): Response<OrderResponse>
 ///////////////////////////////////////////////////////////////
+
+
+    @GET("products/{id}.json")
+    fun getOneProduct(@Path("id") id: Long) : Call<ProductItem>
 
 }

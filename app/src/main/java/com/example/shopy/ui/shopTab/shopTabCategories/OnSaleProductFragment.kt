@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
@@ -19,6 +22,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class OnSaleProductFragment : Fragment() {
+
+
+    lateinit var  shopTabViewModel : ShopTabViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,14 +42,20 @@ class OnSaleProductFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val shopTabViewModel= ViewModelProvider(this).get(ShopTabViewModel::class.java)
+         shopTabViewModel= ViewModelProvider(this).get(ShopTabViewModel::class.java)
         shopTabViewModel.fetchOnSaleProductsList().observe(viewLifecycleOwner,{
             Log.i("output",it.toString()+"******************")
             if (it != null){
-                bindWomanProductRecyclerView(it.products)
+                bindWomanProductRecyclerView(it.products,shopTabViewModel.intentTOProductDetails)
             }
             Log.i("output",it.products.get(0).toString())
 
+        })
+
+        shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{
+            shopTabViewModel.intentTOProductDetails= MutableLiveData()
+            val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id.toLong())
+            findNavController().navigate(action)
         })
 
         shopTabViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, {
@@ -63,9 +75,17 @@ class OnSaleProductFragment : Fragment() {
     }
 
 
-    private fun bindWomanProductRecyclerView( itemName:List<Product>) {
+    override fun onDestroy() {
+        super.onDestroy()
+        shopTabViewModel.intentTOProductDetails = MutableLiveData()
+    }
 
-        itemsRecView.adapter= ShopItemsAdapter(requireContext(),itemName)
+    private fun bindWomanProductRecyclerView(
+        itemName: List<Product>,
+        intentTOProductDetails: MutableLiveData<Product>
+    ) {
+
+        itemsRecView.adapter= ShopItemsAdapter(requireContext(),itemName,intentTOProductDetails)
 
     }
 

@@ -60,15 +60,6 @@ lateinit var meViewModel : MeViewModel
 
         meViewModel.intentTOProductDetails.observe(requireActivity(), {
             if (it!= null) {
-//                val nextFrag = ProuductDetailsFragment()
-//                val bundle  =Bundle()
-//                bundle.putLong(StringsUtils.OrderID, it.id)
-//                nextFrag.arguments = bundle
-//                requireActivity().supportFragmentManager.beginTransaction()
-//                    .replace(R.id.fragment, nextFrag)
-//                    .addToBackStack(null)
-//                    .commit()
-
                 val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id)
                 findNavController().navigate(action)
             }
@@ -93,15 +84,7 @@ lateinit var meViewModel : MeViewModel
 
     private fun startAnotherFragment() {
 
-//        val nextFrag = AllWishListFragment()
-//        requireActivity().supportFragmentManager.beginTransaction()
-//            .replace(R.id.fragment, nextFrag)
-//            .addToBackStack(null)
-//            .commit()
-
-//        val action = NavGraphDirections.actionGlobalHoursFragment(weather!!)
-//        findNavController().navigate(action)
-
+        //todo for fayza
         val action = NavGraphDirections.actionGlobalAllWishListFragment()
         findNavController().navigate(action)
     }

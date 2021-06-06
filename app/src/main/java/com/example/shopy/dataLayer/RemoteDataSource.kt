@@ -31,5 +31,7 @@ interface RemoteDataSource {
      fun getAllProductsList()
      fun getAllDiscountCodeList()
 
+    fun getProuduct(id : Long)
+
     fun isOnline(context: Context): Boolean
 }

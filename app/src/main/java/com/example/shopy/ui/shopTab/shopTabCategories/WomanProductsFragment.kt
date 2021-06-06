@@ -1,17 +1,16 @@
 package com.example.shopy.ui.shopTab.shopTabCategories
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
-import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
@@ -21,7 +20,7 @@ import kotlinx.coroutines.*
 
 class WomanProductsFragment : Fragment() {
 
-
+    lateinit var  shopTabViewModel : ShopTabViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,11 +36,17 @@ class WomanProductsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val shopTabViewModel = ViewModelProvider(this).get(ShopTabViewModel::class.java)
+        shopTabViewModel = ViewModelProvider(this).get(ShopTabViewModel::class.java)
         shopTabViewModel.fetchWomanProductsList().observe(viewLifecycleOwner, {
             if (it != null) {
-                bindWomanProductRecyclerView(it.products)
+                bindWomanProductRecyclerView(it.products,shopTabViewModel.intentTOProductDetails)
             }
+        })
+
+        shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{
+            shopTabViewModel.intentTOProductDetails= MutableLiveData()
+            val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id.toLong())
+            findNavController().navigate(action)
         })
 
 
@@ -62,13 +67,15 @@ class WomanProductsFragment : Fragment() {
             }
         })
 
-
     }
 
 
-    private fun bindWomanProductRecyclerView(itemName: List<Product>) {
+    private fun bindWomanProductRecyclerView(
+        itemName: List<Product>,
+        intentTOProductDetails:MutableLiveData<Product>
+    ) {
 
-        itemsRecView.adapter = ShopItemsAdapter(requireContext(), itemName)
+        itemsRecView.adapter = ShopItemsAdapter(requireContext(), itemName,intentTOProductDetails)
 
     }
 }

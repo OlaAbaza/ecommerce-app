@@ -3,19 +3,19 @@ package com.example.shopy.ui.productDetailsActivity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.datalayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.cartBag.CartRoomRepository
 import com.example.shopy.datalayer.localdatabase.room.wishBag.WishRoomRepositry
-import com.example.shopy.datalayer.onlineDataLayer.NetWorking
-import com.example.shopy.datalayer.onlineDataLayer.productDetailsService.ProuductDetailsReposatory
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class ProductDetailsViewModel(application: Application) : AndroidViewModel(application) {
-    private val networkingReposatory = ProuductDetailsReposatory(NetWorking.productDetailsDao)
+    private val networkingReposatory = RemoteDataSourceImpl()
     private val roomRepositry = WishRoomRepositry(application)
     private var saveWishListJob: Job? = null
     private var deleteOneWishItemJob: Job? = null
