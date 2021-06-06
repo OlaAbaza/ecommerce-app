@@ -25,4 +25,34 @@ class MeDataSharedPrefrenceReposatory(context: Context) {
     fun saveMePoints(points:Int) {
         meDataSharedPrefrence.saveMePoints(points)
     }
+
+
+    fun loadUsertId() = meDataSharedPrefrence.loadUsertId()
+
+
+
+    fun saveUsertId(userId : String){
+        meDataSharedPrefrence.saveUsertId(userId)
+    }
+
+
+    fun loadUsertstate()= meDataSharedPrefrence.loadUsertstate()
+
+
+
+    fun saveUsertState (state:Boolean){
+        meDataSharedPrefrence.saveUsertState(state)
+    }
+
+
+
+
+
+    fun saveUsertName(userName : String){
+        meDataSharedPrefrence.saveUsertName(userName)
+    }
+
+
+    fun loadUsertName()= meDataSharedPrefrence.loadUsertName()
+
 }

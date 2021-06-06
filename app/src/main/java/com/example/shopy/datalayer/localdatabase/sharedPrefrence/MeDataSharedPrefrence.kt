@@ -59,4 +59,53 @@ class MeDataSharedPrefrence(context: Context) {
             points.postValue(point)
         }
     }
+
+
+    fun saveUsertId(userID :String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+            editor.putString(StringsUtils.customerId,userID)
+            editor.apply()
+            editor.commit()
+        }
+    }
+
+    fun loadUsertId() : String{
+            val customerId = sharedPreferences.getString(StringsUtils.customerId,"")
+            return customerId?:""
+    }
+
+    fun saveUsertState(state :Boolean){
+        CoroutineScope(Dispatchers.IO).launch {
+            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+            editor.putBoolean(StringsUtils.customerStat,state)
+            editor.apply()
+            editor.commit()
+        }
+    }
+
+    fun loadUsertstate() : Boolean{
+        val customerState = sharedPreferences.getBoolean(StringsUtils.customerStat,false)
+        return customerState
+    }
+
+
+
+
+
+
+    fun saveUsertName(userName :String){
+        CoroutineScope(Dispatchers.IO).launch {
+            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
+            editor.putString(StringsUtils.customerName,userName)
+            editor.apply()
+            editor.commit()
+        }
+    }
+
+    fun loadUsertName() : String{
+        val customerId = sharedPreferences.getString(StringsUtils.customerName,"")
+        return customerId?:""
+    }
+
 }
