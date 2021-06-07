@@ -1,4 +1,4 @@
-package com.example.shopy.datalayer.localdatabase.sharedPrefrence
+package com.example.shopy.datalayer.sharedprefrence
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import com.example.shopy.ui.StringsUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MeDataSharedPrefrence(context: Context) {
