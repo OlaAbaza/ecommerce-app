@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSource
 import com.example.shopy.datalayer.entity.custom_product.Product
+import com.example.shopy.datalayer.entity.itemPojo.OrderObject
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.models.CreateAddressX
 import com.example.shopy.models.OrderResponse
@@ -69,6 +70,7 @@ class Repository(
         remoteDataSource.getProuduct(id)
     }
 
+
     fun isOnline(context: Context): Boolean {
         return remoteDataSource.isOnline(context)
     }
@@ -80,4 +82,41 @@ class Repository(
     fun fetchAllProducts(): MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
         return remoteDataSource.fetchAllProducts()
     }
+
+
+     fun getAllOrderList(): LiveData<List<OrderObject>> {
+        return  roomDataSourceImpl.getAllOrderList()
+    }
+
+
+    // wish list
+     fun getFourFromWishList(): LiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
+        return roomDataSourceImpl.getFourFromWishList()
+    }
+
+     fun getAllWishList(): LiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
+        return roomDataSourceImpl.getAllWishList()
+    }
+
+     suspend fun saveWishList(withItem: com.example.shopy.datalayer.entity.itemPojo.Product) {
+        roomDataSourceImpl.saveWishList(withItem)
+    }
+
+     suspend fun deleteOneWithItem(id: Long) {
+        roomDataSourceImpl.deleteOneWithItem(id)
+    }
+
+     fun getOneWithItem(id: Long): LiveData<com.example.shopy.datalayer.entity.itemPojo.Product> {
+        return roomDataSourceImpl.getOneWithItem(id)
+    }
+
+     suspend fun deleteAllFromCart() {
+        roomDataSourceImpl.deleteAllFromCart()
+    }
+
+     fun saveAllCartList(dataList: List<ProductCartModule>) {
+        roomDataSourceImpl.saveAllCartList(dataList)
+    }
+
+    fun getFourWishList() = roomDataSourceImpl.getFourWishList()
 }

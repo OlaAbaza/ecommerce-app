@@ -14,8 +14,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.adapters.WishListAdaper
+import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentAllWishListBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
+import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.StringsUtils
 import com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,16 +43,21 @@ class AllWishListFragment : Fragment() {
 
         bindingAllWishListFragment = FragmentAllWishListBinding.inflate(inflater, container, false)
 
+
+        val remoteDataSource = RemoteDataSourceImpl()
+        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
+        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,requireActivity().application)
+
         allWishListFragmentViewModel = ViewModelProvider(
             requireActivity(),
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+            viewModelFactory
         )[AllWishListViewModel::class.java]
 
 
         wishListData = ArrayList()
 
         withListAdapter =
-            WishListAdaper(wishListData, allWishListFragmentViewModel.intentTOProductDetails)
+            WishListAdaper(wishListData, allWishListFragmentViewModel.intentTOProductDetails,allWishListFragmentViewModel.deleteItem)
         bindingAllWishListFragment.wishRecyclerView.apply {
             this.adapter = withListAdapter
             this.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -55,7 +65,7 @@ class AllWishListFragment : Fragment() {
 
         requireActivity().toolbar_title.text = "All Wish List"
 
-        allWishListFragmentViewModel.getAllWishList().observe(requireActivity(), {
+        allWishListFragmentViewModel.repository.getAllWishList().observe(requireActivity(), {
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()

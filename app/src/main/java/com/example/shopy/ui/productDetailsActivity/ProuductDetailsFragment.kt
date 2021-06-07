@@ -1,5 +1,6 @@
 package com.example.shopy.ui.productDetailsActivity
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -16,9 +17,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
 import com.example.shopy.adapters.ImageSilderAdapter
 import com.example.shopy.adapters.OptionsAdapter
+import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentProuductDetailsBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
+import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.StringsUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -37,10 +43,13 @@ class ProuductDetailsFragment : Fragment() {
         bindingProductDetailsFragment =
             FragmentProuductDetailsBinding.inflate(inflater, container, false)
 
-//        val images: List<Images> = ArrayList()
+        val remoteDataSource = RemoteDataSourceImpl()
+
+        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
+        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,requireActivity().application)
         productDetailsViewMode = ViewModelProvider(
             requireActivity(),
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+            viewModelFactory
         )[ProductDetailsViewModel::class.java]
 
         lateinit var product: Product
@@ -149,6 +158,7 @@ class ProuductDetailsFragment : Fragment() {
         })
     }
 
+    @SuppressLint("SetTextI18n")
     private fun updateUI(product: Product, activity: Activity) {
         //activity.title = product.title ?: "null"
 
@@ -159,7 +169,7 @@ class ProuductDetailsFragment : Fragment() {
 
 
 
-        bindingProductDetailsFragment.prise.text = product.variants?.get(0)?.price.toString()
+        bindingProductDetailsFragment.prise.text = "${product.variants?.get(0)?.price.toString()} EGP"
 
         bindingProductDetailsFragment.descriptionEditable.text = product.body_html
         bindingProductDetailsFragment.stateEditable.text = product.status ?: "not known"

@@ -22,7 +22,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.CategoriesViewModel
 import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.ui.allWishListFragment.AllWishListViewModel
 import com.example.shopy.ui.customerAddress.AddressViewModel
+import com.example.shopy.ui.meScreen.MeViewModel
+import com.example.shopy.ui.productDetailsActivity.ProductDetailsViewModel
 import com.example.shopy.ui.shoppingBag.OrderViewModel
 import com.example.shopy.ui.signIn.SignInViewModel
 
@@ -43,6 +46,15 @@ class ViewModelFactory(
         }
         if (modelClass.isAssignableFrom(CategoriesViewModel::class.java)) {
             return CategoriesViewModel(repository,application) as T
+        }
+        if (modelClass.isAssignableFrom(AllWishListViewModel::class.java)) {
+            return AllWishListViewModel(repository,application) as T
+        }
+        if (modelClass.isAssignableFrom(MeViewModel::class.java)) {
+            return MeViewModel(repository,application) as T
+        }
+        if (modelClass.isAssignableFrom(ProductDetailsViewModel::class.java)) {
+            return ProductDetailsViewModel(repository,application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

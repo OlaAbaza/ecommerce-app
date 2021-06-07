@@ -29,26 +29,26 @@
             style="@style/text_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:lines="2"
+            android:lines="3"
             android:padding="5dp"
             android:text="@string/app_name"
             android:gravity="center"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/delete"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/itemImage" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/decrption"-->
-<!--            style="@style/text_style"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:padding="10dp"-->
-<!--            android:text="@string/app_name"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:textSize="12sp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="@id/title"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/title" />-->
+        <ImageButton
+            android:id="@+id/delete"
+            style="@style/text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:src="@drawable/ic_delete_forever_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/itemImage"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:contentDescription="@string/delete" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

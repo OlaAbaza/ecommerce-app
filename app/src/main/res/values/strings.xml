@@ -60,7 +60,6 @@
     <string name="email_address">EMAIL ADDRESS</string>
     <string name="App_name">SHOPY</string>
     <string name="full_name">FULL NAME</string>
-    <string name="me">Me</string>
     <string name="category">Category</string>
     <string name="shop">Shop</string>
     <string name="checkout">CHECKOUT</string>
@@ -95,6 +94,10 @@
     <string name="my_addresses">My Addresses</string>
     <string name="register_login">Register/Login</string>
     <string name="imagebutton">ImageButton</string>
+    <string name="delete">Delete</string>
+    <string name="Delete_Item_From_Wish_List">Delete Item From Wish List</string>
+    <string name="are_you_sure">Are You Sure</string>
+    <string name="me">Me</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

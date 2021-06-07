@@ -3,6 +3,7 @@ package com.example.shopy.ui.productDetailsActivity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
@@ -14,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ProductDetailsViewModel(application: Application) : AndroidViewModel(application) {
+class ProductDetailsViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
     private val networkingReposatory = RemoteDataSourceImpl()
     private val roomRepositry = WishRoomRepositry(application)
     private var saveWishListJob: Job? = null

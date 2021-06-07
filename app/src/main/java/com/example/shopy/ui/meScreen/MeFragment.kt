@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +15,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.adapters.WishListAdaper
+import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
+import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -40,23 +46,24 @@ class MeFragment : Fragment() {
 
         handelVisability()
 
-//        bindingMeScreen.regesterAndLogin.visibility=View.VISIBLE
-
+        val remoteDataSource = RemoteDataSourceImpl()
+        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
+        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,requireActivity().application)
         meViewModel = ViewModelProvider(
             requireActivity(),
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+            viewModelFactory
         )[MeViewModel::class.java]
         wishListData = ArrayList()
 
-        requireActivity().toolbar_title.text = "Me"
 
+        requireActivity().toolbar_title.text = getString(R.string.me)
         bindingMeScreen.regesterAndLogin.setOnClickListener {
             val action = NavGraphDirections.actionGlobalSignInFragment()
             findNavController().navigate(action)
         }
 
 
-        withListAdapter = WishListAdaper(wishListData, meViewModel.intentTOProductDetails)
+        withListAdapter = WishListAdaper(wishListData, meViewModel.intentTOProductDetails,meViewModel.deleteItem)
         bindingMeScreen.wishRecyclerView.apply {
             this.adapter = withListAdapter
             this.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -65,7 +72,7 @@ class MeFragment : Fragment() {
 
         requireActivity().title = resources.getString(R.string.app_name)
 
-        meViewModel.getFourWishList().observe(requireActivity(), {
+        meViewModel.repository.getFourWishList().observe(requireActivity(), {
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()
@@ -97,6 +104,11 @@ class MeFragment : Fragment() {
         }
 
 
+        meViewModel.deleteItem.observe(viewLifecycleOwner,{
+            deleteAlert()
+        })
+
+
         return bindingMeScreen.root
     }
 
@@ -123,11 +135,43 @@ class MeFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         meViewModel.intentTOProductDetails = MutableLiveData<Product>()
+        //meViewModel.deleteItem = MutableLiveData<Product>()
     }
 
     private fun startAnotherFragment() {
         val action = NavGraphDirections.actionGlobalAllWishListFragment()
         findNavController().navigate(action)
     }
+
+    private fun deleteAlert(){
+
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.Delete_Item_From_Wish_List))
+        builder.setMessage(getString(R.string.are_you_sure))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        builder.setPositiveButton("Yes"){dialogInterface, which ->
+//            Toast.makeText(applicationContext,"clicked yes",Toast.LENGTH_LONG).show()
+        }
+
+        builder.setNegativeButton("No"){dialogInterface, which ->
+//            Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
+
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        Log.d("TAd","onDestroyView")
+//    }
+
+
+
 
 }
