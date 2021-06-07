@@ -11,25 +11,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
-import com.example.shopy.ui.allWishListFragment.AllWishListFragment
-import com.example.shopy.ui.shopTab.search.ShopSearchFragment
-import com.example.shopy.ui.shoppingBag.CartFragment
+import com.example.shopy.ui.search.ShopSearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    //    private lateinit var navController: NavController
-//    private lateinit var appBarConfiguration: AppBarConfiguration
+
     private var navHostFragment: Fragment? = null
     private var navController: NavController? = null
 
@@ -72,11 +65,20 @@ class MainActivity : AppCompatActivity() {
         searchView?.setFocusable(true)
         //searchView?.setIconified(false)
         searchView?.setOnSearchClickListener {
-            val manager: FragmentManager = supportFragmentManager
-            val transaction = manager.beginTransaction()
-            transaction.replace(R.id.fragment, ShopSearchFragment())
-            transaction.addToBackStack(null)
-            transaction.commit()
+//
+//            val manager: FragmentManager = supportFragmentManager
+//            val transaction = manager.beginTransaction()
+//            transaction.replace(R.id.fragment, ShopSearchFragment())
+//            transaction.addToBackStack(null)
+//            transaction.commit()
+
+            navHostFragment = fragment as NavHostFragment
+            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
+            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+            navController = (navHostFragment as NavHostFragment).navController
+            navGraph.startDestination = R.id.shopSearchFragment
+            navController!!.graph = navGraph
+
         }
 
 

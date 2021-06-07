@@ -1,21 +1,15 @@
-package com.example.shopy.ui.shopTab.search
+package com.example.shopy.ui.search
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopy.R
 import com.example.shopy.datalayer.entity.allproducts.allProduct
-import com.example.shopy.datalayer.entity.custom_product.Product
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class searchAdapter(private val context: Context, private val itemName : List<allProduct>):

@@ -1,23 +1,17 @@
-package com.example.shopy.ui.shopTab.search
+package com.example.shopy.ui.search
 
 import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
-import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import com.example.myapplication.SearchCategoryItemAdapter
-import com.example.shopy.R
 import com.example.shopy.databinding.FragmentShopSearchBinding
-import com.example.shopy.datalayer.entity.allproducts.allProduct
 import com.example.shopy.datalayer.entity.itemPojo.Product
 
 import com.example.shopy.ui.shopTab.ShopTabViewModel
-import kotlinx.android.synthetic.main.fragment_shop_search.itemsRecView
-import kotlinx.coroutines.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ShopSearchFragment : Fragment() {
@@ -44,7 +38,7 @@ class ShopSearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val shopTabViewModel= ViewModelProvider(this).get(ShopTabViewModel::class.java)
         shopTabViewModel.fetchAllProducts().observe(requireActivity(),{
-            products=it
+            products= it
             sortedProducts=products
             binding.itemsRecView.adapter= SearchCategoryItemAdapter(products,requireContext())
         })
