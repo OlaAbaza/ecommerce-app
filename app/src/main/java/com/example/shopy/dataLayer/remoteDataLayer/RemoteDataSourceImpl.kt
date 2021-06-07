@@ -386,8 +386,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
     override fun fetchAllProducts(): MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
         var categoryRetrofitApi = Network.apiService
         CoroutineScope(Dispatchers.IO).launch {
+
             val response=categoryRetrofitApi.getAllProducts()
             if (response.isSuccessful){
+
                 allProducts.postValue(response.body()!!)
 
             }

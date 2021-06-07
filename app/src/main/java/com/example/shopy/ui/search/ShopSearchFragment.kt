@@ -4,19 +4,27 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.AdapterView
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.example.myapplication.SearchCategoryItemAdapter
+import com.example.shopy.R
 import com.example.shopy.databinding.FragmentShopSearchBinding
+import com.example.shopy.datalayer.entity.allproducts.allProduct
 import com.example.shopy.datalayer.entity.itemPojo.Product
 
 import com.example.shopy.ui.shopTab.ShopTabViewModel
 
 
 class ShopSearchFragment : Fragment() {
-    lateinit var products:List<Product>
-    lateinit var sortedProducts:List<Product>
+
+    init {
+        setHasOptionsMenu(true)
+
+    }
+    lateinit var products:List<allProduct>
+    lateinit var sortedProducts:List<allProduct>
     var productFilter=""
 
     private var _binding: FragmentShopSearchBinding? = null
@@ -36,12 +44,31 @@ class ShopSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        menu.clear()
+        inflater.inflate(R.menu.fragment_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+        val searchItem: MenuItem? = menu?.findItem(R.id.fragmentsearch)
+        val searchView : SearchView? = searchItem?.actionView as SearchView
+        searchView?.setFocusable(true)
+        searchView?.setIconified(false)
+
+
         val shopTabViewModel= ViewModelProvider(this).get(ShopTabViewModel::class.java)
-        shopTabViewModel.fetchAllProducts().observe(requireActivity(),{
-            products= it
-            sortedProducts=products
-            binding.itemsRecView.adapter= SearchCategoryItemAdapter(products,requireContext())
+        shopTabViewModel.fetchallProductsList().observe(viewLifecycleOwner,{
+            Log.i("output","***********"+it.toString())
+            products = it.products
+            sortedProducts = products
+            binding.itemsRecView.adapter=SearchCategoryItemAdapter(it.products,requireContext())
+
         })
+
 
         binding.sortSpinner.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
@@ -97,113 +124,28 @@ class ShopSearchFragment : Fragment() {
 
         }
 
-        binding.searchBar.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                var filteredProducts = sortedProducts.filter { it.title!!.contains(query?:"none",true)&& it.product_type!!.contains(productFilter,true)}
-                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext())
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                var filteredProducts = sortedProducts.filter { it.title!!.contains(newText?:"none",true)&& it.product_type!!.contains(productFilter,true) }//&& it.productType.equals("shoes",true)}
-                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext())
-                return true
-            }
-
-        })
-    }
-}
-    /*init {
-        setHasOptionsMenu(true)
-
-    }
-    private lateinit var searchListFromApi : Deferred<ArrayList<allProduct>>
-    private  var searchList = ArrayList<allProduct>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-        val shopTabViewModel= ViewModelProvider(this).get(ShopTabViewModel::class.java)
-
-        shopTabViewModel.fetchallProductsList().observe(this, {
-            if (it != null) {
-
-                GlobalScope.launch {
-                    searchListFromApi = async { it.products } as Deferred<ArrayList<allProduct>>
-                    Log.i("search", "inside ShopSearch create " + searchListFromApi.await().size)
-                    searchList.add(searchListFromApi.await().get(0))
-                    //shopTabViewModel.shopSearchListLiveData.postValue(searchListFromApi.await())
-                }
-
-            }
-
-        })
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shop_search, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.fragment_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-        val searchItem: MenuItem? = menu?.findItem(R.id.fragmentsearch)
-        val searchView : SearchView? = searchItem?.actionView as SearchView
-        searchView?.setFocusable(true)
-        searchView?.setIconified(false)
-
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                //itemsRecView.adapter = searchAdapter(this@MainActivity, searchList)
-                return false
+                Log.i("output","***********iiii")
+
+                var filteredProducts = sortedProducts.filter { it.title!!.contains(query?:"none",true)&& it.productType!!.contains(productFilter,true)}
+                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext())
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
+                Log.i("output","***********ppp")
 
-                GlobalScope.launch(Dispatchers.Main) {
-                    if (newText!!.isNotEmpty()) {
-                        searchList.clear()
-                        val search = newText.toLowerCase(Locale.getDefault())
-                        searchListFromApi.await().forEach {
-                            if (it.productType.toLowerCase(Locale.getDefault()).contains(search)) {
-                                searchList.add(it)
-                            }
-                        }
-                        itemsRecView.adapter= searchAdapter(requireContext(),searchList)
-
-                        //itemsRecView.adapter!!.notifyDataSetChanged()
-                        Log.i("search","inside MainActivity searchFilter "+searchList.toString())
-
-
-                    } else {
-                        searchList.clear()
-                        searchList.addAll(searchListFromApi.await())
-                        //itemsRecView.adapter!!.notifyDataSetChanged()
-                        itemsRecView.adapter= searchAdapter(requireContext(),searchList)
-
-                    }
-
-                }
-
+                var filteredProducts = sortedProducts.filter { it.title!!.contains(newText?:"none",true)&& it.productType!!.contains(productFilter,true) }//&& it.productType.equals("shoes",true)}
+                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext())
                 return true
             }
 
         })
 
+    }
+}
 
-    }*/
 
 
 

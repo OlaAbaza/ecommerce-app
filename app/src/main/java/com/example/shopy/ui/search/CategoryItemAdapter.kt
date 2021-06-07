@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 import com.example.shopy.databinding.CategoryItemBinding
+import com.example.shopy.datalayer.entity.allproducts.AllProducts
+import com.example.shopy.datalayer.entity.allproducts.allProduct
 import com.example.shopy.datalayer.entity.itemPojo.Product
 
 
-class SearchCategoryItemAdapter(var categoryItems:List<Product>, var context: Context):
+class SearchCategoryItemAdapter(var categoryItems:List<allProduct>, var context: Context):
     RecyclerView.Adapter<SearchCategoryItemAdapter.CategoryItemViewHolder>()  {
     class CategoryItemViewHolder(val binding: CategoryItemBinding): RecyclerView.ViewHolder(binding.root)
 
