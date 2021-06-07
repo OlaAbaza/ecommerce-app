@@ -98,12 +98,12 @@ class ProuductDetailsFragment : Fragment() {
 
 
             bindingProductDetailsFragment.addToWishList.setOnClickListener {
-                if (stored) {
+                stored = if (stored) {
                     productDetailsViewMode.deleteOneWishItem(id = id ?: 0)
-                    stored = false
+                    false
                 } else {
                     productDetailsViewMode.saveWishList(product)
-                    stored = true
+                    true
                 }
                 setStoredButton(stored)
             }
@@ -152,7 +152,7 @@ class ProuductDetailsFragment : Fragment() {
     private fun checkWishListStored(id: Long) {
         productDetailsViewMode.getOneWithItemFromRoom(id).observe(viewLifecycleOwner, {
             if (it != null) {
-                stored = true
+                this.stored = true
                 setStoredButton(stored)
             }
         })
