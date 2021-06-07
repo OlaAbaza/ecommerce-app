@@ -21,8 +21,6 @@ import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentAllWishListBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.ui.StringsUtils
-import com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class AllWishListFragment : Fragment() {
@@ -45,8 +43,9 @@ class AllWishListFragment : Fragment() {
 
 
         val remoteDataSource = RemoteDataSourceImpl()
-        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,requireActivity().application)
+//        val repository =
+        val viewModelFactory = ViewModelFactory(Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
+            ,remoteDataSource,requireActivity().application)
 
         allWishListFragmentViewModel = ViewModelProvider(
             requireActivity(),
@@ -65,7 +64,7 @@ class AllWishListFragment : Fragment() {
 
         requireActivity().toolbar_title.text = "All Wish List"
 
-        allWishListFragmentViewModel.repository.getAllWishList().observe(requireActivity(), {
+        allWishListFragmentViewModel.getAllWishList().observe(requireActivity(), {
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()

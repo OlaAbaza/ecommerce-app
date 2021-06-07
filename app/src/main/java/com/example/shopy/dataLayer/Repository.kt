@@ -1,6 +1,7 @@
 package com.example.shopy.dataLayer
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
@@ -8,14 +9,20 @@ import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSource
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.entity.itemPojo.OrderObject
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
+import com.example.shopy.datalayer.entity.itemPojo.ProductItem
+import com.example.shopy.datalayer.network.Network
 import com.example.shopy.models.CreateAddressX
 import com.example.shopy.models.OrderResponse
 import com.example.shopy.models.Orders
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Repository(
     val remoteDataSource: RemoteDataSource,
     val roomDataSourceImpl: RoomDataSourceImpl
 ) {
+    var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
 
     fun getAllCartList(): LiveData<List<ProductCartModule>> {
         return roomDataSourceImpl.getAllCartList()
@@ -68,6 +75,16 @@ class Repository(
 
     fun getProuduct(id: Long) {
         remoteDataSource.getProuduct(id)
+        Network.apiService.getOneProduct(id).enqueue(object : Callback<ProductItem?> {
+            override fun onResponse(call: Call<ProductItem?>, response: Response<ProductItem?>) {
+                Log.d("TAG","data here")
+                prouductDetaild.value = response.body()
+            }
+            override fun onFailure(call: Call<ProductItem?>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+
     }
 
 
@@ -106,9 +123,9 @@ class Repository(
         roomDataSourceImpl.deleteOneWithItem(id)
     }
 
-     fun getOneWithItem(id: Long): LiveData<com.example.shopy.datalayer.entity.itemPojo.Product> {
-        return roomDataSourceImpl.getOneWithItem(id)
-    }
+//     fun getOneWithItem(id: Long): LiveData<com.example.shopy.datalayer.entity.itemPojo.Product> {
+//        return roomDataSourceImpl.getOneWithItem(id)
+//    }
 
      suspend fun deleteAllFromCart() {
         roomDataSourceImpl.deleteAllFromCart()
@@ -119,4 +136,8 @@ class Repository(
     }
 
     fun getFourWishList() = roomDataSourceImpl.getFourWishList()
+
+    suspend fun deleteOneWishItem(id: Long) = roomDataSourceImpl.deleteOneWithItem(id)
+
+    fun getOneWithItem(id: Long) = roomDataSourceImpl.getOneWithItem(id)
 }

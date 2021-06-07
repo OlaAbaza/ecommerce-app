@@ -29,10 +29,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MeFragment : Fragment() {
 
 
-    lateinit var bindingMeScreen: FragmentMeBinding
-    lateinit var withListAdapter: WishListAdaper
-    lateinit var wishListData: List<Product>
-    lateinit var meViewModel: MeViewModel
+    private lateinit var bindingMeScreen: FragmentMeBinding
+    private lateinit var withListAdapter: WishListAdaper
+    private lateinit var wishListData: List<Product>
+    private lateinit var meViewModel: MeViewModel
     private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
 
 
@@ -47,8 +47,9 @@ class MeFragment : Fragment() {
         handelVisability()
 
         val remoteDataSource = RemoteDataSourceImpl()
-        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,requireActivity().application)
+//        val repository =
+        val viewModelFactory = ViewModelFactory(Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
+            ,remoteDataSource,requireActivity().application)
         meViewModel = ViewModelProvider(
             requireActivity(),
             viewModelFactory
@@ -57,6 +58,7 @@ class MeFragment : Fragment() {
 
 
         requireActivity().toolbar_title.text = getString(R.string.me)
+
         bindingMeScreen.regesterAndLogin.setOnClickListener {
             val action = NavGraphDirections.actionGlobalSignInFragment()
             findNavController().navigate(action)
@@ -70,9 +72,7 @@ class MeFragment : Fragment() {
         }
 
 
-        requireActivity().title = resources.getString(R.string.app_name)
-
-        meViewModel.repository.getFourWishList().observe(requireActivity(), {
+        meViewModel.getFourWishList().observe(requireActivity(), {
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()
@@ -105,7 +105,7 @@ class MeFragment : Fragment() {
 
 
         meViewModel.deleteItem.observe(viewLifecycleOwner,{
-            deleteAlert()
+            deleteAlert(it.id)
         })
 
 
@@ -135,7 +135,7 @@ class MeFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         meViewModel.intentTOProductDetails = MutableLiveData<Product>()
-        //meViewModel.deleteItem = MutableLiveData<Product>()
+        meViewModel.deleteItem = MutableLiveData<Product>()
     }
 
     private fun startAnotherFragment() {
@@ -143,7 +143,7 @@ class MeFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun deleteAlert(){
+    private fun deleteAlert(id: Long){
 
 
         val builder = AlertDialog.Builder(requireContext())
@@ -151,12 +151,13 @@ class MeFragment : Fragment() {
         builder.setMessage(getString(R.string.are_you_sure))
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
-//            Toast.makeText(applicationContext,"clicked yes",Toast.LENGTH_LONG).show()
+        builder.setPositiveButton("Yes"){_, _ ->
+            meViewModel.deleteOneItemFromWishList(id)
+                    meViewModel.deleteItem = MutableLiveData<Product>()
         }
 
-        builder.setNegativeButton("No"){dialogInterface, which ->
-//            Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
+        builder.setNegativeButton("No"){_, _ ->
+            meViewModel.deleteItem = MutableLiveData<Product>()
         }
         // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
@@ -164,14 +165,5 @@ class MeFragment : Fragment() {
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
-
-
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        Log.d("TAd","onDestroyView")
-//    }
-
-
-
 
 }

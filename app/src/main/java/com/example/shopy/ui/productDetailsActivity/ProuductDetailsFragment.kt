@@ -45,8 +45,8 @@ class ProuductDetailsFragment : Fragment() {
 
         val remoteDataSource = RemoteDataSourceImpl()
 
-        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,requireActivity().application)
+        val viewModelFactory = ViewModelFactory(Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
+            ,remoteDataSource,requireActivity().application)
         productDetailsViewMode = ViewModelProvider(
             requireActivity(),
             viewModelFactory
@@ -152,7 +152,7 @@ class ProuductDetailsFragment : Fragment() {
     private fun checkWishListStored(id: Long) {
         productDetailsViewMode.getOneWithItemFromRoom(id).observe(viewLifecycleOwner, {
             if (it != null) {
-                this.stored = true
+                stored = true
                 setStoredButton(stored)
             }
         })
