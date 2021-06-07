@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
+import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.entity.custom_product.ProductsList
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.datalayer.network.Network
@@ -31,6 +32,9 @@ class RemoteDataSourceImpl : RemoteDataSource {
     var allProductsList = MutableLiveData<AllProducts>()
     var allDiscountCodeList = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
+
+    var catProducts = MutableLiveData<List<Product>>()
+    var allProducts = MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>()
 
 
 
@@ -364,6 +368,31 @@ class RemoteDataSourceImpl : RemoteDataSource {
             }
         }
         return false
+    }
+
+    override fun fetchCatProducts(colID: Long): MutableLiveData<List<Product>> {
+        var categoryRetrofitApi = Network.apiService
+        CoroutineScope(Dispatchers.IO).launch {
+            val response = categoryRetrofitApi.getProducts(colID)
+            if (response.isSuccessful) {
+                catProducts.postValue(response.body()!!.products)
+            } else {
+                //error code
+            }
+        }
+        return catProducts
+    }
+
+    override fun fetchAllProducts(): MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
+        var categoryRetrofitApi = Network.apiService
+        CoroutineScope(Dispatchers.IO).launch {
+            val response=categoryRetrofitApi.getAllProducts()
+            if (response.isSuccessful){
+                allProducts.postValue(response.body()!!)
+
+            }
+        }
+        return allProducts
     }
 
 

@@ -97,4 +97,18 @@
     <string name="imagebutton">ImageButton</string>
 
     ////////////////abdelrahman/////////////
+    <string-array name="sortArr">
+        <item>SORT</item>
+        <item>price: Low to High</item>
+        <item>price: High to Low</item>
+        <item>Alphabetically</item>
+        <item>none</item>
+    </string-array>
+    <string-array name="filterArr">
+        <item>FILTER</item>
+        <item>shoes</item>
+        <item>t-shirts</item>
+        <item>accessories</item>
+        <item>none</item>
+    </string-array>
 </resources>

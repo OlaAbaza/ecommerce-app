@@ -25,6 +25,7 @@ class ShopTabViewModel(application: Application) : AndroidViewModel(application)
     var shopSearchListLiveData = MutableLiveData<ArrayList<allProduct>>()
 
 
+    fun fetchAllProducts()=remoteDataSource.allProducts
 
     fun fetchWomanProductsList() : MutableLiveData<ProductsList> {
         remoteDataSource.getWomanProductsList()

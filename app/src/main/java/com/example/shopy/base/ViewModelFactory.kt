@@ -19,6 +19,7 @@ package com.example.shopy.base
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.CategoriesViewModel
 import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.ui.customerAddress.AddressViewModel
@@ -39,6 +40,9 @@ class ViewModelFactory(
         }
         if (modelClass.isAssignableFrom(OrderViewModel::class.java)) {
             return OrderViewModel(repository,application) as T
+        }
+        if (modelClass.isAssignableFrom(CategoriesViewModel::class.java)) {
+            return CategoriesViewModel(repository,application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_shop_tab" />
     <fragment
         android:id="@+id/categoryFragment"
-        android:name="com.example.shopy.CategoryFragment"
+        android:name="com.example.shopy.ui.category.CategoryFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category" />
     <fragment
