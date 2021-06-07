@@ -8,12 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.shopy.NavGraphDirections
 import com.example.shopy.datalayer.entity.itemPojo.Product
-import com.example.shopy.ui.meScreen.MeViewModel
+
 
 class WishListAdaper(prouductList: List<Product> , intentTOProductDetails: MutableLiveData<Product>)
     : RecyclerView.Adapter<WishListAdaper.ViewHolder>() {

@@ -14,6 +14,7 @@ import com.example.shopy.datalayer.localdatabase.room.wishBag.WishDao
 
 @TypeConverters(Converter::class)
 @Database(entities = [Product::class,ProductCartModule::class,OrderObject::class], version = 2,exportSchema = false)
+//@Database(entities = [Product::class,OrderObject::class], version = 2,exportSchema = false)
 abstract class RoomService : RoomDatabase() {
     companion object{
         @Volatile

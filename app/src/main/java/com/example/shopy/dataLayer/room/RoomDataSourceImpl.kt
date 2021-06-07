@@ -1,6 +1,5 @@
-package com.example.shopy.dataLayer.localdatabase.room
+package com.example.shopy.dataLayer.room
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService

@@ -1,9 +1,6 @@
-package com.example.shopy.dataLayer.localdatabase.room
+package com.example.shopy.dataLayer.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 
 interface RoomDataSource {

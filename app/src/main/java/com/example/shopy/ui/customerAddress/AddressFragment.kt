@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.util.Utils
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.localdatabase.room.RoomDataSourceImpl
+import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentAddAddressBinding
 import com.example.shopy.databinding.FragmentAddressBinding
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
