@@ -107,7 +107,7 @@ class ShopSearchFragment : Fragment() {
                 if (parent!!.getItemAtPosition(position).equals("shoes")){
                     productFilter="shoes"
                 }
-                else if (parent!!.getItemAtPosition(position).equals("shirts")){
+                else if (parent!!.getItemAtPosition(position).equals("t-shirts")){
                     productFilter="shirts"
                 }
                 else if (parent!!.getItemAtPosition(position).equals("accessories")){
