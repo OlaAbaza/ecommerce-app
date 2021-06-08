@@ -28,13 +28,10 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
         disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
-                Log.d("TAG", "vechicles ${vehicles.orders!!.count()}")
-// orders.postValue(vehicles.orders)
                 orders.postValue(FilterData.getAllData(vehicles.orders!!))
-                Log.d("TAG", "orders.value ${orders.value!!.size}")
 
             }, { error ->
-                Log.d("TAG", error.printStackTrace().toString())
+                //todo
             })
 
     }
