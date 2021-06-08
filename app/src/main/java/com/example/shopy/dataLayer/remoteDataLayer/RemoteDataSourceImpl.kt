@@ -14,6 +14,9 @@ import com.example.shopy.datalayer.entity.custom_product.ProductsList
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.datalayer.network.Network
 import com.example.shopy.models.*
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -395,7 +398,9 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return allProducts
     }
 
-
+    override fun getAllOrders(): Observable<List<OrderResponse>> {
+       return Network.apiService.getAllOrders()
+    }
 
 
 }

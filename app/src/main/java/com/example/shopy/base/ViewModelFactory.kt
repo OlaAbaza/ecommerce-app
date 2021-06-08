@@ -24,6 +24,7 @@ import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.ui.allWishListFragment.AllWishListViewModel
 import com.example.shopy.ui.customerAddress.AddressViewModel
+import com.example.shopy.ui.displayOrderFragment.DisplayOrderViewModel
 import com.example.shopy.ui.meScreen.MeViewModel
 import com.example.shopy.ui.productDetailsActivity.ProductDetailsViewModel
 import com.example.shopy.ui.shoppingBag.OrderViewModel
@@ -55,6 +56,9 @@ class ViewModelFactory(
         }
         if (modelClass.isAssignableFrom(ProductDetailsViewModel::class.java)) {
             return ProductDetailsViewModel(repository,application) as T
+        }
+        if (modelClass.isAssignableFrom(DisplayOrderViewModel::class.java)) {
+            return DisplayOrderViewModel(repository,application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

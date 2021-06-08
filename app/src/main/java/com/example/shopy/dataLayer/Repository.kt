@@ -14,6 +14,7 @@ import com.example.shopy.datalayer.network.Network
 import com.example.shopy.models.CreateAddressX
 import com.example.shopy.models.OrderResponse
 import com.example.shopy.models.Orders
+import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -140,4 +141,8 @@ class Repository(
     suspend fun deleteOneWishItem(id: Long) = roomDataSourceImpl.deleteOneWithItem(id)
 
     fun getOneWithItem(id: Long) = roomDataSourceImpl.getOneWithItem(id)
+
+     fun getAllOrders(): Observable<List<OrderResponse>> {
+        return remoteDataSource.getAllOrders()
+    }
 }

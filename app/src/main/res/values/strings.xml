@@ -98,6 +98,7 @@
     <string name="Delete_Item_From_Wish_List">Delete Item From Wish List</string>
     <string name="are_you_sure">Are You Sure</string>
     <string name="me">Me</string>
+    <string name="paid">Paid</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

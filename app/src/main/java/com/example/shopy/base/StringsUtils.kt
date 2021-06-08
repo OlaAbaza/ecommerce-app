@@ -1,4 +1,4 @@
-package com.example.shopy.ui
+package com.example.shopy.base
 
 class StringsUtils {
     companion object{

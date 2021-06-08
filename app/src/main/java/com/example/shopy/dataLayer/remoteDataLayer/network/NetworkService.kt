@@ -6,6 +6,7 @@ import com.example.shopy.datalayer.entity.custom_product.ProductsList
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.models.*
+import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -79,10 +80,17 @@ interface NetworkService {
     suspend fun createOrder(
         @Body order: Orders
     ): Response<OrderResponse>
-///////////////////////////////////////////////////////////////
+
+
+
+///////////////////////////////Esraa////////////////////////////////
 
 
     @GET("products/{id}.json")
     fun getOneProduct(@Path("id") id: Long) : Call<ProductItem>
+
+
+    @GET("products/orders.json?status=any")
+    fun getAllOrders() : Observable<List<OrderResponse>>
 
 }

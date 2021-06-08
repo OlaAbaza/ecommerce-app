@@ -47,13 +47,14 @@ class MeFragment : Fragment() {
         handelVisability()
 
         val remoteDataSource = RemoteDataSourceImpl()
-//        val repository =
         val viewModelFactory = ViewModelFactory(Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
             ,remoteDataSource,requireActivity().application)
         meViewModel = ViewModelProvider(
             requireActivity(),
             viewModelFactory
         )[MeViewModel::class.java]
+
+
         wishListData = ArrayList()
 
 
@@ -96,10 +97,12 @@ class MeFragment : Fragment() {
 
 
         bindingMeScreen.unPaied.setOnClickListener {
-            meDataSourceReo.saveUsertState(false)
-            meDataSourceReo.saveUsertName("")
-            meDataSourceReo.saveUsertId("")
-            handelVisability()
+//            val action = NavGraphDirections.actionGlobalDisplayOrderFragment()
+            findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment())
+//            meDataSourceReo.saveUsertState(false)
+//            meDataSourceReo.saveUsertName("")
+//            meDataSourceReo.saveUsertId("")
+//            handelVisability()
 //            AuthUI.getInstance().signOut(requireContext())
         }
 

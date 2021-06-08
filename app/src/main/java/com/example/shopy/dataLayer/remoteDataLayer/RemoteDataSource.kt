@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.models.*
+import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -40,4 +41,7 @@ interface RemoteDataSource {
     fun fetchCatProducts(colID:Long):MutableLiveData<List<Product>>
     fun fetchAllProducts():MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>
 
+
+
+    fun getAllOrders() : Observable<List<OrderResponse>>
 }

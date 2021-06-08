@@ -120,7 +120,11 @@
     <action android:id="@+id/action_global_prouductDetailsFragment" app:destination="@id/prouductDetailsFragment" />
     <action android:id="@+id/action_global_allWishListFragment" app:destination="@id/allWishListFragment" />
     <action android:id="@+id/action_global_signInFragment" app:destination="@id/signInFragment"/>
-<!--    <activity-->
+    <fragment
+        android:id="@+id/displayOrderFragment"
+        android:name="com.example.shopy.ui.displayOrderFragment.DisplayOrderFragment"
+        android:label="DisplayOrderFragment" /><action android:id="@+id/action_global_displayOrderFragment" app:destination="@id/displayOrderFragment"/>
+    <!--    <activity-->
 <!--        android:id="@+id/mainActivity"-->
 <!--        android:name="com.example.shopy.ui.MainActivity"-->
 <!--        android:label="activity_main"-->
