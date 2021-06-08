@@ -2,7 +2,6 @@ package com.example.shopy.ui.displayOrderFragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +9,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentDisplayOrderBinding
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.internal.schedulers.IoScheduler
+
 
 class DisplayOrderFragment : Fragment() {
 
@@ -27,7 +23,7 @@ class DisplayOrderFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = FragmentDisplayOrderBinding.inflate(inflater, container, false)
 
         val remoteDataSource = RemoteDataSourceImpl()

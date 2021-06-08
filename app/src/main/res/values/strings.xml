@@ -99,6 +99,16 @@
     <string name="are_you_sure">Are You Sure</string>
     <string name="me">Me</string>
     <string name="paid">Paid</string>
+    <string name="order">Order ID  #</string>
+    <string name="_111111111111111111111">111111111111111111111</string>
+    <string name="money">Money</string>
+    <string name="total_price">Total price  </string>
+    <string name="_170">170</string>
+    <string name="egp">EGP</string>
+    <string name="created_at">created at </string>
+    <string name="_2021_05_31t23_47_47_02_00">2021-05-31T23:47:47+02:00</string>
+    <string name="cancel">Cancel</string>
+    <string name="pay_now">Pay Now</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">
