@@ -40,8 +40,8 @@ class CartAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.myView.itemCartTitle.text = orderList[position].title
-        holder.myView.itemCountText.text = "0"
-        holder.myView.itemCartPrice.text = orderList[position].variants!![0].price.toString()
+        holder.myView.itemCountText.text = orderList[position].variants?.get(0)?.inventory_quantity.toString()
+        holder.myView.itemCartPrice.text = orderList[position].variants!![0].price.toString()+"EGP"
 
 
         Glide.with(holder.myView.itemCartImage)
@@ -52,10 +52,21 @@ class CartAdapter(
 
 
         holder.myView.decreaseButton.setOnClickListener {
-            holder.myView.itemCountText.text=((holder.myView.itemCountText.text.toString().toInt())-1).toString()
+            var num =((holder.myView.itemCountText.text.toString().toInt())-1)
+            if(num>0){
+            orderList[position].variants?.get(0)?.inventory_quantity = num
+            holder.myView.itemCountText.text=num.toString()
+                orderViewModel.onChangeQuntity()
+            }
+            else{
+                orderViewModel.onDelClick( orderList[position].id)
+            }
         }
         holder.myView.increaseButton.setOnClickListener {
-            holder.myView.itemCountText.text=((holder.myView.itemCountText.text.toString().toInt())+1).toString()
+            var num =((holder.myView.itemCountText.text.toString().toInt())+1)
+            orderList[position].variants?.get(0)?.inventory_quantity = num
+            holder.myView.itemCountText.text=num.toString()
+            orderViewModel.onChangeQuntity()
         }
     }
 

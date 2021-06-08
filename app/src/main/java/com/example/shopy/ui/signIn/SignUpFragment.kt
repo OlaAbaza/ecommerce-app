@@ -47,10 +47,9 @@ class SignUpFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(layoutInflater)
         val application = requireNotNull(this.activity).application
-        val remoteDataSource = RemoteDataSourceImpl()
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(application)))
 
-        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,application)
+        val viewModelFactory = ViewModelFactory(repository,application)
         signinViewModel =
             ViewModelProvider(
                 this, viewModelFactory
@@ -89,10 +88,14 @@ class SignUpFragment : Fragment() {
             }
         }
         binding.tvPassField.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus)
+            if (hasFocus){
+                Timber.i("passs")
                 binding.group.setVisibility(View.VISIBLE)
-            else
+            }
+            else {
+                Timber.i("passsx")
                 binding.group.setVisibility(View.GONE)
+            }
         }
 
         signinViewModel.getPostResult().observe(viewLifecycleOwner, Observer<CustomerX?> {
@@ -106,12 +109,6 @@ class SignUpFragment : Fragment() {
                 meDataSourceReo.saveUsertState(true)
                 view.findNavController().popBackStack()
                 Log.d("Tag","firstName != nul${it.customer.firstName.toString()}l")
-
-//                editor.putBoolean("isLogged", true)
-//                editor.putString("customerID", it.customer.id.toString())
-//                editor.commit()
-//                view.findNavController()
-//                    .navigate(SignUpFragmentDirections.actionSignUpFragmentToHomeFragment())
             } else {
                 Toast.makeText(context, "This mail is already exits", Toast.LENGTH_SHORT).show()
             }
@@ -164,9 +161,6 @@ class SignUpFragment : Fragment() {
                 when (authenticationState) {
                     SignInViewModel.AuthenticationState.AUTHENTICATED -> {
                         meDataSourceReo.saveUsertState(true)
-
-//                        editor.putBoolean("isLogged", true)
-//                        editor.commit()
                         Timber.i("isLogged+" + FirebaseAuth.getInstance().currentUser?.displayName + FirebaseAuth.getInstance().currentUser?.email)
                         FirebaseAuth.getInstance().currentUser?.displayName?.let {
                             FirebaseAuth.getInstance().currentUser?.email?.let { it1 ->
@@ -178,9 +172,6 @@ class SignUpFragment : Fragment() {
                     }
                     else -> {
                         meDataSourceReo.saveUsertState(false)
-
-//                        editor.putBoolean("isLogged", false)
-//                        editor.commit()
                     }
                 }
             })

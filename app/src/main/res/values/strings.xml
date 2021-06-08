@@ -43,6 +43,7 @@
     ////////////////fayza/////////////
 
     ////////////////ola/////////////
+    <string name="payment_method">Payment Method</string>
     <string name="login_unsuccessful_msg">Login unsuccessful</string>
     <string name="fact_type_android">Android</string>
     <string name="fact_type_california">California</string>
@@ -59,7 +60,7 @@
     <string name="password">PASSWORD</string>
     <string name="email_address">EMAIL ADDRESS</string>
     <string name="App_name">SHOPY</string>
-    <string name="full_name">FULL NAME</string>
+    <string name="full_name">*FULL NAME</string>
     <string name="category">Category</string>
     <string name="shop">Shop</string>
     <string name="checkout">CHECKOUT</string>
@@ -98,6 +99,16 @@
     <string name="Delete_Item_From_Wish_List">Delete Item From Wish List</string>
     <string name="are_you_sure">Are You Sure</string>
     <string name="me">Me</string>
+    <string name="place_order">Place Order</string>
+    <string name="apply_voucher">Apply Voucher</string>
+    <string name="enter_discount_code">Enter Discount Code</string>
+    <string name="discount">Discount:</string>
+    <string name="alert_msg"><b>Are you sure to delete this item?</b></string>
+    <string name="item_total">Item Total</string>
+    <string name="click_to_add_address">Click to add address</string>
+    <string name="log_in_to_see_shopping_cart">Log in to see shopping cart</string>
+    <string name="your_bag_is_empty">Your bag is empty</string>
+
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

@@ -14,7 +14,11 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.util.Utils
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
@@ -23,7 +27,10 @@ import com.example.shopy.databinding.FragmentAddAddressBinding
 import com.example.shopy.databinding.FragmentAddressBinding
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
+import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.*
+import com.example.shopy.ui.shoppingBag.OrderConfirmationFragmentArgs
+import com.example.shopy.ui.signIn.SignInFragmentDirections
 import kotlinx.android.synthetic.main.fragment_add_address.view.*
 import timber.log.Timber
 
@@ -31,22 +38,19 @@ class AddressFragment : Fragment() {
     private lateinit var addressAdapter: AddressAdapter
     private lateinit var binding: FragmentAddressBinding
     private lateinit var addressViewModel: AddressViewModel
-    private lateinit var dialog: Dialog
-    private lateinit var bindingDialog: FragmentAddAddressBinding
-    private lateinit var prefs: SharedPreferences
+    private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
     private var customerID: String = ""
-    private var isedit: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
         binding = FragmentAddressBinding.inflate(layoutInflater)
-        prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
         val application = requireNotNull(this.activity).application
-        val remoteDataSource = RemoteDataSourceImpl()
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(application)))
-        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,application)
+        val viewModelFactory = ViewModelFactory(repository,application)
         addressViewModel =
             ViewModelProvider(
                 this, viewModelFactory
@@ -62,16 +66,17 @@ class AddressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        customerID = prefs.getString("customerID", "").toString()
+        customerID =meDataSourceReo.loadUsertId()
         addressViewModel.getCustomersAddressList(customerID)
 
 
         addressViewModel.getAddressList().observe(viewLifecycleOwner, Observer<List<Addresse>?> {
+            Timber.i("olaaaaaaa"+it)
             addressAdapter.addNewList(it)
         })
-        addressViewModel.getAddress().observe(viewLifecycleOwner, Observer<Pair<Addresse?, Int>> {
-            isedit = true
-            showAddAddressDialog(it.first)
+        addressViewModel.getAddress().observe(viewLifecycleOwner, Observer<Addresse?> {
+            view.findNavController()
+                .navigate(AddressFragmentDirections.actionAddressFragmentToAddAddressFragment(it.customerId.toString(),it.id.toString()))
 
         })
         addressViewModel.getDelAddress()
@@ -87,139 +92,9 @@ class AddressFragment : Fragment() {
         })
 
         binding.addAddressBtn.setOnClickListener {
-            showAddAddressDialog(null)
+            view.findNavController()
+                .navigate(AddressFragmentDirections.actionAddressFragmentToAddAddressFragment("null","null"))
         }
 
-    }
-
-    private fun showAddAddressDialog(item: Addresse?) {
-        dialog = Dialog(this.requireContext())
-        dialog.setCancelable(false)
-        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val lp = WindowManager.LayoutParams()
-        // change dialog size
-        lp.copyFrom(dialog.getWindow()?.attributes)
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
-
-        bindingDialog = FragmentAddAddressBinding.inflate(layoutInflater)
-        dialog.setContentView(bindingDialog.root)
-        if (isedit) {
-            item?.let {
-                bindingDialog.apply {
-                    nameEdt.setText(item.firstName)
-                    cityEdt.setText(item.city)
-                    addressEdt.setText(item.address1)
-                    phoneEdt.setText(item.phone)
-                    countryEdt.setText(item.country)
-                    address2Edt.setText(item.address2.toString())
-                    postCodeEdt.setText(item.zip)
-                    stateEdt.setText(item.province)
-                    addressSwitch.isChecked = item.default == true
-
-                }
-            }
-        }
-
-        bindingDialog.saveBtn.setOnClickListener {
-            if(validateFields()){
-            if (Utils.validatePhone(bindingDialog.phoneEdt.text.toString())){
-            Timber.i("ola customerID" + customerID)
-            if (isedit) {
-                item?.let {
-                    var address = Addresse(
-                        bindingDialog.addressEdt.text.toString(),
-                        bindingDialog.address2Edt.text.toString(),
-                        bindingDialog.cityEdt.text.toString(),
-                        "null",
-                        bindingDialog.countryEdt.text.toString(),
-                        "null",
-                        "null",
-                        customerID.toLong(),
-                        bindingDialog.addressSwitch.isChecked,
-                        bindingDialog.nameEdt.text.toString(),
-                        item.id,
-                        "null",
-                        "null",
-                        bindingDialog.phoneEdt.text.toString(),
-                        bindingDialog.stateEdt.text.toString(),
-                        "null",
-                        bindingDialog.postCodeEdt.text.toString()
-                    )
-                    var createAddress = UpdateAddresse(address)
-
-                    addressViewModel.updateCustomerAddresses(
-                        customerID,
-                        item.id.toString(),
-                        createAddress
-                    )
-                }
-            } else {
-                var address = Address(
-                    bindingDialog.addressEdt.text.toString(),
-                    bindingDialog.address2Edt.text.toString(),
-                    bindingDialog.cityEdt.text.toString(),
-                    "null",
-                    bindingDialog.countryEdt.text.toString(),
-                    "null",
-                    "null",
-                    bindingDialog.nameEdt.text.toString(),
-                    "null",
-                    "null",
-                    bindingDialog.phoneEdt.text.toString(),
-                    bindingDialog.stateEdt.text.toString(),
-                    "null",
-                    bindingDialog.postCodeEdt.text.toString(),
-                    bindingDialog.addressSwitch.isChecked
-                )
-                var createAddress = CreateAddress(address)
-                addressViewModel.createCustomersAddress(customerID, createAddress)
-            }
-            dialog.dismiss()
-            isedit = false
-        }
-            else{
-                Toast.makeText(
-                    context,
-                    "incorrect phone number",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-            else{
-                Toast.makeText(
-                    context,
-                    "please fill all required fields",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-        bindingDialog.toolbar1.btn_back.setOnClickListener {
-            Timber.i("backkk")
-            dialog.dismiss()
-            isedit = false
-        }
-
-
-        dialog.show()
-        dialog.getWindow()?.setAttributes(lp)
-    }
-    private fun validateFields():Boolean{
-        var isEmpty=false
-        bindingDialog.apply {
-            if (addressEdt.text.toString().trim().isEmpty()
-                &&cityEdt.text.toString().trim().isEmpty()
-                &&countryEdt.text.toString().trim().isEmpty()
-                &&nameEdt.text.toString().trim().isEmpty()
-                &&phoneEdt.text.toString().trim().isEmpty()
-                &&stateEdt.text.toString().trim().isEmpty()
-                &&postCodeEdt.text.toString().trim().isEmpty()
-                &&addressEdt.text.toString().trim().isEmpty()
-            )
-            {
-                isEmpty=true
-            }
-        }
-return  isEmpty
     }
 }

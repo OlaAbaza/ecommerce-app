@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/country_txt"
         tools:text="Agouza Egypt Egypt 12345" />
 
-    <Button
+    <ImageButton
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:layout_marginStart="180dp"
@@ -82,10 +82,10 @@
         android:buttonTint="@color/gray"
         android:text="Set As Default Address" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btn_del"
         android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_height="18dp"
         android:layout_weight="1"
         android:layout_marginTop="10dp"
         android:background="@drawable/ic_trash1" />

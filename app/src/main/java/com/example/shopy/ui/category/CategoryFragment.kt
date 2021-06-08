@@ -41,7 +41,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(application))
         )
-        val viewModelFactory = ViewModelFactory(repository, remoteDataSource, application)
+        val viewModelFactory = ViewModelFactory(repository, application)
         catViewModel =
             ViewModelProvider(
                 this, viewModelFactory

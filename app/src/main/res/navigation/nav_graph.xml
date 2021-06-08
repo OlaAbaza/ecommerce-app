@@ -99,7 +99,14 @@
         android:id="@+id/addressFragment"
         android:name="com.example.shopy.ui.customerAddress.AddressFragment"
         android:label="AddressFragment"
-        tools:layout="@layout/fragment_address"/>
+        tools:layout="@layout/fragment_address">
+
+        <action
+            android:id="@+id/action_addressFragment_to_addAddressFragment"
+            app:destination="@id/addAddressFragment"
+            app:popUpTo="@id/addAddressFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/cartFragment2"
         android:name="com.example.shopy.ui.shoppingBag.CartFragment"
@@ -120,7 +127,38 @@
     <action android:id="@+id/action_global_prouductDetailsFragment" app:destination="@id/prouductDetailsFragment" />
     <action android:id="@+id/action_global_allWishListFragment" app:destination="@id/allWishListFragment" />
     <action android:id="@+id/action_global_signInFragment" app:destination="@id/signInFragment"/>
-<!--    <activity-->
+    <fragment
+        android:id="@+id/orderConfirmationFragment"
+        android:name="com.example.shopy.ui.shoppingBag.OrderConfirmationFragment"
+        android:label="OrderConfirmationFragment"
+        tools:layout="@layout/fragment_order_confirmation">
+        <argument
+            android:name="totalPrice"
+            app:argType="float"
+            android:defaultValue="0" />
+    </fragment>
+    <action android:id="@+id/action_global_orderConfirmationFragment" app:destination="@id/orderConfirmationFragment"/>
+    <action android:id="@+id/action_global_addressFragment" app:destination="@id/addressFragment" />
+    <fragment
+        android:id="@+id/addAddressFragment"
+        android:name="com.example.shopy.ui.customerAddress.AddAddressFragment"
+        android:label="AddAddressFragment"
+        tools:layout="@layout/fragment_add_address">
+
+        <argument
+            android:name="customerID"
+            app:argType="string" />
+        <argument
+            android:name="addressID"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_addAddressFragment_to_addressFragment"
+            app:destination="@id/addressFragment"
+            app:popUpTo="@id/addAddressFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <action android:id="@+id/action_global_shopTabFragment2" app:destination="@id/shopTabFragment2" />
+    <!--    <activity-->
 <!--        android:id="@+id/mainActivity"-->
 <!--        android:name="com.example.shopy.ui.MainActivity"-->
 <!--        android:label="activity_main"-->

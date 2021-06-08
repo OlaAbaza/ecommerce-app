@@ -3,7 +3,7 @@ package com.example.shopy.ui.signIn
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.Repository
 
 import kotlinx.coroutines.launch
 
@@ -11,7 +11,7 @@ import com.example.shopy.models.Customer
 import com.example.shopy.models.CustomerX
 import timber.log.Timber
 
-class SignInViewModel(val remoteDataSource: RemoteDataSourceImpl, application: Application) : AndroidViewModel(application) {
+class SignInViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
     private val customerList = SingleLiveEvent<List<Customer>>()
     private val postResult = SingleLiveEvent<CustomerX?>()
     fun getPostResult(): LiveData<CustomerX?> {
@@ -36,7 +36,7 @@ class SignInViewModel(val remoteDataSource: RemoteDataSourceImpl, application: A
 
     fun getAllCustomers() {
         viewModelScope.launch {
-            var list = remoteDataSource.fetchCustomersData()
+            var list = repository.fetchCustomersData()
             list.let { customerList.postValue(list!!) }
         }
     }
@@ -46,7 +46,7 @@ class SignInViewModel(val remoteDataSource: RemoteDataSourceImpl, application: A
         var customerx :CustomerX?= CustomerX(customer)
 
         val jop = viewModelScope.launch { customerx =
-            customerx?.let { remoteDataSource.createCustomers(it) }
+            customerx?.let { repository.createCustomers(it) }
         }
         jop.invokeOnCompletion {
                 postResult.postValue(customerx)

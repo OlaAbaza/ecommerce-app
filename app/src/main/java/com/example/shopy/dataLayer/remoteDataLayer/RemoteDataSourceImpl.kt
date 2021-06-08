@@ -80,6 +80,11 @@ class RemoteDataSourceImpl : RemoteDataSource {
             if (response.isSuccessful) {
                 return response.body()
             }
+            else{
+                val jObjError =
+                    JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
+                Timber.i("This  " + jObjError)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -114,6 +119,22 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
                 Timber.i("This  " + jObjError)
 
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
+        return null
+    }
+
+    override suspend fun getCustomerAddress(
+        id: String,
+        addressID: String
+    ): CreateAddressX? {
+        val response = Network.apiService.getCustomerAddress(id,addressID)
+        try {
+            if (response.isSuccessful) {
+                return response.body()
             }
         } catch (e: Exception) {
             e.printStackTrace()

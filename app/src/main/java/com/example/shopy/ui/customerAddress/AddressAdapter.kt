@@ -43,7 +43,7 @@ class AddressAdapter(
             holder.myView.rbtnAddress.isChecked = it
         }
         holder.myView.itemLayout.setOnClickListener {
-          addressViewModel.onItemClick(addressList[position],position)
+          addressViewModel.onItemClick(addressList[position])
         }
         holder.myView.btnDel.setOnClickListener {
             addressViewModel.delItem(addressList[position],position)

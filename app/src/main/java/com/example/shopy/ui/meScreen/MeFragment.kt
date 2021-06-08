@@ -22,7 +22,7 @@ import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -41,6 +41,7 @@ class MeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
+
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
 
@@ -48,7 +49,7 @@ class MeFragment : Fragment() {
 
         val remoteDataSource = RemoteDataSourceImpl()
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,requireActivity().application)
+        val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
         meViewModel = ViewModelProvider(
             requireActivity(),
             viewModelFactory
@@ -127,6 +128,7 @@ class MeFragment : Fragment() {
             bindingMeScreen.wishRecyclerView.visibility= View.INVISIBLE
         }
     }
+
 
     private fun isLoged(): Boolean {
       return meDataSourceReo.loadUsertstate()

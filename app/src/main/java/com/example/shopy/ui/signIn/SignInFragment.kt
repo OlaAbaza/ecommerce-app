@@ -26,8 +26,8 @@ import com.facebook.*
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
-
 
 class SignInFragment : Fragment() {
     companion object {
@@ -41,7 +41,7 @@ class SignInFragment : Fragment() {
     private var email = ""
     lateinit var callbackManager: CallbackManager
     private lateinit var auth: FirebaseAuth
-    private lateinit var  meDataSourceReo : MeDataSharedPrefrenceReposatory
+    private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
 
 
     override fun onCreateView(
@@ -52,12 +52,13 @@ class SignInFragment : Fragment() {
         editor = prefs.edit()
         binding = FragmentSignInBinding.inflate(inflater, container, false)
         val application = requireNotNull(this.activity).application
-        val remoteDataSource = RemoteDataSourceImpl()
 
-        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(application)))
-        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,application)
+        val repository = Repository(
+            RemoteDataSourceImpl(),
+            RoomDataSourceImpl(RoomService.getInstance(application))
+        )
+        val viewModelFactory = ViewModelFactory(repository, application)
         // Initialize Firebase Auth
-
         auth = FirebaseAuth.getInstance()
         signinViewModel =
             ViewModelProvider(
@@ -68,12 +69,12 @@ class SignInFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+       // requireActivity().toolbar.visibility = View.INVISIBLE
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
         signinViewModel.getCustomerList().observe(viewLifecycleOwner, Observer<List<Customer>?> {
-            Log.d("Tag","we lodged")
-
-
+            Timber.i("we lodged")
             val customer: List<Customer> =
                 it.filter {
                     it.email?.toLowerCase() ?: 0 == email
@@ -83,22 +84,15 @@ class SignInFragment : Fragment() {
             if (customer.isEmpty()) {
                 Toast.makeText(context, "you do not have an account", Toast.LENGTH_SHORT).show()
             } else {
-                if(customer.get(0).note==binding.passwordEdt.text.toString()) {
+                if (customer.get(0).note == binding.passwordEdt.text.toString()) {
 
                     meDataSourceReo.saveUsertState(true)
                     meDataSourceReo.saveUsertId(customer[0].id.toString())
                     meDataSourceReo.saveUsertName(customer[0].firstName.toString())
-                    Log.d("Tag","we lodged")
-//                    view.findNavController().currentBackStackEntry
-
-//                    editor.putBoolean("isLogged", true)
-//                    Timber.i("olaakjhd" + customer.get(0).id.toString())
-//                    editor.putString("customerID", customer.get(0).id.toString())
-//                    editor.commit()
+                    Timber.i("we lodged")
+                 ///   view.findNavController().currentBackStackEntry
                     view.findNavController().popBackStack()
-//                        .navigate(SignInFragmentDirections.actionSignInFragmentToHomeFragment())
-                }
-                else{
+                } else {
                     Toast.makeText(context, "incorrect password", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -108,6 +102,7 @@ class SignInFragment : Fragment() {
             email = binding.emailEdt.text.toString().trim()
             signinViewModel.getAllCustomers()
         }
+
         binding.tvSignup.setOnClickListener {
             view.findNavController()
                 .navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
@@ -117,6 +112,7 @@ class SignInFragment : Fragment() {
             val providers = arrayListOf(AuthUI.IdpConfig.GoogleBuilder().build())
             launchSignInFlow(providers)
         }
+
         binding.facebookButton.setOnClickListener {
             val providers = arrayListOf(AuthUI.IdpConfig.FacebookBuilder().build())
             launchSignInFlow(providers)
@@ -165,8 +161,6 @@ class SignInFragment : Fragment() {
                     }
                     else -> {
                         meDataSourceReo.saveUsertState(false)
-//                        editor.putBoolean("isLogged", false)
-//                        editor.commit()
                     }
                 }
             })

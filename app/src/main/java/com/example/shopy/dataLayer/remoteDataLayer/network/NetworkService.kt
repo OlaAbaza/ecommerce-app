@@ -62,6 +62,11 @@ interface NetworkService {
         @Path("address_id") addressID: String,
         @Body customerAddress: UpdateAddresse
     ): Response<CreateAddressX>
+    @GET("customers/{customer_id}/addresses/{address_id}.json")
+    suspend fun getCustomerAddress(
+        @Path("customer_id") id: String,
+        @Path("address_id") addressID: String
+    ): Response<CreateAddressX>
 
     @DELETE(" customers/{customer_id}/addresses/{address_id}.json")
     suspend fun delCustomerAddresses(

@@ -46,7 +46,7 @@ class ProuductDetailsFragment : Fragment() {
         val remoteDataSource = RemoteDataSourceImpl()
 
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-        val viewModelFactory = ViewModelFactory(repository,remoteDataSource,requireActivity().application)
+        val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
         productDetailsViewMode = ViewModelProvider(
             requireActivity(),
             viewModelFactory

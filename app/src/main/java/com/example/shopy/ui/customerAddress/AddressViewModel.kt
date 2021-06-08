@@ -5,28 +5,41 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.Repository
 import com.example.shopy.models.Addresse
 import com.example.shopy.models.CreateAddress
 import com.example.shopy.models.CreateAddressX
 import com.example.shopy.models.UpdateAddresse
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import timber.log.Timber
 
-class AddressViewModel(val remoteDataSource: RemoteDataSourceImpl, application: Application) : AndroidViewModel(application) {
+class AddressViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
 
     private val postCustomerAddress = SingleLiveEvent<Addresse?>()
     private val defaultCustomerAddress = SingleLiveEvent<Addresse?>()
     private val customerAddresses = SingleLiveEvent<List<Addresse>?>()
     private val delListener = SingleLiveEvent<Pair<Addresse?, Int>>()
-    private val navigateListener = SingleLiveEvent<Pair<Addresse?, Int>>()
+    private val navigateListener = SingleLiveEvent<Addresse?>()
     private val dafultListener = SingleLiveEvent<Addresse?>()
+    private val editListener = SingleLiveEvent<Addresse?>()
 
-    fun getdafultAddress(): LiveData<Addresse?> {
-        return dafultListener
+    fun getEditAddress(): LiveData<Addresse?> {
+        return editListener
     }
 
-    fun getAddress(): LiveData<Pair<Addresse?, Int>> {
+
+    fun createCustomerAddress(): LiveData<Addresse?> {
+        return postCustomerAddress
+    }
+
+    fun getdafultAddress(): LiveData<Addresse?> {
+         return dafultListener
+    }
+
+    fun getAddress(): LiveData<Addresse?> {
         return navigateListener
     }
 
@@ -34,13 +47,13 @@ class AddressViewModel(val remoteDataSource: RemoteDataSourceImpl, application: 
         return delListener
     }
 
+
     fun getAddressList(): LiveData<List<Addresse>?> {
         return customerAddresses
     }
 
-    fun onItemClick(addressObj: Addresse, pos: Int) {
-        var pair = Pair(addressObj, pos)
-        navigateListener.value = pair
+    fun onItemClick(addressObj: Addresse) {
+        navigateListener.value = addressObj
     }
 
     fun onCheckBoxClick(addressObj: Addresse) {
@@ -51,12 +64,26 @@ class AddressViewModel(val remoteDataSource: RemoteDataSourceImpl, application: 
         var pair = Pair(addressObj, pos)
         delListener.value = pair
     }
+     fun getCustomerAddress( id: String, addressID: String) {
+         var data: CreateAddressX? = null
+         val jop = viewModelScope.launch {
+             data =
+                 repository.getCustomerAddress(id, addressID)
+         }
+         jop.invokeOnCompletion {
 
+             editListener.postValue(data?.address)
+
+             getCustomersAddressList(id)
+             Timber.i("olaaa+" + data)
+         }
+     }
     fun createCustomersAddress(id: String, addressObj: CreateAddress) {
         var data: CreateAddressX? = null
         val jop = viewModelScope.launch {
             data =
-                remoteDataSource.createCustomerAddress(id, addressObj)
+                repository.createCustomerAddress(id, addressObj)
+
         }
         jop.invokeOnCompletion {
             postCustomerAddress.postValue(data?.address)
@@ -68,7 +95,7 @@ class AddressViewModel(val remoteDataSource: RemoteDataSourceImpl, application: 
     fun getCustomersAddressList(id: String) {
         var data: List<Addresse>? = null
         val jop = viewModelScope.launch {
-            data = remoteDataSource.getCustomerAddresses(id)
+            data = repository.getCustomerAddresses(id)
         }
         jop.invokeOnCompletion {
             customerAddresses.postValue(data)
@@ -81,7 +108,7 @@ class AddressViewModel(val remoteDataSource: RemoteDataSourceImpl, application: 
          var data: CreateAddressX? = null
          val jop = viewModelScope.launch {
              data =
-                 remoteDataSource.updateCustomerAddresses(id, addressID, customerAddress)
+                 repository.updateCustomerAddresses(id, addressID, customerAddress)
          }
          jop.invokeOnCompletion {
 
@@ -94,14 +121,14 @@ class AddressViewModel(val remoteDataSource: RemoteDataSourceImpl, application: 
 
     fun delCustomerAddresses(id: String, addressID: String) {
          viewModelScope.launch {
-            remoteDataSource.delCustomerAddresses(id, addressID)
+            repository.delCustomerAddresses(id, addressID)
         }
     }
 
     fun setDafaultCustomerAddress(id: String, addressID: String) {
         var data: CreateAddressX? = null
         val jop = viewModelScope.launch {
-            remoteDataSource.setDafaultCustomerAddress(id, addressID)
+            repository.setDafaultCustomerAddress(id, addressID)
         }
         jop.invokeOnCompletion {
             defaultCustomerAddress.postValue(data?.address)

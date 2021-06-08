@@ -87,6 +87,9 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:hintTextColor="@color/dark_gray"
+                app:boxStrokeColor="@color/dark_gray"
+                android:textColorHint="@color/dark_gray"
                 app:layout_constraintTop_toBottomOf="@+id/ll_taps"
                 tools:ignore="MissingConstraints">
 
@@ -96,6 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:backgroundTint="@color/white"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:hint="@string/full_name"
                     android:textColorHint="@color/gray" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -105,6 +109,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:hintTextColor="@color/dark_gray"
+                app:boxStrokeColor="@color/dark_gray"
+                android:textColorHint="@color/dark_gray"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_nameField"
                 tools:ignore="MissingConstraints">
@@ -114,6 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:backgroundTint="@color/white"
                     android:hint="@string/email_address"
                     android:textColorHint="@color/gray" />
@@ -126,6 +134,8 @@
                 app:boxStrokeColor="@color/gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:hintTextColor="@color/dark_gray"
+                android:textColorHint="@color/dark_gray"
                 app:layout_constraintTop_toBottomOf="@+id/tv_emailField"
                 app:passwordToggleEnabled="true"
                 tools:ignore="MissingConstraints">
@@ -137,6 +147,7 @@
                     android:layout_margin="10dp"
                     android:backgroundTint="@color/white"
                     android:hint="@string/password"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:inputType="textPassword"
                     android:textColorHint="@color/gray" />
 
@@ -226,7 +237,7 @@
                 android:layout_height="35dp"
                 android:layout_marginStart="130dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/fui_ic_googleg_color_24dp"
+                android:background="@drawable/ic_google"
                 android:padding="10dp"
                 app:layout_constraintEnd_toStartOf="@id/facebook_button"
                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -239,7 +250,7 @@
                 android:layout_height="35dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="120dp"
-                android:src="@drawable/com_facebook_favicon_blue"
+                android:background="@drawable/ic_facebook"
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/google_button"

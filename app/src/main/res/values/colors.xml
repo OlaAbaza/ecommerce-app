@@ -16,7 +16,9 @@
     ////////////////fayza/////////////
 
     ////////////////ola/////////////
-<!--    <color name="gray">#757777</color>-->
+   <color name="dark_gray">#757777</color>
     <color name="light_gray">#DFDFDF</color>
+    <color name="ligtt_blue">#666EFB</color>
+    <color name="red">#EC7373</color>
     ////////////////abdelrahman/////////////
 </resources>
