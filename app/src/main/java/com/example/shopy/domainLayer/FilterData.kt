@@ -12,17 +12,7 @@ class FilterData {
         }
 
         fun getUnPaidData(orders: List<GetOrders.Order?>): List<GetOrders.Order?> {
-            return orders.filter { it!!.customer?.id == 5248282788038 }
+            return orders.filter { it!!.financial_status == "pending" }
         }
     }
 }
-
-
-
-//            orders.forEach(){item ->
-//                if (item?.customer!!.id == 5248282788038){
-//                    filteredList.add(item)
-//                    Log.d("TAG","${item.toString()}")
-//                    Log.d("TAG","${filteredList.size}")
-//                }
-//                Log.d("Tag","bhjm")
