@@ -1,4 +1,4 @@
-package com.example.shopy.datalayer.localdatabase.sharedPrefrence
+package com.example.shopy.datalayer.sharedprefrence
 
 import android.content.Context
 import android.content.SharedPreferences

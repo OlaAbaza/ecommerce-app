@@ -16,7 +16,7 @@ import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCartBinding
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.*
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -64,14 +64,14 @@ class CartFragment : Fragment() {
         requireActivity().toolbar_title.text = "Card Bag"
 
         customerID = meDataSourceReo.loadUsertId()
-        var customerOrder = CustomerOrder(customerID.toLong())
-        var lineItem: MutableList<LineItem> = arrayListOf()
-        lineItem.add(LineItem(1, 39853306642630))
-        var order = Order(customerOrder, "pending", lineItem)
-        var orders = Orders(order)
-        binding.checkoutButton.setOnClickListener {
-            orderViewModel.createOrder(orders)
-        }
+//        var customerOrder = CustomerOrder(customerID.toLong())
+//        var lineItem: MutableList<LineItem> = arrayListOf()
+//        lineItem.add(LineItem(1, 39853306642630))
+//        var order = Order(customerOrder, "pending", lineItem)
+//        var orders = Orders(order)
+//        binding.checkoutButton.setOnClickListener {
+//            orderViewModel.createOrder(orders)
+//        }
         orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<OrderResponse?>
         {
 

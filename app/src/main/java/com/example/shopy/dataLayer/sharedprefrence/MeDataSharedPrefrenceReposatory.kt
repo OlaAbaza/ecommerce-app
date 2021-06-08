@@ -1,7 +1,8 @@
-package com.example.shopy.datalayer.localdatabase.sharedPrefrence
+package com.example.shopy.datalayer.sharedprefrence
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrence
 
 
 class MeDataSharedPrefrenceReposatory(context: Context) {

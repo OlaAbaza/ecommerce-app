@@ -23,7 +23,7 @@ import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.CustomerX
 
 import com.firebase.ui.auth.AuthUI

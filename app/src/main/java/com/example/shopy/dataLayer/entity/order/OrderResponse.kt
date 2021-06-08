@@ -6,6 +6,12 @@ import com.google.gson.annotations.SerializedName
 data class OrderResponse(
     val order: OrderX?
 )
+data class OrdersGetResponse(
+    val orders: List<OrderX>?
+)
+data class OrdersResponse(
+    val response: OrdersGetResponse
+)
 data class OrderX(
     @SerializedName("admin_graphql_api_id")
     val adminGraphqlApiId: String?,

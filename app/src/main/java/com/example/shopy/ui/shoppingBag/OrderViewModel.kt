@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.shopy.base.SingleLiveEvent
 import com.example.shopy.dataLayer.Repository
-import com.example.shopy.datalayer.localdatabase.room.cartBag.CartRoomRepository
+
 
 import kotlinx.coroutines.launch
 
@@ -14,7 +14,7 @@ import timber.log.Timber
 
 class OrderViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
     private val postOrder = SingleLiveEvent<OrderResponse?>()
-    private val cartRoom  = CartRoomRepository(application)
+ //   private val cartRoom  = CartRoomRepository(application)
     fun getPostOrder(): LiveData<OrderResponse?> {
         return postOrder
     }
