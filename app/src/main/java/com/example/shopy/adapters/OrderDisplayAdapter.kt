@@ -10,16 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.shopy.R
 import com.example.shopy.dataLayer.entity.orderGet.GetOrders
 
-class OrderDisplayAdapter(list: List<GetOrders.Order>, payNowMutableData: MutableLiveData<GetOrders.Order>, cancelMutableData: MutableLiveData<GetOrders.Order>) : RecyclerView.Adapter<OrderDisplayAdapter.ViewHolder>() {
-    var list: List<GetOrders.Order> = list
+class OrderDisplayAdapter(list:
+                          List<GetOrders.Order?>,
+                          private var payNowMutableData: MutableLiveData<GetOrders.Order>,
+                          private var cancelMutableData: MutableLiveData<GetOrders.Order>
+) : RecyclerView.Adapter<OrderDisplayAdapter.ViewHolder>() {
+    var list:
+            List<GetOrders.Order?> = list
     set(value) {
         field=value
         notifyDataSetChanged()
     }
-    var payNowMutableData: MutableLiveData<GetOrders.Order> = payNowMutableData
-
-    var cancelMutableData: MutableLiveData<GetOrders.Order> = cancelMutableData
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,11 +46,11 @@ class OrderDisplayAdapter(list: List<GetOrders.Order>, payNowMutableData: Mutabl
         private val textId = itemView.findViewById<TextView>(R.id.orderIdEditable)
         private val textPrice = itemView.findViewById<TextView>(R.id.totalPriceEditable)
         private val currencyCode = itemView.findViewById<TextView>(R.id.currency_code)
-        private val createdAt = itemView.findViewById<TextView>(R.id.created_at)
+        private val createdAt = itemView.findViewById<TextView>(R.id.createdAtEditable)
          val payNow: Button = itemView.findViewById(R.id.payButton)
          val cancel: Button = itemView.findViewById(R.id.cancelButton)
-        fun binding(order: GetOrders.Order) {
-            textId.text = order.id.toString()
+        fun binding(order: GetOrders.Order?) {
+            textId.text = order!!.id.toString()
             textPrice.text = order.total_price?:"not known"
             currencyCode.text = order.presentment_currency?:"not known"
             createdAt.text = order.created_at?:"not known"

@@ -110,6 +110,7 @@
     <string name="cancel">Cancel</string>
     <string name="pay_now">Pay Now</string>
     <string name="image">Image</string>
+    <string name="all_orders">All Orders</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">
