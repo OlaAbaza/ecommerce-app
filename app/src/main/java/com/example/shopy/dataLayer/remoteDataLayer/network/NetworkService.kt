@@ -1,5 +1,6 @@
 package com.example.shopy.datalayer.network
 
+import com.example.shopy.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.ProductsList
@@ -90,7 +91,8 @@ interface NetworkService {
     fun getOneProduct(@Path("id") id: Long) : Call<ProductItem>
 
 
-    @GET("products/orders.json?status=any")
-    fun getAllOrders() : Observable<List<OrderResponse>>
+    @GET("orders.json")
+//    fun getAllOrders() : Call<GetOrders>
+    fun getAllOrders() : Observable<GetOrders>
 
 }

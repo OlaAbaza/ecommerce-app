@@ -22,7 +22,7 @@ import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.datalayer.localdatabase.sharedPrefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import kotlinx.android.synthetic.main.activity_main.*
 
 

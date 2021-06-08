@@ -7,6 +7,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.Product
@@ -398,9 +399,12 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return allProducts
     }
 
-    override fun getAllOrders(): Observable<List<OrderResponse>> {
-       return Network.apiService.getAllOrders()
+    override fun getAllOrders(): Observable<GetOrders> {
+        return Network.apiService.getAllOrders()
+
     }
-
-
+//    override fun getAllOrders(): Call<GetOrders> {
+//        return Network.apiService.getAllOrders()
+//
+//    }
 }

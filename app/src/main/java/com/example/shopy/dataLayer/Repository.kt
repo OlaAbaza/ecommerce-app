@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSource
 import com.example.shopy.datalayer.entity.custom_product.Product
@@ -11,9 +12,7 @@ import com.example.shopy.datalayer.entity.itemPojo.OrderObject
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.datalayer.network.Network
-import com.example.shopy.models.CreateAddressX
-import com.example.shopy.models.OrderResponse
-import com.example.shopy.models.Orders
+import com.example.shopy.models.*
 import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Callback
@@ -142,7 +141,10 @@ class Repository(
 
     fun getOneWithItem(id: Long) = roomDataSourceImpl.getOneWithItem(id)
 
-     fun getAllOrders(): Observable<List<OrderResponse>> {
+//     fun getAllOrders(): Call<GetOrders>{
+//        return remoteDataSource.getAllOrders()
+//    }
+     fun getAllOrders(): Observable<GetOrders>{
         return remoteDataSource.getAllOrders()
     }
 }
