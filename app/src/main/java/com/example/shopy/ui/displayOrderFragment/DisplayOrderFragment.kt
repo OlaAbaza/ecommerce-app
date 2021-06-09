@@ -2,32 +2,44 @@ package com.example.shopy.ui.displayOrderFragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.shopy.R
 import com.example.shopy.adapters.OrderDisplayAdapter
+import com.example.shopy.base.StringsUtils
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentDisplayOrderBinding
 import com.example.shopy.datalayer.localdatabase.room.RoomService
+import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 
 
 class DisplayOrderFragment : Fragment() {
+
+    private var tabId: Int = 0
+    private var userID: Long = 0
+
     @SuppressLint("LogNotTimber")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = FragmentDisplayOrderBinding.inflate(inflater, container, false)
+        val view: FragmentDisplayOrderBinding = FragmentDisplayOrderBinding.inflate(
+            inflater,
+            container,
+            false
+        )
 
 
         val remoteDataSource = RemoteDataSourceImpl()
@@ -37,13 +49,38 @@ class DisplayOrderFragment : Fragment() {
                 RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
             ), remoteDataSource, requireActivity().application
         )
+
+
         val displayOrderViewModel: DisplayOrderViewModel = ViewModelProvider(
             requireActivity(),
             viewModelFactory
         )[DisplayOrderViewModel::class.java]
 
 
-        val adapter=WeakReference(
+        val meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
+        userID = meDataSourceReo.loadUsertId().toLong()
+
+//        tabId =//
+        if (savedInstanceState == null) {
+            userID = meDataSourceReo.loadUsertId().toLong()
+            val args: DisplayOrderFragmentArgs by navArgs()
+            tabId = args.tabID
+        } else {
+
+            userID = savedInstanceState.getLong(StringsUtils.userID)
+            tabId = savedInstanceState.getInt(StringsUtils.tabID)
+        }
+
+
+
+        view.tapLayout.getTabAt(tabId)?.select()
+        if (tabId == 0) {
+            displayOrderViewModel.getPaidOrders(userID)
+        } else {
+            displayOrderViewModel.getUnPaidOrders(userID)
+        }
+
+        val adapter = WeakReference(
             OrderDisplayAdapter(
                 ArrayList(),
                 displayOrderViewModel.payNowMutableData,
@@ -55,15 +92,48 @@ class DisplayOrderFragment : Fragment() {
             this.adapter = adapter
         }
 
-        displayOrderViewModel.getAllOrders()
+
+        requireActivity().toolbar_title.text = getString(R.string.my_orders)
+
+
+
+
         displayOrderViewModel.orders.observe(viewLifecycleOwner, {
-            Log.d("TAG","\ndata is here${it.size}\n")
             adapter!!.list = it
         })
 
 
 
+        view.tapLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+
+                when (tab.position) {
+                    0 -> displayOrderViewModel.getPaidOrders(userID)
+                    1 -> displayOrderViewModel.getUnPaidOrders(userID)
+                }
+
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+
+        })
+
+
+
+
+
         return view.root
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(StringsUtils.tabID, tabId)
+        outState.putLong(StringsUtils.userID, userID)
     }
 
 

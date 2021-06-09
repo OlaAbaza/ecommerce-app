@@ -97,13 +97,7 @@ class MeFragment : Fragment() {
 
 
         bindingMeScreen.unPaied.setOnClickListener {
-//            val action = NavGraphDirections.actionGlobalDisplayOrderFragment()
-            findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment())
-//            meDataSourceReo.saveUsertState(false)
-//            meDataSourceReo.saveUsertName("")
-//            meDataSourceReo.saveUsertId("")
-//            handelVisability()
-//            AuthUI.getInstance().signOut(requireContext())
+            findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(1))
         }
 
 

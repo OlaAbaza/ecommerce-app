@@ -24,11 +24,16 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
     var payNowMutableData: MutableLiveData<GetOrders.Order> = MutableLiveData()
     var cancelMutableData: MutableLiveData<GetOrders.Order> = MutableLiveData()
 
-    fun getAllOrders() {
+
+    fun getPaidOrders(userId: Long) {
         disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
-                orders.postValue(FilterData.getAllData(vehicles.orders!!))
+                orders.postValue(
+                    FilterData.getPaidData(
+                        FilterData.getAllData(vehicles.orders!!, userId)
+                    )
+                )
 
             }, { error ->
                 //todo
@@ -41,5 +46,19 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
         if (!disposable.isDisposed) {
             disposable.dispose()
         }
+    }
+
+    fun getUnPaidOrders(userId: Long) {
+        disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(IoScheduler())
+            .subscribe({ vehicles ->
+                orders.postValue(
+                    FilterData.getUnPaidData(
+                        FilterData.getAllData(vehicles.orders!!, userId)
+                    )
+                )
+            }, { error ->
+                //todo
+            })
     }
 }

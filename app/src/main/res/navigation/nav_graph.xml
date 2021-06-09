@@ -123,7 +123,12 @@
     <fragment
         android:id="@+id/displayOrderFragment"
         android:name="com.example.shopy.ui.displayOrderFragment.DisplayOrderFragment"
-        android:label="DisplayOrderFragment" /><action android:id="@+id/action_global_displayOrderFragment" app:destination="@id/displayOrderFragment"/>
+        android:label="DisplayOrderFragment" >
+        <argument
+            android:name="tabID"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment><action android:id="@+id/action_global_displayOrderFragment" app:destination="@id/displayOrderFragment"/>
     <!--    <activity-->
 <!--        android:id="@+id/mainActivity"-->
 <!--        android:name="com.example.shopy.ui.MainActivity"-->
