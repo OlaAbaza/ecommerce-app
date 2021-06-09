@@ -17,6 +17,7 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
     var payNowMutableData: MutableLiveData<GetOrders.Order> = MutableLiveData()
     var cancelMutableData: MutableLiveData<GetOrders.Order> = MutableLiveData()
     var error: MutableLiveData<Boolean> = MutableLiveData()
+    var deleteOrder: MutableLiveData<Boolean> = MutableLiveData()
 
 
     fun getPaidOrders( userId: Long) {
@@ -57,4 +58,10 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
                 this.error.postValue(true)
             })
     }
+
+    fun deleteOrder(order_id: Long): MutableLiveData<Boolean> {
+      deleteOrder =   repository.deleteOrder(order_id)
+        return deleteOrder
+    }
+
 }

@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +32,7 @@ class DisplayOrderFragment : Fragment() {
 
     private var tabId: Int = 0
     private var userID: Long = 0
-
+    private lateinit var displayOrderViewModel: DisplayOrderViewModel
     @SuppressLint("LogNotTimber")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +54,7 @@ class DisplayOrderFragment : Fragment() {
         )
 
 
-        val displayOrderViewModel: DisplayOrderViewModel = ViewModelProvider(
+         displayOrderViewModel = ViewModelProvider(
             requireActivity(),
             viewModelFactory
         )[DisplayOrderViewModel::class.java]
@@ -75,15 +77,10 @@ class DisplayOrderFragment : Fragment() {
 
 
         view.tapLayout.getTabAt(tabId)?.select()
-        if (tabId == 0) {
-            displayOrderViewModel.getPaidOrders(userID)
-            view.progressPar.visibility = View.VISIBLE
 
-        } else {
-            displayOrderViewModel.getUnPaidOrders(userID)
-            view.progressPar.visibility = View.VISIBLE
+        //make new call to update view with the new data
+        callOrders(displayOrderViewModel,view)
 
-        }
 
         val adapter = WeakReference(
             OrderDisplayAdapter(
@@ -142,9 +139,20 @@ class DisplayOrderFragment : Fragment() {
 
         displayOrderViewModel.error.observe(viewLifecycleOwner,{
             if (it){
-                Toast.makeText(requireContext(),"Some error accurate",Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),getString(R.string.some_error_accurated),Toast.LENGTH_SHORT).show()
                 displayOrderViewModel.error.value=false
             }
+        })
+
+        displayOrderViewModel.cancelMutableData.observe(viewLifecycleOwner,{
+            deleteAlert(displayOrderViewModel,it.id?:0)
+        })
+
+        displayOrderViewModel.deleteOrder.observe(viewLifecycleOwner,{
+            Toast.makeText(requireContext(),getString(R.string.order_canceld),Toast.LENGTH_SHORT).show()
+
+            //make new call to update view with the new data after cancel order
+            callOrders(displayOrderViewModel,view)
         })
 
 
@@ -157,6 +165,42 @@ class DisplayOrderFragment : Fragment() {
         super.onSaveInstanceState(outState)
         outState.putInt(StringsUtils.tabID, tabId)
         outState.putLong(StringsUtils.userID, userID)
+    }
+
+    private fun callOrders(displayOrderViewModel: DisplayOrderViewModel, view: FragmentDisplayOrderBinding){
+
+        if (tabId == 0) {
+            displayOrderViewModel.getPaidOrders(userID)
+            view.progressPar.visibility = View.VISIBLE
+
+        } else {
+            displayOrderViewModel.getUnPaidOrders(userID)
+            view.progressPar.visibility = View.VISIBLE
+        }
+    }
+
+
+    private fun deleteAlert(displayOrderViewModel: DisplayOrderViewModel, order_id : Long){
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.cancel_order))
+        builder.setMessage(getString(R.string.are_you_sure))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+
+        builder.setPositiveButton("Yes"){_, _ ->
+            displayOrderViewModel.deleteOrder(order_id)
+        }
+
+        builder.setNegativeButton("No"){_, _ ->
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        displayOrderViewModel.deleteOrder = MutableLiveData()
     }
 
 

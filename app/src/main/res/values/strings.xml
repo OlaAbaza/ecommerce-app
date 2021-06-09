@@ -112,6 +112,9 @@
     <string name="image">Image</string>
     <string name="all_orders">All Orders</string>
     <string name="paid_orders">Paid Orders</string>
+    <string name="order_canceld">order canceled</string>
+    <string name="some_error_accurated">Some error accurate</string>
+    <string name="cancel_order">Cancel Order</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

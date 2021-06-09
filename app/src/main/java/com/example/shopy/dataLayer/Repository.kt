@@ -147,4 +147,8 @@ class Repository(
      fun getAllOrders(): Observable<GetOrders>{
         return remoteDataSource.getAllOrders()
     }
+
+     fun deleteOrder(order_id: Long) = remoteDataSource.deleteOrder(order_id)
+
+
 }
