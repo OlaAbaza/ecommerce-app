@@ -112,10 +112,10 @@ class MeFragment : Fragment() {
         return bindingMeScreen.root
     }
 
-    @SuppressLint("LogNotTimber")
+    @SuppressLint("LogNotTimber", "SetTextI18n")
     private fun handelVisability() {
         if (isLoged()){
-            bindingMeScreen.hiText.text = meDataSourceReo.loadUsertName()
+            bindingMeScreen.hiText.text = "Hi! ${meDataSourceReo.loadUsertName()}"
             bindingMeScreen.hiText.visibility = View.VISIBLE
             bindingMeScreen.wishRecyclerView.visibility= View.VISIBLE
             bindingMeScreen.regesterAndLogin.visibility=View.INVISIBLE
