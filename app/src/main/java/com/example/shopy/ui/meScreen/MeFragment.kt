@@ -99,6 +99,9 @@ class MeFragment : Fragment() {
         bindingMeScreen.unPaied.setOnClickListener {
             findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(1))
         }
+        bindingMeScreen.paidLayout.setOnClickListener {
+            findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(0))
+        }
 
 
         meViewModel.deleteItem.observe(viewLifecycleOwner,{
@@ -146,7 +149,7 @@ class MeFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.Delete_Item_From_Wish_List))
         builder.setMessage(getString(R.string.are_you_sure))
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setIcon(android.R.drawable.ic_delete)
 
         builder.setPositiveButton("Yes"){_, _ ->
             meViewModel.deleteOneItemFromWishList(id)

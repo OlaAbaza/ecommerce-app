@@ -255,68 +255,68 @@
                 </LinearLayout>
 
 
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/processing"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="vertical"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/hiText"-->
+<!--                    tools:ignore="UseCompoundDrawables">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:contentDescription="@string/processing"-->
+<!--                        android:fontFamily="serif"-->
+<!--                        android:src="@drawable/ic_processing" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="serif"-->
+<!--                        android:gravity="bottom"-->
+<!--                        android:paddingTop="20dp"-->
+<!--                        android:text="@string/processing"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp" />-->
+<!--                </LinearLayout>-->
+
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/shipping"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:gravity="center"-->
+<!--                    android:orientation="vertical"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/hiText"-->
+<!--                    tools:ignore="UseCompoundDrawables">-->
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:contentDescription="@string/wallet"-->
+<!--                        android:src="@drawable/ic_shipping" />-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:fontFamily="serif"-->
+<!--                        android:gravity="bottom"-->
+<!--                        android:paddingTop="20dp"-->
+<!--                        android:text="@string/shipping"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:textSize="12sp"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--                </LinearLayout>-->
+
+
                 <LinearLayout
-                    android:id="@+id/processing"
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/hiText"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/processing"
-                        android:fontFamily="serif"
-                        android:src="@drawable/ic_processing" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="serif"
-                        android:gravity="bottom"
-                        android:paddingTop="20dp"
-                        android:text="@string/processing"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/shipping"
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/hiText"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/wallet"
-                        android:src="@drawable/ic_shipping" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="serif"
-                        android:gravity="bottom"
-                        android:paddingTop="20dp"
-                        android:text="@string/shipping"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/returnsLayout"
+                    android:id="@+id/paidLayout"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
@@ -329,7 +329,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/returns"
-                        android:src="@drawable/ic_returns"
+                        android:src="@drawable/ic_black_money_24"
                         android:text="@string/_1" />
 
                     <TextView
@@ -338,7 +338,7 @@
                         android:fontFamily="serif"
                         android:gravity="bottom"
                         android:paddingTop="20dp"
-                        android:text="@string/returns"
+                        android:text="@string/paid_orders"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
