@@ -1,21 +1,14 @@
 package com.example.shopy.ui.displayOrderFragment
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.entity.orderGet.GetOrders
-import com.example.shopy.datalayer.network.Network
 import com.example.shopy.domainLayer.FilterData
-import com.example.shopy.models.OrderResponse
-import com.example.shopy.models.OrdersGetResponse
-import com.example.shopy.models.OrdersResponse
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
-import retrofit2.Call
 
 class DisplayOrderViewModel(val repository: Repository, application: Application) :
     AndroidViewModel(application) {
@@ -23,20 +16,22 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
     var orders: MutableLiveData<List<GetOrders.Order?>> = MutableLiveData()
     var payNowMutableData: MutableLiveData<GetOrders.Order> = MutableLiveData()
     var cancelMutableData: MutableLiveData<GetOrders.Order> = MutableLiveData()
+    var error: MutableLiveData<Boolean> = MutableLiveData()
 
 
-    fun getPaidOrders(userId: Long) {
+    fun getPaidOrders( userId: Long) {
         disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
                 orders.postValue(
                     FilterData.getPaidData(
                         FilterData.getAllData(vehicles.orders!!, userId)
+//                        FilterData.getAllData(vehicles.orders!!, userId)
                     )
                 )
 
             }, { error ->
-                //todo
+                this.error.postValue(true)
             })
 
     }
@@ -49,6 +44,7 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
     }
 
     fun getUnPaidOrders(userId: Long) {
+
         disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
@@ -58,7 +54,7 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
                     )
                 )
             }, { error ->
-                //todo
+                this.error.postValue(true)
             })
     }
 }

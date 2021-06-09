@@ -54,6 +54,11 @@ class OrderDisplayAdapter(list:
             textPrice.text = order.total_price?:"not known"
             currencyCode.text = order.presentment_currency?:"not known"
             createdAt.text = order.created_at?:"not known"
+
+            if (order.financial_status == "paid"){
+                payNow.visibility=View.GONE
+                cancel.visibility=View.GONE
+            }
         }
 
     }}

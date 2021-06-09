@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -76,8 +77,12 @@ class DisplayOrderFragment : Fragment() {
         view.tapLayout.getTabAt(tabId)?.select()
         if (tabId == 0) {
             displayOrderViewModel.getPaidOrders(userID)
+            view.progressPar.visibility = View.VISIBLE
+
         } else {
             displayOrderViewModel.getUnPaidOrders(userID)
+            view.progressPar.visibility = View.VISIBLE
+
         }
 
         val adapter = WeakReference(
@@ -100,6 +105,12 @@ class DisplayOrderFragment : Fragment() {
 
         displayOrderViewModel.orders.observe(viewLifecycleOwner, {
             adapter!!.list = it
+            view.progressPar.visibility = View.GONE
+            if (it.isEmpty()){
+                view.emptyAnimationView.visibility=View.VISIBLE
+            }else{
+                view.emptyAnimationView.visibility=View.GONE
+            }
         })
 
 
@@ -108,8 +119,14 @@ class DisplayOrderFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab) {
 
                 when (tab.position) {
-                    0 -> displayOrderViewModel.getPaidOrders(userID)
-                    1 -> displayOrderViewModel.getUnPaidOrders(userID)
+                    0 -> {
+                        displayOrderViewModel.getPaidOrders(userID)
+                        view.progressPar.visibility = View.VISIBLE
+                    }
+                    1 -> {
+                        displayOrderViewModel.getUnPaidOrders(userID)
+                        view.progressPar.visibility = View.VISIBLE
+                    }
                 }
 
             }
@@ -123,6 +140,12 @@ class DisplayOrderFragment : Fragment() {
         })
 
 
+        displayOrderViewModel.error.observe(viewLifecycleOwner,{
+            if (it){
+                Toast.makeText(requireContext(),"Some error accurate",Toast.LENGTH_SHORT).show()
+                displayOrderViewModel.error.value=false
+            }
+        })
 
 
 
