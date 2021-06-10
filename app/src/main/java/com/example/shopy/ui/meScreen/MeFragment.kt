@@ -2,7 +2,6 @@ package com.example.shopy.ui.meScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,6 @@ import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MeFragment : Fragment() {
@@ -42,13 +40,14 @@ class MeFragment : Fragment() {
     ): View {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
-
-
         handelVisability()
-
         val remoteDataSource = RemoteDataSourceImpl()
-        val viewModelFactory = ViewModelFactory(Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-            ,remoteDataSource,requireActivity().application)
+        val viewModelFactory = ViewModelFactory(
+            Repository(
+                RemoteDataSourceImpl(),
+                RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
+            ), remoteDataSource, requireActivity().application
+        )
         meViewModel = ViewModelProvider(
             requireActivity(),
             viewModelFactory
@@ -58,7 +57,6 @@ class MeFragment : Fragment() {
         wishListData = ArrayList()
 
 
-        requireActivity().toolbar_title.text = getString(R.string.me)
 
         bindingMeScreen.regesterAndLogin.setOnClickListener {
             val action = NavGraphDirections.actionGlobalSignInFragment()
@@ -66,7 +64,8 @@ class MeFragment : Fragment() {
         }
 
 
-        withListAdapter = WishListAdaper(wishListData, meViewModel.intentTOProductDetails,meViewModel.deleteItem)
+        withListAdapter =
+            WishListAdaper(wishListData, meViewModel.intentTOProductDetails, meViewModel.deleteItem)
         bindingMeScreen.wishRecyclerView.apply {
             this.adapter = withListAdapter
             this.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -104,8 +103,18 @@ class MeFragment : Fragment() {
         }
 
 
-        meViewModel.deleteItem.observe(viewLifecycleOwner,{
+        meViewModel.deleteItem.observe(viewLifecycleOwner, {
             deleteAlert(it.id)
+        })
+
+
+        meViewModel.getPaidOrders(meDataSourceReo.loadUsertId().toLong())
+        meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
+        meViewModel.paidOrders.observe(viewLifecycleOwner, {
+            bindingMeScreen.paidNumbers.text = it.toString()
+        })
+        meViewModel.unPaidOrders.observe(viewLifecycleOwner, {
+            bindingMeScreen.UnPaidNumbers.text = it.toString()
         })
 
 
@@ -114,22 +123,29 @@ class MeFragment : Fragment() {
 
     @SuppressLint("LogNotTimber", "SetTextI18n")
     private fun handelVisability() {
-        if (isLoged()){
+        if (isLoged()) {
             bindingMeScreen.hiText.text = "Hi! ${meDataSourceReo.loadUsertName()}"
             bindingMeScreen.hiText.visibility = View.VISIBLE
-            bindingMeScreen.wishRecyclerView.visibility= View.VISIBLE
-            bindingMeScreen.regesterAndLogin.visibility=View.INVISIBLE
-            Log.d("TAG","VISIBLE")
-        }else{
-            Log.d("TAG","GONE")
-            bindingMeScreen.regesterAndLogin.visibility=View.VISIBLE
+            bindingMeScreen.wishRecyclerView.visibility = View.VISIBLE
+            bindingMeScreen.regesterAndLogin.visibility = View.INVISIBLE
+            bindingMeScreen.paidNumbers.visibility = View.VISIBLE
+            bindingMeScreen.seeAllText.visibility = View.VISIBLE
+            bindingMeScreen.seeAllArrow.visibility = View.VISIBLE
+            bindingMeScreen.pleaseLogIn.visibility=View.INVISIBLE
+        } else {
+            bindingMeScreen.regesterAndLogin.visibility = View.VISIBLE
             bindingMeScreen.hiText.visibility = View.INVISIBLE
-            bindingMeScreen.wishRecyclerView.visibility= View.INVISIBLE
+            bindingMeScreen.wishRecyclerView.visibility = View.INVISIBLE
+            bindingMeScreen.paidNumbers.visibility = View.INVISIBLE
+            bindingMeScreen.seeAllText.visibility = View.INVISIBLE
+            bindingMeScreen.seeAllArrow.visibility = View.INVISIBLE
+            bindingMeScreen.pleaseLogIn.visibility=View.VISIBLE
+
         }
     }
 
     private fun isLoged(): Boolean {
-      return meDataSourceReo.loadUsertstate()
+        return meDataSourceReo.loadUsertstate()
     }
 
     override fun onStop() {
@@ -143,7 +159,7 @@ class MeFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun deleteAlert(id: Long){
+    private fun deleteAlert(id: Long) {
 
 
         val builder = AlertDialog.Builder(requireContext())
@@ -151,12 +167,12 @@ class MeFragment : Fragment() {
         builder.setMessage(getString(R.string.are_you_sure))
         builder.setIcon(android.R.drawable.ic_delete)
 
-        builder.setPositiveButton("Yes"){_, _ ->
+        builder.setPositiveButton("Yes") { _, _ ->
             meViewModel.deleteOneItemFromWishList(id)
-                    meViewModel.deleteItem = MutableLiveData<Product>()
+            meViewModel.deleteItem = MutableLiveData<Product>()
         }
 
-        builder.setNegativeButton("No"){_, _ ->
+        builder.setNegativeButton("No") { _, _ ->
             meViewModel.deleteItem = MutableLiveData<Product>()
         }
         // Create the AlertDialog

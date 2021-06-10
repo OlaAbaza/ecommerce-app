@@ -27,7 +27,6 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
                 orders.postValue(
                     FilterData.getPaidData(
                         FilterData.getAllData(vehicles.orders!!, userId)
-//                        FilterData.getAllData(vehicles.orders!!, userId)
                     )
                 )
 

@@ -115,6 +115,7 @@
     <string name="order_canceld">order canceled</string>
     <string name="some_error_accurated">Some error accurate</string>
     <string name="cancel_order">Cancel Order</string>
+    <string name="please_log_in">Log In to can see wish list</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">
