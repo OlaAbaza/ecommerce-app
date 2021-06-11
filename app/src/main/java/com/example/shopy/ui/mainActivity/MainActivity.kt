@@ -1,22 +1,36 @@
-package com.example.shopy.ui
+package com.example.shopy.ui.mainActivity
 
 import android.app.SearchManager
 import android.content.Context
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.shopy.R
+import com.example.shopy.adapters.CartNotificationAdapter
+import com.example.shopy.adapters.WishListAdapter
+import com.example.shopy.adapters.WishListIconAdapter
 import com.example.shopy.base.NetworkChangeReceiver
+import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.datalayer.localdatabase.room.RoomService
+import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.ui.meScreen.MeViewModel
 import com.example.shopy.ui.shopTab.search.ShopSearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,8 +38,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    //    private lateinit var navController: NavController
-//    private lateinit var appBarConfiguration: AppBarConfiguration
     private var navHostFragment: Fragment? = null
     private var navController: NavController? = null
     val netwokRecever = NetworkChangeReceiver()
@@ -47,15 +59,47 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        //fav
-        val imageButton = toolbar.findViewById(R.id.favourite) as ImageButton
+//        //fav
+//        val imageButton = toolbar.findViewById(R.id.favourite) as View
 
-        imageButton.setOnClickListener {
+
+
+        val wishLiIconAdapter : WishListIconAdapter = WishListIconAdapter(findViewById(R.id.favourite))
+        val cartIconAdapter : CartNotificationAdapter = CartNotificationAdapter(findViewById(R.id.cartView))
+        val remoteDataSource = RemoteDataSourceImpl()
+        val viewModelFactory = ViewModelFactory(
+            Repository(
+                RemoteDataSourceImpl(),
+                RoomDataSourceImpl(RoomService.getInstance(this.application))
+            ), remoteDataSource, this.application
+        )
+        val  viewModel = ViewModelProvider(
+            this,
+            viewModelFactory
+        )[MainActivityViewModel::class.java]
+
+        viewModel.getAllWishList().observe(this,{
+            Log.d("Tag","${it.size}")
+            wishLiIconAdapter.updateView(it.size)
+        })
+        wishLiIconAdapter.favouriteButton.setOnClickListener {
             navHostFragment = fragment as NavHostFragment
             val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
             val navGraph = graphInflater.inflate(R.navigation.nav_graph)
             navController = (navHostFragment as NavHostFragment).navController
             navGraph.startDestination = R.id.allWishListFragment
+            navController!!.graph = navGraph
+        }
+
+        viewModel.getAllCartList().observe(this,{
+            cartIconAdapter.updateView(it.size)
+        })
+        cartIconAdapter.favouriteButton.setOnClickListener {
+            navHostFragment = fragment as NavHostFragment
+            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
+            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+            navController = (navHostFragment as NavHostFragment).navController
+            navGraph.startDestination = R.id.cartFragment2
             navController!!.graph = navGraph
         }
 
@@ -85,16 +129,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.cart -> {
-
-                navHostFragment = fragment as NavHostFragment
-                val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
-                val navGraph = graphInflater.inflate(R.navigation.nav_graph)
-                navController = (navHostFragment as NavHostFragment).navController
-                navGraph.startDestination = R.id.cartFragment2
-                navController!!.graph = navGraph
-                true
-            }
+//            R.id.cart -> {
+//
+//                navHostFragment = fragment as NavHostFragment
+//                val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
+//                val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+//                navController = (navHostFragment as NavHostFragment).navController
+//                navGraph.startDestination = R.id.cartFragment2
+//                navController!!.graph = navGraph
+//                true
+//            }
             else -> super.onOptionsItemSelected(item)
         }
     }

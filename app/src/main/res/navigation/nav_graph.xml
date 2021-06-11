@@ -131,7 +131,7 @@
     </fragment><action android:id="@+id/action_global_displayOrderFragment" app:destination="@id/displayOrderFragment"/>
     <!--    <activity-->
 <!--        android:id="@+id/mainActivity"-->
-<!--        android:name="com.example.shopy.ui.MainActivity"-->
+<!--        android:name="com.example.shopy.ui.mainActivity.MainActivity"-->
 <!--        android:label="activity_main"-->
 <!--        tools:layout="@layout/activity_main" >-->
 <!--        <action-->

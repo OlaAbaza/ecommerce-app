@@ -65,7 +65,6 @@ class MeViewModel(val repository: Repository, application: Application): Android
     }
 
     fun getUnPaidOrders(userId: Long) {
-
         disposableUnPaidOrder = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->

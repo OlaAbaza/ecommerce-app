@@ -63,7 +63,7 @@ class DisplayOrderFragment : Fragment() {
         val meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
         userID = meDataSourceReo.loadUsertId().toLong()
 
-//        tabId =//
+
         if (savedInstanceState == null) {
             userID = meDataSourceReo.loadUsertId().toLong()
             val args: DisplayOrderFragmentArgs by navArgs()

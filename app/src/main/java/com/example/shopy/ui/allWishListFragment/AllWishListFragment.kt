@@ -8,12 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
-import com.example.shopy.R
-import com.example.shopy.adapters.WishListAdaper
+import com.example.shopy.adapters.WishListAdapter
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -27,7 +25,7 @@ class AllWishListFragment : Fragment() {
 
     private lateinit var bindingAllWishListFragment: FragmentAllWishListBinding
     private lateinit var allWishListFragmentViewModel: AllWishListViewModel
-    lateinit var withListAdapter: WishListAdaper
+    lateinit var withListAdapter: WishListAdapter
     lateinit var wishListData: List<Product>
 
 
@@ -56,7 +54,7 @@ class AllWishListFragment : Fragment() {
         wishListData = ArrayList()
 
         withListAdapter =
-            WishListAdaper(wishListData, allWishListFragmentViewModel.intentTOProductDetails,allWishListFragmentViewModel.deleteItem)
+            WishListAdapter(wishListData, allWishListFragmentViewModel.intentTOProductDetails,allWishListFragmentViewModel.deleteItem)
         bindingAllWishListFragment.wishRecyclerView.apply {
             this.adapter = withListAdapter
             this.layoutManager = GridLayoutManager(requireContext(), 2)

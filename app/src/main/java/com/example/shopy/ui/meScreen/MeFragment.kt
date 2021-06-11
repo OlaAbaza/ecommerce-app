@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
-import com.example.shopy.adapters.WishListAdaper
+import com.example.shopy.adapters.WishListAdapter
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -28,7 +28,7 @@ class MeFragment : Fragment() {
 
 
     private lateinit var bindingMeScreen: FragmentMeBinding
-    private lateinit var withListAdapter: WishListAdaper
+    private lateinit var withListAdapter: WishListAdapter
     private lateinit var wishListData: List<Product>
     private lateinit var meViewModel: MeViewModel
     private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
@@ -65,7 +65,7 @@ class MeFragment : Fragment() {
 
 
         withListAdapter =
-            WishListAdaper(wishListData, meViewModel.intentTOProductDetails, meViewModel.deleteItem)
+            WishListAdapter(wishListData, meViewModel.intentTOProductDetails, meViewModel.deleteItem)
         bindingMeScreen.wishRecyclerView.apply {
             this.adapter = withListAdapter
             this.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -94,29 +94,9 @@ class MeFragment : Fragment() {
             startAnotherFragment()
         }
 
-
-        bindingMeScreen.unPaied.setOnClickListener {
-            findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(1))
-        }
-        bindingMeScreen.paidLayout.setOnClickListener {
-            findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(0))
-        }
-
-
         meViewModel.deleteItem.observe(viewLifecycleOwner, {
             deleteAlert(it.id)
         })
-
-
-        meViewModel.getPaidOrders(meDataSourceReo.loadUsertId().toLong())
-        meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
-        meViewModel.paidOrders.observe(viewLifecycleOwner, {
-            bindingMeScreen.paidNumbers.text = it.toString()
-        })
-        meViewModel.unPaidOrders.observe(viewLifecycleOwner, {
-            bindingMeScreen.UnPaidNumbers.text = it.toString()
-        })
-
 
         return bindingMeScreen.root
     }
@@ -124,6 +104,21 @@ class MeFragment : Fragment() {
     @SuppressLint("LogNotTimber", "SetTextI18n")
     private fun handelViability() {
         if (isLoged()) {
+            bindingMeScreen.unPaied.setOnClickListener {
+                findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(1))
+            }
+            bindingMeScreen.paidLayout.setOnClickListener {
+                findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(0))
+            }
+            meViewModel.getPaidOrders(meDataSourceReo.loadUsertId().toLong())
+            meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
+            meViewModel.paidOrders.observe(viewLifecycleOwner, {
+                bindingMeScreen.paidNumbers.text = it.toString()
+            })
+            meViewModel.unPaidOrders.observe(viewLifecycleOwner, {
+                bindingMeScreen.UnPaidNumbers.text = it.toString()
+            })
+
             bindingMeScreen.hiText.text = "Hi! ${meDataSourceReo.loadUsertName()}"
             bindingMeScreen.hiText.visibility = View.VISIBLE
             bindingMeScreen.wishRecyclerView.visibility = View.VISIBLE
@@ -132,6 +127,8 @@ class MeFragment : Fragment() {
             bindingMeScreen.seeAllText.visibility = View.VISIBLE
             bindingMeScreen.seeAllArrow.visibility = View.VISIBLE
             bindingMeScreen.pleaseLogIn.visibility=View.INVISIBLE
+            bindingMeScreen.UnPaidNumbers.visibility=View.VISIBLE
+            bindingMeScreen.paidNumbers.visibility=View.VISIBLE
         } else {
             bindingMeScreen.regesterAndLogin.visibility = View.VISIBLE
             bindingMeScreen.hiText.visibility = View.INVISIBLE
@@ -140,7 +137,8 @@ class MeFragment : Fragment() {
             bindingMeScreen.seeAllText.visibility = View.INVISIBLE
             bindingMeScreen.seeAllArrow.visibility = View.INVISIBLE
             bindingMeScreen.pleaseLogIn.visibility=View.VISIBLE
-
+            bindingMeScreen.UnPaidNumbers.visibility=View.INVISIBLE
+            bindingMeScreen.paidNumbers.visibility=View.INVISIBLE
         }
     }
 
