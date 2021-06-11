@@ -24,6 +24,7 @@ import com.example.shopy.models.Addresse
 import com.example.shopy.models.CreateAddress
 import com.example.shopy.models.UpdateAddresse
 import com.example.shopy.util.Utils
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 class AddAddressFragment : Fragment() {
@@ -83,6 +84,9 @@ class AddAddressFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customerID = meDataSourceReo.loadUsertId()
 
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().bottom_nav.visibility = View.VISIBLE
+        requireActivity().toolbar_title.text = "My Addresses"
 
         binding.saveBtn.setOnClickListener {
             if (!validateFields()) {

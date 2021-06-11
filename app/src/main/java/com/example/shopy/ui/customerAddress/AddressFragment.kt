@@ -20,6 +20,7 @@ import com.example.shopy.databinding.FragmentAddressBinding
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.Addresse
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 class AddressFragment : Fragment() {
@@ -54,6 +55,10 @@ class AddressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().bottom_nav.visibility = View.VISIBLE
+        requireActivity().toolbar_title.text = "My Addresses"
+
         customerID =meDataSourceReo.loadUsertId()
         addressViewModel.getCustomersAddressList(customerID)
 

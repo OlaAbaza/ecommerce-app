@@ -1,14 +1,10 @@
 package com.example.shopy.ui.shoppingBag
 
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.view.*
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -17,9 +13,9 @@ import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCartBinding
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
@@ -36,6 +32,10 @@ class CartFragment : Fragment() {
 
     private var customerID = ""
     private var totalPrice = 0.0
+    init {
+        setHasOptionsMenu(true)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -63,7 +63,6 @@ class CartFragment : Fragment() {
         }
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().toolbar.visibility = View.VISIBLE
@@ -100,11 +99,10 @@ class CartFragment : Fragment() {
         }
 
         orderViewModel.getAllCartList().observe(viewLifecycleOwner, {
-            if(it.isEmpty()){
+            if (it.isEmpty()) {
                 binding.group.visibility = View.GONE
                 binding.emptyCartGroup.visibility = View.VISIBLE
-            }
-            else{
+            } else {
                 binding.group.visibility = View.VISIBLE
                 binding.emptyCartGroup.visibility = View.GONE
                 var products = it.toMutableList()
@@ -132,6 +130,10 @@ class CartFragment : Fragment() {
         Timber.i("price" + price + "lj")
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.empty_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         Timber.i("olaonDestroyView" + cartAdapter.orderList)

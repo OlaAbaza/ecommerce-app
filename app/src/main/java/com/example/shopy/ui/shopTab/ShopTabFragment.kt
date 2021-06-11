@@ -22,6 +22,7 @@ import com.example.shopy.ui.shopTab.shopTabCategories.WomanProductsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_shop_tab.*
 import kotlinx.android.synthetic.main.fragment_shop_tab.view.*
 
@@ -45,6 +46,8 @@ class ShopTabFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().bottom_nav.visibility = View.VISIBLE
         setUpTabBar()
 
     }

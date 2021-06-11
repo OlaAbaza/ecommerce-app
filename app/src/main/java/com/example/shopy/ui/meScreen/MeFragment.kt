@@ -56,7 +56,8 @@ class MeFragment : Fragment() {
         )[MeViewModel::class.java]
         wishListData = ArrayList()
 
-
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().bottom_nav.visibility = View.VISIBLE
         requireActivity().toolbar_title.text = getString(R.string.me)
         bindingMeScreen.regesterAndLogin.setOnClickListener {
             val action = NavGraphDirections.actionGlobalSignInFragment()
