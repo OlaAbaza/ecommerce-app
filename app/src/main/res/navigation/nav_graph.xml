@@ -163,7 +163,17 @@
         android:name="com.example.shopy.ui.profileFragment.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile"/><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
-    <!--    <activity-->
+    <fragment
+        android:id="@+id/displayOrderFragment"
+        android:name="com.example.shopy.ui.displayOrderFragment.DisplayOrderFragment"
+        android:label="DisplayOrderFragment" >
+        <argument
+            android:name="tabID"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment><action android:id="@+id/action_global_displayOrderFragment" app:destination="@id/displayOrderFragment"/>
+
+<!--    <activity-->
 <!--        android:id="@+id/mainActivity"-->
 <!--        android:name="com.example.shopy.ui.MainActivity"-->
 <!--        android:label="activity_main"-->

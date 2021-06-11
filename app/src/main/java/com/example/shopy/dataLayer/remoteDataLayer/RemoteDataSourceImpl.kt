@@ -7,6 +7,8 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.Product
@@ -14,6 +16,7 @@ import com.example.shopy.datalayer.entity.custom_product.ProductsList
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.datalayer.network.Network
 import com.example.shopy.models.*
+import io.reactivex.Observable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,6 +25,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
+import java.util.*
 
 class RemoteDataSourceImpl : RemoteDataSource {
 
@@ -32,6 +36,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     var allProductsList = MutableLiveData<AllProducts>()
     var allDiscountCodeList = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
+    var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     var catProducts = MutableLiveData<List<Product>>()
     var allProducts = MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>()
@@ -453,7 +458,25 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return allProducts
     }
 
+    override fun getAllOrders(): Observable<GetOrders> {
+        return Network.apiService.getAllOrders()
 
+    }
 
+    override fun deleteOrder(order_id: Long): MutableLiveData<Boolean>{
+        CoroutineScope(Dispatchers.IO).launch {
+            Network.apiService.deleteOrder(order_id).enqueue(object : Callback<Delete?> {
+                override fun onResponse(call: Call<Delete?>, response: Response<Delete?>) {
+                    if (response.isSuccessful) {
+                        deleteOrder.postValue(true)
+                    }
+                }
+
+                override fun onFailure(call: Call<Delete?>, t: Throwable) {
+                }
+            })
+        }
+        return deleteOrder
+    }
 
 }

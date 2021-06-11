@@ -18,14 +18,13 @@ import com.example.shopy.R
 import com.example.shopy.adapters.ImageSilderAdapter
 import com.example.shopy.adapters.OptionsAdapter
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentProuductDetailsBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.ui.StringsUtils
+import com.example.shopy.base.StringsUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -110,11 +109,15 @@ class ProuductDetailsFragment : Fragment() {
 
 
             bindingProductDetailsFragment.addToCart.setOnClickListener {
+                val variants = product.variants
+                if (variants!=null){
+                    variants[0].inventory_quantity = 1
+                }
                 productDetailsViewMode.saveCartList(
                     ProductCartModule(
                         product.id,
                         product.title,
-                        order_state = StringsUtils.Unpaid,
+                        StringsUtils.Unpaid,
                         product.body_html,
                         product.vendor,
                         product.product_type,
@@ -127,7 +130,7 @@ class ProuductDetailsFragment : Fragment() {
                         product.published_scope,
                         product.tags,
                         product.admin_graphql_api_id,
-                        product.variants,
+                        variants,
                         product.options,
                         product.images,
                         product.image
@@ -152,7 +155,7 @@ class ProuductDetailsFragment : Fragment() {
     private fun checkWishListStored(id: Long) {
         productDetailsViewMode.getOneWithItemFromRoom(id).observe(viewLifecycleOwner, {
             if (it != null) {
-                this.stored = true
+                stored = true
                 setStoredButton(stored)
             }
         })

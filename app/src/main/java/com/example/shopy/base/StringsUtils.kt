@@ -14,5 +14,7 @@ class StringsUtils {
         const val customerId : String = "customerId"
         const val customerName : String = "customerName"
         const val customerStat : String = "customerStat"
+        const val tabID : String = "tabID"
+        const val userID : String = "userID"
     }
 }

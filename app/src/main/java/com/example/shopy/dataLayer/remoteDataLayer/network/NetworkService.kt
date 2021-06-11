@@ -1,11 +1,14 @@
 package com.example.shopy.datalayer.network
 
+import com.example.shopy.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.ProductsList
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.models.*
+import io.reactivex.Observable
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -93,10 +96,20 @@ interface NetworkService {
     suspend fun createOrder(
         @Body order: Orders
     ): Response<OrderResponse>
-///////////////////////////////////////////////////////////////
+
+
+
+///////////////////////////////Esraa////////////////////////////////
 
 
     @GET("products/{id}.json")
     fun getOneProduct(@Path("id") id: Long) : Call<ProductItem>
 
+
+    @GET("orders.json")
+//    fun getAllOrders() : Call<GetOrders>
+    fun getAllOrders() : Observable<GetOrders>
+
+    @DELETE("orders/{id}.json")
+    fun deleteOrder(@Path("id")order_id : Long) :Call<Delete>
 }

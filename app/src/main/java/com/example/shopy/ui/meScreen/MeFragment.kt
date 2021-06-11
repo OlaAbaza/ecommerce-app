@@ -2,7 +2,6 @@ package com.example.shopy.ui.meScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
-import com.example.shopy.adapters.WishListAdaper
+import com.example.shopy.adapters.WishListAdapter
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.dataLayer.Repository
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentMeBinding
@@ -29,10 +27,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MeFragment : Fragment() {
 
 
-    lateinit var bindingMeScreen: FragmentMeBinding
-    lateinit var withListAdapter: WishListAdaper
-    lateinit var wishListData: List<Product>
-    lateinit var meViewModel: MeViewModel
+    private lateinit var bindingMeScreen: FragmentMeBinding
+    private lateinit var withListAdapter: WishListAdapter
+    private lateinit var wishListData: List<Product>
+    private lateinit var meViewModel: MeViewModel
     private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
 
 
@@ -41,12 +39,8 @@ class MeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
-
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
-
-
-        handelVisability()
-
+        handelViability()
         val remoteDataSource = RemoteDataSourceImpl()
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
         val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
@@ -54,6 +48,8 @@ class MeFragment : Fragment() {
             requireActivity(),
             viewModelFactory
         )[MeViewModel::class.java]
+
+
         wishListData = ArrayList()
 
         requireActivity().toolbar.visibility = View.VISIBLE
@@ -65,16 +61,15 @@ class MeFragment : Fragment() {
         }
 
 
-        withListAdapter = WishListAdaper(wishListData, meViewModel.intentTOProductDetails,meViewModel.deleteItem)
+        withListAdapter =
+            WishListAdapter(wishListData, meViewModel.intentTOProductDetails, meViewModel.deleteItem)
         bindingMeScreen.wishRecyclerView.apply {
             this.adapter = withListAdapter
             this.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
 
-        requireActivity().title = resources.getString(R.string.app_name)
-
-        meViewModel.repository.getFourWishList().observe(requireActivity(), {
+        meViewModel.getFourWishList().observe(requireActivity(), {
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()
@@ -96,49 +91,63 @@ class MeFragment : Fragment() {
             startAnotherFragment()
         }
 
-
-        bindingMeScreen.unPaied.setOnClickListener {
-            meDataSourceReo.saveUsertState(false)
-            meDataSourceReo.saveUsertName("")
-            meDataSourceReo.saveUsertId("")
-            handelVisability()
-//            AuthUI.getInstance().signOut(requireContext())
-        }
-
-
-        meViewModel.deleteItem.observe(viewLifecycleOwner,{
-            deleteAlert()
+        meViewModel.deleteItem.observe(viewLifecycleOwner, {
+            deleteAlert(it.id)
         })
 
 
         return bindingMeScreen.root
     }
 
-    @SuppressLint("LogNotTimber")
-    private fun handelVisability() {
-        if (isLoged()){
-            bindingMeScreen.hiText.text = meDataSourceReo.loadUsertName()
+    @SuppressLint("LogNotTimber", "SetTextI18n")
+    private fun handelViability() {
+        if (isLoged()) {
+            bindingMeScreen.unPaied.setOnClickListener {
+                findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(1))
+            }
+            bindingMeScreen.paidLayout.setOnClickListener {
+                findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(0))
+            }
+            meViewModel.getPaidOrders(meDataSourceReo.loadUsertId().toLong())
+            meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
+            meViewModel.paidOrders.observe(viewLifecycleOwner, {
+                bindingMeScreen.paidNumbers.text = it.toString()
+            })
+            meViewModel.unPaidOrders.observe(viewLifecycleOwner, {
+                bindingMeScreen.UnPaidNumbers.text = it.toString()
+            })
+
+            bindingMeScreen.hiText.text = "Hi! ${meDataSourceReo.loadUsertName()}"
             bindingMeScreen.hiText.visibility = View.VISIBLE
-            bindingMeScreen.wishRecyclerView.visibility= View.VISIBLE
-            bindingMeScreen.regesterAndLogin.visibility=View.INVISIBLE
-            Log.d("TAG","VISIBLE")
-        }else{
-            Log.d("TAG","GONE")
-            bindingMeScreen.regesterAndLogin.visibility=View.VISIBLE
+            bindingMeScreen.wishRecyclerView.visibility = View.VISIBLE
+            bindingMeScreen.regesterAndLogin.visibility = View.INVISIBLE
+            bindingMeScreen.paidNumbers.visibility = View.VISIBLE
+            bindingMeScreen.seeAllText.visibility = View.VISIBLE
+            bindingMeScreen.seeAllArrow.visibility = View.VISIBLE
+            bindingMeScreen.pleaseLogIn.visibility=View.INVISIBLE
+            bindingMeScreen.UnPaidNumbers.visibility=View.VISIBLE
+            bindingMeScreen.paidNumbers.visibility=View.VISIBLE
+        } else {
+            bindingMeScreen.regesterAndLogin.visibility = View.VISIBLE
             bindingMeScreen.hiText.visibility = View.INVISIBLE
-            bindingMeScreen.wishRecyclerView.visibility= View.INVISIBLE
+            bindingMeScreen.wishRecyclerView.visibility = View.INVISIBLE
+            bindingMeScreen.paidNumbers.visibility = View.INVISIBLE
+            bindingMeScreen.seeAllText.visibility = View.INVISIBLE
+            bindingMeScreen.seeAllArrow.visibility = View.INVISIBLE
+            bindingMeScreen.pleaseLogIn.visibility=View.VISIBLE
+            bindingMeScreen.UnPaidNumbers.visibility=View.INVISIBLE
+            bindingMeScreen.paidNumbers.visibility=View.INVISIBLE
         }
     }
 
-
     private fun isLoged(): Boolean {
-      return meDataSourceReo.loadUsertstate()
+        return meDataSourceReo.loadUsertstate()
     }
 
     override fun onStop() {
         super.onStop()
         meViewModel.intentTOProductDetails = MutableLiveData<Product>()
-        //meViewModel.deleteItem = MutableLiveData<Product>()
+        meViewModel.deleteItem = MutableLiveData<Product>()
     }
 
     private fun startAnotherFragment() {
@@ -146,20 +155,21 @@ class MeFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun deleteAlert(){
+    private fun deleteAlert(id: Long) {
 
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.Delete_Item_From_Wish_List))
         builder.setMessage(getString(R.string.are_you_sure))
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setIcon(android.R.drawable.ic_delete)
 
-        builder.setPositiveButton("Yes"){dialogInterface, which ->
-//            Toast.makeText(applicationContext,"clicked yes",Toast.LENGTH_LONG).show()
+        builder.setPositiveButton("Yes") { _, _ ->
+            meViewModel.deleteOneItemFromWishList(id)
+            meViewModel.deleteItem = MutableLiveData<Product>()
         }
 
-        builder.setNegativeButton("No"){dialogInterface, which ->
-//            Toast.makeText(applicationContext,"clicked No",Toast.LENGTH_LONG).show()
+        builder.setNegativeButton("No") { _, _ ->
+            meViewModel.deleteItem = MutableLiveData<Product>()
         }
         // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
@@ -167,14 +177,5 @@ class MeFragment : Fragment() {
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
-
-
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        Log.d("TAd","onDestroyView")
-//    }
-
-
-
 
 }

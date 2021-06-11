@@ -8,10 +8,10 @@
         app:actionViewClass="android.widget.SearchView"
         />
 
-    <item android:title="cart"
-        android:icon="@drawable/ic_baseline_add_shopping_cart_24"
-        android:id="@+id/cart"
-        app:showAsAction="always|collapseActionView"
-        />
+<!--    <item android:title="cart"-->
+<!--        android:icon="@drawable/ic_baseline_add_shopping_cart_24"-->
+<!--        android:id="@+id/cart"-->
+<!--        app:showAsAction="always|collapseActionView"-->
+<!--        />-->
 
 </menu>

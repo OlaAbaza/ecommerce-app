@@ -3,7 +3,7 @@ package com.example.shopy.datalayer.sharedprefrence
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.ui.StringsUtils
+import com.example.shopy.base.StringsUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

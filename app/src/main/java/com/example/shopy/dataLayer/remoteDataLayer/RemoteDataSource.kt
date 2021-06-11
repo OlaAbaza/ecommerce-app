@@ -3,12 +3,13 @@ package com.example.shopy.dataLayer.remoteDataLayer
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.models.*
+import io.reactivex.Observable
+import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.Path
 
 
 interface RemoteDataSource {
@@ -45,4 +46,9 @@ interface RemoteDataSource {
     fun fetchCatProducts(colID:Long):MutableLiveData<List<Product>>
     fun fetchAllProducts():MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>
 
+
+
+    fun getAllOrders() : Observable<GetOrders>
+
+    fun deleteOrder(order_id : Long) : MutableLiveData<Boolean>
 }

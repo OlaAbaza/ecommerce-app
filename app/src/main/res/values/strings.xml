@@ -17,7 +17,7 @@
     <string name="wallet">Wallet</string>
     <string name="gift_card">Gift Card</string>
     <string name="my_orders">My Orders</string>
-    <string name="unpaid">Unpaid</string>
+    <string name="unpaid">Unpaid Orders</string>
     <string name="processing">Processing</string>
     <string name="shipping">Shipping</string>
     <string name="returns">Returns</string>
@@ -113,6 +113,24 @@
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
 
+    <string name="paid">Paid</string>
+    <string name="order">Order ID  #</string>
+    <string name="_111111111111111111111">111111111111111111111</string>
+    <string name="money">Money</string>
+    <string name="total_price">Total price  </string>
+    <string name="_170">170</string>
+    <string name="egp">EGP</string>
+    <string name="created_at">created at </string>
+    <string name="_2021_05_31t23_47_47_02_00">2021-05-31T23:47:47+02:00</string>
+    <string name="cancel">Cancel</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="image">Image</string>
+    <string name="all_orders">All Orders</string>
+    <string name="paid_orders">Paid Orders</string>
+    <string name="order_canceld">order canceled</string>
+    <string name="some_error_accurated">Some error accurate</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="please_log_in">Log In to can see wish list</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

@@ -4,7 +4,6 @@ package com.example.shopy.ui.profileFragment
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.dataLayer.Repository
 
 import kotlinx.coroutines.launch
 

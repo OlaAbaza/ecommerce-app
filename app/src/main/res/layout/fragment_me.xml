@@ -43,7 +43,7 @@
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <LinearLayout
@@ -225,6 +225,67 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/MyOrders">
 
+
+                <!--                <LinearLayout-->
+                <!--                    android:id="@+id/processing"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="70dp"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:orientation="vertical"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/hiText"-->
+                <!--                    tools:ignore="UseCompoundDrawables">-->
+
+                <!--                    <ImageView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:contentDescription="@string/processing"-->
+                <!--                        android:fontFamily="serif"-->
+                <!--                        android:src="@drawable/ic_processing" />-->
+
+                <!--                    <TextView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:fontFamily="serif"-->
+                <!--                        android:gravity="bottom"-->
+                <!--                        android:paddingTop="20dp"-->
+                <!--                        android:text="@string/processing"-->
+                <!--                        android:textColor="@color/black"-->
+                <!--                        android:textSize="12sp" />-->
+                <!--                </LinearLayout>-->
+
+
+                <!--                <LinearLayout-->
+                <!--                    android:id="@+id/shipping"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="70dp"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:gravity="center"-->
+                <!--                    android:orientation="vertical"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@id/hiText"-->
+                <!--                    tools:ignore="UseCompoundDrawables">-->
+
+                <!--                    <ImageView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:contentDescription="@string/wallet"-->
+                <!--                        android:src="@drawable/ic_shipping" />-->
+
+                <!--                    <TextView-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:fontFamily="serif"-->
+                <!--                        android:gravity="bottom"-->
+                <!--                        android:paddingTop="20dp"-->
+                <!--                        android:text="@string/shipping"-->
+                <!--                        android:textColor="@color/black"-->
+                <!--                        android:textSize="12sp"-->
+                <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+
+                <!--                </LinearLayout>-->
+
+
                 <LinearLayout
                     android:id="@+id/unPaied"
                     android:layout_width="0dp"
@@ -254,69 +315,8 @@
 
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:id="@+id/processing"
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/hiText"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/processing"
-                        android:fontFamily="serif"
-                        android:src="@drawable/ic_processing" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="serif"
-                        android:gravity="bottom"
-                        android:paddingTop="20dp"
-                        android:text="@string/processing"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/shipping"
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/hiText"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/wallet"
-                        android:src="@drawable/ic_shipping" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="serif"
-                        android:gravity="bottom"
-                        android:paddingTop="20dp"
-                        android:text="@string/shipping"
-                        android:textColor="@color/black"
-                        android:textSize="12sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/returnsLayout"
+                    android:id="@+id/paidLayout"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:layout_weight="1"
@@ -329,7 +329,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/returns"
-                        android:src="@drawable/ic_returns"
+                        android:src="@drawable/ic_black_money_24"
                         android:text="@string/_1" />
 
                     <TextView
@@ -338,7 +338,7 @@
                         android:fontFamily="serif"
                         android:gravity="bottom"
                         android:paddingTop="20dp"
-                        android:text="@string/returns"
+                        android:text="@string/paid_orders"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -348,6 +348,34 @@
 
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/paidNumbers"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/order_update_status_background_shape"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/layoutOfMyOrders"
+                app:layout_constraintEnd_toEndOf="@id/layoutOfMyOrders"
+                app:layout_constraintHorizontal_bias=".2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/MyOrders" />
+
+            <TextView
+                android:id="@+id/UnPaidNumbers"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/order_update_status_background_shape"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/layoutOfMyOrders"
+                app:layout_constraintEnd_toEndOf="@id/layoutOfMyOrders"
+                app:layout_constraintHorizontal_bias=".8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/MyOrders" />
 
             <TextView
                 android:id="@+id/wishList"
@@ -372,31 +400,58 @@
                 android:text="@string/see_all"
                 android:textColor="@color/yello"
                 android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@id/seeAllArrow"
                 app:layout_constraintEnd_toStartOf="@id/seeAllArrow"
-                app:layout_constraintTop_toTopOf="@id/seeAllArrow"
-                app:layout_constraintBottom_toBottomOf="@id/seeAllArrow"/>
+                app:layout_constraintTop_toTopOf="@id/seeAllArrow" />
 
             <ImageView
                 android:id="@+id/seeAllArrow"
-                android:src="@drawable/ic_double_arrow_24"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:contentDescription="@string/see_all"
+                android:src="@drawable/ic_double_arrow_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutOfMyOrders"
-                android:contentDescription="@string/see_all" />
+                app:layout_constraintTop_toBottomOf="@id/layoutOfMyOrders" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:paddingTop="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@color/white"
                 android:id="@+id/wishRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                android:paddingTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/wishList"
+                tools:listitem="@layout/wish_list_item" />
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/pleaseLogIn"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/white"
+                android:padding="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="wrap_content"
-                tools:listitem="@layout/wish_list_item"
-                android:layout_height="0dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/wishList">
+                <TextView
+                    style="@style/text_style"
+                    android:layout_gravity="center"
+                    android:text="@string/please_log_in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <ImageView
+                    android:padding="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_log_in"
+                    android:contentDescription="@string/please_log_in" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

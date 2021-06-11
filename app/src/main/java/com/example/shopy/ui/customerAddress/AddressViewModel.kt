@@ -5,15 +5,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.dataLayer.Repository
 import com.example.shopy.models.Addresse
 import com.example.shopy.models.CreateAddress
 import com.example.shopy.models.CreateAddressX
 import com.example.shopy.models.UpdateAddresse
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 import timber.log.Timber
 
 class AddressViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
