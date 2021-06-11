@@ -66,6 +66,10 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().bottom_nav.visibility = View.VISIBLE
+        requireActivity().toolbar_title.text = "Shopping Bag"
+
         cartAdapter = CartAdapter(arrayListOf(), orderViewModel)
         binding.rvCartItems.apply {
             layoutManager = LinearLayoutManager(context)
@@ -73,7 +77,7 @@ class CartFragment : Fragment() {
         }
 
 
-        requireActivity().toolbar_title.text = "Shopping Bag"
+
         customerID = meDataSourceReo.loadUsertId()
 
         binding.loginBtn.setOnClickListener {
@@ -139,7 +143,6 @@ class CartFragment : Fragment() {
         val builder = AlertDialog.Builder(requireContext())
         //  builder.setTitle(De)
         builder.setMessage(getString(R.string.alert_msg))
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         builder.setPositiveButton("Delete") { dialogInterface, which ->
             //  Toast.makeText(requireContext(), "clicked yes", Toast.LENGTH_LONG).show()

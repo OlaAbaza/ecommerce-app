@@ -41,7 +41,7 @@ class CartAdapter(
     override fun onBindViewHolder(holder: VH, position: Int) {
         holder.myView.itemCartTitle.text = orderList[position].title
         holder.myView.itemCountText.text = orderList[position].variants?.get(0)?.inventory_quantity.toString()
-        holder.myView.itemCartPrice.text = orderList[position].variants!![0].price.toString()+"EGP"
+        holder.myView.itemCartPrice.text = orderList[position].variants?.get(0)?.price.toString()+"EGP"
 
 
         Glide.with(holder.myView.itemCartImage)

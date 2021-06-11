@@ -25,6 +25,10 @@ interface RemoteDataSource {
 
     suspend fun delCustomerAddresses(id: String, addressID: String)
     suspend fun setDafaultCustomerAddress(id: String, addressID: String): CreateAddressX?
+
+    suspend fun getCustomer( id: String): CustomerX?
+
+    suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX?
     suspend fun createOrder(order: Orders): OrderResponse?
 
      fun getWomanProductsList()

@@ -29,6 +29,7 @@ import com.example.shopy.models.CustomerX
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
 class SignUpFragment : Fragment() {
@@ -59,7 +60,8 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireActivity().toolbar.visibility = View.GONE
+        requireActivity().bottom_nav.visibility = View.GONE
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
         binding.tvSignin.setOnClickListener(
@@ -87,13 +89,13 @@ class SignUpFragment : Fragment() {
                 )
             }
         }
-        binding.tvPassField.setOnFocusChangeListener { _, hasFocus ->
+        binding.passwordEdt.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus){
-                Timber.i("passs")
+                Timber.i("olaa passs")
                 binding.group.setVisibility(View.VISIBLE)
             }
             else {
-                Timber.i("passsx")
+                Timber.i("olaa passsx")
                 binding.group.setVisibility(View.GONE)
             }
         }

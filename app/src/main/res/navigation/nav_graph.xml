@@ -158,6 +158,11 @@
             app:popUpToInclusive="true" />
     </fragment>
     <action android:id="@+id/action_global_shopTabFragment2" app:destination="@id/shopTabFragment2" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.shopy.ui.profileFragment.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile"/><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
     <!--    <activity-->
 <!--        android:id="@+id/mainActivity"-->
 <!--        android:name="com.example.shopy.ui.MainActivity"-->

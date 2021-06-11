@@ -12,7 +12,8 @@ data class Order(
     @SerializedName("financial_status")
     val financialStatus: String?,
     @SerializedName("line_items")
-    val lineItems: List<LineItem>?
+    val lineItems: List<LineItem>?,
+    val note:String?
 )
 
 data class LineItem(

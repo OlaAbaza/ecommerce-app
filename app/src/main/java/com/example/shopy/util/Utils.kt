@@ -25,8 +25,9 @@ class Utils {
         }
         fun validatePhone(Phone: String):Boolean{
 
+         //   "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$"
             //Minimum eight characters, at least one letter and one number
-            val patternPhone: Pattern = Pattern.compile("^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$")
+            val patternPhone: Pattern = Pattern.compile("^[+]?[0-9]{10,13}$")
             val matcherPhone: Matcher = patternPhone.matcher(Phone)
             val PhoneMatchResult : Boolean = matcherPhone.matches()
 

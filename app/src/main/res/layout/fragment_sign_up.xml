@@ -157,7 +157,7 @@
                 android:id="@+id/group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:constraint_referenced_ids="tv_pass,tv_pass2,tv_pass3" />
 
             <TextView
@@ -193,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="35dp"
                 android:layout_weight="1"
                 android:text="@string/at_least_one_number"
                 android:textColor="@color/black"

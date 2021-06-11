@@ -57,6 +57,8 @@ class Repository(
     ////////////////////customer///////////////////
     suspend fun fetchCustomersData() = remoteDataSource.fetchCustomersData()
     suspend fun createCustomers(customer: CustomerX) = remoteDataSource.createCustomers(customer)
+    suspend fun getCustomer(id: String)=remoteDataSource.getCustomer(id)
+    suspend fun updateCustomer(id: String, customer: CustomerProfile)=remoteDataSource.updateCustomer(id,customer)
 
     /////////////////////create order/////////////////////////////
     suspend fun createOrder(order: Orders) = remoteDataSource.createOrder(order)

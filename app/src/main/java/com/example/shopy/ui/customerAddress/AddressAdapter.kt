@@ -1,6 +1,7 @@
 package com.example.shopy.ui.customerAddress
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shopy.models.Addresse
@@ -41,6 +42,9 @@ class AddressAdapter(
         holder.myView.addressTxt.text = addressList[position].address1
         addressList[position].default?.let {
             holder.myView.rbtnAddress.isChecked = it
+        }
+        if( addressList[position].default==true){
+            holder.myView.btnDel.visibility=View.INVISIBLE
         }
         holder.myView.itemLayout.setOnClickListener {
           addressViewModel.onItemClick(addressList[position])

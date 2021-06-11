@@ -1,37 +1,25 @@
 package com.example.shopy.ui.customerAddress
 
-import android.app.Dialog
-import android.content.SharedPreferences
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.preference.PreferenceManager
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shopy.NavGraphDirections
-import com.example.shopy.util.Utils
+import com.example.shopy.R
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.room.RoomDataSourceImpl
-import com.example.shopy.databinding.FragmentAddAddressBinding
-import com.example.shopy.databinding.FragmentAddressBinding
 import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.databinding.FragmentAddressBinding
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
-import com.example.shopy.models.*
-import com.example.shopy.ui.shoppingBag.OrderConfirmationFragmentArgs
-import com.example.shopy.ui.signIn.SignInFragmentDirections
-import kotlinx.android.synthetic.main.fragment_add_address.view.*
+import com.example.shopy.models.Addresse
 import timber.log.Timber
 
 class AddressFragment : Fragment() {
@@ -81,8 +69,7 @@ class AddressFragment : Fragment() {
         })
         addressViewModel.getDelAddress()
             .observe(viewLifecycleOwner, Observer<Pair<Addresse?, Int>> {
-                addressViewModel.delCustomerAddresses(customerID, it.first?.id.toString())
-                addressAdapter.delItem(it.second)
+                deleteAlert(it.first?.id.toString(),it.second)
                 Timber.i("ola delll" + it.toString())
 
             })
@@ -96,5 +83,30 @@ class AddressFragment : Fragment() {
                 .navigate(AddressFragmentDirections.actionAddressFragmentToAddAddressFragment("null","null"))
         }
 
+    }
+
+    private fun deleteAlert(addressID: String,pos:Int) {
+
+        val builder = AlertDialog.Builder(requireContext())
+        //  builder.setTitle(De)
+        builder.setMessage(getString(R.string.alert_msg))
+
+        builder.setPositiveButton("Delete") { dialogInterface, which ->
+            //  Toast.makeText(requireContext(), "clicked yes", Toast.LENGTH_LONG).show()
+            addressViewModel.delCustomerAddresses(customerID, addressID)
+            addressAdapter.delItem(pos)
+        }
+
+        builder.setNegativeButton("Cancel") { dialogInterface, which ->
+            //  Toast.makeText(requireContext(),"clicked No",Toast.LENGTH_LONG).show()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK)
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
     }
 }

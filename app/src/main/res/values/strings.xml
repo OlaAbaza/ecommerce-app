@@ -108,6 +108,10 @@
     <string name="click_to_add_address">Click to add address</string>
     <string name="log_in_to_see_shopping_cart">Log in to see shopping cart</string>
     <string name="your_bag_is_empty">Your bag is empty</string>
+    <string name="change_password">Change Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
 
 
     ////////////////abdelrahman/////////////

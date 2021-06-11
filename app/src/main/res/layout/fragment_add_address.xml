@@ -239,7 +239,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:thumbTint="@color/light_gray"
+                  android:buttonTint="@color/dark_gray"
+                    android:thumbTint="@color/dark_gray"
                     android:trackTint="@color/black" />
 
             </LinearLayout>

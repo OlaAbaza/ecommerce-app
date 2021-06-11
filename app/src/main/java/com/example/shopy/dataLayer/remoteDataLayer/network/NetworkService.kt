@@ -41,7 +41,7 @@ interface NetworkService {
 
     ///////////////////ola////////////////
 
-    @GET("customers.json")
+    @GET("customers.json?limit=250")
     suspend fun getCustomers(): Response<Customers>
 
     @POST("customers.json")
@@ -55,6 +55,15 @@ interface NetworkService {
 
     @GET("customers/{customer_id}/addresses.json")
     suspend fun getCustomerAddresses(@Path("customer_id") id: String): Response<customerAddresses>
+
+    @GET("customers/{customer_id}.json")
+    suspend fun getCustomer(@Path("customer_id") id: String): Response<CustomerX>
+
+    @PUT(" customers/{customer_id}.json")
+    suspend fun updateCustomer(
+        @Path("customer_id") id: String,
+        @Body customer: CustomerProfile
+    ): Response<CustomerX>
 
     @PUT(" customers/{customer_id}/addresses/{address_id}.json")
     suspend fun updateCustomerAddresses(

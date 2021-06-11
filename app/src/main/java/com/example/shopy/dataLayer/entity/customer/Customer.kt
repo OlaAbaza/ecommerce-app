@@ -10,13 +10,17 @@ data class CustomerX(
     val customer: Customer
 )
 
-data class CustomerXX(
-    val email: String?,
-    @SerializedName("first_name")
-    val firstName: String?,
-    val note: Any?
+data class CustomerProfile(
+    val customer: CustomerXXX?
 )
 
+data class CustomerXXX(
+    @SerializedName("first_name")
+    val firstName: String?,
+    val id: Long?,
+    val note: String?,
+    val phone: String?
+)
 data class Customer(
     @SerializedName("accepts_marketing")
     val acceptsMarketing: Boolean?,

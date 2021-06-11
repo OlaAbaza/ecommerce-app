@@ -42,6 +42,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         val response = Network.apiService.getCustomers()
         try {
             if (response.isSuccessful) {
+                Timber.i("olaa fetchCustomersData  "+response.body()?.customers)
                 return response.body()?.customers
             }
         } catch (e: Exception) {
@@ -60,8 +61,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 } else {
                     val jObjError =
                         JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
-                            .getJSONArray("email").get(0).toString()
-                    Timber.i("This email " + jObjError)
+                         //   .getJSONArray("email").get(0).toString()
+                    Timber.i("olaa This email " + jObjError)
                 }
             }
 
@@ -161,6 +162,42 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     override suspend fun setDafaultCustomerAddress(id: String, addressID: String): CreateAddressX? {
         val response = Network.apiService.setDafaultCustomerAddress(id, addressID)
+        try {
+            if (response.isSuccessful) {
+                Timber.i("This  " + "isSuccessful")
+                return response.body()
+            } else {
+                val jObjError =
+                    JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
+                Timber.i("This  " + jObjError)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
+        return null
+    }
+
+    override suspend fun getCustomer(id: String): CustomerX? {
+        val response = Network.apiService.getCustomer(id)
+        try {
+            if (response.isSuccessful) {
+                Timber.i("This  " + "isSuccessful")
+                return response.body()
+            } else {
+                val jObjError =
+                    JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
+                Timber.i("This  " + jObjError)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
+        return null
+    }
+
+    override suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX? {
+        val response = Network.apiService.updateCustomer(id,customer)
         try {
             if (response.isSuccessful) {
                 Timber.i("This  " + "isSuccessful")

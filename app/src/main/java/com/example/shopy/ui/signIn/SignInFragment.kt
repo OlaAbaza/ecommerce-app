@@ -2,10 +2,7 @@ package com.example.shopy.ui.signIn
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.dataLayer.Repository
+import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentSignInBinding
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.Customer
-import com.facebook.*
+import com.facebook.CallbackManager
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
@@ -34,11 +31,10 @@ class SignInFragment : Fragment() {
         const val SIGN_IN_RESULT_CODE = 1001
     }
 
-    private lateinit var prefs: SharedPreferences
-    private lateinit var editor: SharedPreferences.Editor
     private lateinit var signinViewModel: SignInViewModel
     private lateinit var binding: FragmentSignInBinding
     private var email = ""
+    private var isLoginWithfirebase = false
     lateinit var callbackManager: CallbackManager
     private lateinit var auth: FirebaseAuth
     private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
@@ -48,8 +44,6 @@ class SignInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        prefs = PreferenceManager.getDefaultSharedPreferences(activity)
-        editor = prefs.edit()
         binding = FragmentSignInBinding.inflate(inflater, container, false)
         val application = requireNotNull(this.activity).application
 
@@ -70,11 +64,13 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       // requireActivity().toolbar.visibility = View.INVISIBLE
+        requireActivity().toolbar.visibility = View.GONE
+        requireActivity().bottom_nav.visibility = View.GONE
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
         signinViewModel.getCustomerList().observe(viewLifecycleOwner, Observer<List<Customer>?> {
             Timber.i("we lodged")
+            Timber.i("olaa sigin in email"+email)
             val customer: List<Customer> =
                 it.filter {
                     it.email?.toLowerCase() ?: 0 == email
@@ -84,7 +80,7 @@ class SignInFragment : Fragment() {
             if (customer.isEmpty()) {
                 Toast.makeText(context, "you do not have an account", Toast.LENGTH_SHORT).show()
             } else {
-                if (customer.get(0).note == binding.passwordEdt.text.toString()) {
+                if (customer.get(0).note == binding.passwordEdt.text.toString()||isLoginWithfirebase) {
 
                     meDataSourceReo.saveUsertState(true)
                     meDataSourceReo.saveUsertId(customer[0].id.toString())
@@ -145,7 +141,7 @@ class SignInFragment : Fragment() {
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(provider)
-                .setIsSmartLockEnabled(false)
+               // .setIsSmartLockEnabled(false)
                 .build(), SIGN_IN_RESULT_CODE
         )
     }
@@ -158,6 +154,7 @@ class SignInFragment : Fragment() {
                     SignInViewModel.AuthenticationState.AUTHENTICATED -> {
                         email = FirebaseAuth.getInstance().currentUser?.email.toString()
                         signinViewModel.getAllCustomers()
+                        isLoginWithfirebase=true
                     }
                     else -> {
                         meDataSourceReo.saveUsertState(false)

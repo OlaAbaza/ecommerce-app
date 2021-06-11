@@ -69,6 +69,9 @@ class AddAddressFragment : Fragment() {
                     AddAddressFragmentDirections.actionAddAddressFragmentToAddressFragment()
                 findNavController().navigate(action)
             }
+            else{
+                Toast.makeText(context, "The country or The state is  not valid ", Toast.LENGTH_SHORT).show()
+            }
         })
 
 
@@ -87,21 +90,21 @@ class AddAddressFragment : Fragment() {
                     Timber.i("ola customerID" + customerID)
                     if (isedit) {
                         var address = Addresse(
-                            binding.addressEdt.text.toString(),
+                            binding.addressEdt.text.toString().trim(),
                             binding.address2Edt.text.toString(),
-                            binding.cityEdt.text.toString(),
+                            binding.cityEdt.text.toString().trim(),
                             "null",
-                            binding.countryEdt.text.toString(),
+                            binding.countryEdt.text.toString().trim(),
                             "null",
                             "null",
                             customerID.toLong(),
                             binding.addressSwitch.isChecked,
-                            binding.nameEdt.text.toString(),
+                            binding.nameEdt.text.toString().trim(),
                             addressID.toLong(),
                             "null",
                             "null",
-                            binding.phoneEdt.text.toString(),
-                            binding.stateEdt.text.toString(),
+                            binding.phoneEdt.text.toString().trim(),
+                            binding.stateEdt.text.toString().trim(),
                             "null",
                             binding.postCodeEdt.text.toString()
                         )
@@ -115,18 +118,18 @@ class AddAddressFragment : Fragment() {
 
                     } else {
                         var address = Address(
-                            binding.addressEdt.text.toString(),
+                            binding.addressEdt.text.toString().trim(),
                             binding.address2Edt.text.toString(),
-                            binding.cityEdt.text.toString(),
+                            binding.cityEdt.text.toString().trim(),
                             "null",
-                            binding.countryEdt.text.toString(),
-                            "null",
-                            "null",
-                            binding.nameEdt.text.toString(),
+                            binding.countryEdt.text.toString().trim(),
                             "null",
                             "null",
-                            binding.phoneEdt.text.toString(),
-                            binding.stateEdt.text.toString(),
+                            binding.nameEdt.text.toString().trim(),
+                            "null",
+                            "null",
+                            binding.phoneEdt.text.toString().trim(),
+                            binding.stateEdt.text.toString().trim(),
                             "null",
                             binding.postCodeEdt.text.toString(),
                             binding.addressSwitch.isChecked
