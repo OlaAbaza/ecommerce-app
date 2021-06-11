@@ -110,11 +110,15 @@ class ProuductDetailsFragment : Fragment() {
 
 
             bindingProductDetailsFragment.addToCart.setOnClickListener {
+                val variants = product.variants
+                if (variants!=null){
+                    variants[0].inventory_quantity = 1
+                }
                 productDetailsViewMode.saveCartList(
                     ProductCartModule(
                         product.id,
                         product.title,
-                        order_state = StringsUtils.Unpaid,
+                        StringsUtils.Unpaid,
                         product.body_html,
                         product.vendor,
                         product.product_type,
@@ -127,7 +131,7 @@ class ProuductDetailsFragment : Fragment() {
                         product.published_scope,
                         product.tags,
                         product.admin_graphql_api_id,
-                        product.variants,
+                        variants,
                         product.options,
                         product.images,
                         product.image

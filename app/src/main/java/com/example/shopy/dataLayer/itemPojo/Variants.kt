@@ -27,7 +27,7 @@ data class Variants (
 	@SerializedName("weight") val weight : Int?,
 	@SerializedName("weight_unit") val weight_unit : String?,
 	@SerializedName("inventory_item_id") val inventory_item_id : Long?,
-	@SerializedName("inventory_quantity") val inventory_quantity : Int?,
+	@SerializedName("inventory_quantity") var inventory_quantity : Int?,
 	@SerializedName("old_inventory_quantity") val old_inventory_quantity : Int?,
 	@SerializedName("requires_shipping") val requires_shipping : Boolean?,
 	@SerializedName("admin_graphql_api_id") val admin_graphql_api_id : String?

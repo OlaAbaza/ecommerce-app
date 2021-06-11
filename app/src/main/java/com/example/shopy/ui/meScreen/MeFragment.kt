@@ -40,7 +40,7 @@ class MeFragment : Fragment() {
     ): View {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
-        handelVisability()
+        handelViability()
         val remoteDataSource = RemoteDataSourceImpl()
         val viewModelFactory = ViewModelFactory(
             Repository(
@@ -122,7 +122,7 @@ class MeFragment : Fragment() {
     }
 
     @SuppressLint("LogNotTimber", "SetTextI18n")
-    private fun handelVisability() {
+    private fun handelViability() {
         if (isLoged()) {
             bindingMeScreen.hiText.text = "Hi! ${meDataSourceReo.loadUsertName()}"
             bindingMeScreen.hiText.visibility = View.VISIBLE

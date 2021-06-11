@@ -41,13 +41,6 @@ class ProductDetailsViewModel(val repository: Repository, application: Applicati
     fun getOneWithItemFromRoom(id: Long) = repository.getOneWithItem(id)
 
 
-
-
-    // dealing with cart
-//    val cartRoom = CartRoomRepository(application)
-
-
-
     fun saveCartList(cartItem: ProductCartModule) {
         if (isSignin()) {
             saveToCartJob = CoroutineScope(Dispatchers.IO).launch {
