@@ -5,6 +5,7 @@ import androidx.room.TypeConverter
 import com.example.shopy.datalayer.entity.itemPojo.Image
 import com.example.shopy.datalayer.entity.itemPojo.Images
 import com.example.shopy.datalayer.entity.itemPojo.Options
+import com.example.shopy.datalayer.entity.itemPojo.Variants
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

@@ -20,6 +20,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.CategoriesViewModel
+import com.example.shopy.dataLayer.Repository
 import com.example.shopy.ui.profileFragment.ProfileViewModel
 import com.example.shopy.ui.allWishListFragment.AllWishListViewModel
 import com.example.shopy.ui.customerAddress.AddressViewModel

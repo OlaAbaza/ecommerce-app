@@ -14,11 +14,11 @@ import com.bumptech.glide.Glide
 import com.example.shopy.datalayer.entity.itemPojo.Product
 
 
-class WishListAdaper(
+class WishListAdapter(
     prouductList: List<Product>,
     intentTOProductDetails: MutableLiveData<Product>,
     deleteItem: MutableLiveData<Product>
-) : RecyclerView.Adapter<WishListAdaper.ViewHolder>() {
+) : RecyclerView.Adapter<WishListAdapter.ViewHolder>() {
     val intentTOProductDetails: MutableLiveData<Product> = intentTOProductDetails
     val deleteItem: MutableLiveData<Product> = deleteItem
 
