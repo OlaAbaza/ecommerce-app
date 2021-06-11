@@ -54,14 +54,14 @@ class MeViewModel(val repository: Repository, application: Application): Android
     }
 
     override fun onCleared() {
-        super.onCleared()
-        if (!disposablePaidOrder.isDisposed) {
-            disposablePaidOrder.dispose()
-        }
-        if (!disposableUnPaidOrder.isDisposed) {
-            disposableUnPaidOrder.dispose()
-        }
-        deleteOneItemFromWish.cancel()
+//        super.onCleared()
+//        if (!disposablePaidOrder.isDisposed) {
+//            disposablePaidOrder.dispose()
+//        }
+//        if (!disposableUnPaidOrder.isDisposed) {
+//            disposableUnPaidOrder.dispose()
+//        }
+//        deleteOneItemFromWish.cancel()
     }
 
     fun getUnPaidOrders(userId: Long) {

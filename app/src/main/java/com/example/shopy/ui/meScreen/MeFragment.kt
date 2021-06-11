@@ -2,6 +2,7 @@ package com.example.shopy.ui.meScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,6 @@ class MeFragment : Fragment() {
     ): View {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
-        handelViability()
         val remoteDataSource = RemoteDataSourceImpl()
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
         val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
@@ -50,6 +50,7 @@ class MeFragment : Fragment() {
             viewModelFactory
         )[MeViewModel::class.java]
 
+        handelViability()
 
         wishListData = ArrayList()
 
@@ -109,6 +110,7 @@ class MeFragment : Fragment() {
             bindingMeScreen.paidLayout.setOnClickListener {
                 findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(0))
             }
+            Log.d("TAG","user id ${meDataSourceReo.loadUsertId()}")
             meViewModel.getPaidOrders(meDataSourceReo.loadUsertId().toLong())
             meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
             meViewModel.paidOrders.observe(viewLifecycleOwner, {
@@ -178,5 +180,7 @@ class MeFragment : Fragment() {
         alertDialog.setCancelable(false)
         alertDialog.show()
     }
+
+
 
 }

@@ -2,6 +2,7 @@ package com.example.shopy.ui.displayOrderFragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -146,16 +147,15 @@ class DisplayOrderFragment : Fragment() {
 
         displayOrderViewModel.cancelMutableData.observe(viewLifecycleOwner,{
             deleteAlert(displayOrderViewModel,it.id?:0)
+
         })
 
+        //make new call to update view with the new data after cancel order
+
+//        displayOrderViewModel.deleteOrder = MutableLiveData()
         displayOrderViewModel.deleteOrder.observe(viewLifecycleOwner,{
             Toast.makeText(requireContext(),getString(R.string.order_canceld),Toast.LENGTH_SHORT).show()
-
-            //make new call to update view with the new data after cancel order
-            callOrders(displayOrderViewModel,view)
-        })
-
-
+            callOrders(displayOrderViewModel,view)})
 
         return view.root
     }
@@ -200,7 +200,10 @@ class DisplayOrderFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("TAG","onDestroyView")
         displayOrderViewModel.deleteOrder = MutableLiveData()
+        displayOrderViewModel.cancelMutableData = MutableLiveData()
+
     }
 
 
