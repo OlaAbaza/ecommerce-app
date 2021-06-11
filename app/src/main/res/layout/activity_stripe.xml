@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.payment.PayPalActivity">
+    tools:context=".ui.payment.StripeActivity">
 
     <LinearLayout
         android:layout_width="178dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/total_amount"
+            android:id="@+id/amount"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:text="10" />

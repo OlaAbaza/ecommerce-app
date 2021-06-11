@@ -30,6 +30,8 @@ allprojects {
         jcenter()
         maven { url "http://pay.cards/maven" }
     }
+
+    
 }
 
 task clean(type: Delete) {

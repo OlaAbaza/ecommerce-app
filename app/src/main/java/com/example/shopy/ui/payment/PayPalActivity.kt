@@ -1,21 +1,21 @@
-package com.example.shopy
+package com.example.shopy.ui.payment
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.shopy.R
 import com.paypal.android.sdk.payments.*
 import kotlinx.android.synthetic.main.activity_pay_pal.*
-import java.math.BigDecimal
+import java.math.BigDecimal as JavaMathBigDecimal
 
 
 class PayPalActivity : AppCompatActivity() {
     var m_configuration: PayPalConfiguration? = null
 
     //the id is the link to paypal account,we have to create an app and get its id
-    var m_PaypalClientId =
-        "AScx5pid7ihx_S0cSmYHCnNBKfmUvRFxLXCiEjfdphQSpce0Q2NEYIHB7lYrKFvh_8X1D9eDJtxyNNO7"
+    var m_PaypalClientId = "AXExM_ysFYecA99EfnPQDY8XjcQqs89-eDb5p4EDJoOuStfiabv4bfZkEIB7EVMYqpO_EDWsQQYFjLWA"
     var m_service: Intent? = null
     var m_paypalRequestCode = 999 //or any number
 
@@ -23,18 +23,17 @@ class PayPalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pay_pal)
 
-        //Pay part
-        m_configuration = PayPalConfiguration()
-            .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX) //sandox for test,production for real
-            .clientId(m_PaypalClientId)
 
+        m_configuration = PayPalConfiguration().environment(PayPalConfiguration.ENVIRONMENT_SANDBOX) //sandbox for test,production for real
+            .clientId(m_PaypalClientId)
         m_service = Intent(this, PayPalService::class.java)
         m_service!!.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, m_configuration)
         startService(m_service)
 
+        //pay button
         pay.setOnClickListener {
             val payment = PayPalPayment(
-                BigDecimal(10), "USD",
+                JavaMathBigDecimal(10.0), "USD",
                 "Test Payment with Paypal", PayPalPayment.PAYMENT_INTENT_SALE
             )
 
@@ -62,6 +61,8 @@ class PayPalActivity : AppCompatActivity() {
                     }
                 } else Toast.makeText(this, "Confirmation is Null :(", Toast.LENGTH_LONG).show()
             }
+        }else{
+            Toast.makeText(this, " :(", Toast.LENGTH_LONG).show()
         }
     }
 }
