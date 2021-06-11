@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity() {
         )[MainActivityViewModel::class.java]
 
         viewModel.getAllWishList().observe(this,{
-            Log.d("Tag","${it.size}")
             wishLiIconAdapter.updateView(it.size)
         })
         wishLiIconAdapter.favouriteButton.setOnClickListener {
@@ -86,6 +85,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.getAllCartList().observe(this,{
+            Log.d("Tag","${it.size}")
             cartIconAdapter.updateView(it.size)
         })
         cartIconAdapter.favouriteButton.setOnClickListener {
