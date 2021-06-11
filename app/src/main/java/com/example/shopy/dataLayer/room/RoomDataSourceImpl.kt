@@ -74,6 +74,11 @@ class RoomDataSourceImpl(database: RoomService?) : RoomDataSource {
         cartDao.saveAllCartList(dataList)
     }
 
+    override suspend fun deleteAllFromWishlist() {
+        wishDao.deleteAllWishlist()
+    }
+
+
     override fun getFourWishList(): LiveData<List<Product>> {
         return wishDao.getFourFromWishList()
     }

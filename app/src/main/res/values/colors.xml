@@ -21,4 +21,6 @@
     <color name="ligtt_blue">#666EFB</color>
     <color name="red">#EC7373</color>
     ////////////////abdelrahman/////////////
+    <color name="grey">#EBEBEB</color>
+    <color name="redLight">#F40606</color>
 </resources>

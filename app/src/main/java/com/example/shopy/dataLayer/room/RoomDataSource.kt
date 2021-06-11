@@ -21,6 +21,6 @@ interface RoomDataSource {
     fun getOneWithItem(id: Long) : LiveData<Product>
     suspend fun deleteAllFromCart()
     fun saveAllCartList(dataList :List<ProductCartModule>)
-
+    suspend fun deleteAllFromWishlist()
     fun getFourWishList(): LiveData<List<Product>>
 }

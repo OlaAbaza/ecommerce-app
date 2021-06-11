@@ -181,6 +181,11 @@ class MeFragment : Fragment() {
         alertDialog.show()
     }
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindingMeScreen.points.setOnClickListener {
+            findNavController().navigate(MeFragmentDirections.actionMeFragmentToSettingsFragment())
+        }
+    }
 
 }

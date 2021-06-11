@@ -41,6 +41,10 @@ class Repository(
         roomDataSourceImpl.deleteAllFromCart()
     }
 
+    suspend fun deleteAllFromWish() {
+        roomDataSourceImpl.deleteAllFromWishlist()
+    }
+
     fun saveAllCartList(dataList: List<ProductCartModule>) {
         roomDataSourceImpl.saveAllCartList(dataList)
     }

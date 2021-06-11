@@ -19,7 +19,11 @@
         android:id="@+id/meFragment"
         android:name="com.example.shopy.ui.meScreen.MeFragment"
         android:label="fragment_me"
-        tools:layout="@layout/fragment_me" />
+        tools:layout="@layout/fragment_me" >
+        <action
+            android:id="@+id/action_meFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 
 
     <fragment
@@ -172,8 +176,17 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment><action android:id="@+id/action_global_displayOrderFragment" app:destination="@id/displayOrderFragment"/>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.shopy.ui.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_meFragment"
+            app:destination="@id/meFragment" />
+    </fragment>
 
-<!--    <activity-->
+    <!--    <activity-->
 <!--        android:id="@+id/mainActivity"-->
 <!--        android:name="com.example.shopy.ui.MainActivity"-->
 <!--        android:label="activity_main"-->

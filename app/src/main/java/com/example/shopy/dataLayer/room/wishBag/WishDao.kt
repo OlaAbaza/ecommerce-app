@@ -22,7 +22,8 @@ interface WishDao {
     @Query("DELETE FROM wishList WHERE id LIKE:id")
     suspend fun deleteOneWithItem(id: Long)
 
-
+    @Query("DELETE FROM wishList")
+    suspend fun deleteAllWishlist()
 
     @Query("SELECT * FROM wishList WHERE id LIKE:id LIMIT 1")
     fun getOneWithItem(id: Long) : LiveData<Product>
