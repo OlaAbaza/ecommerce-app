@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shopy.R
-import com.example.shopy.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 
 class OrderDisplayAdapter(list:
                           List<GetOrders.Order?>,

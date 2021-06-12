@@ -1,19 +1,18 @@
-package com.example.shopy.dataLayer
+package com.example.shopy.data.dataLayer
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.dataLayer.entity.orderGet.GetOrders
-import com.example.shopy.dataLayer.room.RoomDataSourceImpl
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSource
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSource
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.entity.itemPojo.OrderObject
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.models.*
 import com.example.shopy.datalayer.entity.itemPojo.ProductItem
 import com.example.shopy.datalayer.network.Network
-import com.example.shopy.models.*
 import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Callback
@@ -23,7 +22,7 @@ class Repository(
     val remoteDataSource: RemoteDataSource,
     val roomDataSourceImpl: RoomDataSourceImpl
 ) {
-    var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
+    var prouductDetaild: MutableLiveData<ProductItem> = MutableLiveData()
 
     ////////////////////cart list////////////////
     fun getAllCartList(): LiveData<List<ProductCartModule>> {
@@ -37,6 +36,7 @@ class Repository(
     suspend fun deleteOnCartItem(id: Long) {
         roomDataSourceImpl.deleteOnCartItem(id)
     }
+
     suspend fun deleteAllFromCart() {
         roomDataSourceImpl.deleteAllFromCart()
     }
@@ -66,16 +66,22 @@ class Repository(
 
     suspend fun setDafaultCustomerAddress(id: String, addressID: String) =
         remoteDataSource.setDafaultCustomerAddress(id, addressID)
-    suspend fun getCustomerAddress( id: String, addressID: String)=remoteDataSource.getCustomerAddress(id,addressID)
+
+    suspend fun getCustomerAddress(id: String, addressID: String) =
+        remoteDataSource.getCustomerAddress(id, addressID)
 
     ////////////////////customer///////////////////
     suspend fun fetchCustomersData() = remoteDataSource.fetchCustomersData()
     suspend fun createCustomers(customer: CustomerX) = remoteDataSource.createCustomers(customer)
-    suspend fun getCustomer(id: String)=remoteDataSource.getCustomer(id)
-    suspend fun updateCustomer(id: String, customer: CustomerProfile)=remoteDataSource.updateCustomer(id,customer)
+    suspend fun getCustomer(id: String) = remoteDataSource.getCustomer(id)
+    suspend fun updateCustomer(id: String, customer: CustomerProfile) =
+        remoteDataSource.updateCustomer(id, customer)
 
     /////////////////////create order/////////////////////////////
-    suspend fun createOrder(order: Orders) = remoteDataSource.createOrder(order)
+    fun createOrder(order: Orders) =
+        remoteDataSource.createOrder(order)
+
+
 
     ///////////////////products/////////////////////////
     fun getWomanProductsList() {
@@ -105,10 +111,14 @@ class Repository(
     fun getProuduct(id: Long) {
         remoteDataSource.getProuduct(id)
         Network.apiService.getOneProduct(id).enqueue(object : Callback<ProductItem?> {
-            override fun onResponse(call: Call<ProductItem?>, response: Response<ProductItem?>) {
-                Log.d("TAG","data here")
+            override fun onResponse(
+                call: Call<ProductItem?>,
+                response: Response<ProductItem?>
+            ) {
+                Log.d("TAG", "data here")
                 prouductDetaild.value = response.body()
             }
+
             override fun onFailure(call: Call<ProductItem?>, t: Throwable) {
                 t.printStackTrace()
             }
@@ -172,7 +182,7 @@ class Repository(
     //     fun getAllOrders(): Call<GetOrders>{
 //        return remoteDataSource.getAllOrders()
 //    }
-    fun getAllOrders(): Observable<GetOrders>{
+    fun getAllOrders(): Observable<GetOrders> {
         return remoteDataSource.getAllOrders()
     }
 

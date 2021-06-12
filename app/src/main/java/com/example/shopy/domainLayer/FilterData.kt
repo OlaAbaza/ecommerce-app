@@ -1,7 +1,7 @@
 package com.example.shopy.domainLayer
 
 import android.annotation.SuppressLint
-import com.example.shopy.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 
 class FilterData {
     companion object {

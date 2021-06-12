@@ -1,15 +1,12 @@
-package com.example.shopy.dataLayer.remoteDataLayer
+package com.example.shopy.data.dataLayer.remoteDataLayer
 
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.dataLayer.entity.orderGet.GetOrders
-import com.example.shopy.dataLayer.itemPojo.Delete
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.models.*
 import io.reactivex.Observable
-import retrofit2.Call
-import retrofit2.Response
 
 
 interface RemoteDataSource {
@@ -30,7 +27,7 @@ interface RemoteDataSource {
     suspend fun getCustomer( id: String): CustomerX?
 
     suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX?
-    suspend fun createOrder(order: Orders): OrderResponse?
+     fun createOrder(order: Orders): OrderResponse?
 
      fun getWomanProductsList()
      fun getKidsProductsList()

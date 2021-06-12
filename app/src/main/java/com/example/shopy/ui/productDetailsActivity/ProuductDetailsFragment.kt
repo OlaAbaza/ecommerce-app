@@ -18,14 +18,14 @@ import com.example.shopy.R
 import com.example.shopy.adapters.ImageSilderAdapter
 import com.example.shopy.adapters.OptionsAdapter
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
-import com.example.shopy.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentProuductDetailsBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.base.StringsUtils
-import com.example.shopy.dataLayer.Repository
+import com.example.shopy.data.dataLayer.Repository
 import kotlinx.android.synthetic.main.activity_main.*
 
 

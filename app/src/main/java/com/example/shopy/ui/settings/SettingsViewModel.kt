@@ -2,8 +2,7 @@ package com.example.shopy.ui.settings
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.shopy.dataLayer.Repository
-import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.data.dataLayer.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -3,7 +3,7 @@ package com.example.shopy.ui.signIn
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.dataLayer.Repository
+import com.example.shopy.data.dataLayer.Repository
 
 import kotlinx.coroutines.launch
 

@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.*
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
-import com.example.shopy.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCategoryBinding
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService

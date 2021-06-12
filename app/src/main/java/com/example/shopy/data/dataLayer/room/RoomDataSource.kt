@@ -1,9 +1,6 @@
-package com.example.shopy.dataLayer.room
+package com.example.shopy.data.dataLayer.room
 
 import androidx.lifecycle.LiveData
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
 import com.example.shopy.datalayer.entity.itemPojo.OrderObject
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule

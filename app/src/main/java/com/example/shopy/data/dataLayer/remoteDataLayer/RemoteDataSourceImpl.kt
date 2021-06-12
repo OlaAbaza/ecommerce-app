@@ -1,4 +1,4 @@
-package com.example.shopy.dataLayer.remoteDataLayer
+package com.example.shopy.data.dataLayer.remoteDataLayer
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -7,8 +7,8 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.dataLayer.entity.orderGet.GetOrders
-import com.example.shopy.dataLayer.itemPojo.Delete
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.Product
@@ -25,7 +25,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
-import java.util.*
 
 class RemoteDataSourceImpl : RemoteDataSource {
 
@@ -219,12 +218,14 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return null
     }
 
-    override suspend fun createOrder(order: Orders): OrderResponse? {
+    override  fun createOrder(order: Orders): OrderResponse? {
+        CoroutineScope(Dispatchers.IO).launch {
+
         val response = Network.apiService.createOrder(order)
         try {
             if (response.isSuccessful) {
                 Timber.i("This  " + "isSuccessful")
-                return response.body()
+               // return response.body()
             } else {
                 val jObjError =
                     JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
@@ -234,6 +235,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
             e.printStackTrace()
 
         }
+       // return null
+    }
         return null
     }
 
@@ -449,8 +452,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
     override fun fetchAllProducts(): MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
         var categoryRetrofitApi = Network.apiService
         CoroutineScope(Dispatchers.IO).launch {
+
             val response=categoryRetrofitApi.getAllProducts()
             if (response.isSuccessful){
+
                 allProducts.postValue(response.body()!!)
 
             }

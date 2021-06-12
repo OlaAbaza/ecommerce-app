@@ -1,4 +1,4 @@
-package com.example.shopy.dataLayer.room
+package com.example.shopy.data.dataLayer.room
 
 import androidx.lifecycle.LiveData
 import com.example.shopy.datalayer.entity.itemPojo.OrderObject

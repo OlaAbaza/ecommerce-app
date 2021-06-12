@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.allproducts.allProduct

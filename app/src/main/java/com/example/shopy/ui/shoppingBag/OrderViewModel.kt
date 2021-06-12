@@ -3,7 +3,7 @@ package com.example.shopy.ui.shoppingBag
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.dataLayer.Repository
+import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.models.Addresse
 
@@ -57,18 +57,18 @@ class OrderViewModel(val repository: Repository, application: Application) : And
 
 
     fun createOrder(order: Orders) {
-        var orderResponse: OrderResponse? = null
-        val jop = viewModelScope.launch { orderResponse =
+//        var orderResponse: OrderResponse? = null
+        val jop = viewModelScope.launch {
            repository.createOrder(order)
         }
-        jop.invokeOnCompletion {
-            orderResponse?.let {
-                postOrder.postValue(it)
-            }
+//        jop.invokeOnCompletion {
+//            orderResponse?.let {
+//                postOrder.postValue(it)
+//            }
 
-            Timber.i("orderResponse%s", orderResponse)
+         //   Timber.i("orderResponse%s", orderResponse)
 
-        }
+        //}
     }
 
 

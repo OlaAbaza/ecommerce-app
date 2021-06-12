@@ -11,15 +11,14 @@ import com.example.myapplication.FAQAdapter
 import com.example.myapplication.SettingsAdapter
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
-import com.example.shopy.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentSettingsBinding
 import com.example.shopy.datalayer.entity.settings.DeveloperModel
 import com.example.shopy.datalayer.entity.settings.FAQModel
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
-import com.example.shopy.ui.meScreen.MeFragmentDirections
 
 
 class SettingsFragment : Fragment() {

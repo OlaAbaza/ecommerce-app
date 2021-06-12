@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageButton
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -21,42 +22,33 @@ import com.example.shopy.adapters.CartNotificationAdapter
 import com.example.shopy.adapters.WishListIconAdapter
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
-import com.example.shopy.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.ui.shopTab.search.ShopSearchFragment
+import com.example.shopy.ui.search.ShopSearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-
     private var navHostFragment: Fragment? = null
     private var navController: NavController? = null
     val netwokRecever = NetworkChangeReceiver()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         this.registerReceiver(netwokRecever, IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"))
-
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
-
         navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment)
         navController = navHostFragment?.findNavController()
         if (navController != null) {
             bottomNavigationView.setupWithNavController(navController!!)
         }
-
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
 //        //fav
 //        val imageButton = toolbar.findViewById(R.id.favourite) as View
-
-
 
         val wishLiIconAdapter : WishListIconAdapter = WishListIconAdapter(findViewById(R.id.favourite))
         val cartIconAdapter : CartNotificationAdapter = CartNotificationAdapter(findViewById(R.id.cartView))
@@ -71,8 +63,8 @@ class MainActivity : AppCompatActivity() {
             this,
             viewModelFactory
         )[MainActivityViewModel::class.java]
-
         viewModel.getAllWishList().observe(this,{
+            Log.d("Tag","${it.size}")
             wishLiIconAdapter.updateView(it.size)
         })
         wishLiIconAdapter.favouriteButton.setOnClickListener {
@@ -83,9 +75,7 @@ class MainActivity : AppCompatActivity() {
             navGraph.startDestination = R.id.allWishListFragment
             navController!!.graph = navGraph
         }
-
         viewModel.getAllCartList().observe(this,{
-            Log.d("Tag","${it.size}")
             cartIconAdapter.updateView(it.size)
         })
         cartIconAdapter.favouriteButton.setOnClickListener {
@@ -96,12 +86,9 @@ class MainActivity : AppCompatActivity() {
             navGraph.startDestination = R.id.cartFragment2
             navController!!.graph = navGraph
         }
-
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.actionbar_menu, menu)
-
         //search
         val searchItem: MenuItem? = menu?.findItem(R.id.search)
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -116,11 +103,8 @@ class MainActivity : AppCompatActivity() {
             transaction.commit()
         }
 
-
-
         return super.onCreateOptionsMenu(menu)
     }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
 //            R.id.cart -> {
@@ -136,10 +120,8 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         this.unregisterReceiver(netwokRecever)
     }
-
 }

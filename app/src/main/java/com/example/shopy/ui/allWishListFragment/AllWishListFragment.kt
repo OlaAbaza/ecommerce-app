@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.adapters.WishListAdapter
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
-import com.example.shopy.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentAllWishListBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService

@@ -1,6 +1,5 @@
 package com.example.shopy.ui.shopTab
 
-import android.R.attr.data
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopy.R
 import com.example.shopy.datalayer.entity.custom_product.Product
-import com.example.shopy.ui.shopTab.search.searchAdapter
 
 
 class ShopItemsAdapter(private val context: Context, private val itemName: List<Product>,var intentTOProductDetails : MutableLiveData<Product>):

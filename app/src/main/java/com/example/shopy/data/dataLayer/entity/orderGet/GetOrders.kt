@@ -1,8 +1,11 @@
-package com.example.shopy.dataLayer.entity.orderGet
+package com.example.shopy.data.dataLayer.entity.orderGet
+
+import java.io.Serializable
 
 data class GetOrders(
     val orders: List<Order?>?
 ) {
+
     data class Order(
         val admin_graphql_api_id: String?,
         val app_id: Int?,
@@ -85,8 +88,9 @@ data class GetOrders(
         val total_weight: Int?,
         val updated_at: String?,
         val user_id: Any?
-    ) {
-        data class BillingAddress(
+    ) : Serializable{
+
+        data class BillingAddress (
             val address1: String?,
             val address2: Any?,
             val city: String?,
@@ -102,66 +106,66 @@ data class GetOrders(
             val province: Any?,
             val province_code: Any?,
             val zip: Any?
-        )
+        )  : Serializable
 
         data class CurrentSubtotalPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) : Serializable {
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
-        data class CurrentTotalDiscountsSet(
+        data class CurrentTotalDiscountsSet (
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) : Serializable {
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
         data class CurrentTotalPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        )  : Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
         data class CurrentTotalTaxSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        )  : Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
         data class Customer(
@@ -189,7 +193,7 @@ data class GetOrders(
             val total_spent: String?,
             val updated_at: String?,
             val verified_email: Boolean?
-        ) {
+        )  : Serializable{
             data class DefaultAddress(
                 val address1: String?,
                 val address2: String?,
@@ -208,7 +212,7 @@ data class GetOrders(
                 val province: String?,
                 val province_code: String?,
                 val zip: String?
-            )
+            ) : Serializable
         }
 
         data class DiscountApplication(
@@ -221,13 +225,13 @@ data class GetOrders(
             val type: String?,
             val value: String?,
             val value_type: String?
-        )
+        ) : Serializable
 
         data class DiscountCode(
             val amount: String?,
             val code: String?,
             val type: String?
-        )
+        ) : Serializable
 
         data class Fulfillment(
             val admin_graphql_api_id: String?,
@@ -247,7 +251,7 @@ data class GetOrders(
             val tracking_url: Any?,
             val tracking_urls: List<Any?>?,
             val updated_at: String?
-        ) {
+        ) : Serializable {
             data class LineItem(
                 val admin_graphql_api_id: String?,
                 val discount_allocations: List<Any?>?,
@@ -276,40 +280,40 @@ data class GetOrders(
                 val variant_inventory_management: String?,
                 val variant_title: String?,
                 val vendor: String?
-            ) {
+            ) : Serializable {
                 data class PriceSet(
                     val presentment_money: PresentmentMoney?,
                     val shop_money: ShopMoney?
-                ) {
+                ) : Serializable {
                     data class PresentmentMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
 
                     data class ShopMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
                 }
 
                 data class TotalDiscountSet(
                     val presentment_money: PresentmentMoney?,
                     val shop_money: ShopMoney?
-                ) {
+                ) : Serializable {
                     data class PresentmentMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
 
                     data class ShopMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
                 }
             }
 
             class Receipt(
-            )
+            ) : Serializable
         }
 
         data class LineItem(
@@ -340,56 +344,56 @@ data class GetOrders(
             val variant_inventory_management: String?,
             val variant_title: String?,
             val vendor: String?
-        ) {
+        ) : Serializable {
             data class DiscountAllocation(
                 val amount: String?,
                 val amount_set: AmountSet?,
                 val discount_application_index: Int?
-            ) {
+            )  : Serializable{
                 data class AmountSet(
                     val presentment_money: PresentmentMoney?,
                     val shop_money: ShopMoney?
-                ) {
+                ) : Serializable {
                     data class PresentmentMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
 
                     data class ShopMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
                 }
             }
 
             data class PriceSet(
                 val presentment_money: PresentmentMoney?,
                 val shop_money: ShopMoney?
-            ) {
+            ) : Serializable {
                 data class PresentmentMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) : Serializable
 
                 data class ShopMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) : Serializable
             }
 
             data class TotalDiscountSet(
                 val presentment_money: PresentmentMoney?,
                 val shop_money: ShopMoney?
-            ) {
+            ) : Serializable {
                 data class PresentmentMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) : Serializable
 
                 data class ShopMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) : Serializable
             }
         }
 
@@ -407,7 +411,7 @@ data class GetOrders(
             val total_duties_set: TotalDutiesSet?,
             val transactions: List<Transaction?>?,
             val user_id: Any?
-        ) {
+        ) : Serializable {
             data class OrderAdjustment(
                 val amount: String?,
                 val amount_set: AmountSet?,
@@ -418,51 +422,51 @@ data class GetOrders(
                 val refund_id: Long?,
                 val tax_amount: String?,
                 val tax_amount_set: TaxAmountSet?
-            ) {
+            )  : Serializable{
                 data class AmountSet(
                     val presentment_money: PresentmentMoney?,
                     val shop_money: ShopMoney?
-                ) {
+                ) : Serializable {
                     data class PresentmentMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
 
                     data class ShopMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
                 }
 
                 data class TaxAmountSet(
                     val presentment_money: PresentmentMoney?,
                     val shop_money: ShopMoney?
-                ) {
+                ) : Serializable {
                     data class PresentmentMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
 
                     data class ShopMoney(
                         val amount: String?,
                         val currency_code: String?
-                    )
+                    ) : Serializable
                 }
             }
 
             data class TotalDutiesSet(
                 val presentment_money: PresentmentMoney?,
                 val shop_money: ShopMoney?
-            ) {
+            )  : Serializable{
                 data class PresentmentMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) : Serializable
 
                 data class ShopMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) : Serializable
             }
 
             data class Transaction(
@@ -486,9 +490,9 @@ data class GetOrders(
                 val status: String?,
                 val test: Boolean?,
                 val user_id: Any?
-            ) {
+            ) : Serializable {
                 class Receipt(
-                )
+                ) : Serializable
             }
         }
 
@@ -508,96 +512,96 @@ data class GetOrders(
             val province: Any?,
             val province_code: Any?,
             val zip: Any?
-        )
+        ) : Serializable
 
         data class SubtotalPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) : Serializable {
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
         data class TotalDiscountsSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) : Serializable {
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
         data class TotalLineItemsPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        )  : Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
         data class TotalPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) : Serializable {
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
         data class TotalShippingPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) : Serializable {
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
 
         data class TotalTaxSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        )  : Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) : Serializable
         }
     }
 }

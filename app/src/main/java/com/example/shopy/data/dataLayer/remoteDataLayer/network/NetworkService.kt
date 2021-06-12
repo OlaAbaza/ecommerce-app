@@ -1,7 +1,7 @@
 package com.example.shopy.datalayer.network
 
-import com.example.shopy.dataLayer.entity.orderGet.GetOrders
-import com.example.shopy.dataLayer.itemPojo.Delete
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.ProductsList
@@ -93,7 +93,7 @@ interface NetworkService {
     ): Response<CreateAddressX>
 
     @POST("orders.json")
-    suspend fun createOrder(
+     suspend fun createOrder(
         @Body order: Orders
     ): Response<OrderResponse>
 

@@ -2,7 +2,7 @@ package com.example.shopy.ui.mainActivity
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.shopy.dataLayer.Repository
+import com.example.shopy.data.dataLayer.Repository
 
 class MainActivityViewModel(val repository: Repository, application: Application): AndroidViewModel(application) {
 

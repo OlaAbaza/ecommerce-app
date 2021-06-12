@@ -1,6 +1,7 @@
 package com.example.shopy.ui.displayOrderFragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,15 +18,17 @@ import com.example.shopy.R
 import com.example.shopy.adapters.OrderDisplayAdapter
 import com.example.shopy.base.StringsUtils
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.dataLayer.Repository
-import com.example.shopy.dataLayer.remoteDataLayer.RemoteDataSourceImpl
-import com.example.shopy.dataLayer.room.RoomDataSourceImpl
+import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentDisplayOrderBinding
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.ui.payment.Checkout_Activity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.Serializable
 import java.lang.ref.WeakReference
 
 
@@ -157,6 +160,17 @@ class DisplayOrderFragment : Fragment() {
             Toast.makeText(requireContext(),getString(R.string.order_canceld),Toast.LENGTH_SHORT).show()
             callOrders(displayOrderViewModel,view)})
 
+
+
+        //payment
+        displayOrderViewModel.payNowMutableData.observe(viewLifecycleOwner,{
+            Toast.makeText(requireContext(),"amount = "+ it.total_price,Toast.LENGTH_SHORT).show()
+
+            startActivity(Intent(requireActivity(), Checkout_Activity::class.java).putExtra("amount",it.total_price)
+                .putExtra("order",it as Serializable))
+            //.putExtra("amount",amount)
+        })
+
         return view.root
     }
 
@@ -203,6 +217,7 @@ class DisplayOrderFragment : Fragment() {
         Log.d("TAG","onDestroyView")
         displayOrderViewModel.deleteOrder = MutableLiveData()
         displayOrderViewModel.cancelMutableData = MutableLiveData()
+        displayOrderViewModel.payNowMutableData = MutableLiveData()
 
     }
 
