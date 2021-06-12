@@ -47,5 +47,6 @@ interface RemoteDataSource {
 
     fun getAllOrders() : Observable<GetOrders>
 
-    fun deleteOrder(order_id : Long) : MutableLiveData<Boolean>
+    fun deleteOrder(order_id : Long): MutableLiveData<Boolean>
+
 }

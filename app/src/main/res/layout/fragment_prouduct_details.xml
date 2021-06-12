@@ -50,6 +50,7 @@
                     android:id="@+id/addToWishList"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:background="#00FFFFFF"
                     android:layout_margin="10dp"
                     android:contentDescription="@string/add_to_wish_list"
                     android:src="@drawable/ic__favorite_border_24"

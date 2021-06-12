@@ -186,6 +186,9 @@ class Repository(
         return remoteDataSource.getAllOrders()
     }
 
-    fun deleteOrder(order_id: Long) = remoteDataSource.deleteOrder(order_id)
+    fun deleteOrder(order_id: Long) : MutableLiveData<Boolean> {
+       // remoteDataSource.deleteOrder(order_id)
+        return remoteDataSource.deleteOrder(order_id)
+    }
 
 }

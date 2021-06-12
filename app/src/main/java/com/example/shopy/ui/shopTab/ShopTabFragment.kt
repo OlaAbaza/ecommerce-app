@@ -37,6 +37,8 @@ class ShopTabFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().bottom_nav.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
         setUpTabBar()
 
     }

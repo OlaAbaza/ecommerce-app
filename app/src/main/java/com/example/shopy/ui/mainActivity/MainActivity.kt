@@ -34,11 +34,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private var navHostFragment: Fragment? = null
     private var navController: NavController? = null
-    val netwokRecever = NetworkChangeReceiver()
+    lateinit var netwokRecever :NetworkChangeReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        this.registerReceiver(netwokRecever, IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"))
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment)
         navController = navHostFragment?.findNavController()
@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
         }
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+        netwokRecever = NetworkChangeReceiver(this)
+        this.registerReceiver(netwokRecever, IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"))
 //        //fav
 //        val imageButton = toolbar.findViewById(R.id.favourite) as View
 

@@ -140,6 +140,9 @@
     <string name="some_error_accurated">Some error accurate</string>
     <string name="cancel_order">Cancel Order</string>
     <string name="please_log_in">Log In to can see wish list</string>
+    <string name="logInToCanAddToWishList">Login to can add to wish list</string>
+    <string name="logInToCanAddToCart">Login to can add to cart</string>
+    <string name="thereIsNoNetwork">There is no network</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

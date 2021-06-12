@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
+import com.example.shopy.R
 import com.example.shopy.adapters.WishListAdapter
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
@@ -25,14 +27,14 @@ class AllWishListFragment : Fragment() {
 
     private lateinit var bindingAllWishListFragment: FragmentAllWishListBinding
     private lateinit var allWishListFragmentViewModel: AllWishListViewModel
-    lateinit var withListAdapter: WishListAdapter
-    lateinit var wishListData: List<Product>
+    private lateinit var withListAdapter: WishListAdapter
+    private lateinit var wishListData: List<Product>
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_all_wish_list, container, false)
 
@@ -40,7 +42,6 @@ class AllWishListFragment : Fragment() {
         bindingAllWishListFragment = FragmentAllWishListBinding.inflate(inflater, container, false)
 
 
-        val remoteDataSource = RemoteDataSourceImpl()
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
         val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
 
@@ -49,6 +50,9 @@ class AllWishListFragment : Fragment() {
             viewModelFactory
         )[AllWishListViewModel::class.java]
 
+
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.GONE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
 
         wishListData = ArrayList()
 
@@ -79,7 +83,35 @@ class AllWishListFragment : Fragment() {
             }
         })
 
+        allWishListFragmentViewModel.deleteItem.observe(viewLifecycleOwner,{
+            deleteAlert(it.id)
+        })
+
         return bindingAllWishListFragment.root
+    }
+
+
+    private fun deleteAlert(id: Long) {
+
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.Delete_Item_From_Wish_List))
+        builder.setMessage(getString(R.string.are_you_sure))
+        builder.setIcon(android.R.drawable.ic_delete)
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            allWishListFragmentViewModel.deleteOneItemFromWishList(id)
+            allWishListFragmentViewModel.deleteItem = MutableLiveData<Product>()
+        }
+
+        builder.setNegativeButton("No") { _, _ ->
+            allWishListFragmentViewModel.deleteItem = MutableLiveData<Product>()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
 

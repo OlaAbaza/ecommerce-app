@@ -3,6 +3,7 @@ package com.example.shopy.ui.displayOrderFragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
 import com.example.shopy.adapters.OrderDisplayAdapter
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.StringsUtils
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
@@ -36,6 +38,7 @@ class DisplayOrderFragment : Fragment() {
     private var tabId: Int = 0
     private var userID: Long = 0
     private lateinit var displayOrderViewModel: DisplayOrderViewModel
+
     @SuppressLint("LogNotTimber")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,10 +59,12 @@ class DisplayOrderFragment : Fragment() {
         )
 
 
-         displayOrderViewModel = WeakReference(ViewModelProvider(
-             requireActivity(),
-             viewModelFactory
-         )[DisplayOrderViewModel::class.java]).get()!!
+        displayOrderViewModel = WeakReference(
+            ViewModelProvider(
+                requireActivity(),
+                viewModelFactory
+            )[DisplayOrderViewModel::class.java]
+        ).get()!!
 
 
         val meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
@@ -76,13 +81,10 @@ class DisplayOrderFragment : Fragment() {
             tabId = savedInstanceState.getInt(StringsUtils.tabID)
         }
 
-
-
         view.tapLayout.getTabAt(tabId)?.select()
 
         //make new call to update view with the new data
-        callOrders(displayOrderViewModel,view)
-
+        callOrders(displayOrderViewModel, view)
 
         val adapter = WeakReference(
             OrderDisplayAdapter(
@@ -91,6 +93,8 @@ class DisplayOrderFragment : Fragment() {
                 displayOrderViewModel.cancelMutableData
             )
         ).get()
+
+
         view.orderRecycler.apply {
             this.layoutManager = LinearLayoutManager(requireContext())
             this.adapter = adapter
@@ -103,13 +107,16 @@ class DisplayOrderFragment : Fragment() {
 
 
         displayOrderViewModel.orders.observe(viewLifecycleOwner, {
-            adapter!!.list = it
+
+            adapter?.list = it
             view.progressPar.visibility = View.GONE
-            if (it.isEmpty()){
-                view.emptyAnimationView.visibility=View.VISIBLE
-            }else{
-                view.emptyAnimationView.visibility=View.GONE
+
+            if (it.isEmpty()) {
+                view.emptyAnimationView.visibility = View.VISIBLE
+            } else {
+                view.emptyAnimationView.visibility = View.GONE
             }
+            Log.d("TAG", "size of list ${it.size}")
         })
 
 
@@ -117,15 +124,23 @@ class DisplayOrderFragment : Fragment() {
         view.tapLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
 
-                when (tab.position) {
-                    0 -> {
-                        displayOrderViewModel.getPaidOrders(userID)
-                        view.progressPar.visibility = View.VISIBLE
+                if (NetworkChangeReceiver.isOnline) {
+                    view.progressPar.visibility = View.VISIBLE
+                    when (tab.position) {
+                        0 -> {
+                            displayOrderViewModel.getPaidOrders(userID)
+                        }
+                        1 -> {
+                            displayOrderViewModel.getUnPaidOrders(userID)
+                        }
                     }
-                    1 -> {
-                        displayOrderViewModel.getUnPaidOrders(userID)
-                        view.progressPar.visibility = View.VISIBLE
-                    }
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.thereIsNoNetwork),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 }
 
             }
@@ -139,40 +154,48 @@ class DisplayOrderFragment : Fragment() {
         })
 
 
-        displayOrderViewModel.error.observe(viewLifecycleOwner,{
-            if (it){
-                Toast.makeText(requireContext(),getString(R.string.some_error_accurated),Toast.LENGTH_SHORT).show()
-                displayOrderViewModel.error.value=false
+        displayOrderViewModel.error.observe(viewLifecycleOwner, {
+            if (it) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.some_error_accurated),
+                    Toast.LENGTH_SHORT
+                ).show()
+                displayOrderViewModel.error.value = false
             }
         })
 
-        displayOrderViewModel.cancelMutableData.observe(viewLifecycleOwner,{
-            deleteAlert(displayOrderViewModel,it.id?:0)
+        displayOrderViewModel.cancelMutableData.observe(viewLifecycleOwner, {
+            deleteAlert(displayOrderViewModel, it.id ?: 0)
 
         })
 
         //make new call to update view with the new data after cancel order
 
-        displayOrderViewModel.deleteOrder.observe(viewLifecycleOwner,{
-            if (it == true) {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.order_canceld),
-                    Toast.LENGTH_SHORT
-                ).show()
-                callOrders(displayOrderViewModel, view)
-                displayOrderViewModel.deleteOrder.value = false
-            }
+        displayOrderViewModel.deleteOrder.observe(viewLifecycleOwner, {
+//            if (it == true) {
+            callOrders(displayOrderViewModel, view)
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.order_canceld),
+                Toast.LENGTH_SHORT
+            ).show()
+
         })
 
 
-
         //payment
-        displayOrderViewModel.payNowMutableData.observe(viewLifecycleOwner,{
-            Toast.makeText(requireContext(),"amount = "+ it.total_price,Toast.LENGTH_SHORT).show()
+        displayOrderViewModel.payNowMutableData.observe(viewLifecycleOwner, {
+            Toast.makeText(requireContext(), "amount = " + it.total_price, Toast.LENGTH_SHORT)
+                .show()
 
-            startActivity(Intent(requireActivity(), Checkout_Activity::class.java).putExtra("amount",it.total_price)
-                .putExtra("order",it as Serializable))
+            startActivity(
+                Intent(requireActivity(), Checkout_Activity::class.java).putExtra(
+                    "amount",
+                    it.total_price
+                )
+                    .putExtra("order", it as Serializable)
+            )
         })
 
         return view.root
@@ -185,31 +208,41 @@ class DisplayOrderFragment : Fragment() {
         outState.putLong(StringsUtils.userID, userID)
     }
 
-    private fun callOrders(displayOrderViewModel: DisplayOrderViewModel, view: FragmentDisplayOrderBinding){
+    private fun callOrders(
+        displayOrderViewModel: DisplayOrderViewModel,
+        view: FragmentDisplayOrderBinding
+    ) {
+        view.progressPar.visibility = View.VISIBLE
+        if (NetworkChangeReceiver.isOnline) {
+            if (tabId == 0) {
+                displayOrderViewModel.getPaidOrders(userID)
 
-        if (tabId == 0) {
-            displayOrderViewModel.getPaidOrders(userID)
-            view.progressPar.visibility = View.VISIBLE
-
+            } else {
+                displayOrderViewModel.getUnPaidOrders(userID)
+            }
         } else {
-            displayOrderViewModel.getUnPaidOrders(userID)
-            view.progressPar.visibility = View.VISIBLE
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.thereIsNoNetwork),
+                Toast.LENGTH_SHORT
+            ).show()
+
         }
     }
 
 
-    private fun deleteAlert(displayOrderViewModel: DisplayOrderViewModel, order_id : Long){
+    private fun deleteAlert(displayOrderViewModel: DisplayOrderViewModel, order_id: Long) {
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.cancel_order))
         builder.setMessage(getString(R.string.are_you_sure))
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
-        builder.setPositiveButton("Yes"){_, _ ->
+        builder.setPositiveButton("Yes") { _, _ ->
             displayOrderViewModel.deleteOrder(order_id)
         }
 
-        builder.setNegativeButton("No"){_, _ ->
+        builder.setNegativeButton("No") { _, _ ->
         }
         val alertDialog: AlertDialog = builder.create()
         alertDialog.setCancelable(false)
@@ -218,7 +251,7 @@ class DisplayOrderFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-//        displayOrderViewModel.deleteOrder = MutableLiveData()
+        displayOrderViewModel.deleteOrder = MutableLiveData()
         displayOrderViewModel.cancelMutableData = MutableLiveData()
         displayOrderViewModel.payNowMutableData = MutableLiveData()
 

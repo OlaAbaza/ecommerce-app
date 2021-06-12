@@ -35,13 +35,9 @@ class RemoteDataSourceImpl : RemoteDataSource {
     var allProductsList = MutableLiveData<AllProducts>()
     var allDiscountCodeList = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
-    var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-
     var catProducts = MutableLiveData<List<Product>>()
+
     var allProducts = MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>()
-
-
-
     override suspend fun fetchCustomersData(): List<Customer>? {
         val response = Network.apiService.getCustomers()
         try {
@@ -55,6 +51,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
         return null
     }
+
+
 
     override suspend fun createCustomers(customer: CustomerX): CustomerX? {
         val response = Network.apiService.createCustomer(customer)
@@ -321,7 +319,6 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
     }
 
-
     override  fun getOnSaleProductsList() {
         Log.i("output", "getOnSaleProductsListFromApi ** repo")
 
@@ -349,6 +346,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
     }
 
+
     override  fun getAllProductsList() {
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -374,7 +372,6 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
     }
 
-
     override  fun getAllDiscountCodeList() {
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -396,7 +393,6 @@ class RemoteDataSourceImpl : RemoteDataSource {
             })
         }
     }
-
 
 
         override fun getProuduct(id: Long){
@@ -436,6 +432,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return false
     }
 
+
+
     override fun fetchCatProducts(colID: Long): MutableLiveData<List<Product>> {
         var categoryRetrofitApi = Network.apiService
         CoroutineScope(Dispatchers.IO).launch {
@@ -468,6 +466,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     }
 
+    var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
     override fun deleteOrder(order_id: Long): MutableLiveData<Boolean>{
         CoroutineScope(Dispatchers.IO).launch {
             Network.apiService.deleteOrder(order_id).enqueue(object : Callback<Delete?> {
@@ -483,5 +483,4 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
         return deleteOrder
     }
-
 }
