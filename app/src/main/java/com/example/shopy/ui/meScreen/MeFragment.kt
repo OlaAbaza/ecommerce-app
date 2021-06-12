@@ -113,6 +113,7 @@ class MeFragment : Fragment() {
             Log.d("TAG","user id ${meDataSourceReo.loadUsertId()}")
             meViewModel.getPaidOrders(meDataSourceReo.loadUsertId().toLong())
             meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
+
             meViewModel.paidOrders.observe(viewLifecycleOwner, {
                 bindingMeScreen.paidNumbers.text = it.toString()
             })
