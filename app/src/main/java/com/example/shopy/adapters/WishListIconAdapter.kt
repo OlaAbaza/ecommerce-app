@@ -9,8 +9,10 @@ class WishListIconAdapter(view: View) {
     var wishListCounter : TextView = view.findViewById(R.id.favouriteItems)
     var favouriteButton : ImageButton = view.findViewById(R.id.favouriteButton)
     fun updateView(number : Int){
-        if (number> 0)
-        wishListCounter.text = number.toString()
+        if (number> 0){
+            wishListCounter.text = number.toString()
+            wishListCounter.visibility = View.VISIBLE
+        }
         else
             wishListCounter.visibility = View.INVISIBLE
     }
