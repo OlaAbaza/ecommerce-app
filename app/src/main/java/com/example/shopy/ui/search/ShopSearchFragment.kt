@@ -10,11 +10,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.example.myapplication.SearchCategoryItemAdapter
 import com.example.shopy.R
+import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
+import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentShopSearchBinding
 import com.example.shopy.datalayer.entity.allproducts.allProduct
 import com.example.shopy.datalayer.entity.itemPojo.Product
+import com.example.shopy.datalayer.localdatabase.room.RoomService
 
 import com.example.shopy.ui.shopTab.ShopTabViewModel
+import com.example.shopy.util.Utils
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class ShopSearchFragment : Fragment() {
@@ -26,6 +34,7 @@ class ShopSearchFragment : Fragment() {
     lateinit var products:List<allProduct>
     lateinit var sortedProducts:List<allProduct>
     var productFilter=""
+    lateinit var  shopTabViewModel : ShopTabViewModel
 
     private var _binding: FragmentShopSearchBinding? = null
     // This property is only valid between onCreateView and
@@ -39,6 +48,22 @@ class ShopSearchFragment : Fragment() {
     ): View? {
         _binding = FragmentShopSearchBinding.inflate(inflater, container, false)
         val view = binding.root
+        if(Utils.toolbarImg.visibility == View.VISIBLE){
+            Utils.toolbarImg.visibility = View.GONE
+        }
+        if(Utils.cartView.visibility == View.VISIBLE){
+            Utils.cartView.visibility = View.GONE
+        }
+        val application = requireNotNull(this.activity).application
+        val repository = Repository(
+            RemoteDataSourceImpl(),
+            RoomDataSourceImpl(RoomService.getInstance(application))
+        )
+        val viewModelFactory = ViewModelFactory(repository, application)
+        shopTabViewModel =
+            ViewModelProvider(
+                this, viewModelFactory
+            ).get(ShopTabViewModel::class.java)
         return view
     }
 
@@ -60,7 +85,6 @@ class ShopSearchFragment : Fragment() {
         searchView?.setIconified(false)
 
 
-        val shopTabViewModel= ViewModelProvider(this).get(ShopTabViewModel::class.java)
         shopTabViewModel.fetchallProductsList().observe(viewLifecycleOwner,{
             Log.i("output","***********"+it.toString())
             products = it.products

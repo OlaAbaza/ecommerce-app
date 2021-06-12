@@ -23,6 +23,7 @@ import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.util.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -54,8 +55,14 @@ class MeFragment : Fragment() {
 
         wishListData = ArrayList()
 
-        requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().bottom_nav.visibility = View.VISIBLE
+//        requireActivity().toolbar.visibility = View.VISIBLE
+//        requireActivity().bottom_nav.visibility = View.VISIBLE
+        if(Utils.toolbarImg.visibility == View.GONE){
+            Utils.toolbarImg.visibility = View.VISIBLE
+        }
+        if(Utils.cartView.visibility == View.GONE){
+            Utils.cartView.visibility = View.VISIBLE
+        }
         requireActivity().toolbar_title.text = getString(R.string.me)
         bindingMeScreen.regesterAndLogin.setOnClickListener {
             val action = NavGraphDirections.actionGlobalSignInFragment()

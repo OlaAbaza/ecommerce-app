@@ -168,15 +168,9 @@
         android:id="@+id/shopSearchFragment"
         android:name="com.example.shopy.ui.search.ShopSearchFragment"
         android:label="fragment_shop_search"
-        tools:layout="@layout/fragment_shop_search" /><action android:id="@+id/action_global_shopSearchFragment" app:destination="@id/shopSearchFragment"/>
-    <!--    <activity-->
-<!--        android:id="@+id/mainActivity"-->
-<!--        android:name="com.example.shopy.ui.MainActivity"-->
-<!--        android:label="activity_main"-->
-<!--        tools:layout="@layout/activity_main" >-->
-<!--        <action-->
-<!--            android:id="@+id/action_global_articleActivity"-->
-<!--            app:destination="@id/allWishListFragment" />-->
-<!--    </activity>-->
+        tools:layout="@layout/fragment_shop_search" />
+    <action android:id="@+id/action_global_shopSearchFragment"
+        app:destination="@id/shopSearchFragment"/>
+
 
 </navigation>

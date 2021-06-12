@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageButton
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -27,8 +28,10 @@ import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.search.ShopSearchFragment
+import com.example.shopy.util.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +49,8 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.setupWithNavController(navController!!)
         }
         setSupportActionBar(toolbar)
+        Utils.toolbarImg = toolbar.searchIcon
+        Utils.cartView = toolbar.cartView
         supportActionBar?.setDisplayShowTitleEnabled(false)
 //        //fav
 //        val imageButton = toolbar.findViewById(R.id.favourite) as View
@@ -86,38 +91,15 @@ class MainActivity : AppCompatActivity() {
             navGraph.startDestination = R.id.cartFragment2
             navController!!.graph = navGraph
         }
-    }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.actionbar_menu, menu)
-        //search
-        val searchItem: MenuItem? = menu?.findItem(R.id.search)
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView: SearchView? = searchItem?.actionView as SearchView
-        searchView?.setFocusable(true)
-        //searchView?.setIconified(false)
-        searchView?.setOnSearchClickListener {
-            val manager: FragmentManager = supportFragmentManager
-            val transaction = manager.beginTransaction()
-            transaction.replace(R.id.fragment, ShopSearchFragment())
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
 
-        return super.onCreateOptionsMenu(menu)
-    }
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-//            R.id.cart -> {
-//
-//                navHostFragment = fragment as NavHostFragment
-//                val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
-//                val navGraph = graphInflater.inflate(R.navigation.nav_graph)
-//                navController = (navHostFragment as NavHostFragment).navController
-//                navGraph.startDestination = R.id.cartFragment2
-//                navController!!.graph = navGraph
-//                true
-//            }
-            else -> super.onOptionsItemSelected(item)
+        searchIcon.setOnClickListener {
+            Toast.makeText(this,"search",Toast.LENGTH_LONG).show()
+            navHostFragment = fragment as NavHostFragment
+            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
+            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+            navController = (navHostFragment as NavHostFragment).navController
+            navGraph.startDestination = R.id.shopSearchFragment
+            navController!!.graph = navGraph
         }
     }
     override fun onDestroy() {

@@ -7,7 +7,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSource
+import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
+import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.Product
+import com.example.shopy.datalayer.entity.custom_product.ProductsList
 import com.example.shopy.datalayer.entity.itemPojo.OrderObject
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.models.*
@@ -84,28 +87,28 @@ class Repository(
 
 
     ///////////////////products/////////////////////////
-    fun getWomanProductsList() {
-        remoteDataSource.getWomanProductsList()
+    fun getWomanProductsList() : MutableLiveData<ProductsList>{
+       return remoteDataSource.getWomanProductsList()
     }
 
-    fun getKidsProductsList() {
-        remoteDataSource.getKidsProductsList()
+    fun getKidsProductsList()  : MutableLiveData<ProductsList>{
+        return remoteDataSource.getKidsProductsList()
     }
 
-    fun getMenProductsList() {
-        remoteDataSource.getMenProductsList()
+    fun getMenProductsList() : MutableLiveData<ProductsList> {
+        return remoteDataSource.getMenProductsList()
     }
 
-    fun getOnSaleProductsList() {
-        remoteDataSource.getOnSaleProductsList()
+    fun getOnSaleProductsList()  : MutableLiveData<ProductsList>{
+        return remoteDataSource.getOnSaleProductsList()
     }
 
-    fun getAllProductsList() {
-        remoteDataSource.getAllProductsList()
+    fun getAllProductsList():  MutableLiveData<AllProducts>{
+        return remoteDataSource.getAllProductsList()
     }
 
-    fun getAllDiscountCodeList() {
-        remoteDataSource.getAllDiscountCodeList()
+    fun getAllDiscountCodeList() : MutableLiveData<AllCodes> {
+       return remoteDataSource.getAllDiscountCodeList()
     }
 
     fun getProuduct(id: Long) {

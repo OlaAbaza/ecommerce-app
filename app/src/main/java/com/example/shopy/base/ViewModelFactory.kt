@@ -27,8 +27,10 @@ import com.example.shopy.ui.customerAddress.AddressViewModel
 import com.example.shopy.ui.displayOrderFragment.DisplayOrderViewModel
 import com.example.shopy.ui.mainActivity.MainActivityViewModel
 import com.example.shopy.ui.meScreen.MeViewModel
+import com.example.shopy.ui.payment.PaymentViewModel
 import com.example.shopy.ui.productDetailsActivity.ProductDetailsViewModel
 import com.example.shopy.ui.settings.SettingsViewModel
+import com.example.shopy.ui.shopTab.ShopTabViewModel
 import com.example.shopy.ui.shoppingBag.OrderViewModel
 import com.example.shopy.ui.signIn.SignInViewModel
 
@@ -69,6 +71,12 @@ class ViewModelFactory(
         }
         else if(modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
             return SettingsViewModel(repository, application) as T
+        }
+        else if(modelClass.isAssignableFrom(ShopTabViewModel::class.java)) {
+            return ShopTabViewModel(repository, application) as T
+        }
+        else if(modelClass.isAssignableFrom(PaymentViewModel::class.java)) {
+            return PaymentViewModel(repository, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

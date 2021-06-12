@@ -4,7 +4,10 @@ package com.example.shopy.data.dataLayer.remoteDataLayer
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
+import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.Product
+import com.example.shopy.datalayer.entity.custom_product.ProductsList
 import com.example.shopy.models.*
 import io.reactivex.Observable
 
@@ -29,12 +32,13 @@ interface RemoteDataSource {
     suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX?
      fun createOrder(order: Orders): OrderResponse?
 
-     fun getWomanProductsList()
-     fun getKidsProductsList()
-     fun getMenProductsList()
-     fun getOnSaleProductsList()
-     fun getAllProductsList()
-     fun getAllDiscountCodeList()
+     //shopTab
+     fun getWomanProductsList() : MutableLiveData<ProductsList>
+     fun getKidsProductsList() : MutableLiveData<ProductsList>
+     fun getMenProductsList() : MutableLiveData<ProductsList>
+     fun getOnSaleProductsList() : MutableLiveData<ProductsList>
+     fun getAllProductsList() : MutableLiveData<AllProducts>
+     fun getAllDiscountCodeList() : MutableLiveData<AllCodes>
 
     fun getProuduct(id : Long)
 

@@ -28,12 +28,12 @@ import timber.log.Timber
 
 class RemoteDataSourceImpl : RemoteDataSource {
 
-    var womanProductsList = MutableLiveData<ProductsList>()
-    var kidsProductsList = MutableLiveData<ProductsList>()
-    var menProductsList = MutableLiveData<ProductsList>()
-    var onSaleProductsList = MutableLiveData<ProductsList>()
-    var allProductsList = MutableLiveData<AllProducts>()
-    var allDiscountCodeList = MutableLiveData<AllCodes>()
+    var womanProducts = MutableLiveData<ProductsList>()
+    var kidsProducts = MutableLiveData<ProductsList>()
+    var menProducts = MutableLiveData<ProductsList>()
+    var onSaleProducts = MutableLiveData<ProductsList>()
+    var allProductsListt = MutableLiveData<AllProducts>()
+    var allDiscountCode = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
     var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
@@ -240,7 +240,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return null
     }
 
-    override  fun getWomanProductsList() {
+    override fun getWomanProductsList(): MutableLiveData<ProductsList> {
         Log.i("output", "getWomanProductsListFromApi ** repo")
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -252,7 +252,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     response: Response<ProductsList?>
                 ) {
                     if (response.isSuccessful) {
-                        womanProductsList.postValue(response.body())
+                        womanProducts.postValue(response.body())
                         // Log.i("output", response.body().toString())
 
                     }
@@ -265,9 +265,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 }
             })
         }
+        return womanProducts
     }
 
-    override  fun getMenProductsList() {
+    override  fun getMenProductsList() : MutableLiveData<ProductsList> {
         Log.i("output", "getMenProductsListFromApi ** repo")
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -279,7 +280,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     response: Response<ProductsList?>
                 ) {
                     if (response.isSuccessful) {
-                        menProductsList.postValue(response.body())
+                        menProducts.postValue(response.body())
                         // Log.i("output", response.body().toString())
 
                     }
@@ -292,9 +293,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 }
             })
         }
+        return menProducts
     }
 
-    override  fun getKidsProductsList() {
+    override  fun getKidsProductsList() : MutableLiveData<ProductsList>{
         Log.i("output", "getKidProductsListFromApi ** repo")
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -306,7 +308,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     response: Response<ProductsList?>
                 ) {
                     if (response.isSuccessful) {
-                        kidsProductsList.postValue(response.body())
+                        kidsProducts.postValue(response.body())
                         // Log.i("output", response.body().toString())
 
                     }
@@ -319,10 +321,11 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 }
             })
         }
+        return kidsProducts
     }
 
 
-    override  fun getOnSaleProductsList() {
+    override  fun getOnSaleProductsList(): MutableLiveData<ProductsList> {
         Log.i("output", "getOnSaleProductsListFromApi ** repo")
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -334,7 +337,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     response: Response<ProductsList?>
                 ) {
                     if (response.isSuccessful) {
-                        onSaleProductsList.postValue(response.body())
+                        onSaleProducts.postValue(response.body())
                         // Log.i("output", response.body().toString())
 
                     }
@@ -347,9 +350,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 }
             })
         }
+        return onSaleProducts
     }
 
-    override  fun getAllProductsList() {
+    override  fun getAllProductsList() : MutableLiveData<AllProducts>{
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -360,7 +364,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     response: Response<AllProducts?>
                 ) {
                     if (response.isSuccessful) {
-                        allProductsList.postValue(response.body())
+                        allProductsListt.postValue(response.body())
 
                     }
                 }
@@ -372,10 +376,11 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 }
             })
         }
+        return allProductsListt
     }
 
 
-    override  fun getAllDiscountCodeList() {
+    override  fun getAllDiscountCodeList() : MutableLiveData<AllCodes> {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -383,7 +388,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
                 override fun onResponse(call: Call<AllCodes?>, response: Response<AllCodes?>) {
                     if (response.isSuccessful) {
-                        allDiscountCodeList.postValue(response.body())
+                        allDiscountCode.postValue(response.body())
 
                     }
                 }
@@ -395,11 +400,24 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 }
             })
         }
+        return allDiscountCode
     }
 
+    override fun fetchAllProducts(): MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
+        var categoryRetrofitApi = Network.apiService
+        CoroutineScope(Dispatchers.IO).launch {
 
+            val response=categoryRetrofitApi.getAllProducts()
+            if (response.isSuccessful){
 
-        override fun getProuduct(id: Long){
+                allProducts.postValue(response.body()!!)
+
+            }
+        }
+        return allProducts
+    }
+
+    override fun getProuduct(id: Long){
             Network.apiService.getOneProduct(id).enqueue(object : Callback<ProductItem?> {
                 override fun onResponse(call: Call<ProductItem?>, response: Response<ProductItem?>) {
                     Log.d("TAG","data here")
@@ -449,19 +467,6 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return catProducts
     }
 
-    override fun fetchAllProducts(): MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
-        var categoryRetrofitApi = Network.apiService
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val response=categoryRetrofitApi.getAllProducts()
-            if (response.isSuccessful){
-
-                allProducts.postValue(response.body()!!)
-
-            }
-        }
-        return allProducts
-    }
 
     override fun getAllOrders(): Observable<GetOrders> {
         return Network.apiService.getAllOrders()

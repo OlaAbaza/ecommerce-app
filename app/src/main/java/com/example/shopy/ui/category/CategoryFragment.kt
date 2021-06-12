@@ -15,6 +15,7 @@ import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCategoryBinding
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
+import com.example.shopy.util.Utils
 
 
 class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyclerClick {
@@ -74,6 +75,12 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if(Utils.toolbarImg.visibility == View.GONE){
+            Utils.toolbarImg.visibility = View.VISIBLE
+        }
+        if(Utils.cartView.visibility == View.GONE){
+            Utils.cartView.visibility = View.VISIBLE
+        }
         var subcatList= arrayOf("Shoes","Accessories","T-Shirts")
         var mainCatList= arrayOf("home","kids","men","sales","women")
         binding.subcategoriesRecView.adapter= SubCategoriesAdapter(subcatList,this)

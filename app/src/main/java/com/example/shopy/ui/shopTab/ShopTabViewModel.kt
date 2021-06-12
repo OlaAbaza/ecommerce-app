@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
@@ -11,60 +12,35 @@ import com.example.shopy.datalayer.entity.allproducts.allProduct
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.entity.custom_product.ProductsList
 
-class ShopTabViewModel(application: Application) : AndroidViewModel(application) {
+class ShopTabViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
 
     var intentTOProductDetails : MutableLiveData<Product> = MutableLiveData()
 
-    var remoteDataSource: RemoteDataSourceImpl
-    init {
-        remoteDataSource = RemoteDataSourceImpl()
-        Log.i("output","viewModel")
-    }
-    val error = MutableLiveData<Boolean>()
-    val navigation = MutableLiveData<Int>()
-    var shopSearchListLiveData = MutableLiveData<ArrayList<allProduct>>()
 
-
-    fun fetchAllProducts()=remoteDataSource.allProducts
+    fun fetchAllProducts()=repository.fetchAllProducts()
 
     fun fetchWomanProductsList() : MutableLiveData<ProductsList> {
-        remoteDataSource.getWomanProductsList()
-       return remoteDataSource.womanProductsList
+        return repository.getWomanProductsList()
     }
 
     fun fetchMenProductsList() : MutableLiveData<ProductsList> {
-        remoteDataSource.getMenProductsList()
-        return remoteDataSource.menProductsList
+        return repository.getMenProductsList()
     }
 
     fun fetchOnSaleProductsList() : MutableLiveData<ProductsList> {
-        remoteDataSource.getOnSaleProductsList()
-        return remoteDataSource.onSaleProductsList
+        return repository.getOnSaleProductsList()
     }
 
     fun fetchKidsProductsList() : MutableLiveData<ProductsList> {
-        remoteDataSource.getKidsProductsList()
-        return remoteDataSource.kidsProductsList
+        return repository.getKidsProductsList()
     }
 
     fun fetchallProductsList() : MutableLiveData<AllProducts> {
-        remoteDataSource.getAllProductsList()
-        return remoteDataSource.allProductsList
+        return repository.getAllProductsList()
     }
 
     fun fetchallDiscountCodeList() : MutableLiveData<AllCodes> {
-        remoteDataSource.getAllDiscountCodeList()
-        return remoteDataSource.allDiscountCodeList
+        return repository.getAllDiscountCodeList()
     }
-
-
-
-
-    fun onClick(id: Int) {
-        if (id == 0) {
-            navigation.setValue(id)
-        } else navigation.setValue(id)
-    }
-
 
 }

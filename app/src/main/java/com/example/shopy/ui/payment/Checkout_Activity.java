@@ -11,8 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.shopy.R;
+import com.example.shopy.base.ViewModelFactory;
 import com.example.shopy.data.dataLayer.Repository;
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders;
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl;
@@ -60,12 +62,16 @@ import okhttp3.Response;
         private OkHttpClient httpClient = new OkHttpClient();
         private String paymentIntentClientSecret;
         private Stripe stripe;
+        public static PaymentViewModel paymentViewModel;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_checkout_);
             repository = new Repository(new RemoteDataSourceImpl(), new RoomDataSourceImpl(RoomService.Companion.getInstance(getApplication())));
+
+            ViewModelFactory viewModelFactory = new ViewModelFactory(repository, getApplication());
+            paymentViewModel =  new ViewModelProvider(this, viewModelFactory).get(PaymentViewModel.class);
             amount = getIntent().getStringExtra("amount");
             order = (GetOrders.Order) getIntent().getSerializableExtra("order");
             // Configure the SDK with your Stripe publishable key so it can make requests to Stripe
@@ -220,8 +226,8 @@ import okhttp3.Response;
                     try {
                         Thread.sleep(1500);
                         Toast.makeText(activity,"Open Home Activity",Toast.LENGTH_LONG).show();
-                        repository.deleteOrder(order.getId());
-                        createOrderInPayment(order);
+                        paymentViewModel.cancelOrder(order.getId());
+                        paymentViewModel.createOrderInPayment(order);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -247,35 +253,5 @@ import okhttp3.Response;
             }
         }
 
-
-//        var customerOrder = CustomerOrder(customerID.toLong())
-//        var lineItem: MutableList<LineItem> = arrayListOf()
-//
-//        val items = orderItemsAdapter.orderList.map {
-//            it.variants?.get(0)
-//        }
-//            Timber.i("itemss"+items)
-//                for(item in items){
-//            lineItem.add(LineItem(item?.inventory_quantity, item?.id))
-//        }
-//        getPaymentMethod()
-//        var order = Order(customerOrder, "pending", lineItem,paymentMethod)
-//        var orders = Orders(order)
-//            orderViewModel.createOrder(orders)
-
-
-       static void createOrderInPayment(GetOrders.Order order){
-            CustomerOrder customerOrder = new CustomerOrder(order.getCustomer().getId());
-            List<LineItem> lineItems = new ArrayList();
-            for(int i = 0; i < order.getLine_items().size();i++){
-
-                lineItems.add(new LineItem(order.getLine_items().get(i).getQuantity(),order.getLine_items().get(i).getVariant_id()));
-
-            }
-
-            Order ord = new Order(customerOrder,"paid",lineItems,"card");
-            Orders orders = new Orders(ord);
-            repository.createOrder(orders);
-        }
 
     }

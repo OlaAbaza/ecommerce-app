@@ -1,5 +1,8 @@
 package com.example.shopy.util
 
+import android.view.View
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintSet
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -7,6 +10,11 @@ import java.util.regex.Pattern
 class Utils {
 
     companion object{
+        //toolbar Image
+        lateinit var toolbarImg: ImageView
+        //toolbar cart
+        lateinit var cartView : View
+
         fun validateEmail(userEmail: String):Boolean{
             val patternEmail: Pattern = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")
             val matcherEmail: Matcher = patternEmail.matcher(userEmail)
@@ -34,6 +42,8 @@ class Utils {
             return PhoneMatchResult
         }
     }
+
+
 
 
 }
