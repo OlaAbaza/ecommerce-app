@@ -74,7 +74,6 @@ class ProuductDetailsFragment : Fragment() {
                 setStoredButton(stored)
 
             } else {
-                //todo from Intent
                  val args: ProuductDetailsFragmentArgs by navArgs()
                 id = args.productID
                 checkWishListStored(id ?: 0)
