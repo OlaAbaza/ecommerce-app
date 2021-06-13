@@ -2,7 +2,6 @@ package com.example.shopy.ui.meScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,6 +75,11 @@ class MeFragment : Fragment() {
 
 
         meViewModel.getFourWishList().observe(requireActivity(), {
+            if (it.isEmpty())
+                bindingMeScreen.emptyAnimationView.visibility=View.VISIBLE
+            else
+                bindingMeScreen.emptyAnimationView.visibility=View.GONE
+
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()
