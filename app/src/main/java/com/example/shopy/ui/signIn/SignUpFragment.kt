@@ -17,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.shopy.R
-import com.example.shopy.util.Utils
+import com.example.shopy.domainLayer.Utils
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl

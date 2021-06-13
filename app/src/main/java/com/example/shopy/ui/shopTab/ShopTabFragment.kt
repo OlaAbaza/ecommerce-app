@@ -10,7 +10,7 @@ import com.example.shopy.ui.shopTab.shopTabCategories.KidsProductFragment
 import com.example.shopy.ui.shopTab.shopTabCategories.MenProductsFragment
 import com.example.shopy.ui.shopTab.shopTabCategories.OnSaleProductFragment
 import com.example.shopy.ui.shopTab.shopTabCategories.WomanProductsFragment
-import com.example.shopy.util.Utils
+import com.example.shopy.domainLayer.Utils
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import kotlinx.android.synthetic.main.activity_main.*

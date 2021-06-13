@@ -144,6 +144,7 @@
     <string name="logInToCanAddToCart">Login to can add to cart</string>
     <string name="thereIsNoNetwork">There is no network</string>
     <string name="AllWishList">All Wish List</string>
+    <string name="cash">Cash</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

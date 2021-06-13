@@ -1,4 +1,4 @@
-package com.example.shopy.util
+package com.example.shopy.domainLayer
 
 import android.view.View
 import android.widget.ImageView

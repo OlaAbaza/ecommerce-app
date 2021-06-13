@@ -46,6 +46,7 @@ class OrderDisplayAdapter(list:
         private val textId = itemView.findViewById<TextView>(R.id.orderIdEditable)
         private val textPrice = itemView.findViewById<TextView>(R.id.totalPriceEditable)
         private val currencyCode = itemView.findViewById<TextView>(R.id.currency_code)
+        private val cash = itemView.findViewById<TextView>(R.id.cashText)
         private val createdAt = itemView.findViewById<TextView>(R.id.createdAtEditable)
          val payNow: Button = itemView.findViewById(R.id.payButton)
          val cancel: Button = itemView.findViewById(R.id.cancelButton)
@@ -58,6 +59,18 @@ class OrderDisplayAdapter(list:
             if (order.financial_status == "paid"){
                 payNow.visibility=View.GONE
                 cancel.visibility=View.GONE
+            }else{
+                payNow.visibility=View.VISIBLE
+                cancel.visibility=View.VISIBLE
+            }
+
+
+            if (order.note=="Cash"){
+                payNow.visibility=View.GONE
+                cash.visibility=View.VISIBLE
+            }else{
+                payNow.visibility=View.VISIBLE
+                cash.visibility=View.GONE
             }
         }
 
