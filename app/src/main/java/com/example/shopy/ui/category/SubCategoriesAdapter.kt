@@ -9,8 +9,8 @@ import com.example.shopy.databinding.SubcategoryTitleBinding
 
 class SubCategoriesAdapter(var subCategories:Array<String>,var subCategoryRecyclerClick: SubCategoryRecyclerClick):
     RecyclerView.Adapter<SubCategoriesAdapter.SubCategoriesViewHolder>() {
-    var oldPos=0
-    class SubCategoriesViewHolder(val binding: SubcategoryTitleBinding):RecyclerView.ViewHolder(binding.root)
+    var oldPos:Int?=null
+    class SubCategoriesViewHolder(val binding:SubcategoryTitleBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SubCategoriesViewHolder {
         return SubCategoriesViewHolder(SubcategoryTitleBinding.inflate(LayoutInflater.from(parent.context),
@@ -19,14 +19,21 @@ class SubCategoriesAdapter(var subCategories:Array<String>,var subCategoryRecycl
 
     override fun onBindViewHolder(holder: SubCategoriesViewHolder, position: Int) {
         holder.binding.subCategoryTitle.text=subCategories.get(position)
-        if (holder.adapterPosition==oldPos){
+        if (holder.adapterPosition==oldPos?:false){
+            //black
             holder.binding.underLine.background= ColorDrawable(Color.parseColor("#000000"))
         }else{
+            //white
             holder.binding.underLine.background= ColorDrawable(Color.parseColor("#ffffff"))
         }
         holder.itemView.setOnClickListener {
-            subCategoryRecyclerClick.onSubClick(position)
             oldPos=position
+            if (holder.adapterPosition==oldPos){
+                //black
+                holder.binding.underLine.background= ColorDrawable(Color.parseColor("#000000"))
+            }
+            subCategoryRecyclerClick.onSubClick(position)
+
         }
     }
 

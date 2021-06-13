@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/underLine"
         android:layout_width="0dp"
-        android:layout_height="10dp"
+        android:layout_height="5dp"
         app:layout_constraintStart_toStartOf="@id/subCategoryTitle"
         app:layout_constraintEnd_toEndOf="@id/subCategoryTitle"
         app:layout_constraintTop_toBottomOf="@id/subCategoryTitle"

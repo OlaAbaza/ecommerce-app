@@ -25,6 +25,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
     lateinit var catViewModel:CategoriesViewModel
     lateinit var products:List<Product>
     lateinit var subList:List<Product>
+    lateinit var  subcatList:Array<String>
     private var _binding: FragmentCategoryBinding? = null
     // This property is only valid between onCreateView and
 // onDestroyView.
@@ -59,7 +60,8 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
     }
     override fun onMainClick(position: Int) {
         super.onMainClick(position)
-
+        binding.subcategoriesRecView.adapter=SubCategoriesAdapter(subcatList,this)
+        binding.subcategoriesRecView.adapter!!.notifyDataSetChanged()
         mainCategoryIndex=position
         colID=getMainCategory(position)
         catViewModel.fetchCatProducts(colID).observe(requireActivity(),{
@@ -81,7 +83,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         if(Utils.cartView.visibility == View.GONE){
             Utils.cartView.visibility = View.VISIBLE
         }
-        var subcatList= arrayOf("Shoes","Accessories","T-Shirts")
+        subcatList= arrayOf("Shoes","Accessories","T-Shirts")
         var mainCatList= arrayOf("home","kids","men","sales","women")
         binding.subcategoriesRecView.adapter= SubCategoriesAdapter(subcatList,this)
         binding.mainCategoriesRecView.adapter= MainCategoriesAdapter(mainCatList,this)
