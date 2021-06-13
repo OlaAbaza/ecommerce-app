@@ -81,7 +81,8 @@ class Repository(
     fun createOrder(order: Orders) =
         remoteDataSource.createOrder(order)
 
-
+     fun getCreateOrderResponse()= remoteDataSource.getCreateOrderResponse()
+    suspend fun getPriceRulesList()=remoteDataSource.getPriceRulesList()
 
     ///////////////////products/////////////////////////
     fun getWomanProductsList() {
@@ -107,6 +108,8 @@ class Repository(
     fun getAllDiscountCodeList() {
         remoteDataSource.getAllDiscountCodeList()
     }
+    fun getAllDiscountCodes() = remoteDataSource.getAllDiscountCodesData()
+
 
     fun getProuduct(id: Long) {
         remoteDataSource.getProuduct(id)

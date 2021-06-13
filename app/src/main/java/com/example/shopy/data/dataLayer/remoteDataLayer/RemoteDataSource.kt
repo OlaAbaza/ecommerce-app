@@ -3,10 +3,14 @@ package com.example.shopy.data.dataLayer.remoteDataLayer
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.data.dataLayer.entity.discount.discountCodes
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
+import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.models.*
 import io.reactivex.Observable
+import retrofit2.Response
 
 
 interface RemoteDataSource {
@@ -27,9 +31,10 @@ interface RemoteDataSource {
     suspend fun getCustomer( id: String): CustomerX?
 
     suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX?
-     fun createOrder(order: Orders): OrderResponse?
+    fun createOrder(order: Orders)
+    fun getCreateOrderResponse(): MutableLiveData<Boolean>
 
-     fun getWomanProductsList()
+    fun getWomanProductsList()
      fun getKidsProductsList()
      fun getMenProductsList()
      fun getOnSaleProductsList()
@@ -43,8 +48,9 @@ interface RemoteDataSource {
     fun fetchCatProducts(colID:Long):MutableLiveData<List<Product>>
     fun fetchAllProducts():MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>
 
-
-
+    fun  getAllDiscountCodesData(): MutableLiveData<AllCodes>
+   // suspend fun getDiscountCodeList():discountCodes?
+    suspend fun getPriceRulesList():priceRules?
     fun getAllOrders() : Observable<GetOrders>
 
     fun deleteOrder(order_id : Long) : MutableLiveData<Boolean>

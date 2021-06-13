@@ -1,6 +1,8 @@
 package com.example.shopy.datalayer.network
 
+import com.example.shopy.data.dataLayer.entity.discount.discountCodes
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.data.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
@@ -43,6 +45,11 @@ interface NetworkService {
     fun getAllDiscountCodeList(): Call<AllCodes>
 
     ///////////////////ola////////////////
+
+    @GET("price_rules.json")
+    suspend fun getPriceRulesList():Response<priceRules>
+//    @GET("price_rules/950267576518/discount_codes.json")
+//    suspend fun getDiscountCodeList():Response<discountCodes>
 
     @GET("customers.json?limit=250")
     suspend fun getCustomers(): Response<Customers>

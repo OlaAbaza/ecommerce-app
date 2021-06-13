@@ -7,7 +7,9 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.data.dataLayer.entity.discount.discountCodes
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.data.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
@@ -34,19 +36,19 @@ class RemoteDataSourceImpl : RemoteDataSource {
     var onSaleProductsList = MutableLiveData<ProductsList>()
     var allProductsList = MutableLiveData<AllProducts>()
     var allDiscountCodeList = MutableLiveData<AllCodes>()
-    var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
-    var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    var prouductDetaild: MutableLiveData<ProductItem> = MutableLiveData()
+    var deleteOrder: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+    var createOrder: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     var catProducts = MutableLiveData<List<Product>>()
     var allProducts = MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>()
-
 
 
     override suspend fun fetchCustomersData(): List<Customer>? {
         val response = Network.apiService.getCustomers()
         try {
             if (response.isSuccessful) {
-                Timber.i("olaa fetchCustomersData  "+response.body()?.customers)
+                Timber.i("olaa fetchCustomersData  " + response.body()?.customers)
                 return response.body()?.customers
             }
         } catch (e: Exception) {
@@ -65,7 +67,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                 } else {
                     val jObjError =
                         JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
-                         //   .getJSONArray("email").get(0).toString()
+                    //   .getJSONArray("email").get(0).toString()
                     Timber.i("olaa This email " + jObjError)
                 }
             }
@@ -84,8 +86,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         try {
             if (response.isSuccessful) {
                 return response.body()
-            }
-            else{
+            } else {
                 val jObjError =
                     JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
                 Timber.i("This  " + jObjError)
@@ -136,7 +137,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         id: String,
         addressID: String
     ): CreateAddressX? {
-        val response = Network.apiService.getCustomerAddress(id,addressID)
+        val response = Network.apiService.getCustomerAddress(id, addressID)
         try {
             if (response.isSuccessful) {
                 return response.body()
@@ -201,7 +202,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     }
 
     override suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX? {
-        val response = Network.apiService.updateCustomer(id,customer)
+        val response = Network.apiService.updateCustomer(id, customer)
         try {
             if (response.isSuccessful) {
                 Timber.i("This  " + "isSuccessful")
@@ -218,29 +219,35 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return null
     }
 
-    override  fun createOrder(order: Orders): OrderResponse? {
+    override fun createOrder(order: Orders) {
         CoroutineScope(Dispatchers.IO).launch {
 
-        val response = Network.apiService.createOrder(order)
-        try {
-            if (response.isSuccessful) {
-                Timber.i("This  " + "isSuccessful")
-               // return response.body()
-            } else {
-                val jObjError =
-                    JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
-                Timber.i("This  " + jObjError)
+            val response = Network.apiService.createOrder(order)
+            try {
+                if (response.isSuccessful) {
+                    Timber.i("This  " + "isSuccessful")
+                    createOrder.postValue(true)
+                    // return response.body()
+                } else {
+                    createOrder.postValue(false)
+                    val jObjError =
+                        JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
+                    Timber.i("This  " + jObjError)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-
+            // return null
         }
-       // return null
-    }
-        return null
+
     }
 
-    override  fun getWomanProductsList() {
+    override fun getCreateOrderResponse(): MutableLiveData<Boolean> {
+        return createOrder
+    }
+
+    override fun getWomanProductsList() {
         Log.i("output", "getWomanProductsListFromApi ** repo")
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -267,7 +274,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
     }
 
-    override  fun getMenProductsList() {
+    override fun getMenProductsList() {
         Log.i("output", "getMenProductsListFromApi ** repo")
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -294,7 +301,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
     }
 
-    override  fun getKidsProductsList() {
+    override fun getKidsProductsList() {
         Log.i("output", "getKidProductsListFromApi ** repo")
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -322,7 +329,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     }
 
 
-    override  fun getOnSaleProductsList() {
+    override fun getOnSaleProductsList() {
         Log.i("output", "getOnSaleProductsListFromApi ** repo")
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -349,7 +356,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
     }
 
-    override  fun getAllProductsList() {
+    override fun getAllProductsList() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -375,7 +382,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     }
 
 
-    override  fun getAllDiscountCodeList() {
+    override fun getAllDiscountCodeList() {
 
         CoroutineScope(Dispatchers.IO).launch {
 
@@ -398,19 +405,18 @@ class RemoteDataSourceImpl : RemoteDataSource {
     }
 
 
+    override fun getProuduct(id: Long) {
+        Network.apiService.getOneProduct(id).enqueue(object : Callback<ProductItem?> {
+            override fun onResponse(call: Call<ProductItem?>, response: Response<ProductItem?>) {
+                Log.d("TAG", "data here")
+                prouductDetaild.value = response.body()
+            }
 
-        override fun getProuduct(id: Long){
-            Network.apiService.getOneProduct(id).enqueue(object : Callback<ProductItem?> {
-                override fun onResponse(call: Call<ProductItem?>, response: Response<ProductItem?>) {
-                    Log.d("TAG","data here")
-                    prouductDetaild.value = response.body()
-                }
-                override fun onFailure(call: Call<ProductItem?>, t: Throwable) {
-                    t.printStackTrace()
-                }
-            })
-        }
-
+            override fun onFailure(call: Call<ProductItem?>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
+    }
 
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -453,8 +459,8 @@ class RemoteDataSourceImpl : RemoteDataSource {
         var categoryRetrofitApi = Network.apiService
         CoroutineScope(Dispatchers.IO).launch {
 
-            val response=categoryRetrofitApi.getAllProducts()
-            if (response.isSuccessful){
+            val response = categoryRetrofitApi.getAllProducts()
+            if (response.isSuccessful) {
 
                 allProducts.postValue(response.body()!!)
 
@@ -462,13 +468,33 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
         return allProducts
     }
+    override fun  getAllDiscountCodesData() = allDiscountCodeList
+
+    override suspend  fun getPriceRulesList(): priceRules? {
+        val response =
+            Network.apiService.getPriceRulesList()
+        try {
+            if (response.isSuccessful) {
+                return response.body()
+            } else {
+                val jObjError =
+                    JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
+                Timber.i("This  " + jObjError)
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+        }
+        return null
+    }
 
     override fun getAllOrders(): Observable<GetOrders> {
         return Network.apiService.getAllOrders()
 
     }
 
-    override fun deleteOrder(order_id: Long): MutableLiveData<Boolean>{
+    override fun deleteOrder(order_id: Long): MutableLiveData<Boolean> {
         CoroutineScope(Dispatchers.IO).launch {
             Network.apiService.deleteOrder(order_id).enqueue(object : Callback<Delete?> {
                 override fun onResponse(call: Call<Delete?>, response: Response<Delete?>) {

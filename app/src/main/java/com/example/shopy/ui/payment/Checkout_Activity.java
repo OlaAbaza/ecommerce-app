@@ -273,7 +273,7 @@ import okhttp3.Response;
 
             }
 
-            Order ord = new Order(customerOrder,"paid",lineItems,"card");
+            Order ord = new Order(customerOrder,"paid",lineItems,"card",order.getDiscount_codes());
             Orders orders = new Orders(ord);
             repository.createOrder(orders);
         }
