@@ -1,5 +1,6 @@
 package com.example.shopy.data.dataLayer.entity.orderGet
 
+import com.example.shopy.models.DiscountCodes
 import java.io.Serializable
 
 data class GetOrders(
@@ -35,7 +36,7 @@ data class GetOrders(
         val customer_locale: Any?,
         val device_id: Any?,
         val discount_applications: List<DiscountApplication?>?,
-        val discount_codes: List<DiscountCode?>?,
+        val discount_codes: List<DiscountCodes>?,
         val email: String?,
         val financial_status: String?,
         val fulfillment_status: Any?,
@@ -229,8 +230,7 @@ data class GetOrders(
 
         data class DiscountCode(
             val amount: String?,
-            val code: String?,
-            val type: String?
+            val code: String?
         ) : Serializable
 
         data class Fulfillment(

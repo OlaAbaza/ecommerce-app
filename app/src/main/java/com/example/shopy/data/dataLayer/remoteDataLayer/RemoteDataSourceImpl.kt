@@ -7,7 +7,9 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.data.dataLayer.entity.discount.discountCodes
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.data.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
@@ -28,12 +30,12 @@ import timber.log.Timber
 
 class RemoteDataSourceImpl : RemoteDataSource {
 
-    var womanProducts = MutableLiveData<ProductsList>()
-    var kidsProducts = MutableLiveData<ProductsList>()
-    var menProducts = MutableLiveData<ProductsList>()
-    var onSaleProducts = MutableLiveData<ProductsList>()
-    var allProductsListt = MutableLiveData<AllProducts>()
-    var allDiscountCode = MutableLiveData<AllCodes>()
+    var womanProductsList = MutableLiveData<ProductsList>()
+    var kidsProductsList = MutableLiveData<ProductsList>()
+    var menProductsList = MutableLiveData<ProductsList>()
+    var onSaleProductsList = MutableLiveData<ProductsList>()
+    var allProductsList = MutableLiveData<AllProducts>()
+    var allDiscountCodeList = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
     var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
@@ -218,26 +220,32 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return null
     }
 
-    override  fun createOrder(order: Orders): OrderResponse? {
+    override fun createOrder(order: Orders) {
         CoroutineScope(Dispatchers.IO).launch {
 
-        val response = Network.apiService.createOrder(order)
-        try {
-            if (response.isSuccessful) {
-                Timber.i("This  " + "isSuccessful")
-               // return response.body()
-            } else {
-                val jObjError =
-                    JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
-                Timber.i("This  " + jObjError)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+            val response = Network.apiService.createOrder(order)
+            try {
+                if (response.isSuccessful) {
+                    Timber.i("This  " + "isSuccessful")
+                    createOrder.postValue(true)
+                    // return response.body()
+                } else {
+                    createOrder.postValue(false)
+                    val jObjError =
+                        JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
+                    Timber.i("This  " + jObjError)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
 
+            }
+            // return null
         }
-       // return null
+
     }
-        return null
+
+    override fun getCreateOrderResponse(): MutableLiveData<Boolean> {
+        return createOrder
     }
 
     override fun getWomanProductsList(): MutableLiveData<ProductsList> {
@@ -252,7 +260,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     response: Response<ProductsList?>
                 ) {
                     if (response.isSuccessful) {
-                        womanProducts.postValue(response.body())
+                        womanProductsList.postValue(response.body())
                         // Log.i("output", response.body().toString())
 
                     }
