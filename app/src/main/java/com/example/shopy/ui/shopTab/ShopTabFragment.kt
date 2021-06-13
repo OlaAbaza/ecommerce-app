@@ -30,6 +30,7 @@ class ShopTabFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_shop_tab, container, false)
+
         return view
     }
 
@@ -43,6 +44,10 @@ class ShopTabFragment : Fragment() {
         if(Utils.cartView.visibility == View.GONE){
             Utils.cartView.visibility = View.VISIBLE
         }
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().bottom_nav.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
         setUpTabBar()
 
     }

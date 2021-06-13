@@ -49,6 +49,8 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
         disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
+                Log.d("TAG", "getUnPaidOrders(userId: Long)")
+
                 orders.postValue(
                     FilterData.getUnPaidData(
                         FilterData.getAllData(vehicles.orders!!, userId)
