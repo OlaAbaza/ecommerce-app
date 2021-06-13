@@ -1,4 +1,4 @@
-package com.example.shopy.adapters
+package com.example.shopy.ui.productDetailsActivity
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shopy.R
-import com.example.shopy.datalayer.entity.itemPojo.Options
 
 class OptionsAdapter(options : List<String>) : RecyclerView.Adapter<OptionsAdapter.ViewHolder>() {
     var options : List<String> = ArrayList()

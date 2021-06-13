@@ -1,4 +1,4 @@
-package com.example.shopy.adapters
+package com.example.shopy.ui.displayOrderFragment
 
 import android.view.LayoutInflater
 import android.view.View

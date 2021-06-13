@@ -12,8 +12,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.shopy.R
-import com.example.shopy.adapters.CartNotificationAdapter
-import com.example.shopy.adapters.WishListIconAdapter
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
@@ -49,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 //        //fav
 //        val imageButton = toolbar.findViewById(R.id.favourite) as View
 
-        val wishLiIconAdapter : WishListIconAdapter = WishListIconAdapter(findViewById(R.id.favourite))
+        val wishLiNotificationAdapter : WishListNotificationAdapter = WishListNotificationAdapter(findViewById(R.id.favourite))
         val cartIconAdapter : CartNotificationAdapter = CartNotificationAdapter(findViewById(R.id.cartView))
         val remoteDataSource = RemoteDataSourceImpl()
         val viewModelFactory = ViewModelFactory(
@@ -64,9 +62,9 @@ class MainActivity : AppCompatActivity() {
         )[MainActivityViewModel::class.java]
         viewModel.getAllWishList().observe(this,{
             Log.d("Tag","${it.size}")
-            wishLiIconAdapter.updateView(it.size)
+            wishLiNotificationAdapter.updateView(it.size)
         })
-        wishLiIconAdapter.favouriteButton.setOnClickListener {
+        wishLiNotificationAdapter.favouriteButton.setOnClickListener {
             navHostFragment = fragment as NavHostFragment
             val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
             val navGraph = graphInflater.inflate(R.navigation.nav_graph)

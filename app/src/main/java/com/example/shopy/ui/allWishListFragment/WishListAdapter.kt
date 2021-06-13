@@ -1,4 +1,4 @@
-package com.example.shopy.adapters
+package com.example.shopy.ui.allWishListFragment
 
 import android.util.Log
 import com.example.shopy.R
@@ -42,7 +42,6 @@ class WishListAdapter(
         holder.binding(productList[position], position)
         holder.itemView.setOnClickListener {
             intentTOProductDetails.value = productList[position]
-            Log.d("TAG", "onBindViewHolder fired")
 
         }
         holder.deleteButton.setOnClickListener {

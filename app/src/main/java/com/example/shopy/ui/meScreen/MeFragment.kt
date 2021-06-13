@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
-import com.example.shopy.adapters.WishListAdapter
+import com.example.shopy.ui.allWishListFragment.WishListAdapter
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository

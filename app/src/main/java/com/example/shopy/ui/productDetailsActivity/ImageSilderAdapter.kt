@@ -1,4 +1,4 @@
-package com.example.shopy.adapters
+package com.example.shopy.ui.productDetailsActivity
 
 import android.util.Log
 import android.view.LayoutInflater

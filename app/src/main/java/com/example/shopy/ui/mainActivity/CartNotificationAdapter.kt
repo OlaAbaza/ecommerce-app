@@ -1,4 +1,4 @@
-package com.example.shopy.adapters
+package com.example.shopy.ui.mainActivity
 
 import android.view.View
 import android.widget.ImageButton

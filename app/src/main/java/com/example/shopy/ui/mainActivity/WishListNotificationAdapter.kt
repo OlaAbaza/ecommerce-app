@@ -1,11 +1,11 @@
-package com.example.shopy.adapters
+package com.example.shopy.ui.mainActivity
 
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import com.example.shopy.R
 
-class WishListIconAdapter(view: View) {
+class WishListNotificationAdapter(view: View) {
     var wishListCounter : TextView = view.findViewById(R.id.favouriteItems)
     var favouriteButton : ImageButton = view.findViewById(R.id.favouriteButton)
     fun updateView(number : Int){

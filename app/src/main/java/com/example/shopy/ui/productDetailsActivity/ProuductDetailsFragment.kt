@@ -15,8 +15,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
-import com.example.shopy.adapters.ImageSilderAdapter
-import com.example.shopy.adapters.OptionsAdapter
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
