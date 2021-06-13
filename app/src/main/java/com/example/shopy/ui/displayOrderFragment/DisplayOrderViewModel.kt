@@ -1,6 +1,7 @@
 package com.example.shopy.ui.displayOrderFragment
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.data.dataLayer.Repository
@@ -59,7 +60,8 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
     }
 
     fun deleteOrder(order_id: Long): MutableLiveData<Boolean> {
-      deleteOrder =   repository.deleteOrder(order_id)
+        repository.deleteOrder(order_id)
+        deleteOrder.value=true
         return deleteOrder
     }
 

@@ -9,8 +9,10 @@ class CartNotificationAdapter(view: View) {
     var wishListCounter : TextView = view.findViewById<TextView>(R.id.cartItems)
     var favouriteButton : ImageButton = view.findViewById<ImageButton>(R.id.cartButton)
     fun updateView(number : Int){
-        if (number> 0)
+        if (number> 0) {
             wishListCounter.text = number.toString()
+            wishListCounter.visibility = View.VISIBLE
+        }
         else
             wishListCounter.visibility = View.INVISIBLE
     }

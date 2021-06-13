@@ -3,7 +3,6 @@ package com.example.shopy.ui.displayOrderFragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +48,6 @@ class DisplayOrderFragment : Fragment() {
         )
 
 
-        val remoteDataSource = RemoteDataSourceImpl()
         val viewModelFactory = ViewModelFactory(
             Repository(
                 RemoteDataSourceImpl(),
@@ -58,10 +56,10 @@ class DisplayOrderFragment : Fragment() {
         )
 
 
-         displayOrderViewModel = ViewModelProvider(
-            requireActivity(),
-            viewModelFactory
-        )[DisplayOrderViewModel::class.java]
+         displayOrderViewModel = WeakReference(ViewModelProvider(
+             requireActivity(),
+             viewModelFactory
+         )[DisplayOrderViewModel::class.java]).get()!!
 
 
         val meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
@@ -155,10 +153,17 @@ class DisplayOrderFragment : Fragment() {
 
         //make new call to update view with the new data after cancel order
 
-//        displayOrderViewModel.deleteOrder = MutableLiveData()
         displayOrderViewModel.deleteOrder.observe(viewLifecycleOwner,{
-            Toast.makeText(requireContext(),getString(R.string.order_canceld),Toast.LENGTH_SHORT).show()
-            callOrders(displayOrderViewModel,view)})
+            if (it == true) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.order_canceld),
+                    Toast.LENGTH_SHORT
+                ).show()
+                callOrders(displayOrderViewModel, view)
+                displayOrderViewModel.deleteOrder.value = false
+            }
+        })
 
 
 
@@ -168,7 +173,6 @@ class DisplayOrderFragment : Fragment() {
 
             startActivity(Intent(requireActivity(), Checkout_Activity::class.java).putExtra("amount",it.total_price)
                 .putExtra("order",it as Serializable))
-            //.putExtra("amount",amount)
         })
 
         return view.root
@@ -214,8 +218,7 @@ class DisplayOrderFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d("TAG","onDestroyView")
-        displayOrderViewModel.deleteOrder = MutableLiveData()
+//        displayOrderViewModel.deleteOrder = MutableLiveData()
         displayOrderViewModel.cancelMutableData = MutableLiveData()
         displayOrderViewModel.payNowMutableData = MutableLiveData()
 
