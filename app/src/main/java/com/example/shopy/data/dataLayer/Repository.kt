@@ -85,7 +85,7 @@ class Repository(
         remoteDataSource.createOrder(order)
 
      fun getCreateOrderResponse()= remoteDataSource.getCreateOrderResponse()
-    suspend fun getPriceRulesList()=remoteDataSource.getPriceRulesList()
+   // suspend fun getPriceRulesList()=remoteDataSource.getPriceRulesList()
 
     ///////////////////products/////////////////////////
     fun getWomanProductsList() : MutableLiveData<ProductsList>{
@@ -111,7 +111,7 @@ class Repository(
     fun getAllDiscountCodeList() : MutableLiveData<AllCodes> {
        return remoteDataSource.getAllDiscountCodeList()
     }
-    fun getAllDiscountCodes() = remoteDataSource.getAllDiscountCodesData()
+    // fun getAllDiscountCodes() = remoteDataSource.getAllDiscountCodesData()
 
 
     fun getProuduct(id: Long) {

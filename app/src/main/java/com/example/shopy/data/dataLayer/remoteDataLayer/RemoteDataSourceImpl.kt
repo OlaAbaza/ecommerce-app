@@ -7,7 +7,6 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.data.dataLayer.entity.discount.discountCodes
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.data.dataLayer.itemPojo.Delete
@@ -30,18 +29,19 @@ import timber.log.Timber
 
 class RemoteDataSourceImpl : RemoteDataSource {
 
-    var womanProductsList = MutableLiveData<ProductsList>()
-    var kidsProductsList = MutableLiveData<ProductsList>()
-    var menProductsList = MutableLiveData<ProductsList>()
-    var onSaleProductsList = MutableLiveData<ProductsList>()
-    var allProductsList = MutableLiveData<AllProducts>()
-    var allDiscountCodeList = MutableLiveData<AllCodes>()
+    var womanProducts = MutableLiveData<ProductsList>()
+    var kidsProducts = MutableLiveData<ProductsList>()
+    var menProducts = MutableLiveData<ProductsList>()
+    var onSaleProducts = MutableLiveData<ProductsList>()
+    var allProductsListt = MutableLiveData<AllProducts>()
+
+
+    var allDiscountCode = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
     var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-
+    var createOrder: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     var catProducts = MutableLiveData<List<Product>>()
     var allProducts = MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>()
-
 
 
     override suspend fun fetchCustomersData(): List<Customer>? {
@@ -260,7 +260,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
                     response: Response<ProductsList?>
                 ) {
                     if (response.isSuccessful) {
-                        womanProductsList.postValue(response.body())
+                        womanProducts.postValue(response.body())
                         // Log.i("output", response.body().toString())
 
                     }
@@ -332,7 +332,6 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return kidsProducts
     }
 
-
     override  fun getOnSaleProductsList(): MutableLiveData<ProductsList> {
         Log.i("output", "getOnSaleProductsListFromApi ** repo")
 
@@ -386,7 +385,6 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
         return allProductsListt
     }
-
 
     override  fun getAllDiscountCodeList() : MutableLiveData<AllCodes> {
 

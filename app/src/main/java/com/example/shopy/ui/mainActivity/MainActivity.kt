@@ -92,6 +92,7 @@ class MainActivity : AppCompatActivity() {
             navController!!.graph = navGraph
         }
 
+        ///////////////////////////////////
         searchIcon.setOnClickListener {
             Toast.makeText(this,"search",Toast.LENGTH_LONG).show()
             navHostFragment = fragment as NavHostFragment

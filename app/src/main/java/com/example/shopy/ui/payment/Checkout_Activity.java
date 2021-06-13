@@ -270,19 +270,5 @@ import okhttp3.Response;
 //            orderViewModel.createOrder(orders)
 
 
-        static void createOrderInPayment(GetOrders.Order order){
-            CustomerOrder customerOrder = new CustomerOrder(order.getCustomer().getId());
-            List<LineItem> lineItems = new ArrayList();
-            for(int i = 0; i < order.getLine_items().size();i++){
-
-                lineItems.add(new LineItem(order.getLine_items().get(i).getQuantity(),order.getLine_items().get(i).getVariant_id()));
-
-            }
-
-            Order ord = new Order(customerOrder,"paid",lineItems,"card",order.getDiscount_codes());
-            Orders orders = new Orders(ord);
-            repository.createOrder(orders);
-        }
-
 
     }

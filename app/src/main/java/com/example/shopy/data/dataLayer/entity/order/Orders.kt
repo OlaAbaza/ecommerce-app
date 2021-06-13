@@ -3,6 +3,7 @@ package com.example.shopy.models
 
 import com.example.shopy.datalayer.entity.ads_discount_codes.DiscountCode
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Orders(
     val order: Order?
@@ -11,7 +12,7 @@ data class Orders(
 data class DiscountCodes(
     val amount: String?,
     val code: String?
-)
+): Serializable
 
 data class Order(
     val customer: CustomerOrder?,

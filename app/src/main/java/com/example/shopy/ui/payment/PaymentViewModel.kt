@@ -8,7 +8,6 @@ import com.example.shopy.models.CustomerOrder
 import com.example.shopy.models.LineItem
 import com.example.shopy.models.Order
 import com.example.shopy.models.Orders
-import java.util.*
 
 class PaymentViewModel(val repository: Repository, application: Application) : AndroidViewModel(
     application
@@ -25,12 +24,12 @@ class PaymentViewModel(val repository: Repository, application: Application) : A
                 )
             )
         }
-        val ord = Order(customerOrder, "paid", lineItems, "card")
+        val ord = Order(customerOrder, "paid", lineItems, "card", order.discount_codes)
         val orders = Orders(ord)
         repository.createOrder(orders)
     }
 
-    fun cancelOrder(orderId : Long){
+    fun cancelOrder(orderId: Long){
         repository.deleteOrder(orderId)
     }
 

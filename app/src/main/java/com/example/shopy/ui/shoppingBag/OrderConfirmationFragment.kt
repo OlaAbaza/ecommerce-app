@@ -80,7 +80,7 @@ class OrderConfirmationFragment : Fragment() {
             Timber.i("olaaa" + customerID)
             orderViewModel.getCustomersAddressList(customerID)
           //  orderViewModel.getPriceRulesList()
-            orderViewModel.fetchallDiscountCodeList()
+           // orderViewModel.fetchallDiscountCodeList()
         }
 
         orderItemsAdapter = OrderItemsAdapter(arrayListOf(), orderViewModel)
@@ -148,7 +148,7 @@ class OrderConfirmationFragment : Fragment() {
 //
 //        })
 
-        orderViewModel.getallDiscountCodeList().observe(viewLifecycleOwner, Observer<AllCodes> {
+        orderViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, Observer<AllCodes> {
             discountCodesList = it.discountCodes
 
         })

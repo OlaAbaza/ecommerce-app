@@ -80,12 +80,12 @@ class OrderViewModel(val repository: Repository, application: Application) :
 //            Timber.i("olaaa+" + data)
 //        }
 //    }
-    fun fetchallDiscountCodeList() {
-        repository.getAllDiscountCodeList()
+    fun fetchallDiscountCodeList(): MutableLiveData<AllCodes> {
+       return  repository.getAllDiscountCodeList()
     }
-    fun getallDiscountCodeList(): MutableLiveData<AllCodes> {
-        return repository.getAllDiscountCodes()
-    }
+//    fun getallDiscountCodeList(): MutableLiveData<AllCodes> {
+//        return repository.getAllDiscountCodes()
+//    }
 
     fun createOrder(order: Orders) = repository.createOrder(order)
 
