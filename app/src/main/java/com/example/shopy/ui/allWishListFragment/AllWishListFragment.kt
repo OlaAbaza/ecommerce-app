@@ -1,7 +1,6 @@
 package com.example.shopy.ui.allWishListFragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,8 +34,6 @@ class AllWishListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_all_wish_list, container, false)
 
 
         bindingAllWishListFragment = FragmentAllWishListBinding.inflate(inflater, container, false)
@@ -63,20 +60,23 @@ class AllWishListFragment : Fragment() {
             this.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
-        requireActivity().toolbar_title.text = "All Wish List"
+        requireActivity().toolbar_title.text = getString(R.string.AllWishList)
 
         allWishListFragmentViewModel.getAllWishList().observe(requireActivity(), {
+            if (it.isEmpty())
+                bindingAllWishListFragment.emptyAnimationView.visibility=View.VISIBLE
+            else
+                bindingAllWishListFragment.emptyAnimationView.visibility=View.GONE
+
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()
         })
-//        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
-//        val navController = navHostFragment.navController
+
 
         allWishListFragmentViewModel.intentTOProductDetails.observe(requireActivity(), {
 
             if (it != null) {
-                Log.d("TAG","${it.id}")
                 val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id)
                 findNavController().navigate(action)
 

@@ -143,6 +143,7 @@
     <string name="logInToCanAddToWishList">Login to can add to wish list</string>
     <string name="logInToCanAddToCart">Login to can add to cart</string>
     <string name="thereIsNoNetwork">There is no network</string>
+    <string name="AllWishList">All Wish List</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">
