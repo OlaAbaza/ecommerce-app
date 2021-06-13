@@ -61,10 +61,11 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
             })
     }
 
-    fun deleteOrder(order_id: Long): MutableLiveData<Boolean> {
-        repository.deleteOrder(order_id)
-        deleteOrder.value=true
-        return deleteOrder
+    fun deleteOrder(order_id: Long){
+         repository.deleteOrder(order_id)
     }
 
+    fun observeDeleteOrder():MutableLiveData<Boolean>{
+        return repository.observeDeleteOrder()
+    }
 }

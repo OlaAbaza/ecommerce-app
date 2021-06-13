@@ -54,6 +54,7 @@ interface RemoteDataSource {
     //suspend fun getPriceRulesList(): priceRules?
     fun getAllOrders() : Observable<GetOrders>
 
-    fun deleteOrder(order_id : Long): MutableLiveData<Boolean>
+    fun deleteOrder(order_id : Long)
+    fun observeDeleteOrder():MutableLiveData<Boolean>
 
 }

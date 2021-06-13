@@ -172,9 +172,10 @@ class DisplayOrderFragment : Fragment() {
 
         //make new call to update view with the new data after cancel order
 
-        displayOrderViewModel.deleteOrder.observe(viewLifecycleOwner, {
+        displayOrderViewModel.observeDeleteOrder().observe(viewLifecycleOwner, {
 //            if (it == true) {
             callOrders(displayOrderViewModel, view)
+
             Toast.makeText(
                 requireContext(),
                 getString(R.string.order_canceld),

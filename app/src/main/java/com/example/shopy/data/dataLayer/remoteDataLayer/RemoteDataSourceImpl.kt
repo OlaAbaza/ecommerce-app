@@ -479,19 +479,21 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     }
 
-    override fun deleteOrder(order_id: Long): MutableLiveData<Boolean>{
+    override fun deleteOrder(order_id: Long){
         CoroutineScope(Dispatchers.IO).launch {
             Network.apiService.deleteOrder(order_id).enqueue(object : Callback<Delete?> {
                 override fun onResponse(call: Call<Delete?>, response: Response<Delete?>) {
-                    if (response.isSuccessful) {
+//                    if (response.isSuccessful) {
                         deleteOrder.postValue(true)
-                    }
+//                    }
                 }
 
                 override fun onFailure(call: Call<Delete?>, t: Throwable) {
                 }
             })
         }
+    }
+    override fun observeDeleteOrder():MutableLiveData<Boolean>{
         return deleteOrder
     }
 
