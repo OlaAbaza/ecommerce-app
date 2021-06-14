@@ -1,9 +1,11 @@
 package com.example.shopy.ui.settings
 
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -39,6 +41,9 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
+        if (meDataSourceReo.loadUsertstate()){
+            binding.signout.visibility=View.VISIBLE
+        }
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
         val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
         settingsViewModel = ViewModelProvider(

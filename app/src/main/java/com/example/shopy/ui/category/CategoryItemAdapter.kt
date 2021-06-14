@@ -9,9 +9,10 @@ import com.bumptech.glide.Glide
 
 import com.example.shopy.databinding.CategoryItemBinding
 import com.example.shopy.datalayer.entity.custom_product.Product
+import com.example.shopy.ui.category.ItemsRecyclerClick
 
 
-class CategoryItemAdapter(var categoryItems:List<Product>, var context: Context):
+class CategoryItemAdapter(var categoryItems:List<Product>, var context: Context,var onClick:ItemsRecyclerClick):
     RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>()  {
     class CategoryItemViewHolder(val binding: CategoryItemBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -24,9 +25,10 @@ class CategoryItemAdapter(var categoryItems:List<Product>, var context: Context)
 
     override fun onBindViewHolder(holder: CategoryItemViewHolder, position: Int) {
         Glide.with(context).load(categoryItems.get(position).images.get(0).src).into(holder.binding.itemIcon)
-        //holder.binding.itemTitle.text=categoryItems.get(position).title
         holder.binding.itemTitle.text=""+categoryItems.get(position).title
-        //Log.d("hitler","position: "+position+" price: "+categoryItems.get(position).variants!!.get(0).price)
+        holder.itemView.setOnClickListener {
+            onClick.itemOnClick(categoryItems.get(position).id.toLong())
+        }
     }
 
     override fun getItemCount(): Int = categoryItems.size

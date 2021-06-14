@@ -36,6 +36,7 @@ class searchAdapter(private val context: Context, private val itemName : List<al
         //String iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
 //https://cdn.shopify.com/s/files/1/0567/9310/4582/products/7883dc186e15bf29dad696e1e989e914.jpg?v=1621288214
 
+
     }
     override fun getItemCount() = filterList.size
 

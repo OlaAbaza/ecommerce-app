@@ -11,9 +11,10 @@ import com.example.shopy.databinding.CategoryItemBinding
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.allproducts.allProduct
 import com.example.shopy.datalayer.entity.itemPojo.Product
+import com.example.shopy.ui.category.ItemsRecyclerClick
 
 
-class SearchCategoryItemAdapter(var categoryItems:List<allProduct>, var context: Context):
+class SearchCategoryItemAdapter(var categoryItems:List<allProduct>, var context: Context,var onClick:ItemsRecyclerClick):
     RecyclerView.Adapter<SearchCategoryItemAdapter.CategoryItemViewHolder>()  {
     class CategoryItemViewHolder(val binding: CategoryItemBinding): RecyclerView.ViewHolder(binding.root)
 
@@ -29,6 +30,9 @@ class SearchCategoryItemAdapter(var categoryItems:List<allProduct>, var context:
         //holder.binding.itemTitle.text=categoryItems.get(position).title
         holder.binding.itemTitle.text=""+categoryItems.get(position).title
         //Log.d("hitler","position: "+position+" price: "+categoryItems.get(position).variants!!.get(0).price)
+        holder.itemView.setOnClickListener {
+            onClick.itemOnClick(categoryItems.get(position).id.toLong())
+        }
     }
 
     override fun getItemCount(): Int = categoryItems.size

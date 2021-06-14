@@ -16,9 +16,11 @@ import com.example.shopy.databinding.FragmentCategoryBinding
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.domainLayer.Utils
+import androidx.navigation.fragment.findNavController
+import com.example.shopy.NavGraphDirections
 
 
-class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyclerClick {
+class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyclerClick,ItemsRecyclerClick {
     var mainCategoryIndex=0
     var subCategoryIndex=0
     var colID:Long=268359696582
@@ -55,7 +57,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         super.onSubClick(position)
         subCategoryIndex=position
         subList=getSubCategoryItems(position)
-        binding.itemsRecView.adapter= CategoryItemAdapter(subList,requireContext())
+        binding.itemsRecView.adapter= CategoryItemAdapter(subList,requireContext(),this)
         binding.subcategoriesRecView.adapter!!.notifyDataSetChanged()
     }
     override fun onMainClick(position: Int) {
@@ -66,7 +68,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         colID=getMainCategory(position)
         catViewModel.fetchCatProducts(colID).observe(requireActivity(),{
             products=it
-            binding.itemsRecView.adapter= CategoryItemAdapter(products,requireContext())
+            binding.itemsRecView.adapter= CategoryItemAdapter(products,requireContext(),this)
             Log.d("hitler","list size: "+it.size)
             binding.itemsRecView.adapter!!.notifyDataSetChanged()
         })
@@ -89,7 +91,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         binding.mainCategoriesRecView.adapter= MainCategoriesAdapter(mainCatList,this)
         catViewModel.fetchCatProducts(267715608774).observe(requireActivity(),{
             products=it
-            binding.itemsRecView.adapter= CategoryItemAdapter(products,requireContext())
+            binding.itemsRecView.adapter= CategoryItemAdapter(products,requireContext(),this)
         })
     }
 
@@ -114,6 +116,11 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
             else-> subCatList=products.filter { it.productType.equals("SHOES")}
         }
         return subCatList
+    }
+
+    override fun itemOnClick(itemId: Long) {
+        val action = NavGraphDirections.actionGlobalProuductDetailsFragment(itemId)
+        findNavController().navigate(action)
     }
 
 }

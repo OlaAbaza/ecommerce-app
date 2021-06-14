@@ -8,7 +8,9 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import com.example.myapplication.SearchCategoryItemAdapter
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
@@ -20,9 +22,10 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 
 import com.example.shopy.ui.shopTab.ShopTabViewModel
 import com.example.shopy.domainLayer.Utils
+import com.example.shopy.ui.category.ItemsRecyclerClick
 
 
-class ShopSearchFragment : Fragment() {
+class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
 
     init {
         setHasOptionsMenu(true)
@@ -86,7 +89,7 @@ class ShopSearchFragment : Fragment() {
             Log.i("output","***********"+it.toString())
             products = it.products
             sortedProducts = products
-            binding.itemsRecView.adapter=SearchCategoryItemAdapter(it.products,requireContext())
+            binding.itemsRecView.adapter=SearchCategoryItemAdapter(it.products,requireContext(),this)
 
         })
 
@@ -108,7 +111,7 @@ class ShopSearchFragment : Fragment() {
                     sortedProducts = products.sortedByDescending { it.variants!!.get(0).price }
                     //binding.itemsRecView.adapter=SearchCategoryItemAdapter(filteredProducts,requireContext())
                 }else if (parent!!.getItemAtPosition(position).equals("none")) {
-                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(products, requireContext())
+                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(products, requireContext(),this@ShopSearchFragment)
                 }
             }
 
@@ -150,7 +153,7 @@ class ShopSearchFragment : Fragment() {
                 Log.i("output","***********iiii")
 
                 var filteredProducts = sortedProducts.filter { it.title!!.contains(query?:"none",true)&& it.productType!!.contains(productFilter,true)}
-                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext())
+                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext(),this@ShopSearchFragment)
                 return true
             }
 
@@ -158,12 +161,17 @@ class ShopSearchFragment : Fragment() {
                 Log.i("output","***********ppp")
 
                 var filteredProducts = sortedProducts.filter { it.title!!.contains(newText?:"none",true)&& it.productType!!.contains(productFilter,true) }//&& it.productType.equals("shoes",true)}
-                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext())
+                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext(),this@ShopSearchFragment)
                 return true
             }
 
         })
 
+    }
+
+    override fun itemOnClick(itemId: Long) {
+        val action = NavGraphDirections.actionGlobalProuductDetailsFragment(itemId)
+        findNavController().navigate(action)
     }
 }
 
