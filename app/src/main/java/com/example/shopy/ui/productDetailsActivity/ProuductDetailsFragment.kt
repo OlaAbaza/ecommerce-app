@@ -35,6 +35,7 @@ class ProuductDetailsFragment : Fragment() {
     private lateinit var productDetailsViewMode: ProductDetailsViewModel
     private lateinit var imageSliderAdaper: ImageSilderAdapter
     private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
+    private var optionsSelected: String? = null
 
     var id: Long? = null
     private var stored = false
@@ -50,9 +51,14 @@ class ProuductDetailsFragment : Fragment() {
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
 
-        val repository = WeakReference(Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))).get()
+        val repository = WeakReference(
+            Repository(
+                RemoteDataSourceImpl(),
+                RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
+            )
+        ).get()
 
-        val viewModelFactory = ViewModelFactory(repository!!,requireActivity().application)
+        val viewModelFactory = ViewModelFactory(repository!!, requireActivity().application)
         productDetailsViewMode = ViewModelProvider(
             requireActivity(),
             viewModelFactory
@@ -72,7 +78,7 @@ class ProuductDetailsFragment : Fragment() {
                 setStoredButton(stored)
 
             } else {
-                 val args: ProuductDetailsFragmentArgs by navArgs()
+                val args: ProuductDetailsFragmentArgs by navArgs()
                 id = args.productID
                 checkWishListStored(id ?: 0)
             }
@@ -91,9 +97,10 @@ class ProuductDetailsFragment : Fragment() {
             bindingProductDetailsFragment.viewPagerMain.adapter = imageSliderAdaper
 
 
-
+            var values : List<String> = emptyList()
             productDetailsViewMode.observeProductDetails().observe(activity, {
                 product = it.product
+                values  = product.options?.get(0)?.values!!
                 updateUI(product, activity)
                 productDetailsViewMode.progressPar.value = true
 
@@ -111,7 +118,7 @@ class ProuductDetailsFragment : Fragment() {
 
 
             bindingProductDetailsFragment.addToWishList.setOnClickListener {
-                if (isLoged()){
+                if (isLoged()) {
                     stored = if (stored) {
                         productDetailsViewMode.deleteOneWishItem(id = id ?: 0)
                         false
@@ -120,9 +127,12 @@ class ProuductDetailsFragment : Fragment() {
                         true
                     }
                     setStoredButton(stored)
-                }else
-                {
-                    Toast.makeText(requireContext(),getString(R.string.logInToCanAddToWishList),Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.logInToCanAddToWishList),
+                        Toast.LENGTH_SHORT
+                    ).show()
 
                 }
 
@@ -130,46 +140,64 @@ class ProuductDetailsFragment : Fragment() {
 
 
             bindingProductDetailsFragment.addToCart.setOnClickListener {
-                if (isLoged()){
-                    val variants = product.variants
-                    if (variants!=null){
-                        variants[0].inventory_quantity = 1
-                    }
-                    productDetailsViewMode.saveCartList(
-                        ProductCartModule(
-                            product.id,
-                            product.title,
-                            StringsUtils.Unpaid,
-                            product.body_html,
-                            product.vendor,
-                            product.product_type,
-                            product.created_at,
-                            product.handle,
-                            product.updated_at,
-                            product.published_at,
-                            product.template_suffix,
-                            product.status,
-                            product.published_scope,
-                            product.tags,
-                            product.admin_graphql_api_id,
-                            variants,
-                            product.options,
-                            product.images,
-                            product.image
+                if (isLoged()) {
+
+                    if (optionsSelected == null) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Please chose the size frist",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        val variants = product.variants
+                        if (variants != null) {
+                            variants[0].inventory_quantity = 1
+                        }
+                        val options = product.options
+                        options?.get(0)?.values = listOf(optionsSelected!!)
+                        productDetailsViewMode.saveCartList(
+                            ProductCartModule(
+                                product.id,
+                                product.title,
+                                StringsUtils.Unpaid,
+                                product.body_html,
+                                product.vendor,
+                                product.product_type,
+                                product.created_at,
+                                product.handle,
+                                product.updated_at,
+                                product.published_at,
+                                product.template_suffix,
+                                product.status,
+                                product.published_scope,
+                                product.tags,
+                                product.admin_graphql_api_id,
+                                variants,
+                                options,
+                                product.images,
+                                product.image
+                            )
                         )
-                    )
+                        productDetailsViewMode.optionsMutableLiveData.value = -1
+
+                        Toast.makeText(activity, getString(R.string.item_saved_in_cart), Toast.LENGTH_SHORT).show()
+                    }
+
+                } else {
                     Toast.makeText(
-                        activity,
-                        getString(R.string.item_saved_in_cart),
+                        requireContext(),
+                        getString(R.string.logInToCanAddToCart),
                         Toast.LENGTH_SHORT
                     ).show()
-                }
-                else{
-                    Toast.makeText(requireContext(),getString(R.string.logInToCanAddToCart),Toast.LENGTH_SHORT).show()
 
                 }
 
             }
+            productDetailsViewMode.optionsMutableLiveData.observe(activity,{
+                if (it !=-1){
+                    optionsSelected = values[it]
+                }
+            })
 
             productDetailsViewMode.signInBoolesn.observe(activity, {
                 createAlertToSignIn(activity)
@@ -199,7 +227,8 @@ class ProuductDetailsFragment : Fragment() {
 
 
 
-        bindingProductDetailsFragment.prise.text = "${product.variants?.get(0)?.price.toString()} EGP"
+        bindingProductDetailsFragment.prise.text =
+            "${product.variants?.get(0)?.price.toString()} EGP"
 
         bindingProductDetailsFragment.descriptionEditable.text = product.body_html
         bindingProductDetailsFragment.stateEditable.text = product.status ?: "not known"
@@ -218,14 +247,21 @@ class ProuductDetailsFragment : Fragment() {
         bindingProductDetailsFragment.colorEditable.apply {
             this.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            this.adapter = product.options?.get(1)?.values?.let { OptionsAdapter(it) }
+            this.adapter = product.options?.get(1)?.values?.let {
+                OptionsAdapter(
+                    it,
+                    productDetailsViewMode.optionsMutableLiveData
+                )
+            }
         }
 
 
         bindingProductDetailsFragment.sizeEditable.apply {
             this.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            this.adapter = product.options?.get(0)?.values?.let { OptionsAdapter(it) }
+            this.adapter = product.options?.get(0)?.values?.let {
+                OptionsAdapter(it, productDetailsViewMode.optionsMutableLiveData)
+            }
         }
 
     }
@@ -252,7 +288,6 @@ class ProuductDetailsFragment : Fragment() {
         alertDialogBuilder.setPositiveButton(getString(R.string.ok)) { _, _ ->
         }
         alertDialogBuilder.setNegativeButton(getString(R.string.signin)) { _, _ ->
-            //todo for intent
 //            val intent = Intent(context, SignIn::class.java)
 //            startActivity(intent)
         }
@@ -263,10 +298,12 @@ class ProuductDetailsFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         productDetailsViewMode.progressPar.value = false
+        productDetailsViewMode.optionsMutableLiveData.value = -1
+
 
     }
-    fun isLoged()= meDataSourceReo.loadUsertstate()
 
+    private fun isLoged() = meDataSourceReo.loadUsertstate()
 
 
 }
