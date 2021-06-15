@@ -127,8 +127,8 @@ class AllWishListFragment : Fragment() {
     private fun changeToolbar() {
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
-        requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.favourite).visibility = View.GONE
         requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
         requireActivity().toolbar_title.setTextColor(Color.WHITE)
