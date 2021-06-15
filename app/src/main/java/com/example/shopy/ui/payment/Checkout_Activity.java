@@ -1,5 +1,6 @@
 package com.example.shopy.ui.payment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ import com.example.shopy.models.CustomerOrder;
 import com.example.shopy.models.LineItem;
 import com.example.shopy.models.Order;
 import com.example.shopy.models.Orders;
+import com.example.shopy.ui.mainActivity.MainActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.stripe.android.ApiResultCallback;
@@ -57,6 +59,7 @@ import okhttp3.Response;
         //private static final String BACKEND_URL = "http://10.0.2.2:4242/";
         private static final String BACKEND_URL = "https://strip-payment-backend.herokuapp.com/";
         String amount;
+        private static Context mContext;
         public static GetOrders.Order order;
         public static Repository repository;
         //https://strip-payment-backend.herokuapp.com/
@@ -74,6 +77,7 @@ import okhttp3.Response;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_checkout_);
             img1 = findViewById(R.id.btn);
+            mContext=this;
             img2 = findViewById(R.id.btn_hide);
              payButton = findViewById(R.id.payButton);
              cardInputWidget = findViewById(R.id.cardInputWidget);
@@ -259,6 +263,9 @@ import okhttp3.Response;
                         Toast.makeText(activity,"Open Home Activity",Toast.LENGTH_LONG).show();
                         paymentViewModel.cancelOrder(order.getId());
                         paymentViewModel.createOrderInPayment(order);
+
+                        Intent login = new Intent(mContext, MainActivity.class);
+                        mContext.startActivity(login);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
