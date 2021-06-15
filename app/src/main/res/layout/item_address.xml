@@ -46,14 +46,15 @@
         tools:text="Agouza Egypt Egypt 12345" />
 
     <ImageButton
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="180dp"
-        android:layout_marginTop="5dp"
         android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+        android:elevation="10dp"
+        android:adjustViewBounds="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/fullName_txt"
-        app:layout_constraintTop_toTopOf="@+id/country_txt" />
+        app:layout_constraintTop_toBottomOf="@+id/fullName_txt" />
 
     <View
         android:id="@+id/line1"
@@ -81,6 +82,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_weight="1"
+        android:elevation="10dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/ic_trash1"
         app:layout_constraintStart_toEndOf="@id/rbtn_address"

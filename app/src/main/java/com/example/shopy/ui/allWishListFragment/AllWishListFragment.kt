@@ -1,5 +1,7 @@
 package com.example.shopy.ui.allWishListFragment
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
@@ -20,6 +23,7 @@ import com.example.shopy.databinding.FragmentAllWishListBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class AllWishListFragment : Fragment() {
 
@@ -33,13 +37,16 @@ class AllWishListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        changeToolbar()
 
         bindingAllWishListFragment = FragmentAllWishListBinding.inflate(inflater, container, false)
 
 
-        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-        val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
+        val repository = Repository(
+            RemoteDataSourceImpl(),
+            RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
+        )
+        val viewModelFactory = ViewModelFactory(repository, requireActivity().application)
 
         allWishListFragmentViewModel = ViewModelProvider(
             requireActivity(),
@@ -47,25 +54,28 @@ class AllWishListFragment : Fragment() {
         )[AllWishListViewModel::class.java]
 
 
-        requireActivity().findViewById<View>(R.id.favourite).visibility = View.GONE
-        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
 
         wishListData = ArrayList()
 
         withListAdapter =
-            WishListAdapter(wishListData, allWishListFragmentViewModel.intentTOProductDetails,allWishListFragmentViewModel.deleteItem)
+            WishListAdapter(
+                wishListData,
+                allWishListFragmentViewModel.intentTOProductDetails,
+                allWishListFragmentViewModel.deleteItem
+            )
         bindingAllWishListFragment.wishRecyclerView.apply {
             this.adapter = withListAdapter
             this.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
-        requireActivity().toolbar_title.text = getString(R.string.AllWishList)
-
         allWishListFragmentViewModel.getAllWishList().observe(requireActivity(), {
-            if (it.isEmpty())
-                bindingAllWishListFragment.emptyAnimationView.visibility=View.VISIBLE
-            else
-                bindingAllWishListFragment.emptyAnimationView.visibility=View.GONE
+            if (it.isEmpty()) {
+                bindingAllWishListFragment.emptyAnimationView.visibility = View.VISIBLE
+                bindingAllWishListFragment.emptyText.visibility = View.VISIBLE
+            } else {
+                bindingAllWishListFragment.emptyText.visibility = View.GONE
+                bindingAllWishListFragment.emptyAnimationView.visibility = View.GONE
+            }
 
             wishListData = it
             withListAdapter.productList = wishListData
@@ -82,28 +92,26 @@ class AllWishListFragment : Fragment() {
             }
         })
 
-        allWishListFragmentViewModel.deleteItem.observe(viewLifecycleOwner,{
+        allWishListFragmentViewModel.deleteItem.observe(viewLifecycleOwner, {
             deleteAlert(it.id)
         })
 
         return bindingAllWishListFragment.root
     }
 
-
     private fun deleteAlert(id: Long) {
 
-
         val builder = AlertDialog.Builder(requireContext())
+        //  builder.setTitle(De)
         builder.setTitle(getString(R.string.Delete_Item_From_Wish_List))
         builder.setMessage(getString(R.string.are_you_sure))
-        builder.setIcon(android.R.drawable.ic_delete)
 
-        builder.setPositiveButton("Yes") { _, _ ->
+        builder.setPositiveButton("Delete") { _, _ ->
             allWishListFragmentViewModel.deleteOneItemFromWishList(id)
             allWishListFragmentViewModel.deleteItem = MutableLiveData<Product>()
         }
 
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton("Cancel") { _, _ ->
             allWishListFragmentViewModel.deleteItem = MutableLiveData<Product>()
         }
         // Create the AlertDialog
@@ -111,8 +119,28 @@ class AllWishListFragment : Fragment() {
         // Set other dialog properties
         alertDialog.setCancelable(false)
         alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK)
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
     }
 
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.GONE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
+        requireActivity().toolbar_title.setTextColor(Color.WHITE)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_arrow_back_ios_24))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+
+        requireActivity().toolbar_title.text = getString(R.string.AllWishList)
+    }
 
     override fun onStop() {
         super.onStop()

@@ -1,10 +1,12 @@
 package com.example.shopy.ui.customerAddress
 
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -21,6 +24,7 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.Addresse
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import timber.log.Timber
 
 class AddressFragment : Fragment() {
@@ -55,13 +59,21 @@ class AddressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().bottom_nav.visibility = View.VISIBLE
-        requireActivity().toolbar_title.text = "My Addresses"
+        changeToolbar()
 
         customerID =meDataSourceReo.loadUsertId()
-        addressViewModel.getCustomersAddressList(customerID)
+        if (NetworkChangeReceiver.isOnline) {
+            addressViewModel.getCustomersAddressList(customerID)
 
+        }
+        else {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.thereIsNoNetwork),
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
 
         addressViewModel.getAddressList().observe(viewLifecycleOwner, Observer<List<Addresse>?> {
             Timber.i("olaaaaaaa"+it)
@@ -74,8 +86,14 @@ class AddressFragment : Fragment() {
         })
         addressViewModel.getDelAddress()
             .observe(viewLifecycleOwner, Observer<Pair<Addresse?, Int>> {
-                deleteAlert(it.first?.id.toString(),it.second)
-                Timber.i("ola delll" + it.toString())
+                if(it.first?.default==true){
+                    Toast.makeText(
+                        requireContext(), "ypu Can not delete your dafault address ",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                else
+                   deleteAlert(it.first?.id.toString(),it.second)
 
             })
         addressViewModel.getdafultAddress().observe(viewLifecycleOwner, Observer<Addresse?> {
@@ -98,7 +116,17 @@ class AddressFragment : Fragment() {
 
         builder.setPositiveButton("Delete") { dialogInterface, which ->
             //  Toast.makeText(requireContext(), "clicked yes", Toast.LENGTH_LONG).show()
-            addressViewModel.delCustomerAddresses(customerID, addressID)
+            if (NetworkChangeReceiver.isOnline) {
+                addressViewModel.delCustomerAddresses(customerID, addressID)
+            }
+            else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.thereIsNoNetwork),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
             addressAdapter.delItem(pos)
         }
 
@@ -113,5 +141,23 @@ class AddressFragment : Fragment() {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK)
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
+    }
+
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.cartView.visibility = View.INVISIBLE
+        requireActivity().toolbar.favourite.visibility = View.INVISIBLE
+        requireActivity().toolbar_title.setTextColor(Color.WHITE)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_arrow_back_ios_24))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+
+        requireActivity().toolbar_title.text = "My Address"
     }
 }

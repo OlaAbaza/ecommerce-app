@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.domainLayer.Utils
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
@@ -82,11 +83,22 @@ class SignUpFragment : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
             else {
-                signinViewModel.createCustomers(
-                    binding.nameEdt.text.toString(),
-                    binding.emailEdt.text.toString(),
-                    binding.passwordEdt.text.toString()
-                )
+                if (NetworkChangeReceiver.isOnline) {
+                    signinViewModel.createCustomers(
+                        binding.nameEdt.text.toString(),
+                        binding.emailEdt.text.toString(),
+                        binding.passwordEdt.text.toString()
+                    )
+                }
+                else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.thereIsNoNetwork),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
             }
         }
         binding.passwordEdt.setOnFocusChangeListener { _, hasFocus ->
@@ -166,9 +178,20 @@ class SignUpFragment : Fragment() {
                         Timber.i("isLogged+" + FirebaseAuth.getInstance().currentUser?.displayName + FirebaseAuth.getInstance().currentUser?.email)
                         FirebaseAuth.getInstance().currentUser?.displayName?.let {
                             FirebaseAuth.getInstance().currentUser?.email?.let { it1 ->
-                                signinViewModel.createCustomers(
-                                    it, it1, "123"
-                                )
+                                if (NetworkChangeReceiver.isOnline) {
+                                    signinViewModel.createCustomers(
+                                        it, it1, "123"
+                                    )
+                                }
+                                else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        getString(R.string.thereIsNoNetwork),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+
                             }
                         }
                     }

@@ -65,7 +65,7 @@ class WishListAdapter(
                 .fitCenter()
                 .placeholder(R.drawable.ic_loading)
                 .into(companyLogo)
-            itemTitle.text = item.title ?: "Title name is unknown"
+            itemTitle.text = item.variants?.get(0)?.price.toString()+"EGP"
 
 
         }

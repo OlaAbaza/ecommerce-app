@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -96,7 +98,17 @@ class SignInFragment : Fragment() {
 
         binding.loginBtn.setOnClickListener {
             email = binding.emailEdt.text.toString().trim()
-            signinViewModel.getAllCustomers()
+            if (NetworkChangeReceiver.isOnline) {
+                signinViewModel.getAllCustomers()
+            }
+            else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.thereIsNoNetwork),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
         }
 
         binding.tvSignup.setOnClickListener {
@@ -153,7 +165,17 @@ class SignInFragment : Fragment() {
                 when (authenticationState) {
                     SignInViewModel.AuthenticationState.AUTHENTICATED -> {
                         email = FirebaseAuth.getInstance().currentUser?.email.toString()
-                        signinViewModel.getAllCustomers()
+                        if (NetworkChangeReceiver.isOnline) {
+                            signinViewModel.getAllCustomers()
+                        }
+                        else {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.thereIsNoNetwork),
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
                         isLoginWithfirebase=true
                     }
                     else -> {

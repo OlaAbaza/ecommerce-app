@@ -1,5 +1,7 @@
 package com.example.shopy.ui.customerAddress
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +10,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -17,12 +22,13 @@ import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentAddAddressBinding
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.domainLayer.Utils
 import com.example.shopy.models.Address
 import com.example.shopy.models.Addresse
 import com.example.shopy.models.CreateAddress
 import com.example.shopy.models.UpdateAddresse
-import com.example.shopy.domainLayer.Utils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import timber.log.Timber
 
 class AddAddressFragment : Fragment() {
@@ -56,20 +62,33 @@ class AddAddressFragment : Fragment() {
 
         if (customerID != "null" && addressID != "null") {
             isedit = true
-            addressViewModel.getCustomerAddress(customerID, addressID)
+            if (NetworkChangeReceiver.isOnline) {
+                addressViewModel.getCustomerAddress(customerID, addressID)
+            }
+            else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.thereIsNoNetwork),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
         }
         addressViewModel.getEditAddress().observe(viewLifecycleOwner, Observer<Addresse?> {
             displayAddress(it)
         })
         addressViewModel.createCustomerAddress().observe(viewLifecycleOwner, Observer<Addresse?> {
-            Timber.i("olaaaa address"+it)
-            if(it!=null) {
+            Timber.i("olaaaa address" + it)
+            if (it != null) {
                 val action =
                     AddAddressFragmentDirections.actionAddAddressFragmentToAddressFragment()
                 findNavController().navigate(action)
-            }
-            else{
-                Toast.makeText(context, "The country or The state is  not valid ", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    context,
+                    "The country or The state is  not valid ",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
@@ -82,9 +101,7 @@ class AddAddressFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customerID = meDataSourceReo.loadUsertId()
 
-        requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().bottom_nav.visibility = View.VISIBLE
-        requireActivity().toolbar_title.text = "My Addresses"
+        changeToolbar()
 
         binding.saveBtn.setOnClickListener {
             if (!validateFields()) {
@@ -111,12 +128,22 @@ class AddAddressFragment : Fragment() {
                             binding.postCodeEdt.text.toString()
                         )
                         var createAddress = UpdateAddresse(address)
+                        if (NetworkChangeReceiver.isOnline) {
+                            addressViewModel.updateCustomerAddresses(
+                                customerID,
+                                addressID,
+                                createAddress
+                            )
+                        }
+                        else {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.thereIsNoNetwork),
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-                        addressViewModel.updateCustomerAddresses(
-                            customerID,
-                            addressID,
-                            createAddress
-                        )
+                        }
+
 
                     } else {
                         var address = Address(
@@ -137,25 +164,42 @@ class AddAddressFragment : Fragment() {
                             binding.addressSwitch.isChecked
                         )
                         var createAddress = CreateAddress(address)
-                        addressViewModel.createCustomersAddress(customerID, createAddress)
+                        if (NetworkChangeReceiver.isOnline) {
+                            addressViewModel.createCustomersAddress(customerID, createAddress)
+                        }
+                        else {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.thereIsNoNetwork),
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
                     }
+                } else {
+                    binding.phoneEdt.setError("Please enter valid formate")
                 }
-                else {
-                    Toast.makeText(
-                        context,
-                        "incorrect phone number",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            } else {
-                Toast.makeText(
-                    context,
-                    "please fill all required fields",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
 
         }
+    }
+
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.cartView.visibility = View.INVISIBLE
+        requireActivity().toolbar.favourite.visibility = View.INVISIBLE
+        requireActivity().toolbar_title.setTextColor(Color.WHITE)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_arrow_back_ios_24))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+
+        requireActivity().toolbar_title.text = "Add Address"
     }
 
     private fun displayAddress(item: Addresse?) {
@@ -178,14 +222,26 @@ class AddAddressFragment : Fragment() {
     private fun validateFields(): Boolean {
         var isEmpty = false
         binding.apply {
-            if (addressEdt.text.toString().trim().isEmpty()
-                && cityEdt.text.toString().trim().isEmpty()
-                && countryEdt.text.toString().trim().isEmpty()
-                && nameEdt.text.toString().trim().isEmpty()
-                && phoneEdt.text.toString().trim().isEmpty()
-                && stateEdt.text.toString().trim().isEmpty()
-                && postCodeEdt.text.toString().trim().isEmpty()
-            ) {
+            if (nameEdt.text.toString().trim().isEmpty()) {
+                nameEdt.setError("This faild is required")
+                isEmpty = true
+            } else if (phoneEdt.text.toString().trim().isEmpty()) {
+                phoneEdt.setError("This faild is required")
+                isEmpty = true
+            } else if (cityEdt.text.toString().trim().isEmpty()) {
+                cityEdt.setError("This faild is required")
+                isEmpty = true
+            } else if (stateEdt.text.toString().trim().isEmpty()) {
+                stateEdt.setError("This faild is required")
+                isEmpty = true
+            } else if (postCodeEdt.text.toString().trim().isEmpty()) {
+                postCodeEdt.setError("This faild is required")
+                isEmpty = true
+            } else if (addressEdt.text.toString().trim().isEmpty()) {
+                addressEdt.setError("This faild is required")
+                isEmpty = true
+            } else if (countryEdt.text.toString().trim().isEmpty()) {
+                countryEdt.setError("This faild is required")
                 isEmpty = true
             }
         }

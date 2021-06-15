@@ -1,5 +1,7 @@
 package com.example.shopy.ui.shoppingBag
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,9 +13,12 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.shopy.NavGraphDirections
+import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.entity.priceRules.PriceRule
@@ -26,6 +31,7 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_order_confirmation.*
 import timber.log.Timber
 
@@ -71,14 +77,23 @@ class OrderConfirmationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().bottom_nav.visibility = View.VISIBLE
-        requireActivity().toolbar_title.text = "Order Confirmation"
+      changeToolbar()
 
         if (isLoged()) {
             customerID = meDataSourceReo.loadUsertId()
             Timber.i("olaaa" + customerID)
-            orderViewModel.getCustomersAddressList(customerID)
+            if (NetworkChangeReceiver.isOnline) {
+                orderViewModel.getCustomersAddressList(customerID)
+            }
+            else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.thereIsNoNetwork),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
           //  orderViewModel.getPriceRulesList()
            // orderViewModel.fetchallDiscountCodeList()
         }
@@ -120,10 +135,16 @@ class OrderConfirmationFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.cvVoucher.setOnClickListener {
-            discount_edt.visibility = View.VISIBLE
+        binding.discountBtn.setOnClickListener {
+            binding.discountEdt.visibility = View.VISIBLE
+            binding.discountBtn.visibility = View.INVISIBLE
+            binding.discountBtnHide.visibility = View.VISIBLE
         }
-
+        binding.discountBtnHide.setOnClickListener {
+            discount_edt.visibility = View.INVISIBLE
+            binding.discountBtnHide.visibility = View.INVISIBLE
+            binding.discountBtn.visibility = View.VISIBLE
+        }
         binding.placeOrderBtn.setOnClickListener {
             if (isDefaultAddress) {
                 placeOrder()
@@ -232,7 +253,17 @@ class OrderConfirmationFragment : Fragment() {
 
         var order = Order(customerOrder, "pending", lineItem, paymentMethod,discount)
         var orders = Orders(order)
-        orderViewModel.createOrder(orders)
+        if (NetworkChangeReceiver.isOnline) {
+            orderViewModel.createOrder(orders)
+        }
+        else {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.thereIsNoNetwork),
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
     }
 
     private fun getPaymentMethod() {
@@ -245,5 +276,20 @@ class OrderConfirmationFragment : Fragment() {
     private fun isLoged(): Boolean {
         return meDataSourceReo.loadUsertstate()
     }
+    private fun changeToolbar() {
+        requireActivity().bottom_nav.visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.cartView.visibility = View.INVISIBLE
+        requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.favourite.visibility = View.INVISIBLE
+        requireActivity().toolbar_title.setTextColor(Color.WHITE)
 
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_arrow_back_ios_24))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+        requireActivity().toolbar_title.text = "Order Confirmation"
+    }
 }

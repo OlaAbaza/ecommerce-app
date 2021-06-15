@@ -1,5 +1,7 @@
 package com.example.shopy.ui.profileFragment
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +11,8 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -22,6 +26,7 @@ import com.example.shopy.models.CustomerX
 import com.example.shopy.models.CustomerXXX
 import com.example.shopy.domainLayer.Utils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import timber.log.Timber
 
 class ProfileFragment : Fragment() {
@@ -50,11 +55,18 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().bottom_nav.visibility = View.VISIBLE
-        requireActivity().toolbar_title.text = "Edit Profile"
+      changeToolbar()
+        if (NetworkChangeReceiver.isOnline) {
+            profileViewModel.getCustomer(customerID)
+        }
+        else {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.thereIsNoNetwork),
+                Toast.LENGTH_SHORT
+            ).show()
 
-        profileViewModel.getCustomer(customerID)
+        }
         profileViewModel.getCustomerInfo().observe(viewLifecycleOwner, Observer<Customer?>{
             if (it!=null){
                 binding.nameEdt.setText(it.firstName)
@@ -72,6 +84,18 @@ class ProfileFragment : Fragment() {
             )
 
         })
+        binding.passBtnShow.setOnClickListener {
+            binding.passGroup.visibility=View.VISIBLE
+            binding.passBtnShow.visibility=View.GONE
+            binding.passBtnHide.visibility=View.VISIBLE
+
+        }
+        binding.passBtnHide.setOnClickListener {
+            binding.passGroup.visibility=View.GONE
+            binding.passBtnHide.visibility=View.GONE
+            binding.passBtnShow.visibility=View.VISIBLE
+
+        }
         binding.saveBtn.setOnClickListener {
             var name=""
             var phone=""
@@ -95,7 +119,17 @@ class ProfileFragment : Fragment() {
             if(flag) {
                 var cust = CustomerXXX(name, customerID.toLong(), customerPassword, phone)
                 var customerProfile = CustomerProfile(cust)
-                profileViewModel.UpdateCustomers(customerID, customerProfile)
+                if (NetworkChangeReceiver.isOnline) {
+                    profileViewModel.UpdateCustomers(customerID, customerProfile)
+                }
+                else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.thereIsNoNetwork),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
             }
         }
     }
@@ -115,7 +149,8 @@ class ProfileFragment : Fragment() {
         var isCorrect = true
         binding.apply {
             if (currentPasswordEdt.text.toString()!=customerPassword) {
-                Toast.makeText(context, "Your old Password is wrong", Toast.LENGTH_SHORT).show()
+                binding.currentPasswordEdt.setError("Your old Password is wrong")
+               // Toast.makeText(context, "Your old Password is wrong", Toast.LENGTH_SHORT).show()
                 isCorrect = false
             }
         }
@@ -130,10 +165,12 @@ class ProfileFragment : Fragment() {
                     "Your Password must contain at least one letter , one number and 8 characters minimum",
                     Toast.LENGTH_SHORT
                 ).show()
+                 binding.passwordEdt.setError("")
                 isCorrect = false
             }
              else if (passwordEdt.text.toString()!=confirmPasswordEdt.text.toString()) {
-                Toast.makeText(context, "Wrong password", Toast.LENGTH_SHORT).show()
+                 binding.confirmPasswordEdt.setError("Wrong password")
+                //Toast.makeText(context, "Wrong password", Toast.LENGTH_SHORT).show()
                 isCorrect = false
             }
         }
@@ -144,7 +181,8 @@ class ProfileFragment : Fragment() {
         binding.apply {
             if (nameEdt.text.toString().trim().isEmpty()) {
                 isEmpty = false
-                Toast.makeText(context, "Please Enter Your name", Toast.LENGTH_SHORT).show()
+                nameEdt.setError("This faild is required")
+             //   Toast.makeText(context, "Please Enter Your name", Toast.LENGTH_SHORT).show()
             }
         }
         return isEmpty
@@ -155,12 +193,29 @@ class ProfileFragment : Fragment() {
             if (!(phoneEdt.text.toString().trim().isEmpty())) {
                 if (!(Utils.validatePhone(binding.phoneEdt.text.toString()))){
                     Timber.i("olaa phone")
-                    Toast.makeText(context, "incorrect phone number", Toast.LENGTH_SHORT).show()
+                    binding.phoneEdt.setError("Please enter valid formate")
+                   // Toast.makeText(context, "incorrect phone number", Toast.LENGTH_SHORT).show()
                     isEmpty=false
                 }
                 Timber.i("olaa phone44-")
             }
         }
         return isEmpty
+    }
+    private fun changeToolbar() {
+        requireActivity().bottom_nav.visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.cartView.visibility = View.INVISIBLE
+        requireActivity().toolbar.favourite.visibility = View.INVISIBLE
+        requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar_title.setTextColor(Color.WHITE)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_arrow_back_ios_24))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+        requireActivity().toolbar_title.text = "Edit Profile"
     }
 }

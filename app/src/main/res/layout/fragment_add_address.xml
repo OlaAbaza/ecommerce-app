@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".04" />
+        app:layout_constraintGuide_percent=".01" />
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -19,7 +19,7 @@
         tools:layout_editor_absoluteY="-82dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/topguid1"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf ="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +32,6 @@
                 android:id="@+id/tv_nameField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -239,9 +238,7 @@
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:checked="true"
-                  android:buttonTint="@color/dark_gray"
-                    android:thumbTint="@color/dark_gray"
-                    android:trackTint="@color/black" />
+                    android:theme="@style/SCBSwitch" />
 
             </LinearLayout>
 
