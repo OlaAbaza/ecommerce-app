@@ -88,7 +88,7 @@ class AddressFragment : Fragment() {
             .observe(viewLifecycleOwner, Observer<Pair<Addresse?, Int>> {
                 if(it.first?.default==true){
                     Toast.makeText(
-                        requireContext(), "ypu Can not delete your dafault address ",
+                        requireContext(), "you Can not delete your dafault address ",
                         Toast.LENGTH_SHORT
                     ).show()
                 }

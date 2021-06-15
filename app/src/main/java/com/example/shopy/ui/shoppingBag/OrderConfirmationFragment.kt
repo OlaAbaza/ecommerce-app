@@ -1,5 +1,6 @@
 package com.example.shopy.ui.shoppingBag
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -30,10 +31,12 @@ import com.example.shopy.datalayer.entity.ads_discount_codes.DiscountCode
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.*
+import com.example.shopy.ui.payment.Checkout_Activity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_order_confirmation.*
 import timber.log.Timber
+import java.io.Serializable
 
 
 class OrderConfirmationFragment : Fragment() {
