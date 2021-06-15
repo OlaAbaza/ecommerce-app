@@ -130,7 +130,7 @@ class OrderConfirmationFragment : Fragment() {
             }
 
         })
-        binding.cvAddress.setOnClickListener {
+        binding.addressBtn.setOnClickListener {
             val action = NavGraphDirections.actionGlobalAddressFragment()
             findNavController().navigate(action)
         }
@@ -219,12 +219,12 @@ class OrderConfirmationFragment : Fragment() {
         if (discount.isEmpty()) {
             isDiscount=false
             binding.discountEdt.setError("Sorry, this coupon is invalid")
-            binding.totalDiscountTxt.text = "0.0"
+            binding.totalDiscountTxt.text = "---"
             binding.totalPriceTxt.text=(totalPrice).toString() + " EGP"
            // Toast.makeText(context, "Sorry, this coupon is invalid", Toast.LENGTH_SHORT).show()
         } else {
             isDiscount=true
-            binding.totalDiscountTxt.text = "10 %"
+            binding.totalDiscountTxt.text = "10%"
             discountAmount = ((totalPrice*10)/100)
             discountCode=discount.get(0).code
             Timber.i("olaaa discountAmount"+discountAmount+"  "+totalDiscont+"  "+totalPrice)
