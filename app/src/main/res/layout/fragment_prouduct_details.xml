@@ -164,7 +164,7 @@
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@id/linlay1"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:padding="15dp">
+                    android:padding="5dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -173,7 +173,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:orientation="horizontal"
-                            android:padding="5dp">
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp">
                             <TextView
                                 android:id="@+id/stateNotEditable"
                                 style="@style/text_style"
@@ -187,7 +189,6 @@
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="end"
-                                android:layout_marginTop="20dp"
                                 android:layout_marginStart="150dp"
                                 android:paddingTop="10dp"
                                 android:background="@drawable/ic_baseline_arrow_forward_ios_24"
@@ -196,13 +197,17 @@
                         </LinearLayout>
                         <TextView
                             android:id="@+id/stateEditable"
-                            style="@style/text_style"
                             android:layout_width="wrap_content"
                             android:layout_weight="3"
                             android:layout_height="0dp"
-                            android:layout_marginHorizontal="20dp"
                             android:visibility="gone"
-                            android:textColor="#C60B0B"
+                            android:textSize="12sp"
+                            android:textColor="#696969"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:layout_marginLeft="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/stateNotEditable"
                             app:layout_constraintTop_toTopOf="@id/stateNotEditable" />
@@ -215,7 +220,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:orientation="horizontal"
-                            android:padding="10dp">
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp">
                             <TextView
                                 android:id="@+id/vendorNotEditable"
                                 style="@style/text_style"
@@ -242,9 +249,14 @@
                             style="@style/text_style"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
+                            android:textSize="12sp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
                             android:visibility="gone"
-                            android:textColor="@color/blue"
+                            android:textColor="#696969"
+                            android:layout_marginLeft="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/vendorNotEditable"
                             app:layout_constraintTop_toTopOf="@id/vendorNotEditable" />
@@ -257,7 +269,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:orientation="horizontal"
-                            android:padding="10dp">
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp">
                             <TextView
                                 android:id="@+id/descriptionNotEditable"
                                 style="@style/text_style"
@@ -271,7 +285,7 @@
                                 android:id="@+id/description_btn"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
-                                android:layout_marginStart="150dp"
+                                android:layout_marginStart="125dp"
                                 android:background="@drawable/ic_baseline_arrow_forward_ios_24"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -284,8 +298,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/description"
-                            android:textColor="@color/gray"
+                            android:textColor="#696969"
+                            android:textSize="12sp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
                             android:visibility="gone"
+                            android:layout_marginLeft="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/descriptionNotEditable" />

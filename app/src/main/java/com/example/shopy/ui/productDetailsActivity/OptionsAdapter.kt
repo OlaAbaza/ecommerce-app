@@ -48,7 +48,7 @@ class OptionsAdapter(options: List<String>, optionsMutableLiveData: MutableLiveD
         holder.binding(options[position])
 
         if (position == positionLast) {
-            holder.colorItemRecycler.setBackgroundResource(R.color.green)
+            holder.colorItemRecycler.setBackgroundResource(R.drawable.item_bg)
         }else{
             holder.colorItemRecycler.setBackgroundResource(R.color.white)
         }

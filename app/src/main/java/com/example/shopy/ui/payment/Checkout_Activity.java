@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -63,11 +64,43 @@ import okhttp3.Response;
         private String paymentIntentClientSecret;
         private Stripe stripe;
         public static PaymentViewModel paymentViewModel;
+        ImageButton img1;
+        ImageButton img2;
+        Button payButton;
+        CardInputWidget cardInputWidget;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_checkout_);
+            img1 = findViewById(R.id.btn);
+            img2 = findViewById(R.id.btn_hide);
+             payButton = findViewById(R.id.payButton);
+             cardInputWidget = findViewById(R.id.cardInputWidget);
+
+
+            img1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    img1.setVisibility(View.GONE);
+                    img2.setVisibility(View.VISIBLE);
+                    payButton.setVisibility(View.VISIBLE);
+                    cardInputWidget.setVisibility(View.VISIBLE);
+
+                }
+            });
+
+
+            img2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                img1.setVisibility(View.VISIBLE);
+                img2.setVisibility(View.GONE);
+                payButton.setVisibility(View.GONE);
+                cardInputWidget.setVisibility(View.GONE);
+                }
+            });
+
             repository = new Repository(new RemoteDataSourceImpl(), new RoomDataSourceImpl(RoomService.Companion.getInstance(getApplication())));
 
             ViewModelFactory viewModelFactory = new ViewModelFactory(repository, getApplication());
@@ -113,9 +146,7 @@ import okhttp3.Response;
                     .enqueue(new PayCallback(this));
 
             // Hook up the pay button to the card widget and stripe instance
-            Button payButton = findViewById(R.id.payButton);
             payButton.setOnClickListener((View view) -> {
-                CardInputWidget cardInputWidget = findViewById(R.id.cardInputWidget);
                 PaymentMethodCreateParams params = cardInputWidget.getPaymentMethodCreateParams();
                 if (params != null) {
                     ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams
