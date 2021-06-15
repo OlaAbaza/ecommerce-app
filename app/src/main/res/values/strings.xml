@@ -140,6 +140,7 @@
     <string name="some_error_accurated">Some error accurate</string>
     <string name="cancel_order">Cancel Order</string>
     <string name="please_log_in">Log In to can see wish list</string>
+    <string name="add_to_bag">ADD TO BAG</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

@@ -27,7 +27,6 @@ import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class ProuductDetailsFragment : Fragment() {
@@ -207,6 +206,36 @@ class ProuductDetailsFragment : Fragment() {
             this.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             this.adapter = product.options?.get(0)?.values?.let { OptionsAdapter(it) }
+        }
+
+        bindingProductDetailsFragment.descriptionBtn.setOnClickListener {
+            if (bindingProductDetailsFragment.descriptionEditable.visibility == View.GONE) {
+                bindingProductDetailsFragment.descriptionEditable.visibility = View.VISIBLE
+                bindingProductDetailsFragment.descriptionBtn.setBackgroundResource(R.drawable.ic_arrow_down_24)
+            }else{
+                bindingProductDetailsFragment.descriptionEditable.visibility = View.GONE
+                bindingProductDetailsFragment.descriptionBtn.setBackgroundResource(R.drawable.ic_baseline_arrow_forward_ios_24)
+            }
+        }
+
+        bindingProductDetailsFragment.stateBtn.setOnClickListener {
+            if (bindingProductDetailsFragment.stateEditable.visibility == View.GONE) {
+                bindingProductDetailsFragment.stateEditable.visibility = View.VISIBLE
+                bindingProductDetailsFragment.stateBtn.setBackgroundResource(R.drawable.ic_arrow_down_24)
+            }else{
+                bindingProductDetailsFragment.stateEditable.visibility = View.GONE
+                bindingProductDetailsFragment.stateBtn.setBackgroundResource(R.drawable.ic_baseline_arrow_forward_ios_24)
+
+            }
+        }
+        bindingProductDetailsFragment.vendorBtn.setOnClickListener {
+            if (bindingProductDetailsFragment.vendorEditable.visibility == View.GONE) {
+                bindingProductDetailsFragment.vendorEditable.visibility = View.VISIBLE
+                bindingProductDetailsFragment.vendorBtn.setBackgroundResource(R.drawable.ic_arrow_down_24)
+            }else{
+                bindingProductDetailsFragment.vendorEditable.visibility = View.GONE
+                bindingProductDetailsFragment.vendorBtn.setBackgroundResource(R.drawable.ic_baseline_arrow_forward_ios_24)
+            }
         }
 
     }
