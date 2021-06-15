@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.datalayer.entity.itemPojo.Options
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import kotlinx.coroutines.CoroutineScope
@@ -16,6 +17,8 @@ class ProductDetailsViewModel(val repository: Repository, application: Applicati
     private var saveWishListJob: Job? = null
     private var deleteOneWishItemJob: Job? = null
     private  var saveToCartJob : Job? = null
+    var optionsMutableLiveData : MutableLiveData<Int> = MutableLiveData()
+
 
      val signInBoolesn : MutableLiveData<Boolean> = MutableLiveData()
      val progressPar : MutableLiveData<Boolean> = MutableLiveData()

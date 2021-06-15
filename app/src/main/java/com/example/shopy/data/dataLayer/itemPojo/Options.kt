@@ -9,5 +9,5 @@ data class Options (
 	@SerializedName("product_id") val product_id : Long?,
 	@SerializedName("name") val name : String?,
 	@SerializedName("position") val position : Int?,
-	@SerializedName("values") val values : List<String>?
+	@SerializedName("values") var values : List<String>?
 )

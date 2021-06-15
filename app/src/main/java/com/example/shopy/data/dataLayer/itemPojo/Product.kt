@@ -22,7 +22,7 @@ data class Product (
 	@SerializedName("tags") val tags : String?,
 	@SerializedName("admin_graphql_api_id") val admin_graphql_api_id : String?,
 	@SerializedName("variants") val variants : List<Variants>?,
-	@SerializedName("options") val options : List<Options>?,
+	@SerializedName("options") var options : List<Options>?,
 	@SerializedName("images") val images : List<Images>?,
 	@SerializedName("image") val image : Image
 )

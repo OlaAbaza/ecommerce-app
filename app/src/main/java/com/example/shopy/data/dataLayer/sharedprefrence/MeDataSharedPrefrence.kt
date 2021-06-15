@@ -27,14 +27,6 @@ class MeDataSharedPrefrence(context: Context) {
         }
     }
 
-    fun saveAccessToken(accessToken:String){
-        CoroutineScope(Dispatchers.IO).launch {
-            val editor: SharedPreferences.Editor =  sharedPreferences.edit()
-            editor.putString(StringsUtils.accessToken,accessToken)
-            editor.apply()
-            editor.commit()
-        }
-    }
 
     fun saveMePoints(points:Int){
         CoroutineScope(Dispatchers.IO).launch {
