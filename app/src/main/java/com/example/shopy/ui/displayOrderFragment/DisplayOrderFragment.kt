@@ -2,6 +2,8 @@ package com.example.shopy.ui.displayOrderFragment
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
@@ -22,12 +25,14 @@ import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentDisplayOrderBinding
+import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.ui.payment.Checkout_Activity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import java.io.Serializable
 import java.lang.ref.WeakReference
 
@@ -99,8 +104,7 @@ class DisplayOrderFragment : Fragment() {
             this.adapter = adapter
         }
 
-
-        requireActivity().toolbar_title.text = getString(R.string.my_orders)
+        changeToolbar()
 
 
 
@@ -111,9 +115,9 @@ class DisplayOrderFragment : Fragment() {
             view.progressPar.visibility = View.GONE
 
             if (it.isEmpty()) {
-                view.emptyAnimationView.visibility = View.VISIBLE
+                view.emptyGroup.visibility=View.VISIBLE
             } else {
-                view.emptyAnimationView.visibility = View.GONE
+                view.emptyGroup.visibility=View.GONE
             }
             Log.d("TAG", "size of list ${it.size}")
         })
@@ -232,25 +236,46 @@ class DisplayOrderFragment : Fragment() {
         }
     }
 
-
     private fun deleteAlert(displayOrderViewModel: DisplayOrderViewModel, order_id: Long) {
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.cancel_order))
         builder.setMessage(getString(R.string.are_you_sure))
-        builder.setIcon(android.R.drawable.ic_dialog_alert)
 
-        builder.setPositiveButton("Yes") { _, _ ->
+        builder.setPositiveButton("Delete") { _, _ ->
             displayOrderViewModel.deleteOrder(order_id)
         }
 
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton("Cancel") { _, _ ->
         }
+        // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
         alertDialog.setCancelable(false)
         alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK)
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
     }
 
+
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.GONE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.GONE
+        requireActivity().toolbar_title.setTextColor(Color.WHITE)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_arrow_back_ios_24))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+
+        requireActivity().toolbar_title.text = getString(R.string.my_orders)
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         displayOrderViewModel.deleteOrder = MutableLiveData()

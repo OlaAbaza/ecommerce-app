@@ -102,7 +102,7 @@
     <string name="_8_characters_minimum">8 characters minimum</string>
     <string name="add_address">Add Address</string>
     <string name="my_addresses">My Addresses</string>
-    <string name="register_login">Register/Login</string>
+    <string name="register_login">sign in/register</string>
     <string name="imagebutton">ImageButton</string>
     <string name="delete">Delete</string>
     <string name="Delete_Item_From_Wish_List">Delete Item From Wish List</string>
@@ -129,7 +129,7 @@
     <string name="total_price">Total price  </string>
     <string name="_170">170</string>
     <string name="egp">EGP</string>
-    <string name="created_at">created at </string>
+    <string name="created_at">created at: </string>
     <string name="_2021_05_31t23_47_47_02_00">2021-05-31T23:47:47+02:00</string>
     <string name="cancel">Cancel</string>
     <string name="pay_now">Pay Now</string>
@@ -146,6 +146,12 @@
     <string name="thereIsNoNetwork">There is no network</string>
     <string name="AllWishList">All Wish List</string>
     <string name="cash">Cash</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="address_book">Address Book</string>
+    <string name="about_shopy">About SHOPY</string>
+    <string name="it_s_an_e_commerce_app_based_exclusive_in_egypt_where_you_can_find_categories_and_sub_categories_for_all_clothes_shoes_and_accessories">It\'s an e-commerce app based exclusive in Egypt where you can find categories and sub-categories for all clothes, shoes and accessories</string>
+    <string name="developed_by">Developed By</string>
+    <string name="it_is_empty_here">It is empty here :-(</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

@@ -38,9 +38,12 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:fontFamily="serif"
+                android:layout_marginBottom="5dp"
                 android:text="@string/register_login"
+                android:textStyle="bold"
+                android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -399,7 +402,7 @@
                 android:background="@color/white"
                 android:fontFamily="serif"
                 android:text="@string/see_all"
-                android:textColor="@color/yello"
+                android:textColor="@color/black"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@id/seeAllArrow"
                 app:layout_constraintEnd_toStartOf="@id/seeAllArrow"
@@ -417,7 +420,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/wishRecyclerView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@color/white"
                 android:paddingTop="10dp"

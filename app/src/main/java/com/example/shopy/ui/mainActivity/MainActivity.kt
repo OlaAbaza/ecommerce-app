@@ -1,16 +1,22 @@
 package com.example.shopy.ui.mainActivity
 
+import android.app.Activity
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
@@ -38,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         if (navController != null) {
             bottomNavigationView.setupWithNavController(navController!!)
         }
+
+
         setSupportActionBar(toolbar)
         Utils.toolbarImg = toolbar.searchIcon
         Utils.cartView = toolbar.cartView
@@ -65,23 +73,33 @@ class MainActivity : AppCompatActivity() {
             wishLiNotificationAdapter.updateView(it.size)
         })
         wishLiNotificationAdapter.favouriteButton.setOnClickListener {
-            navHostFragment = fragment as NavHostFragment
-            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
-            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
-            navController = (navHostFragment as NavHostFragment).navController
-            navGraph.startDestination = R.id.allWishListFragment
-            navController!!.graph = navGraph
+//            navHostFragment = fragment as NavHostFragment
+//            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
+//            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+//            navController = (navHostFragment as NavHostFragment).navController
+//            navGraph.startDestination = R.id.allWishListFragment
+//            navController!!.graph = navGraph
+
+            val action = NavGraphDirections.actionGlobalAllWishListFragment()
+            navController?.navigate(action)
         }
         viewModel.getAllCartList().observe(this,{
             cartIconAdapter.updateView(it.size)
         })
         cartIconAdapter.favouriteButton.setOnClickListener {
-            navHostFragment = fragment as NavHostFragment
-            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
-            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
-            navController = (navHostFragment as NavHostFragment).navController
-            navGraph.startDestination = R.id.cartFragment2
-            navController!!.graph = navGraph
+//            navHostFragment = fragment as NavHostFragment
+//            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
+//            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+//            navController = (navHostFragment as NavHostFragment).navController
+//            navGraph.startDestination = R.id.cartFragment2
+//            navController!!.graph = navGraph
+
+          //  val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+           // val navController = navHostFragment.navController
+            val action = NavGraphDirections.actionGlobalCartFragment2()
+            navController?.navigate(action)
+
+           // findNavController(it).navigate(action)
         }
 
         ///////////////////////////////////

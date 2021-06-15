@@ -11,12 +11,6 @@ class AddressAdapter(
     var addressList: ArrayList<Addresse>,  var addressViewModel: AddressViewModel
 ) : RecyclerView.Adapter<AddressAdapter.VH>() {
 
-    fun updateAddress(newAddress: Addresse?) {
-        newAddress?.let {
-            addressList.add(newAddress)
-            notifyDataSetChanged()  }
-
-    }
     fun addNewList(addressNewList: List<Addresse>) {
             addressList.clear()
             addressList.addAll(addressNewList)
@@ -43,9 +37,9 @@ class AddressAdapter(
         addressList[position].default?.let {
             holder.myView.rbtnAddress.isChecked = it
         }
-        if( addressList[position].default==true){
-            holder.myView.btnDel.visibility=View.INVISIBLE
-        }
+//        if( addressList[position].default==true){
+//            holder.myView.btnDel.visibility=View.INVISIBLE
+//        }
         holder.myView.itemLayout.setOnClickListener {
           addressViewModel.onItemClick(addressList[position])
         }

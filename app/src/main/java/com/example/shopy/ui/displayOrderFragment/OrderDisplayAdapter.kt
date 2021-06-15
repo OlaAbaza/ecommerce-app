@@ -51,7 +51,7 @@ class OrderDisplayAdapter(list:
          val payNow: Button = itemView.findViewById(R.id.payButton)
          val cancel: Button = itemView.findViewById(R.id.cancelButton)
         fun binding(order: GetOrders.Order?) {
-            textId.text = order!!.id.toString()
+            textId.text = "#"+order!!.id.toString()
             textPrice.text = order.total_price?:"not known"
             currencyCode.text = order.presentment_currency?:"not known"
             createdAt.text = order.created_at?:"not known"

@@ -1,6 +1,8 @@
 package com.example.shopy.ui.meScreen
 
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
@@ -26,6 +29,11 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.domainLayer.Utils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
+import kotlinx.android.synthetic.main.fragment_sign_in.view.*
+import kotlinx.android.synthetic.main.list_toolbar_view.view.*
+import kotlinx.android.synthetic.main.list_toolbar_view.view.favouriteButton
 
 
 class MeFragment : Fragment() {
@@ -58,17 +66,13 @@ class MeFragment : Fragment() {
 
 //        requireActivity().toolbar.visibility = View.VISIBLE
 //        requireActivity().bottom_nav.visibility = View.VISIBLE
-        if(Utils.toolbarImg.visibility == View.GONE){
-            Utils.toolbarImg.visibility = View.VISIBLE
-        }
-        if(Utils.cartView.visibility == View.GONE){
-            Utils.cartView.visibility = View.VISIBLE
-        }
-        requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().bottom_nav.visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
-        requireActivity().toolbar_title.text = getString(R.string.me)
+//        if(Utils.toolbarImg.visibility == View.GONE){
+//            Utils.toolbarImg.visibility = View.VISIBLE
+//        }
+//        if(Utils.cartView.visibility == View.GONE){
+//            Utils.cartView.visibility = View.VISIBLE
+//        }
+
         bindingMeScreen.regesterAndLogin.setOnClickListener {
             val action = NavGraphDirections.actionGlobalSignInFragment()
             findNavController().navigate(action)
@@ -181,20 +185,48 @@ class MeFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun deleteAlert(id: Long) {
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindingMeScreen.points.setOnClickListener {
+            findNavController().navigate(MeFragmentDirections.actionMeFragmentToSettingsFragment())
+        }
+        requireActivity().findViewById<View>(R.id.settingIcon).setOnClickListener {
+            findNavController().navigate(MeFragmentDirections.actionMeFragmentToSettingsFragment())
+        }
+        changeToolbar()
+    }
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.VISIBLE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(getResources().getColor(R.color.white))
+        requireActivity().findViewById<View>(R.id.cartView).cartButton.setColorFilter(getResources().getColor(R.color.white))
+        requireActivity().settingIcon.setColorFilter(getResources().getColor(R.color.white))
+        requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
+        requireActivity().toolbar_title.setTextColor(Color.WHITE)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setNavigationIcon(null)
+//        requireActivity().toolbar.setNavigationOnClickListener {
+//            view?.findNavController()?.popBackStack()
+//        }
+        requireActivity().toolbar_title.text = getString(R.string.me)
+    }
+    private fun deleteAlert(id: Long) {
 
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(getString(R.string.Delete_Item_From_Wish_List))
         builder.setMessage(getString(R.string.are_you_sure))
-        builder.setIcon(android.R.drawable.ic_delete)
-
-        builder.setPositiveButton("Yes") { _, _ ->
+        builder.setPositiveButton("Delete") { _, _ ->
             meViewModel.deleteOneItemFromWishList(id)
             meViewModel.deleteItem = MutableLiveData<Product>()
         }
 
-        builder.setNegativeButton("No") { _, _ ->
+        builder.setNegativeButton("Cancel") { _, _ ->
             meViewModel.deleteItem = MutableLiveData<Product>()
         }
         // Create the AlertDialog
@@ -202,13 +234,8 @@ class MeFragment : Fragment() {
         // Set other dialog properties
         alertDialog.setCancelable(false)
         alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK)
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        bindingMeScreen.points.setOnClickListener {
-            findNavController().navigate(MeFragmentDirections.actionMeFragmentToSettingsFragment())
-        }
-    }
-
 }

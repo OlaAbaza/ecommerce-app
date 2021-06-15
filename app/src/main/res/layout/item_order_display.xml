@@ -3,74 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:layout_margin="3dp"
-    android:backgroundTint="@color/white"
-    app:cardCornerRadius="30dp">
+    app:cardUseCompatPadding="true"
+    android:backgroundTint="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp">
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="100dp"
-            android:background="@color/gray"
-            android:contentDescription="@string/image"
-            android:padding="5dp"
-            android:src="@drawable/ic_shopping_bag_24"
+        android:padding="10dp">
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="waiting for payment"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textSize="15sp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/black"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintBottom_toTopOf="@id/orderIDNotEditable"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/orderIDNotEditable"
             style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/order"
-            app:layout_constraintBottom_toBottomOf="@id/image"
-            app:layout_constraintStart_toEndOf="@+id/image"
-            app:layout_constraintTop_toTopOf="@id/image" />
+            android:layout_marginTop="5dp"
+            android:text="Order"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_pay" />
 
         <TextView
             android:id="@+id/orderIdEditable"
-            style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:text="@string/_111111111111111111111"
-            android:textColor="@color/gray"
+            android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/image"
+            app:layout_constraintHorizontal_bias="0.01"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/orderIDNotEditable"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tv_pay" />
 
-
-        <ImageView
-            android:id="@+id/priceImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:contentDescription="@string/money"
-            android:src="@drawable/ic_baseline_attach_money_24"
-            app:layout_constraintEnd_toEndOf="@id/image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image" />
 
 
         <TextView
             android:id="@+id/priceNotEditable"
-            style="@style/text_style"
+          android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@string/total_price"
-            app:layout_constraintBottom_toBottomOf="@id/priceImage"
-            app:layout_constraintStart_toEndOf="@+id/priceImage"
-            app:layout_constraintTop_toTopOf="@id/priceImage" />
+            android:layout_marginTop="10dp"
+            android:text="Total:"
+            app:layout_constraintEnd_toStartOf="@+id/totalPriceEditable"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/orderIdEditable" />
 
 
         <TextView
@@ -79,14 +71,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:gravity="center"
             android:text="@string/_170"
             android:textColor="@color/gray"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/priceNotEditable"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toEndOf="@id/priceNotEditable"
-            app:layout_constraintTop_toTopOf="@id/orderIdEditable"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toBottomOf="@id/orderIdEditable" />
 
         <TextView
             android:id="@+id/currency_code"
@@ -94,53 +84,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingHorizontal="10dp"
             android:text="@string/egp"
             android:textColor="@color/gray"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/totalPriceEditable"
             app:layout_constraintStart_toEndOf="@id/totalPriceEditable" />
 
-
-        <ImageView
-            android:id="@+id/image_created_at"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/gray"
-            android:contentDescription="@string/created_at"
-            android:src="@drawable/ic_baseline_date_range_24"
-            app:layout_constraintEnd_toEndOf="@id/image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/priceImage" />
-
-
         <TextView
             android:id="@+id/created_at"
-            style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:text="@string/created_at"
-            app:layout_constraintBottom_toBottomOf="@id/image_created_at"
-            app:layout_constraintStart_toEndOf="@+id/image_created_at"
-            app:layout_constraintTop_toTopOf="@id/image_created_at" />
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/line1"
+            app:layout_constraintTop_toBottomOf="@id/totalPriceEditable" />
 
         <TextView
             android:id="@+id/createdAtEditable"
-            style="@style/text_style"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:gravity="center"
-            android:paddingHorizontal="5dp"
             android:text="@string/_2021_05_31t23_47_47_02_00"
             android:textColor="@color/gray"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/created_at"
+            app:layout_constraintBottom_toBottomOf="@id/line1"
             app:layout_constraintStart_toEndOf="@id/created_at"
-            app:layout_constraintTop_toTopOf="@id/totalPriceEditable"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/totalPriceEditable"
+            app:layout_constraintHorizontal_bias="0.1" />
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/createdAtEditable" />
 
         <Button
             android:id="@+id/cancelButton"
@@ -149,10 +132,12 @@
             android:layout_marginTop="20dp"
             android:text="@string/cancel"
             android:textAllCaps="false"
-            android:textColor="@color/gray"
-            app:layout_constraintEnd_toStartOf="@id/payButton"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/createdAtEditable" />
+            app:layout_constraintTop_toBottomOf="@id/line1" />
 
         <Button
             android:id="@+id/payButton"
@@ -162,10 +147,11 @@
             android:backgroundTint="@color/green"
             android:text="@string/pay_now"
             android:textAllCaps="false"
+            android:visibility="visible"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cancelButton"
-            app:layout_constraintTop_toBottomOf="@id/createdAtEditable" />
+            app:layout_constraintTop_toBottomOf="@id/line1" />
         <TextView
             android:id="@+id/cashText"
             android:layout_width="wrap_content"
@@ -173,12 +159,13 @@
             android:layout_marginTop="20dp"
             android:text="@string/cash"
             android:visibility="gone"
-            style="@style/text_style"
+            android:textStyle="bold"
+            android:textSize="17dp"
             android:textColor="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cancelButton"
-            app:layout_constraintBottom_toBottomOf="@id/cancelButton"
-            app:layout_constraintTop_toBottomOf="@id/createdAtEditable" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

@@ -1,90 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cv_price"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:paddingBottom="16dp">
+    android:layout_margin="10dp"
+    android:layout_marginBottom="5dp"
+    android:elevation="4dp"
+    android:padding="5dp"
+    app:cardCornerRadius="2dp"
+    app:cardUseCompatPadding="true"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/cv_bag">
 
-    <ImageView
-        android:id="@+id/itemCartImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/ic_shirt" />
-
-    <TextView
-        android:id="@+id/itemCartTitle"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:textColor="@color/gray"
-        android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@id/itemCartImage"
-        app:layout_constraintTop_toTopOf="@id/itemCartImage"
-        android:text=" Disney Donald Duck T-Shirt" />
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="16dp">
 
-    <TextView
-        android:id="@+id/itemCartPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/itemCartTitle"
-        app:layout_constraintTop_toBottomOf="@id/itemCartTitle"
-        android:text="US$6.00" />
+        <ImageView
+            android:id="@+id/itemCartImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/ic_shirt" />
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/gray"
-        app:layout_constraintBottom_toBottomOf="@id/itemCartImage"
-        app:layout_constraintStart_toStartOf="@id/itemCartTitle"
-        app:layout_constraintTop_toBottomOf="@id/itemCartPrice">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/itemCartTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="5dp"
+            android:text=" Disney Donald Duck T-Shirt"
+            android:textColor="@color/gray"
+            android:textSize="10dp"
+            app:layout_constraintStart_toEndOf="@id/itemCartImage"
+            app:layout_constraintTop_toTopOf="@id/itemCartImage" />
 
-            <ImageButton
-                android:id="@+id/increaseButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:layout_weight="1"
-                android:backgroundTint="@android:color/transparent"
-                app:srcCompat="@drawable/ic_add" />
+        <TextView
+            android:id="@+id/itemCartPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="US$6.00"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@id/itemCartTitle"
+            app:layout_constraintTop_toBottomOf="@id/itemCartTitle" />
 
-            <TextView
-                android:id="@+id/itemCountText"
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/gray"
+            app:layout_constraintBottom_toBottomOf="@id/itemCartImage"
+            app:layout_constraintStart_toStartOf="@id/itemCartTitle"
+            app:layout_constraintTop_toBottomOf="@id/itemCartPrice">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:text="2" />
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/decreaseButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                app:srcCompat="@drawable/ic_min" />
+                <ImageButton
+                    android:id="@+id/increaseButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_add" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/itemCountText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
-    </androidx.cardview.widget.CardView>
+                <ImageButton
+                    android:id="@+id/decreaseButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="end"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    app:srcCompat="@drawable/ic_min" />
 
+            </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
+

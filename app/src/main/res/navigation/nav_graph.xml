@@ -170,7 +170,7 @@
         android:label="fragment_shop_search"
         tools:layout="@layout/fragment_shop_search" />
     <action android:id="@+id/action_global_shopSearchFragment"
-        app:destination="@id/shopSearchFragment"/>
+        app:destination="@id/shopSearchFragment"/><action android:id="@+id/action_global_cartFragment2" app:destination="@id/cartFragment2"/>
 
 
 </navigation>
