@@ -46,8 +46,9 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/category_item"
         android:orientation="vertical"
-        app:spanCount="3"
+        app:spanCount="2"
         tools:itemCount="30"
+        android:padding="15dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

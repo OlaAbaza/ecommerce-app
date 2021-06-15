@@ -86,7 +86,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
             Utils.cartView.visibility = View.VISIBLE
         }
         subcatList= arrayOf("Shoes","Accessories","T-Shirts")
-        var mainCatList= arrayOf("home","kids","men","sales","women")
+        var mainCatList= arrayOf("Home","kids","Men","Sales","Women")
         binding.subcategoriesRecView.adapter= SubCategoriesAdapter(subcatList,this)
         binding.mainCategoriesRecView.adapter= MainCategoriesAdapter(mainCatList,this)
         catViewModel.fetchCatProducts(267715608774).observe(requireActivity(),{
