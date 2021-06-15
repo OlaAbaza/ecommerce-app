@@ -50,6 +50,7 @@ android {
 
 dependencies {
     implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
     def lifecycle_version = "2.3.0"
     def nav_version = "2.3.3"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -178,6 +179,8 @@ dependencies {
 
     //material spinner
     implementation 'com.jaredrummler:material-spinner:1.3.1'
+    implementation 'com.google.android.material:material:1.0.0'
+
 
 
     ////////////////ola/////////////

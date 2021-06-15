@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.example.shopy.R
@@ -34,7 +35,7 @@ class ImageSilderAdapter(images: List<Images>) : PagerAdapter(){
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object` as LinearLayout
+        return view === `object` as ConstraintLayout
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
@@ -59,7 +60,7 @@ class ImageSilderAdapter(images: List<Images>) : PagerAdapter(){
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as LinearLayout)
+        container.removeView(`object` as ConstraintLayout)
     }
 
     override fun getItemPosition(`object`: Any): Int {

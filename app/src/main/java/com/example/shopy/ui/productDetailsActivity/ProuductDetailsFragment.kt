@@ -17,15 +17,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
 import com.example.shopy.adapters.ImageSilderAdapter
 import com.example.shopy.adapters.OptionsAdapter
+import com.example.shopy.base.StringsUtils
 import com.example.shopy.base.ViewModelFactory
+import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentProuductDetailsBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.base.StringsUtils
-import com.example.shopy.data.dataLayer.Repository
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -43,10 +44,17 @@ class ProuductDetailsFragment : Fragment() {
         bindingProductDetailsFragment =
             FragmentProuductDetailsBinding.inflate(inflater, container, false)
 
-        val remoteDataSource = RemoteDataSourceImpl()
+        val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
+        navBar.visibility = View.GONE
 
-        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-        val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
+        val repository = Repository(
+            RemoteDataSourceImpl(), RoomDataSourceImpl(
+                RoomService.getInstance(
+                    requireActivity().application
+                )
+            )
+        )
+        val viewModelFactory = ViewModelFactory(repository, requireActivity().application)
         productDetailsViewMode = ViewModelProvider(
             requireActivity(),
             viewModelFactory
@@ -166,13 +174,12 @@ class ProuductDetailsFragment : Fragment() {
     private fun updateUI(product: Product, activity: Activity) {
         //activity.title = product.title ?: "null"
 
-        activity.toolbar_title.text = product.title ?: "null"
 //        toolbar.title =product.title ?: "null"
         imageSliderAdaper.images = product.images ?: ArrayList()
         imageSliderAdaper.notifyDataSetChanged()
 
 
-
+        bindingProductDetailsFragment.productTitle.text = product.title ?: "null"
         bindingProductDetailsFragment.prise.text = "${product.variants?.get(0)?.price.toString()} EGP"
 
         bindingProductDetailsFragment.descriptionEditable.text = product.body_html
