@@ -72,20 +72,20 @@
                 android:textStyle="bold" />
             <ImageButton
                 android:layout_width="wrap_content"
-                android:id="@+id/searchIcon"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_baseline_search_24"
-                android:layout_weight="1"
-                android:background="@null"
-                android:visibility="visible"
-                />
-            <ImageButton
-                android:layout_width="wrap_content"
                 android:id="@+id/settingIcon"
                 android:layout_height="35dp"
                 android:background="@null"
                 android:src="@drawable/ic_baseline_settings_24"
                 android:layout_weight="1"
+                android:visibility="visible"
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:id="@+id/searchIcon"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_baseline_search_24"
+                android:layout_weight="1"
+                android:background="@null"
                 android:visibility="visible"
                 />
             <include

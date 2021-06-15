@@ -67,7 +67,7 @@ class OnSaleProductFragment : Fragment() {
 
         })
 
-        requireActivity().toolbar_title.text = "Sales Products"
+//        requireActivity().toolbar_title.text = "Sales Products"
 
         shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{
             shopTabViewModel.intentTOProductDetails= MutableLiveData()

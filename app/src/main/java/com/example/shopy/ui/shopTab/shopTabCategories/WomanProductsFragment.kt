@@ -59,7 +59,7 @@ class WomanProductsFragment : Fragment() {
             }
         })
 
-        requireActivity().toolbar_title.text = "Woman Products"
+//        requireActivity().toolbar_title.text = "Woman Products"
 
         //product details fragment
         shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{

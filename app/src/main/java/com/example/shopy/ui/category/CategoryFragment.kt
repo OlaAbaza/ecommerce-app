@@ -1,5 +1,7 @@
 package com.example.shopy.ui.category
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,6 +20,10 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.domainLayer.Utils
 import androidx.navigation.fragment.findNavController
 import com.example.shopy.NavGraphDirections
+import com.example.shopy.R
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
+import kotlinx.android.synthetic.main.list_toolbar_view.view.*
 
 
 class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyclerClick,ItemsRecyclerClick {
@@ -79,12 +85,8 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(Utils.toolbarImg.visibility == View.GONE){
-            Utils.toolbarImg.visibility = View.VISIBLE
-        }
-        if(Utils.cartView.visibility == View.GONE){
-            Utils.cartView.visibility = View.VISIBLE
-        }
+
+        changeToolbar()
         subcatList= arrayOf("Shoes","Accessories","T-Shirts")
         var mainCatList= arrayOf("Home","kids","Men","Sales","Women")
         binding.subcategoriesRecView.adapter= SubCategoriesAdapter(subcatList,this)
@@ -123,4 +125,22 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         findNavController().navigate(action)
     }
 
+
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.VISIBLE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().findViewById<View>(R.id.cartView).cartButton.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().settingIcon.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
+        requireActivity().toolbar_title.setTextColor(Color.BLACK)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        requireActivity().toolbar.setNavigationIcon(null)
+        requireActivity().toolbar_title.text = "Category"
+
+    }
 }

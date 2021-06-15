@@ -66,7 +66,7 @@ class KidsProductFragment : Fragment() {
 
         })
 
-        requireActivity().toolbar_title.text = "Kids Products"
+//        requireActivity().toolbar_title.text = "Kids Products"
 
         shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{
             shopTabViewModel.intentTOProductDetails= MutableLiveData()

@@ -3,6 +3,8 @@ package com.example.shopy.ui.productDetailsActivity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
@@ -27,6 +30,10 @@ import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
+import kotlinx.android.synthetic.main.list_toolbar_view.view.*
 import java.lang.ref.WeakReference
 
 
@@ -36,6 +43,7 @@ class ProuductDetailsFragment : Fragment() {
     private lateinit var imageSliderAdaper: ImageSilderAdapter
     private lateinit var meDataSourceReo: MeDataSharedPrefrenceReposatory
     private var optionsSelected: String? = null
+    var num = 1
 
     var id: Long? = null
     private var stored = false
@@ -50,6 +58,22 @@ class ProuductDetailsFragment : Fragment() {
         val navBar: BottomNavigationView = requireActivity().findViewById(R.id.bottom_nav)
         navBar.visibility = View.GONE
 
+        bindingProductDetailsFragment.decreaseButton.setOnClickListener {
+             num =((bindingProductDetailsFragment.itemCountText.text.toString().toInt())-1)
+            if(num>0){
+                bindingProductDetailsFragment.itemCountText.text=num.toString()
+            }
+            else{
+                num = 1
+            }
+        }
+        bindingProductDetailsFragment.increaseButton.setOnClickListener {
+             num =((bindingProductDetailsFragment.itemCountText.text.toString().toInt())+1)
+            bindingProductDetailsFragment.itemCountText.text=num.toString()
+        }
+
+
+        changeToolbar()
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
         val repository = WeakReference(
@@ -65,8 +89,6 @@ class ProuductDetailsFragment : Fragment() {
             viewModelFactory
         )[ProductDetailsViewModel::class.java]
 
-        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
 
         lateinit var product: Product
         val activity = activity
@@ -152,8 +174,9 @@ class ProuductDetailsFragment : Fragment() {
                     } else {
                         val variants = product.variants
                         if (variants != null) {
-                            variants[0].inventory_quantity = 1
+                            variants[0].inventory_quantity = num
                         }
+
                         val options = product.options
                         options?.get(0)?.values = listOf(optionsSelected!!)
                         productDetailsViewMode.saveCartList(
@@ -326,6 +349,28 @@ class ProuductDetailsFragment : Fragment() {
         alertDialogBuilder.show()
     }
 
+
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).favouriteItems.visibility = View.VISIBLE
+
+        requireActivity().findViewById<View>(R.id.cartView).cartButton.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).cartItems.visibility = View.VISIBLE
+
+        requireActivity().toolbar_title.setTextColor(Color.BLACK)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.black_arrow))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+
+        requireActivity().toolbar_title.text = ""
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

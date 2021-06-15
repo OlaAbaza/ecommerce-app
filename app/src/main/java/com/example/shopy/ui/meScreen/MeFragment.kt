@@ -200,21 +200,19 @@ class MeFragment : Fragment() {
     private fun changeToolbar() {
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.VISIBLE
         requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(getResources().getColor(R.color.white))
-        requireActivity().findViewById<View>(R.id.cartView).cartButton.setColorFilter(getResources().getColor(R.color.white))
-        requireActivity().settingIcon.setColorFilter(getResources().getColor(R.color.white))
+        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().findViewById<View>(R.id.cartView).cartButton.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().settingIcon.setColorFilter(getResources().getColor(R.color.black))
         requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.VISIBLE
         requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
         requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
-        requireActivity().toolbar_title.setTextColor(Color.WHITE)
+        requireActivity().toolbar_title.setTextColor(Color.BLACK)
 
-        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         requireActivity().toolbar.setNavigationIcon(null)
-//        requireActivity().toolbar.setNavigationOnClickListener {
-//            view?.findNavController()?.popBackStack()
-//        }
-        requireActivity().toolbar_title.text = getString(R.string.me)
+        requireActivity().toolbar_title.text = "Me"
+
     }
     private fun deleteAlert(id: Long) {
 

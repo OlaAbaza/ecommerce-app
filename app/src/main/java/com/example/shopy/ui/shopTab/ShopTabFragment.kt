@@ -1,5 +1,7 @@
 package com.example.shopy.ui.shopTab
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +16,9 @@ import com.example.shopy.domainLayer.Utils
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
 import kotlinx.android.synthetic.main.fragment_shop_tab.*
+import kotlinx.android.synthetic.main.list_toolbar_view.view.*
 
 class ShopTabFragment : Fragment() {
 
@@ -36,22 +40,32 @@ class ShopTabFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        requireActivity().toolbar.visibility = View.VISIBLE
-//        requireActivity().bottom_nav.visibility = View.VISIBLE
-        if(Utils.toolbarImg.visibility == View.GONE){
-            Utils.toolbarImg.visibility = View.VISIBLE
-        }
-        if(Utils.cartView.visibility == View.GONE){
-            Utils.cartView.visibility = View.VISIBLE
-        }
-        requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().bottom_nav.visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
+        requireActivity().toolbar_title.text = "Home"
+
         setUpTabBar()
+        changeToolbar()
 
     }
 
+
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.VISIBLE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().findViewById<View>(R.id.cartView).cartButton.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().settingIcon.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
+        requireActivity().toolbar_title.setTextColor(Color.BLACK)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        requireActivity().toolbar.setNavigationIcon(null)
+//        requireActivity().toolbar.setNavigationOnClickListener {
+//            view?.findNavController()?.popBackStack()
+//        }
+    }
     private fun setUpTabBar() {
         val adapter = FragmentPagerItemAdapter(
             childFragmentManager,

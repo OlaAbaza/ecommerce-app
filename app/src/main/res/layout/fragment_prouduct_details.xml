@@ -143,14 +143,58 @@
                         <TextView
                             android:id="@+id/qty"
                             android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:text="Qty: " />
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight="3"
+                            android:text="Qty: "
+                            android:layout_gravity="center"/>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_weight="2"
                             android:layout_height="wrap_content"
-                            android:text="- 1 +" />
+                            android:backgroundTint="@color/gray"
+                            app:layout_constraintBottom_toBottomOf="@id/itemCartImage"
+                            app:layout_constraintStart_toStartOf="@id/itemCartTitle"
+                            app:layout_constraintTop_toBottomOf="@id/itemCartPrice">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageButton
+                                    android:id="@+id/increaseButton"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="start"
+                                    android:layout_weight="1"
+                                    android:backgroundTint="@android:color/transparent"
+                                    app:srcCompat="@drawable/ic_add" />
+
+                                <TextView
+                                    android:id="@+id/itemCountText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="1"
+                                    android:textColor="@color/black"
+                                    android:textSize="18sp" />
+
+                                <ImageButton
+                                    android:id="@+id/decreaseButton"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="end"
+                                    android:layout_weight="1"
+                                    android:background="@android:color/transparent"
+                                    app:srcCompat="@drawable/ic_min" />
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
                     </LinearLayout>
 
                 </LinearLayout>

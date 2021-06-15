@@ -22,9 +22,9 @@
         <activity android:name=".ui.payment.PayTabsActivity" />
         <activity android:name=".ui.payment.Checkout_Activity" />
         <activity android:name=".ui.payment.PayPalActivity" />
-        <activity android:name=".ui.splash.SplashActivity" />
+        <activity android:name=".ui.mainActivity.MainActivity" />
         <activity android:name=".ui.payment.StripeActivity" />
-        <activity android:name=".ui.mainActivity.MainActivity">
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
