@@ -50,7 +50,7 @@ class OptionsAdapter(options: List<String>, optionsMutableLiveData: MutableLiveD
         if (position == positionLast) {
             holder.colorItemRecycler.setBackgroundResource(R.color.green)
         }else{
-            holder.colorItemRecycler.setBackgroundResource(R.color.gray)
+            holder.colorItemRecycler.setBackgroundResource(R.color.white)
         }
 
         holder.itemView.setOnClickListener {

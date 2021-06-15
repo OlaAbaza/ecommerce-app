@@ -16,8 +16,6 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
-import com.example.shopy.adapters.ImageSilderAdapter
-import com.example.shopy.adapters.OptionsAdapter
 import com.example.shopy.base.StringsUtils
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
@@ -29,7 +27,6 @@ import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
-import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 
 
@@ -54,15 +51,6 @@ class ProuductDetailsFragment : Fragment() {
         navBar.visibility = View.GONE
 
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
-
-        val repository = Repository(
-            RemoteDataSourceImpl(), RoomDataSourceImpl(
-                RoomService.getInstance(
-                    requireActivity().application
-                )
-            )
-        )
-        val viewModelFactory = ViewModelFactory(repository, requireActivity().application)
 
         val repository = WeakReference(
             Repository(
