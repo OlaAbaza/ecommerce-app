@@ -36,14 +36,14 @@
                 android:id="@+id/regesterAndLogin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:background="@color/white"
                 android:fontFamily="serif"
-                android:layout_marginBottom="5dp"
                 android:text="@string/register_login"
-                android:textStyle="bold"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -289,36 +289,6 @@
 
                 <!--                </LinearLayout>-->
 
-
-                <LinearLayout
-                    android:id="@+id/unPaied"
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintTop_toBottomOf="@id/hiText"
-                    tools:ignore="UseCompoundDrawables">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/unpaid"
-                        android:src="@drawable/ic_unpaied"
-                        android:text="@string/_1" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="serif"
-                        android:gravity="bottom"
-                        android:paddingTop="20dp"
-                        android:text="@string/unpaid"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/paidLayout"
                     android:layout_width="0dp"
@@ -350,11 +320,40 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/unPaied"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/hiText"
+                    tools:ignore="UseCompoundDrawables">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/unpaid"
+                        android:src="@drawable/ic_unpaied"
+                        android:text="@string/_1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:gravity="bottom"
+                        android:paddingTop="20dp"
+                        android:text="@string/unpaid"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/UnPaidNumbers"
+                android:id="@+id/paidNumbers"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@drawable/order_update_status_background_shape"
@@ -368,7 +367,7 @@
                 app:layout_constraintTop_toTopOf="@id/MyOrders" />
 
             <TextView
-                android:id="@+id/paidNumbers"
+                android:id="@+id/UnPaidNumbers"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@drawable/order_update_status_background_shape"
