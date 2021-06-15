@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="5dp"
+            android:lines="2"
             android:text=" Disney Donald Duck T-Shirt"
             android:textColor="@color/gray"
             android:padding="5dp"
