@@ -16,13 +16,10 @@ import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentShopSearchBinding
 import com.example.shopy.datalayer.entity.allproducts.allProduct
-import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 
 import com.example.shopy.ui.shopTab.ShopTabViewModel
-import com.example.shopy.util.Utils
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
+import com.example.shopy.domainLayer.Utils
 
 
 class ShopSearchFragment : Fragment() {

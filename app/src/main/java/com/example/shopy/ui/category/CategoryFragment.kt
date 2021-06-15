@@ -15,7 +15,7 @@ import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCategoryBinding
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.util.Utils
+import com.example.shopy.domainLayer.Utils
 
 
 class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyclerClick {

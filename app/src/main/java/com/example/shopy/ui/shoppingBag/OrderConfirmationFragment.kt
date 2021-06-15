@@ -1,10 +1,13 @@
 package com.example.shopy.ui.shoppingBag
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,9 +16,12 @@ import androidx.navigation.fragment.navArgs
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.entity.priceRules.PriceRule
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentOrderConfirmationBinding
+import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
+import com.example.shopy.datalayer.entity.ads_discount_codes.DiscountCode
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.*
@@ -30,9 +36,17 @@ class OrderConfirmationFragment : Fragment() {
     private lateinit var binding: FragmentOrderConfirmationBinding
     private lateinit var orderItemsAdapter: OrderItemsAdapter
 
-    private var totalPrice = 0.0
+    private var totalPrice = 0.0f
+    private var totalDiscont = 0.0f
+    private var discountAmount = 0.0f
+    private var discountCode = ""
     private var customerID = ""
     private var paymentMethod = ""
+    private var isDefaultAddress = false
+    private var isDiscount = false
+    private var priceRulesList: List<PriceRule> = arrayListOf()
+    private var discountCodesList: List<DiscountCode> = arrayListOf()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +54,7 @@ class OrderConfirmationFragment : Fragment() {
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
         binding = FragmentOrderConfirmationBinding.inflate(layoutInflater)
         val args: OrderConfirmationFragmentArgs by navArgs()
-        totalPrice = args.totalPrice.toDouble()
+        totalPrice = args.totalPrice
         val application = requireNotNull(this.activity).application
         val repository = Repository(
             RemoteDataSourceImpl(),
@@ -60,11 +74,15 @@ class OrderConfirmationFragment : Fragment() {
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().bottom_nav.visibility = View.VISIBLE
         requireActivity().toolbar_title.text = "Order Confirmation"
+
         if (isLoged()) {
             customerID = meDataSourceReo.loadUsertId()
             Timber.i("olaaa" + customerID)
             orderViewModel.getCustomersAddressList(customerID)
+          //  orderViewModel.getPriceRulesList()
+           // orderViewModel.fetchallDiscountCodeList()
         }
+
         orderItemsAdapter = OrderItemsAdapter(arrayListOf(), orderViewModel)
         binding.rvCartItems.apply {
             adapter = orderItemsAdapter
@@ -76,23 +94,21 @@ class OrderConfirmationFragment : Fragment() {
 
         orderViewModel.getAddressList().observe(viewLifecycleOwner, Observer<List<Addresse>?> {
             val dafultAddress: MutableList<Addresse> = arrayListOf()
-            for(item in it ){
-                if(item.default==true) {
+            for (item in it) {
+                if (item.default == true) {
                     dafultAddress.add(item)
                     Timber.i("olaada" + item.default)
                 }
-                Timber.i("olaahh" + item.default)
             }
-            Timber.i("olaamm" + dafultAddress)
 
-            if (dafultAddress.isEmpty()){
-                binding.group.visibility=View.INVISIBLE
-                binding.addAddressText.visibility=View.VISIBLE
-                Toast.makeText(context, "you do not have an account", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                binding.group.visibility=View.VISIBLE
-                binding.addAddressText.visibility=View.INVISIBLE
+            if (dafultAddress.isEmpty()) {
+                binding.group.visibility = View.INVISIBLE
+                binding.addAddressText.visibility = View.VISIBLE
+                isDefaultAddress = false
+            } else {
+                isDefaultAddress = true
+                binding.group.visibility = View.VISIBLE
+                binding.addAddressText.visibility = View.INVISIBLE
                 binding.fullNameTxt.text = dafultAddress.get(0).firstName.toString()
                 binding.countryTxt.text = dafultAddress.get(0).country.toString()
                 binding.addressTxt.text = dafultAddress.get(0).address1.toString()
@@ -102,52 +118,129 @@ class OrderConfirmationFragment : Fragment() {
         binding.cvAddress.setOnClickListener {
             val action = NavGraphDirections.actionGlobalAddressFragment()
             findNavController().navigate(action)
-//            val action = NavGraphDirections.actionGlobalProfileFragment()
-//            findNavController().navigate(action)
         }
+
         binding.cvVoucher.setOnClickListener {
             discount_edt.visibility = View.VISIBLE
         }
+
         binding.placeOrderBtn.setOnClickListener {
-            var customerOrder = CustomerOrder(customerID.toLong())
-            var lineItem: MutableList<LineItem> = arrayListOf()
+            if (isDefaultAddress) {
+                placeOrder()
 
-            val items = orderItemsAdapter.orderList.map {
-               it.variants?.get(0)
             }
-            Timber.i("itemss"+items)
-            for(item in items){
-                lineItem.add(LineItem(item?.inventory_quantity, item?.id))
+            else {
+                Toast.makeText(context, "please, set your address", Toast.LENGTH_SHORT).show()
             }
-            getPaymentMethod()
-            var order = Order(customerOrder, "pending", lineItem,paymentMethod)
-            var orders = Orders(order)
-            orderViewModel.createOrder(orders)
         }
-        orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<OrderResponse?>
-        {
-
-            if (it != null) {
+        orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<Boolean> {
+            if (it) {
                 Timber.i("order+" + it)
                 orderViewModel.delAllItems()
                 val action = NavGraphDirections.actionGlobalShopTabFragment2()
                 findNavController().navigate(action)
             } else {
-                Toast.makeText(context, "eror null", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "error Try again please", Toast.LENGTH_SHORT).show()
             }
         })
-        binding.totalPriceTxt.text = totalPrice.toString() + "EGP"
-        binding.totalItemTxt.text = totalPrice.toString() + "EGP"
+//        orderViewModel.getPriceRules().observe(viewLifecycleOwner, Observer<List<PriceRule>?> {
+//            priceRulesList=it
+//
+//        })
 
+        orderViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, Observer<AllCodes> {
+            discountCodesList = it.discountCodes
+
+        })
+        binding.discountEdt.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                Timber.i("olaa  afterTextChanged")
+                checkDiscountCode()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                Timber.i("olaa  beforeTextChanged")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Timber.i("olaa  onTextChanged")
+            }
+        })
+
+        binding.totalPriceTxt.text = totalPrice.toString() + " EGP"
+        binding.totalItemTxt.text = totalPrice.toString() + " EGP"
+
+    }
+
+//    private fun checkDiscountCode() {
+//        val discount: List<PriceRule> =
+//            priceRulesList.filter {
+//                it.title == binding.discountEdt.text.toString().trim()
+//            }
+//        if (discount.isEmpty()) {
+//            Toast.makeText(context, "Sorry, this coupon is invalid", Toast.LENGTH_SHORT).show()
+//        } else {
+//            binding.totalDiscountTxt.text = discount.get(0).value+"%"
+//            totalDiscont= discount.get(0).value?.toFloat() ?:0.0f
+//            Timber.i("olaaa discountAmount"+discountAmount+"  "+totalDiscont+"  "+totalPrice)
+//            discountAmount = (totalPrice*totalDiscont)/100
+//            binding.totalPriceTxt.text=(totalPrice+totalDiscont).toString() + " EGP"
+//
+//
+//        }
+//    }
+    private fun checkDiscountCode() {
+        val discount: List<DiscountCode> =
+            discountCodesList.filter {
+                Timber.i("olaaa code "+it.code)
+                it.code == binding.discountEdt.text.toString().trim()
+            }
+        if (discount.isEmpty()) {
+            isDiscount=false
+            binding.discountEdt.setError("Sorry, this coupon is invalid")
+            binding.totalDiscountTxt.text = "0.0"
+            binding.totalPriceTxt.text=(totalPrice).toString() + " EGP"
+           // Toast.makeText(context, "Sorry, this coupon is invalid", Toast.LENGTH_SHORT).show()
+        } else {
+            isDiscount=true
+            binding.totalDiscountTxt.text = "10 %"
+            discountAmount = ((totalPrice*10)/100)
+            discountCode=discount.get(0).code
+            Timber.i("olaaa discountAmount"+discountAmount+"  "+totalDiscont+"  "+totalPrice)
+            binding.totalPriceTxt.text=(totalPrice-discountAmount).toString() + " EGP"
+
+        }
+    }
+
+
+    private fun placeOrder() {
+        var customerOrder = CustomerOrder(customerID.toLong())
+        var lineItem: MutableList<LineItem> = arrayListOf()
+        var discount: MutableList<DiscountCodes>? = arrayListOf()
+        val items = orderItemsAdapter.orderList.map {
+            it.variants?.get(0)
+        }
+        Timber.i("itemss" + items)
+        for (item in items) {
+            lineItem.add(LineItem(item?.inventory_quantity, item?.id))
+        }
+        getPaymentMethod()
+        if(isDiscount)
+            discount?.add(DiscountCodes(discountAmount.toString(),discountCode))
+        else
+            discount=null
+
+        var order = Order(customerOrder, "pending", lineItem, paymentMethod,discount)
+        var orders = Orders(order)
+        orderViewModel.createOrder(orders)
     }
 
     private fun getPaymentMethod() {
-        if(binding.radioCash.isChecked)
-            paymentMethod="Cash"
-        else if(binding.radioCredit.isChecked)
-            paymentMethod="Card"
+        if (binding.radioCash.isChecked)
+            paymentMethod = "Cash"
+        else if (binding.radioCredit.isChecked)
+            paymentMethod = "Card"
     }
-
 
     private fun isLoged(): Boolean {
         return meDataSourceReo.loadUsertstate()

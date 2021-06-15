@@ -49,6 +49,8 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
         disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
+                Log.d("TAG", "getUnPaidOrders(userId: Long)")
+
                 orders.postValue(
                     FilterData.getUnPaidData(
                         FilterData.getAllData(vehicles.orders!!, userId)
@@ -59,10 +61,11 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
             })
     }
 
-    fun deleteOrder(order_id: Long): MutableLiveData<Boolean> {
-        repository.deleteOrder(order_id)
-        deleteOrder.value=true
-        return deleteOrder
+    fun deleteOrder(order_id: Long){
+         repository.deleteOrder(order_id)
     }
 
+    fun observeDeleteOrder():MutableLiveData<Boolean>{
+        return repository.observeDeleteOrder()
+    }
 }

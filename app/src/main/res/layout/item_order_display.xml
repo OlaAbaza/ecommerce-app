@@ -166,6 +166,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cancelButton"
             app:layout_constraintTop_toBottomOf="@id/createdAtEditable" />
+        <TextView
+            android:id="@+id/cashText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/cash"
+            android:visibility="gone"
+            style="@style/text_style"
+            android:textColor="@color/green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cancelButton"
+            app:layout_constraintBottom_toBottomOf="@id/cancelButton"
+            app:layout_constraintTop_toBottomOf="@id/createdAtEditable" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

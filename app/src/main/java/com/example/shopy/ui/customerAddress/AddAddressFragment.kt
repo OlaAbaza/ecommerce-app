@@ -21,7 +21,7 @@ import com.example.shopy.models.Address
 import com.example.shopy.models.Addresse
 import com.example.shopy.models.CreateAddress
 import com.example.shopy.models.UpdateAddresse
-import com.example.shopy.util.Utils
+import com.example.shopy.domainLayer.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 

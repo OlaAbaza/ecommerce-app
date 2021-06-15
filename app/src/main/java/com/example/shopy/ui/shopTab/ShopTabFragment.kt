@@ -10,7 +10,7 @@ import com.example.shopy.ui.shopTab.shopTabCategories.KidsProductFragment
 import com.example.shopy.ui.shopTab.shopTabCategories.MenProductsFragment
 import com.example.shopy.ui.shopTab.shopTabCategories.OnSaleProductFragment
 import com.example.shopy.ui.shopTab.shopTabCategories.WomanProductsFragment
-import com.example.shopy.util.Utils
+import com.example.shopy.domainLayer.Utils
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +30,7 @@ class ShopTabFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_shop_tab, container, false)
+
         return view
     }
 
@@ -43,6 +44,10 @@ class ShopTabFragment : Fragment() {
         if(Utils.cartView.visibility == View.GONE){
             Utils.cartView.visibility = View.VISIBLE
         }
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().bottom_nav.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
         setUpTabBar()
 
     }

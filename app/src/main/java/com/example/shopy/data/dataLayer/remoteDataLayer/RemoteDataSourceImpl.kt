@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.data.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
@@ -33,13 +34,14 @@ class RemoteDataSourceImpl : RemoteDataSource {
     var menProducts = MutableLiveData<ProductsList>()
     var onSaleProducts = MutableLiveData<ProductsList>()
     var allProductsListt = MutableLiveData<AllProducts>()
+
+
     var allDiscountCode = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
     var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-
+    var createOrder: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
     var catProducts = MutableLiveData<List<Product>>()
     var allProducts = MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>()
-
 
 
     override suspend fun fetchCustomersData(): List<Customer>? {
@@ -218,26 +220,32 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return null
     }
 
-    override  fun createOrder(order: Orders): OrderResponse? {
+    override fun createOrder(order: Orders) {
         CoroutineScope(Dispatchers.IO).launch {
 
-        val response = Network.apiService.createOrder(order)
-        try {
-            if (response.isSuccessful) {
-                Timber.i("This  " + "isSuccessful")
-               // return response.body()
-            } else {
-                val jObjError =
-                    JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
-                Timber.i("This  " + jObjError)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
+            val response = Network.apiService.createOrder(order)
+            try {
+                if (response.isSuccessful) {
+                    Timber.i("This  " + "isSuccessful")
+                    createOrder.postValue(true)
+                    // return response.body()
+                } else {
+                    createOrder.postValue(false)
+                    val jObjError =
+                        JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
+                    Timber.i("This  " + jObjError)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
 
+            }
+            // return null
         }
-       // return null
+
     }
-        return null
+
+    override fun getCreateOrderResponse(): MutableLiveData<Boolean> {
+        return createOrder
     }
 
     override fun getWomanProductsList(): MutableLiveData<ProductsList> {
@@ -324,7 +332,6 @@ class RemoteDataSourceImpl : RemoteDataSource {
         return kidsProducts
     }
 
-
     override  fun getOnSaleProductsList(): MutableLiveData<ProductsList> {
         Log.i("output", "getOnSaleProductsListFromApi ** repo")
 
@@ -378,7 +385,6 @@ class RemoteDataSourceImpl : RemoteDataSource {
         }
         return allProductsListt
     }
-
 
     override  fun getAllDiscountCodeList() : MutableLiveData<AllCodes> {
 
@@ -473,19 +479,21 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     }
 
-    override fun deleteOrder(order_id: Long): MutableLiveData<Boolean>{
+    override fun deleteOrder(order_id: Long){
         CoroutineScope(Dispatchers.IO).launch {
             Network.apiService.deleteOrder(order_id).enqueue(object : Callback<Delete?> {
                 override fun onResponse(call: Call<Delete?>, response: Response<Delete?>) {
-                    if (response.isSuccessful) {
+//                    if (response.isSuccessful) {
                         deleteOrder.postValue(true)
-                    }
+//                    }
                 }
 
                 override fun onFailure(call: Call<Delete?>, t: Throwable) {
                 }
             })
         }
+    }
+    override fun observeDeleteOrder():MutableLiveData<Boolean>{
         return deleteOrder
     }
 

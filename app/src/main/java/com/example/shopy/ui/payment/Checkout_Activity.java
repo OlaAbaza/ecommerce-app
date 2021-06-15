@@ -254,4 +254,21 @@ import okhttp3.Response;
         }
 
 
+//        var customerOrder = CustomerOrder(customerID.toLong())
+//        var lineItem: MutableList<LineItem> = arrayListOf()
+//
+//        val items = orderItemsAdapter.orderList.map {
+//            it.variants?.get(0)
+//        }
+//            Timber.i("itemss"+items)
+//                for(item in items){
+//            lineItem.add(LineItem(item?.inventory_quantity, item?.id))
+//        }
+//        getPaymentMethod()
+//        var order = Order(customerOrder, "pending", lineItem,paymentMethod)
+//        var orders = Orders(order)
+//            orderViewModel.createOrder(orders)
+
+
+
     }

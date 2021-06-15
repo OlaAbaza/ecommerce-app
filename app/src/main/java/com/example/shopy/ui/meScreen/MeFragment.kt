@@ -2,10 +2,10 @@ package com.example.shopy.ui.meScreen
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -14,7 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
-import com.example.shopy.adapters.WishListAdapter
+import com.example.shopy.ui.allWishListFragment.WishListAdapter
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -23,7 +24,7 @@ import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
-import com.example.shopy.util.Utils
+import com.example.shopy.domainLayer.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -43,7 +44,7 @@ class MeFragment : Fragment() {
     ): View {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
-        val remoteDataSource = RemoteDataSourceImpl()
+
         val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
         val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
         meViewModel = ViewModelProvider(
@@ -63,6 +64,10 @@ class MeFragment : Fragment() {
         if(Utils.cartView.visibility == View.GONE){
             Utils.cartView.visibility = View.VISIBLE
         }
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().bottom_nav.visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
         requireActivity().toolbar_title.text = getString(R.string.me)
         bindingMeScreen.regesterAndLogin.setOnClickListener {
             val action = NavGraphDirections.actionGlobalSignInFragment()
@@ -79,6 +84,11 @@ class MeFragment : Fragment() {
 
 
         meViewModel.getFourWishList().observe(requireActivity(), {
+            if (it.isEmpty())
+                bindingMeScreen.emptyAnimationView.visibility=View.VISIBLE
+            else
+                bindingMeScreen.emptyAnimationView.visibility=View.GONE
+
             wishListData = it
             withListAdapter.productList = wishListData
             withListAdapter.notifyDataSetChanged()
@@ -117,16 +127,21 @@ class MeFragment : Fragment() {
             bindingMeScreen.paidLayout.setOnClickListener {
                 findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(0))
             }
-            Log.d("TAG","user id ${meDataSourceReo.loadUsertId()}")
-            meViewModel.getPaidOrders(meDataSourceReo.loadUsertId().toLong())
-            meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
 
-            meViewModel.paidOrders.observe(viewLifecycleOwner, {
-                bindingMeScreen.paidNumbers.text = it.toString()
-            })
-            meViewModel.unPaidOrders.observe(viewLifecycleOwner, {
-                bindingMeScreen.UnPaidNumbers.text = it.toString()
-            })
+
+            if (NetworkChangeReceiver.isOnline) {
+                meViewModel.getPaidOrders(meDataSourceReo.loadUsertId().toLong())
+                meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
+
+                meViewModel.paidOrders.observe(viewLifecycleOwner, {
+                    bindingMeScreen.paidNumbers.text = it.toString()
+                })
+                meViewModel.unPaidOrders.observe(viewLifecycleOwner, {
+                    bindingMeScreen.UnPaidNumbers.text = it.toString()
+                })
+            }else{
+                Toast.makeText(requireContext(),"There is no network",Toast.LENGTH_SHORT).show()
+            }
 
             bindingMeScreen.hiText.text = "Hi! ${meDataSourceReo.loadUsertName()}"
             bindingMeScreen.hiText.visibility = View.VISIBLE

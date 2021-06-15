@@ -20,7 +20,7 @@ import com.example.shopy.models.Customer
 import com.example.shopy.models.CustomerProfile
 import com.example.shopy.models.CustomerX
 import com.example.shopy.models.CustomerXXX
-import com.example.shopy.util.Utils
+import com.example.shopy.domainLayer.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
