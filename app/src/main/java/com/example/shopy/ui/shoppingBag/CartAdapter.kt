@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.example.shopy.R
 import com.example.shopy.databinding.ItemCartBinding
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
-import com.example.shopy.models.Variants
+
 
 class CartAdapter(
     var orderList: ArrayList<ProductCartModule>, var orderViewModel: OrderViewModel
@@ -63,8 +63,11 @@ class CartAdapter(
             orderViewModel.onChangeQuntity()
         }
         holder.myView.btnFav.setOnClickListener {
-
             orderViewModel.onFavClick( orderList[position])
+        }
+        holder.myView.itemCartImage.setOnClickListener {
+
+            orderViewModel.onImgClick( orderList[position].id)
         }
     }
 

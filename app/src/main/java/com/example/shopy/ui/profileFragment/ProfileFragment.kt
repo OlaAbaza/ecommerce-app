@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
@@ -48,7 +50,11 @@ class ProfileFragment : Fragment() {
             ViewModelProvider(
                 this, viewModelFactory
             ).get(ProfileViewModel::class.java)
-        customerID =meDataSourceReo.loadUsertId()
+        if(meDataSourceReo.loadUsertstate())
+            customerID =meDataSourceReo.loadUsertId()
+        else {
+            findNavController().navigate(NavGraphDirections.actionGlobalSignInFragment())
+        }
         // Inflate the layout for this fragment
         return binding.root
     }

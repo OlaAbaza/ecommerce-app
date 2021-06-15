@@ -14,6 +14,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,6 +23,7 @@ import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.data.dataLayer.entity.priceRules.PriceRule
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
@@ -157,12 +159,25 @@ class OrderConfirmationFragment : Fragment() {
                 Toast.makeText(context, "please, set your address", Toast.LENGTH_SHORT).show()
             }
         }
-        orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<Boolean> {
-            if (it) {
+        orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<GetOrders?> {
+            if (it!=null) {
                 Timber.i("order+" + it)
                 orderViewModel.delAllItems()
-                val action = NavGraphDirections.actionGlobalShopTabFragment2()
-                findNavController().navigate(action)
+//                val action = NavGraphDirections.actionGlobalShopTabFragment2()
+//                findNavController().navigate(action)
+                it?.let {
+                   // findNavController().popBackStack(R.id.meFragment, true)
+                    //val navOption = NavOptions.Builder().setPopUpTo(R.id.meFragment, false).build()
+                    startActivity(
+                        Intent(requireActivity(), Checkout_Activity::class.java).putExtra(
+                            "amount",
+                            totalPrice.toString()
+                        )
+                            .putExtra("order", it.orders as? Serializable)
+                    )
+                    findNavController().navigateUp()
+                }
+
             } else {
                 Toast.makeText(context, "error Try again please", Toast.LENGTH_SHORT).show()
             }
@@ -231,7 +246,8 @@ class OrderConfirmationFragment : Fragment() {
             discountAmount = ((totalPrice*10)/100)
             discountCode=discount.get(0).code
             Timber.i("olaaa discountAmount"+discountAmount+"  "+totalDiscont+"  "+totalPrice)
-            binding.totalPriceTxt.text=(totalPrice-discountAmount).toString() + " EGP"
+            totalPrice=(totalPrice-discountAmount)
+            binding.totalPriceTxt.text=totalPrice.toString() + " EGP"
 
         }
     }

@@ -32,7 +32,7 @@ interface RemoteDataSource {
 
     suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX?
     fun createOrder(order: Orders)
-    fun getCreateOrderResponse(): MutableLiveData<Boolean>
+    fun getCreateOrderResponse(): MutableLiveData<GetOrders?>
 
      //shopTab
      fun getWomanProductsList() : MutableLiveData<ProductsList>

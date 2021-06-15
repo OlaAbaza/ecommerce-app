@@ -160,7 +160,9 @@
         tools:layout="@layout/fragment_settings" >
         <action
             android:id="@+id/action_settingsFragment_to_meFragment"
-            app:destination="@id/meFragment" />
+            app:destination="@id/meFragment"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <!--    <activity-->

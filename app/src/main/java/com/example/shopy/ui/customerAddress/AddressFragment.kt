@@ -12,7 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
@@ -61,7 +63,11 @@ class AddressFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         changeToolbar()
 
-        customerID =meDataSourceReo.loadUsertId()
+        if(meDataSourceReo.loadUsertstate())
+           customerID =meDataSourceReo.loadUsertId()
+        else
+         findNavController().navigate( NavGraphDirections.actionGlobalSignInFragment())
+
         if (NetworkChangeReceiver.isOnline) {
             addressViewModel.getCustomersAddressList(customerID)
 
