@@ -10,13 +10,22 @@
         android:id="@+id/mainCategoriesRecView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/subcategoriesRecView"
+        app:layout_constraintStart_toStartOf="@id/subcategoriesRecView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/subcategory_title"
         android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        />
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainCategoriesRecView" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subcategoriesRecView"
         android:layout_width="wrap_content"
