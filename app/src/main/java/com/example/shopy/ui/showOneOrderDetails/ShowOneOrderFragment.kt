@@ -1,6 +1,9 @@
 package com.example.shopy.ui.showOneOrderDetails
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,19 +11,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentShowOneOrderBinding
 import com.example.shopy.datalayer.localdatabase.room.RoomService
+import com.example.shopy.datalayer.localdatabase.room.order.OrderRepository
 import com.example.shopy.domainLayer.FilterData
 import com.example.shopy.ui.displayOrderFragment.DisplayOrderFragmentArgs
 import com.example.shopy.ui.displayOrderFragment.DisplayOrderViewModel
+import com.example.shopy.ui.payment.Checkout_Activity
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
+import java.io.Serializable
 import java.lang.ref.WeakReference
 
 class ShowOneOrderFragment : Fragment() {
@@ -28,6 +41,7 @@ class ShowOneOrderFragment : Fragment() {
     private lateinit var fragmentShowOneOrderBinding:FragmentShowOneOrderBinding
     private lateinit var showOrderViewModel:ShowOneOrderDetailsViewModel
     private lateinit var images : List<String>
+    lateinit var order : OneOrderResponce.Order
 
 
     @SuppressLint("SetTextI18n")
@@ -58,30 +72,72 @@ class ShowOneOrderFragment : Fragment() {
             this.adapter = ordersListAdapter
         }
 
+        fragmentShowOneOrderBinding.cancelButton.setOnClickListener {
+            deleteAlert(showOrderViewModel,order.id!!)
+        }
+
+        var total_price : String = ""
+        fragmentShowOneOrderBinding.payButton.setOnClickListener {
+            startActivity(
+                Intent(requireActivity(), Checkout_Activity::class.java).putExtra(
+                    "amount",
+                    total_price
+                )
+                    .putExtra("order", order as Serializable)
+            )
+        }
+
+        showOrderViewModel.observeDeleteOrder().observe(viewLifecycleOwner,{
+            if (it){
+                view?.findNavController()?.popBackStack()
+                showOrderViewModel.observeDeleteOrder().value = false
+            }
+        })
 
 
+
+        changeToolbar()
 
         showOrderViewModel.getOneOrders(args.productId).observe(viewLifecycleOwner,{
 
+            total_price= it.order?.total_price.toString()
+            order = it.order!!
 
             ordersListAdapter!!.line_items= it.order?.line_items!!
 
 
-            if (it.order.financial_status == "paid"){
-                fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
-                fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
-            }else{
-                fragmentShowOneOrderBinding.tvPay.text = resources.getString(R.string.waiting_for_payment)
-                fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_circle_shape)
 
-            }
             fragmentShowOneOrderBinding.totalPriceEditable.text = it.order.total_price
             fragmentShowOneOrderBinding.orderIdEditable.text = "# ${it.order.id}"
             fragmentShowOneOrderBinding.createdAtEditable.text = it.order.created_at
             if(it.order.note == "Cash"){
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = it.order.note
+                fragmentShowOneOrderBinding.payButton.visibility = View.GONE
+                if (it.order.financial_status == "paid"){
+                    fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
+                    fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
+                    fragmentShowOneOrderBinding.cancelButton.visibility = View.GONE
+                }else{
+                    fragmentShowOneOrderBinding.tvPay.text = resources.getString(R.string.waiting_for_payment)
+                    fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_circle_shape)
+                    fragmentShowOneOrderBinding.cancelButton.visibility = View.VISIBLE
+                }
+
+
             }else{
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = "Credit Card"
+                fragmentShowOneOrderBinding.payButton.visibility = View.GONE
+                if (it.order.financial_status == "paid"){
+                    fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
+                    fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
+                    fragmentShowOneOrderBinding.cancelButton.visibility = View.GONE
+                }else{
+                    fragmentShowOneOrderBinding.tvPay.text = resources.getString(R.string.waiting_for_payment)
+                    fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_circle_shape)
+                    fragmentShowOneOrderBinding.cancelButton.visibility = View.VISIBLE
+
+
+                }
             }
 
 
@@ -99,5 +155,46 @@ class ShowOneOrderFragment : Fragment() {
        return fragmentShowOneOrderBinding.root
     }
 
+
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+        requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
+        requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.GONE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.GONE
+        requireActivity().toolbar_title.setTextColor(Color.WHITE)
+
+        requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_arrow_back_ios_24))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+
+        }
+
+        requireActivity().toolbar_title.text = getString(R.string.my_orders)
+    }
+
+    private fun deleteAlert(displayOrderViewModel: ShowOneOrderDetailsViewModel, order_id: Long) {
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.cancel_order))
+        builder.setMessage(getString(R.string.are_you_sure))
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            displayOrderViewModel.deleteOrder(order_id)
+        }
+
+        builder.setNegativeButton("No") { _, _ ->
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK)
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
+    }
 
 }

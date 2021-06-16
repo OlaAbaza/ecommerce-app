@@ -205,8 +205,8 @@ class DisplayOrderFragment : Fragment() {
 
         //payment
         displayOrderViewModel.payNowMutableData.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), "amount = " + it.total_price, Toast.LENGTH_SHORT)
-                .show()
+//            Toast.makeText(requireContext(), "amount = " + it.total_price, Toast.LENGTH_SHORT)
+//                .show()
 
             startActivity(
                 Intent(requireActivity(), Checkout_Activity::class.java).putExtra(
@@ -255,7 +255,7 @@ class DisplayOrderFragment : Fragment() {
         builder.setTitle(getString(R.string.cancel_order))
         builder.setMessage(getString(R.string.are_you_sure))
 
-        builder.setPositiveButton("Delete") { _, _ ->
+        builder.setPositiveButton("Yes") { _, _ ->
             displayOrderViewModel.deleteOrder(order_id)
         }
 
@@ -294,7 +294,7 @@ class DisplayOrderFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         displayOrderViewModel.showOrderDetails = MutableLiveData()
-        displayOrderViewModel.deleteOrder = MutableLiveData()
+//        displayOrderViewModel.deleteOrder = MutableLiveData()
         displayOrderViewModel.cancelMutableData = MutableLiveData()
         displayOrderViewModel.payNowMutableData = MutableLiveData()
 

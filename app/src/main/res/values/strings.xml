@@ -73,7 +73,6 @@
     <string name="category">Category</string>
     <string name="shop">Shop</string>
     <string name="checkout">CHECKOUT</string>
-    <string name="total">Total: </string>
     <string name="save">save</string>
     <string name="phone_number">*Phone Number</string>
     <string name="city">*City</string>
@@ -163,6 +162,7 @@
     <string name="quantity_x">quantity X</string>
     <string name="price">Price</string>
     <string name="see_details">See Details</string>
+    <string name="total">Total:</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

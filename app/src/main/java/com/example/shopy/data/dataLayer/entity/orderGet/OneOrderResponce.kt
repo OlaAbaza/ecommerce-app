@@ -1,5 +1,7 @@
 package com.example.shopy.data.dataLayer.entity.orderGet
 
+import java.io.Serializable
+
 data class OneOrderResponce(
     val order: Order?
 ) {
@@ -83,11 +85,11 @@ data class OneOrderResponce(
         val total_weight: Int?,
         val updated_at: String?,
         val user_id: Any?
-    ) {
+    ) :Serializable{
         data class CurrentSubtotalPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ):Serializable {
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
@@ -102,46 +104,46 @@ data class OneOrderResponce(
         data class CurrentTotalDiscountsSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
         }
 
         data class CurrentTotalPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ):Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ):Serializable
         }
 
         data class CurrentTotalTaxSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
         }
 
         data class Customer(
@@ -169,7 +171,7 @@ data class OneOrderResponce(
             val total_spent: String?,
             val updated_at: String?,
             val verified_email: Boolean?
-        ) {
+        ) :Serializable{
             data class DefaultAddress(
                 val address1: String?,
                 val address2: String?,
@@ -188,7 +190,7 @@ data class OneOrderResponce(
                 val province: String?,
                 val province_code: String?,
                 val zip: String?
-            )
+            ):Serializable
         }
 
         data class LineItem(
@@ -219,126 +221,126 @@ data class OneOrderResponce(
             val variant_inventory_management: String?,
             val variant_title: String?,
             val vendor: String?
-        ) {
+        ):Serializable {
             data class PriceSet(
                 val presentment_money: PresentmentMoney?,
                 val shop_money: ShopMoney?
-            ) {
+            ) :Serializable{
                 data class PresentmentMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ):Serializable
 
                 data class ShopMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) :Serializable
             }
 
             data class TotalDiscountSet(
                 val presentment_money: PresentmentMoney?,
                 val shop_money: ShopMoney?
-            ) {
+            ) :Serializable{
                 data class PresentmentMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) :Serializable
 
                 data class ShopMoney(
                     val amount: String?,
                     val currency_code: String?
-                )
+                ) :Serializable
             }
         }
 
         data class SubtotalPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
         }
 
         data class TotalDiscountsSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
         }
 
         data class TotalLineItemsPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ):Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
         }
 
         data class TotalPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
         }
 
         data class TotalShippingPriceSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
         }
 
         data class TotalTaxSet(
             val presentment_money: PresentmentMoney?,
             val shop_money: ShopMoney?
-        ) {
+        ) :Serializable{
             data class PresentmentMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
 
             data class ShopMoney(
                 val amount: String?,
                 val currency_code: String?
-            )
+            ) :Serializable
         }
     }
 }

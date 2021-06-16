@@ -17,7 +17,7 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
     var payNowMutableData: MutableLiveData<GetOrders.Order> = MutableLiveData()
     var cancelMutableData: MutableLiveData<GetOrders.Order> = MutableLiveData()
     var error: MutableLiveData<Boolean> = MutableLiveData()
-    var deleteOrder: MutableLiveData<Boolean> = MutableLiveData()
+//    var deleteOrder: MutableLiveData<Boolean> = MutableLiveData()
     var showOrderDetails: MutableLiveData<Long> = MutableLiveData()
 
 

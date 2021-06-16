@@ -80,7 +80,6 @@ class OrderDisplayAdapter(context: Context,
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val textId = itemView.findViewById<TextView>(R.id.orderIdEditable)
         private val textPrice = itemView.findViewById<TextView>(R.id.totalPriceEditable)
         private val currencyCode = itemView.findViewById<TextView>(R.id.currency_code)
         private val tvPay = itemView.findViewById<TextView>(R.id.tv_pay)
@@ -93,8 +92,7 @@ class OrderDisplayAdapter(context: Context,
 
         @SuppressLint("SetTextI18n")
         fun binding(order: GetOrders.Order?) {
-            textId.text = "#" + order!!.id.toString()
-            textPrice.text = order.total_price ?: "not known"
+            textPrice.text = order!!.total_price ?: "not known"
             currencyCode.text = order.presentment_currency ?: "not known"
             createdAt.text = order.created_at ?: "not known"
 

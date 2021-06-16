@@ -34,4 +34,10 @@ class ShowOneOrderDetailsViewModel (val repository: Repository, application: App
 
     fun getProductAllProuducts()= repository.getAllProductsList()
 
+    fun deleteOrder(order_id: Long){
+        repository.deleteOrder(order_id)
+    }
+    fun observeDeleteOrder():MutableLiveData<Boolean>{
+        return repository.observeDeleteOrder()
+    }
 }
