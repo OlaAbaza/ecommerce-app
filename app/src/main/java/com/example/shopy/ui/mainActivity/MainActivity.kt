@@ -2,7 +2,6 @@ package com.example.shopy.ui.mainActivity
 
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -46,9 +45,8 @@ class MainActivity : AppCompatActivity() {
 //        //fav
 //        val imageButton = toolbar.findViewById(R.id.favourite) as View
 
-        val wishLiNotificationAdapter : WishListNotificationAdapter = WishListNotificationAdapter(findViewById(R.id.favourite))
-        val cartIconAdapter : CartNotificationAdapter = CartNotificationAdapter(findViewById(R.id.cartView))
-        val remoteDataSource = RemoteDataSourceImpl()
+        val wishLiNotificationAdapter  = WishListNotificationAdapter(findViewById(R.id.favourite))
+        val cartIconAdapter  = CartNotificationAdapter(findViewById(R.id.cartView))
         val viewModelFactory = ViewModelFactory(
             Repository(
                 RemoteDataSourceImpl(),
@@ -60,7 +58,6 @@ class MainActivity : AppCompatActivity() {
             viewModelFactory
         )[MainActivityViewModel::class.java]
         viewModel.getAllWishList().observe(this,{
-            Log.d("Tag","${it.size}")
             wishLiNotificationAdapter.updateView(it.size)
         })
         wishLiNotificationAdapter.favouriteButton.setOnClickListener {
