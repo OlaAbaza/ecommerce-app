@@ -23,4 +23,5 @@
     ////////////////abdelrahman/////////////
     <color name="grey">#EBEBEB</color>
     <color name="redLight">#F40606</color>
+    <color name="background">#E8E2DC</color>
 </resources>

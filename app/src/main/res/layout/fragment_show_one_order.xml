@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,8 +9,10 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:background="@color/background"
         android:layout_height="match_parent"
         tools:context=".ui.showOneOrderDetails.ShowOneOrderFragment">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -23,23 +25,24 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/state_circle_shape"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@id/tv_pay"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/tv_pay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/waiting_for_payment"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:textSize="15sp"
                 android:layout_marginBottom="10dp"
+                android:text="@string/waiting_for_payment"
+                android:textAllCaps="true"
                 android:textColor="@color/black"
-                app:layout_constraintHorizontal_bias="0.01"
+                android:textSize="15sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@id/orderIDNotEditable"
-                app:layout_constraintStart_toEndOf="@id/line1"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.01"
+                app:layout_constraintStart_toEndOf="@id/line1"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -60,20 +63,19 @@
                 android:text="@string/_111111111111111111111"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:layout_constraintHorizontal_bias="0.01"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.01"
                 app:layout_constraintStart_toEndOf="@id/orderIDNotEditable"
                 app:layout_constraintTop_toBottomOf="@id/tv_pay" />
 
 
-
             <TextView
                 android:id="@+id/priceNotEditable"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Total:"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/totalPriceEditable"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/orderIdEditable" />
@@ -85,10 +87,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/_170"
                 android:textColor="@color/gray"
                 android:textSize="12sp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toEndOf="@id/priceNotEditable"
                 app:layout_constraintTop_toBottomOf="@id/orderIdEditable" />
 
@@ -109,90 +111,86 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="@string/created_at"
                 android:padding="5dp"
+                android:text="@string/created_at"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintTop_toBottomOf="@id/totalPriceEditable" />
+                app:layout_constraintTop_toBottomOf="@id/totalPriceEditable"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:padding="5dp"
                 android:id="@+id/createdAtEditable"
-                android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
                 android:text="@string/_2021_05_31t23_47_47_02_00"
                 android:textColor="@color/gray"
                 android:textSize="12sp"
-                app:layout_constraintVertical_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/created_at"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/created_at"
                 app:layout_constraintTop_toBottomOf="@id/totalPriceEditable"
-                app:layout_constraintHorizontal_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/created_at"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/payment_type"
-                android:padding="5dp"
-                style="@style/text_style"
                 android:id="@+id/paymentTypeNotEditable"
-                />
-            <TextView
-                android:padding="5dp"
+                style="@style/text_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/created_at"
-                app:layout_constraintStart_toEndOf="@id/paymentTypeNotEditable"
+                android:padding="5dp"
                 android:text="@string/payment_type"
-                style="@style/text_style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/created_at" />
+
+            <TextView
                 android:id="@+id/paymentTypeEditable"
-                />
+                style="@style/text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="@string/payment_type"
+                app:layout_constraintStart_toEndOf="@id/paymentTypeNotEditable"
+                app:layout_constraintTop_toBottomOf="@id/created_at" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_margin="10dp"
-                android:layout_width="0dp"
                 android:id="@+id/imageItemsRecycler"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_margin="10dp"
+                app:layout_constraintBottom_toTopOf="@id/cancelButton"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/paymentTypeEditable" />
+
+
+            <Button
+                android:id="@+id/cancelButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/yello"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/payButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/green"
+                android:text="@string/pay_now"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/paymentTypeEditable"
-                />
-
-
-
-<!--            <Button-->
-<!--                android:id="@+id/cancelButton"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:text="@string/cancel"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:backgroundTint="@color/yello"-->
-<!--                android:textColor="@color/black"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.3"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/line1" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/payButton"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:backgroundTint="@color/green"-->
-<!--                android:text="@string/pay_now"-->
-<!--                android:textAllCaps="false"-->
-<!--                android:visibility="visible"-->
-<!--                android:textColor="@color/white"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toEndOf="@id/cancelButton"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/line1" />-->
+                app:layout_constraintStart_toEndOf="@id/cancelButton"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

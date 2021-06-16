@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#E8E2DC"
+        android:background="@color/background"
         tools:context=".ui.displayOrderFragment.DisplayOrderFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
