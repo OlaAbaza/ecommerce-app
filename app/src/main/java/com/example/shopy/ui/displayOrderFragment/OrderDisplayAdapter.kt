@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
@@ -60,7 +61,7 @@ class OrderDisplayAdapter(context: Context,
             holder.bindingRecycler(context, adapterImages, emptyList())
         }
 
-        holder.itemView.setOnClickListener {
+        holder.seaAllDetails.setOnClickListener {
             showOrderDetails.value = list[position]?.id
         }
 
@@ -84,6 +85,7 @@ class OrderDisplayAdapter(context: Context,
         private val currencyCode = itemView.findViewById<TextView>(R.id.currency_code)
         private val tvPay = itemView.findViewById<TextView>(R.id.tv_pay)
         private val cash = itemView.findViewById<TextView>(R.id.cashText)
+         val seaAllDetails = itemView.findViewById<LinearLayout>(R.id.seeAllDeatails)
         private val createdAt = itemView.findViewById<TextView>(R.id.createdAtEditable)
         val payNow: Button = itemView.findViewById(R.id.payButton)
         val cancel: Button = itemView.findViewById(R.id.cancelButton)

@@ -162,6 +162,7 @@
     <string name="_5_black">5 / black</string>
     <string name="quantity_x">quantity X</string>
     <string name="price">Price</string>
+    <string name="see_details">See Details</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">
