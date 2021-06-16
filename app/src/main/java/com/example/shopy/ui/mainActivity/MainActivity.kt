@@ -87,19 +87,10 @@ class MainActivity : AppCompatActivity() {
             cartIconAdapter.updateView(it.size)
         })
         cartIconAdapter.favouriteButton.setOnClickListener {
-//            navHostFragment = fragment as NavHostFragment
-//            val graphInflater = (navHostFragment as NavHostFragment).navController.navInflater
-//            val navGraph = graphInflater.inflate(R.navigation.nav_graph)
-//            navController = (navHostFragment as NavHostFragment).navController
-//            navGraph.startDestination = R.id.cartFragment2
-//            navController!!.graph = navGraph
 
-          //  val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
-           // val navController = navHostFragment.navController
             val action = NavGraphDirections.actionGlobalCartFragment2()
             navController?.navigate(action)
 
-           // findNavController(it).navigate(action)
         }
 
         ///////////////////////////////////

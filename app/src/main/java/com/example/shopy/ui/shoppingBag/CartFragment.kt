@@ -1,5 +1,6 @@
 package com.example.shopy.ui.shoppingBag
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -40,6 +41,10 @@ class CartFragment : Fragment() {
 
     private var customerID = ""
     private var totalPrice = 0.0
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        changeToolbar()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,7 +76,7 @@ class CartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        changeToolbar()
+
 
 
         cartAdapter = CartAdapter(arrayListOf(), orderViewModel)
@@ -263,7 +268,7 @@ class CartFragment : Fragment() {
         requireActivity().toolbar.setNavigationOnClickListener {
             view?.findNavController()?.popBackStack()
         }
-        requireActivity().bottom_nav.visibility = View.VISIBLE
+        //requireActivity().bottom_nav.visibility = View.VISIBLE
         requireActivity().toolbar_title.text = "Shopping Bag"
         requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
