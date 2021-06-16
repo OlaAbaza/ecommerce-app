@@ -56,16 +56,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/editAddress" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/faqRecView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/FAQlabel"
-                tools:listitem="@layout/faq_item" />
-
             <TextView
                 android:id="@+id/aboutLabel"
                 android:layout_width="match_parent"
@@ -77,20 +67,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/faqRecView" />
+                app:layout_constraintTop_toBottomOf="@id/FAQlabel" />
 
-            <TextView
-                android:id="@+id/aboutTV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/grey"
-                android:elegantTextHeight="true"
-                android:padding="10dp"
-                android:text="It's an e-commerce app based exclusive in Egypt where you can find categories and sub-categories for all clothes, shoes and accessories"
-                android:textSize="20sp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aboutLabel" />
 
             <TextView
                 android:id="@+id/developedByLabel"
@@ -103,7 +81,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aboutTV" />
+                app:layout_constraintTop_toBottomOf="@id/aboutLabel" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/devByRecView"

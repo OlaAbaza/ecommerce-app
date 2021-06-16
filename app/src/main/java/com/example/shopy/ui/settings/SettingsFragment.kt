@@ -50,39 +50,10 @@ class SettingsFragment : Fragment() {
             requireActivity(),
             viewModelFactory
         )[SettingsViewModel::class.java]
-        binding.devByRecView.adapter = SettingsAdapter(
-            listOf(
-                DeveloperModel(
-                    "AbdElRahman Nabil",
-                    "https://github.com/AbdelrahmanNabil77",
-                    "https://www.linkedin.com/in/abdelrahman-nabil-060124111/"
-                ),
-                DeveloperModel(
-                    "Esraa Fathy",
-                    "https://github.com/EsraaFathy/EsraaFathy",
-                    "https://www.linkedin.com/in/esraafathy1998/"
-                ),
-                DeveloperModel(
-                    "Ola Abaza",
-                    "https://github.com/OlaAbaza",
-                    "https://www.linkedin.com/in/ola-abaza/"
-                ),
-                DeveloperModel(
-                    "Fayza ElShorbagy",
-                    "https://github.com/fayza55elshorbagy",
-                    "https://www.linkedin.com/in/fayza-elshorbagy/"
-                )
-            )
-        )
+
 
         binding.developedByLabel.setOnClickListener {
-
-            if (binding.devByRecView.visibility == View.GONE) {
-                binding.devByRecView.visibility = View.VISIBLE
-            } else {
-                binding.devByRecView.visibility = View.GONE
-            }
-
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToDevelopedByFragment())
         }
         binding.editAddress.setOnClickListener {
             findNavController().navigate(NavGraphDirections.actionGlobalAddressFragment())
@@ -91,32 +62,11 @@ class SettingsFragment : Fragment() {
             findNavController().navigate(NavGraphDirections.actionGlobalProfileFragment())
         }
         binding.aboutLabel.setOnClickListener {
-
-            if (binding.aboutTV.visibility == View.GONE) {
-
-                binding.aboutTV.visibility = View.VISIBLE
-            } else {
-                binding.aboutTV.visibility = View.GONE
-            }
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToAboutFragment())
         }
 
-        var faqList = listOf(
-            FAQModel("Is this app available on in Egypt?", "Yes, it's exclusive in Egypt."),
-            FAQModel("How much are the delivery fees?", "It's based on your location."),
-            FAQModel("What are the payment methods?", "You can pay either online or on delivery."),
-            FAQModel(
-                "What is the return policy?",
-                "You have 14 days to return the product but it needs to a brand-new, or 30 days if there is any defect in it."
-            )
-        )
-        binding.faqRecView.adapter = FAQAdapter(faqList)
         binding.FAQlabel.setOnClickListener {
-            if (binding.faqRecView.visibility == View.GONE) {
-
-                binding.faqRecView.visibility = View.VISIBLE
-            } else {
-                binding.faqRecView.visibility = View.GONE
-            }
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFAQFragment())
         }
     binding.signout.setOnClickListener {
 
