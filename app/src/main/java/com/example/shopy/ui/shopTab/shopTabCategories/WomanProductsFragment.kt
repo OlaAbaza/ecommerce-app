@@ -1,9 +1,13 @@
 package com.example.shopy.ui.shopTab.shopTabCategories
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -72,7 +76,8 @@ class WomanProductsFragment : Fragment() {
         shopTabViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, {
             val allCodes = it
             if (allCodes != null) {
-                ads.setOnClickListener {
+                play.setOnClickListener {
+                    play.visibility = View.GONE
                     Glide.with(this@WomanProductsFragment)
                         .load(R.drawable.woman_three)
                         .into(ads)
@@ -85,6 +90,13 @@ class WomanProductsFragment : Fragment() {
 
             }
         })
+
+        codeTextView.setOnClickListener {
+            val clipboard = ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
+            clipboard?.setPrimaryClip(ClipData.newPlainText("",codeTextView.text))
+            Toast.makeText(requireContext(),"Copied", Toast.LENGTH_SHORT).show()
+
+        }
 
     }
 

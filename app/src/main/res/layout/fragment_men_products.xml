@@ -52,17 +52,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
-                                android:text="US$25 OFF"
+                                android:text="Get Discount "
                                 android:textStyle="bold"
                                 android:textSize="13sp"
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:text="  orders US$140+"
-                                android:textSize="8sp"
-
                                 />
 
                         </LinearLayout>
@@ -86,7 +78,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
-                                android:text="US$10 OFF"
+                                android:text="EGP10 OFF"
                                 android:textStyle="bold"
                                 android:textSize="13sp"
                                 />
@@ -94,7 +86,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
-                                android:text="  orders US$90+"
+                                android:text="   for your orders"
                                 android:textSize="8sp"
 
                                 />
@@ -124,13 +116,37 @@
 
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/ads"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:src="@drawable/men_pic"
-                        android:scaleType="fitXY"
-                        />
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ads"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/men_pic"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/line"
+                            tools:ignore="NotSibling" />
+
+                        <ImageView
+                            android:id="@+id/play"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="171dp"
+                            android:layout_marginEnd="172dp"
+                            android:src="@drawable/play"
+                            app:layout_constraintBottom_toBottomOf="@+id/ads"
+                            app:layout_constraintEnd_toEndOf="@+id/ads"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/ads"
+                            app:layout_constraintTop_toTopOf="@+id/ads" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </LinearLayout>
 
                 <androidx.appcompat.widget.Toolbar
@@ -203,7 +219,7 @@
                     app:spanCount="3"
                     tools:itemCount="30"
                     android:padding="15dp"
-                    android:paddingTop="40dp"
+                    android:paddingTop="10dp"
                     tools:listitem="@layout/shop_item"
 
                     />

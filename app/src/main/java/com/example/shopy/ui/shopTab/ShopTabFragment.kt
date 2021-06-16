@@ -40,7 +40,7 @@ class ShopTabFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        requireActivity().toolbar_title.text = "Home"
+        requireActivity().toolbar_title.text = "Shop"
 
         setUpTabBar()
         changeToolbar()

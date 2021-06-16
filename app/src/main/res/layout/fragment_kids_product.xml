@@ -1,148 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.shopTab.shopTabCategories.WomanProductsFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
-        >
+        android:orientation="vertical">
+
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:toolbarId="@+id/toolbar"
-                app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
                 app:contentScrim="?attr/colorAccent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
+                app:toolbarId="@+id/toolbar">
 
 
                 <LinearLayout
-                    android:background="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/white"
                     android:orientation="vertical"
                     app:layout_collapseMode="pin">
+
                     <LinearLayout
+                        android:id="@+id/lin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#f0c0b2"
-                        android:orientation="horizontal"
                         android:layout_gravity="center"
-                        android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        >
+                        android:background="#f0c0b2"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
-                            >
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:text="US$25 OFF"
-                                android:textStyle="bold"
-                                android:textSize="13sp"
-                                />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:text="  orders US$140+"
-                                android:textSize="8sp"
+                            android:orientation="vertical">
 
-                                />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Get Discount "
+                                android:textColor="@color/black"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="1dp"
                             android:layout_height="match_parent"
-                            android:orientation="vertical"
                             android:layout_margin="20dp"
-                            android:background="@color/black"/>
+                            android:background="@color/black"
+                            android:orientation="vertical" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
-                            >
+                            android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="EGP10 OFF"
                                 android:textColor="@color/black"
-                                android:text="US$10 OFF"
-                                android:textStyle="bold"
                                 android:textSize="13sp"
-                                />
+                                android:textStyle="bold" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="   for your orders"
                                 android:textColor="@color/black"
-                                android:text="  orders US$90+"
                                 android:textSize="8sp"
 
                                 />
 
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="24dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="10dp"
+                            android:orientation="vertical"
 
                             >
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:text="Click ads to get code"
-                                android:textStyle="bold"
-                                android:textSize="10sp"
                                 android:background="@color/white"
-                                />
+                                android:text="Click ads to get code"
+                                android:textColor="@color/black"
+                                android:textSize="10sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
                     </LinearLayout>
-
-                    <ImageView
-                        android:id="@+id/ads"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:src="@drawable/kids_img"
-                        android:scaleType="fitXY"
-                        />
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ads"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/kids_pic"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/line"
+                            tools:ignore="NotSibling" />
+
+                        <ImageView
+                            android:id="@+id/play"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="171dp"
+                            android:layout_marginEnd="172dp"
+                            android:src="@drawable/play"
+                            app:layout_constraintBottom_toBottomOf="@+id/ads"
+                            app:layout_constraintEnd_toEndOf="@+id/ads"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="@+id/ads"
+                            app:layout_constraintTop_toTopOf="@+id/ads" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
                 </LinearLayout>
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
-                    android:layout_height="?attr/actionBarSize"
-                    android:layout_width="match_parent"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
-
 
 
         <androidx.core.widget.NestedScrollView
@@ -150,38 +168,40 @@
             android:layout_height="match_parent"
             android:paddingLeft="25dp"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                app:layout_collapseMode="pin"
-                android:gravity="center_horizontal">
+                app:layout_collapseMode="pin">
+
                 <LinearLayout
-                    android:id="@+id/lin"
+                    android:id="@+id/line"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_gravity="center_horizontal"
-                    android:visibility="gone"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
                     <TextView
                         android:id="@+id/useCodeTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
+                        android:background="@color/black"
                         android:padding="5dp"
                         android:text="USE CODE:"
-                        android:background="@color/black"
-                        />
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/codeTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:padding="5dp"
-                        android:textStyle="bold"
                         android:background="@color/black"
+                        android:padding="5dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
 
                         />
 
@@ -190,10 +210,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:text="- #SHOPYsale -"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:layout_margin="10dp"/>
+                    android:textStyle="bold" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -201,10 +221,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:paddingTop="10dp"
                     app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:spanCount="3"
                     tools:itemCount="30"
-                    android:paddingTop="40dp"
                     tools:listitem="@layout/shop_item"
 
                     />
@@ -214,9 +234,7 @@
         </androidx.core.widget.NestedScrollView>
 
 
-
     </LinearLayout>
-
 
 
 </ScrollView>

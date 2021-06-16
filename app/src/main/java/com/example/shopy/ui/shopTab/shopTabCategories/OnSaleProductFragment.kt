@@ -1,11 +1,17 @@
 package com.example.shopy.ui.shopTab.shopTabCategories
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,11 +27,17 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_on_sale_product.*
 import kotlinx.android.synthetic.main.fragment_woman_products.*
+import kotlinx.android.synthetic.main.fragment_woman_products.ads
+import kotlinx.android.synthetic.main.fragment_woman_products.codeTextView
+import kotlinx.android.synthetic.main.fragment_woman_products.itemsRecView
+import kotlinx.android.synthetic.main.fragment_woman_products.lin
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 class OnSaleProductFragment : Fragment() {
 
@@ -58,19 +70,19 @@ class OnSaleProductFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        shopTabViewModel.fetchOnSaleProductsList().observe(viewLifecycleOwner,{
-            Log.i("output",it.toString()+"******************")
-            if (it != null){
-                bindWomanProductRecyclerView(it.products,shopTabViewModel.intentTOProductDetails)
+        shopTabViewModel.fetchOnSaleProductsList().observe(viewLifecycleOwner, {
+            Log.i("output", it.toString() + "******************")
+            if (it != null) {
+                bindWomanProductRecyclerView(it.products, shopTabViewModel.intentTOProductDetails)
             }
-            Log.i("output",it.products.get(0).toString())
+            Log.i("output", it.products.get(0).toString())
 
         })
 
 //        requireActivity().toolbar_title.text = "Sales Products"
 
-        shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{
-            shopTabViewModel.intentTOProductDetails= MutableLiveData()
+        shopTabViewModel.intentTOProductDetails.observe(requireActivity(), {
+            shopTabViewModel.intentTOProductDetails = MutableLiveData()
             val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id.toLong())
             findNavController().navigate(action)
         })
@@ -78,17 +90,27 @@ class OnSaleProductFragment : Fragment() {
         shopTabViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, {
             val allCodes = it
             if (allCodes != null) {
-                ads.setOnClickListener {
+                startbtn.setOnClickListener {
+                    startbtn.visibility = View.GONE
                     Glide.with(this)
-                        .load(R.drawable.gif_discount)
+                        .load(R.drawable.sale_gif)
                         .into(ads)
-                    GlobalScope.launch(Dispatchers.Main) { delay(1500)
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(1500)
                         lin.visibility = View.VISIBLE
-                        codeTextView.text = allCodes.discountCodes[0].code}
+                        codeTextView.text = allCodes.discountCodes[0].code
+                    }
                 }
 
             }
         })
+
+        codeTextView.setOnClickListener {
+            val clipboard = ContextCompat.getSystemService(requireContext(),ClipboardManager::class.java)
+            clipboard?.setPrimaryClip(ClipData.newPlainText("",codeTextView.text))
+            Toast.makeText(requireContext(),"Copied",Toast.LENGTH_SHORT).show()
+
+        }
     }
 
 
@@ -102,7 +124,7 @@ class OnSaleProductFragment : Fragment() {
         intentTOProductDetails: MutableLiveData<Product>
     ) {
 
-        itemsRecView.adapter= ShopItemsAdapter(requireContext(),itemName,intentTOProductDetails)
+        itemsRecView.adapter= ShopItemsAdapter(requireContext(), itemName, intentTOProductDetails)
 
     }
 
