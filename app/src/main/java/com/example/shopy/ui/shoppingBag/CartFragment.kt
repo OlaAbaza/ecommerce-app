@@ -120,6 +120,10 @@ class CartFragment : Fragment() {
             favAlert(it)
 
         })
+        orderViewModel.getDetalisOrderID().observe(viewLifecycleOwner, {
+            val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.toLong())
+            findNavController().navigate(action)
+        })
 
     }
 

@@ -177,9 +177,6 @@ class Repository(
     fun getFourWishList() = roomDataSourceImpl.getFourWishList()
 
     /////////////////////////////////is online//////////
-    fun isOnline(context: Context): Boolean {
-        return remoteDataSource.isOnline(context)
-    }
 
     suspend fun deleteOneWishItem(id: Long) = roomDataSourceImpl.deleteOneWithItem(id)
 
