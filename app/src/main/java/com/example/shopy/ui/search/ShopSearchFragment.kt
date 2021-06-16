@@ -135,8 +135,8 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                 if (parent!!.getItemAtPosition(position).equals("shoes")){
                     productFilter="shoes"
                 }
-                else if (parent!!.getItemAtPosition(position).equals("shirts")){
-                    productFilter="shirts"
+                else if (parent!!.getItemAtPosition(position).equals("t-shirts")){
+                    productFilter="t-shirts"
                 }
                 else if (parent!!.getItemAtPosition(position).equals("accessories")){
                     productFilter="accessories"
