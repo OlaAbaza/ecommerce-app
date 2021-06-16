@@ -15,7 +15,7 @@
             android:id="@+id/tv_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="waiting for payment"
+            android:text="@string/waiting_for_payment"
             android:textStyle="bold"
             android:textAllCaps="true"
             android:textSize="15sp"
@@ -26,7 +26,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
         <TextView
             android:id="@+id/orderIDNotEditable"
@@ -99,6 +98,7 @@
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/line1"
+            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintTop_toBottomOf="@id/totalPriceEditable" />
 
         <TextView
@@ -109,11 +109,22 @@
             android:text="@string/_2021_05_31t23_47_47_02_00"
             android:textColor="@color/gray"
             android:textSize="12sp"
+            app:layout_constraintVertical_bias="0.0"
             app:layout_constraintBottom_toBottomOf="@id/line1"
             app:layout_constraintStart_toEndOf="@id/created_at"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/totalPriceEditable"
-            app:layout_constraintHorizontal_bias="0.1" />
+            app:layout_constraintHorizontal_bias="0.0" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_margin="10dp"
+            android:layout_width="0dp"
+            android:id="@+id/imageItemsRecycler"
+             android:layout_height="120dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/line1"
+            app:layout_constraintTop_toBottomOf="@id/createdAtEditable"/>
         <View
             android:id="@+id/line1"
             android:layout_width="match_parent"
@@ -123,7 +134,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/createdAtEditable" />
+            app:layout_constraintTop_toBottomOf="@id/imageItemsRecycler" />
 
         <Button
             android:id="@+id/cancelButton"
@@ -161,7 +172,7 @@
             android:text="@string/cash"
             android:visibility="gone"
             android:textStyle="bold"
-            android:textSize="17dp"
+            android:textSize="17sp"
             android:textColor="@color/green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cancelButton"

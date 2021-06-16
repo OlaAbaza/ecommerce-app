@@ -236,7 +236,7 @@ data class GetOrders(
         data class Fulfillment(
             val admin_graphql_api_id: String?,
             val created_at: String?,
-            val id: Long?,
+            val id: Long,
             val line_items: List<LineItem?>?,
             val location_id: Long?,
             val name: String?,
@@ -325,7 +325,7 @@ data class GetOrders(
             val fulfillment_status: Any?,
             val gift_card: Boolean?,
             val grams: Int?,
-            val id: Long?,
+            val id: Long,
             val name: String?,
             val price: String?,
             val price_set: PriceSet?,

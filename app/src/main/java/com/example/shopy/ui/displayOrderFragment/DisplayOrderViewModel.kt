@@ -37,6 +37,8 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
 
     }
 
+    fun getProductAllProuducts()= repository.getAllProductsList()
+
     override fun onCleared() {
         super.onCleared()
         if (!disposable.isDisposed) {

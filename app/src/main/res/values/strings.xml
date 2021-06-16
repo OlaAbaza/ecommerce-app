@@ -152,6 +152,8 @@
     <string name="it_s_an_e_commerce_app_based_exclusive_in_egypt_where_you_can_find_categories_and_sub_categories_for_all_clothes_shoes_and_accessories">It\'s an e-commerce app based exclusive in Egypt where you can find categories and sub-categories for all clothes, shoes and accessories</string>
     <string name="developed_by">Developed By</string>
     <string name="it_is_empty_here">It is empty here :-(</string>
+    <string name="empty">Empty</string>
+    <string name="waiting_for_payment">waiting for payment</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

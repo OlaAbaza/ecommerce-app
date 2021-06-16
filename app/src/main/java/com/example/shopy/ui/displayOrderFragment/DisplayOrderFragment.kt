@@ -28,6 +28,7 @@ import com.example.shopy.databinding.FragmentDisplayOrderBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.domainLayer.FilterData
 import com.example.shopy.ui.payment.Checkout_Activity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -42,6 +43,7 @@ class DisplayOrderFragment : Fragment() {
     private var tabId: Int = 0
     private var userID: Long = 0
     private lateinit var displayOrderViewModel: DisplayOrderViewModel
+    private var imagesOrders: MutableList<List<String>> = arrayListOf()
 
     @SuppressLint("LogNotTimber")
     override fun onCreateView(
@@ -89,10 +91,10 @@ class DisplayOrderFragment : Fragment() {
 
         //make new call to update view with the new data
         callOrders(displayOrderViewModel, view)
-
+        var adapterImages  = WeakReference(ProductsImageAdapter(emptyList())).get()!!
         val adapter = WeakReference(
-            OrderDisplayAdapter(
-                ArrayList(),
+            OrderDisplayAdapter(adapterImages,requireContext(),
+                ArrayList(), listOf(),
                 displayOrderViewModel.payNowMutableData,
                 displayOrderViewModel.cancelMutableData
             )
@@ -109,17 +111,23 @@ class DisplayOrderFragment : Fragment() {
 
 
 
-        displayOrderViewModel.orders.observe(viewLifecycleOwner, {
+        displayOrderViewModel.orders.observe(viewLifecycleOwner, { it ->
 
             adapter?.list = it
             view.progressPar.visibility = View.GONE
 
             if (it.isEmpty()) {
-                view.emptyGroup.visibility=View.VISIBLE
+                view.emptyGroup.visibility = View.VISIBLE
             } else {
-                view.emptyGroup.visibility=View.GONE
+                view.emptyGroup.visibility = View.GONE
             }
-            Log.d("TAG", "size of list ${it.size}")
+            val prouductsId = FilterData.ProductsIDs(it)
+            displayOrderViewModel.getProductAllProuducts().observe(viewLifecycleOwner, {
+             val data  = FilterData.getListOfImage(prouductsId,it.products)
+
+                adapter!!.imagelist = data
+            })
+
         })
 
 
@@ -184,7 +192,7 @@ class DisplayOrderFragment : Fragment() {
                     getString(R.string.order_canceld),
                     Toast.LENGTH_SHORT
                 ).show()
-                displayOrderViewModel.observeDeleteOrder().value=false
+                displayOrderViewModel.observeDeleteOrder().value = false
             }
 
         })
@@ -276,6 +284,7 @@ class DisplayOrderFragment : Fragment() {
 
         requireActivity().toolbar_title.text = getString(R.string.my_orders)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         displayOrderViewModel.deleteOrder = MutableLiveData()
