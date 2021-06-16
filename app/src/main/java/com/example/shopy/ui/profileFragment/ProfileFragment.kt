@@ -3,14 +3,18 @@ package com.example.shopy.ui.profileFragment
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
@@ -20,14 +24,16 @@ import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentProfileBinding
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.domainLayer.Utils
 import com.example.shopy.models.Customer
 import com.example.shopy.models.CustomerProfile
 import com.example.shopy.models.CustomerX
 import com.example.shopy.models.CustomerXXX
-import com.example.shopy.domainLayer.Utils
+import com.facebook.FacebookSdk.getApplicationContext
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import timber.log.Timber
+
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -42,20 +48,35 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(layoutInflater)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
         val application = requireNotNull(this.activity).application
-        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(application)))
-        val viewModelFactory = ViewModelFactory(repository,application)
+        val repository = Repository(
+            RemoteDataSourceImpl(), RoomDataSourceImpl(
+                RoomService.getInstance(
+                    application
+                )
+            )
+        )
+        val viewModelFactory = ViewModelFactory(repository, application)
         profileViewModel =
             ViewModelProvider(
                 this, viewModelFactory
             ).get(ProfileViewModel::class.java)
-        customerID =meDataSourceReo.loadUsertId()
+        if(meDataSourceReo.loadUsertstate())
+            customerID =meDataSourceReo.loadUsertId()
+//        else {
+//            findNavController().navigate(NavGraphDirections.actionGlobalSignInFragment())
+//        }
         // Inflate the layout for this fragment
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-      changeToolbar()
+        val slideUp: Animation =
+            AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up)
+        val slideDown: Animation =
+            AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_down)
+
+        changeToolbar()
         if (NetworkChangeReceiver.isOnline) {
             profileViewModel.getCustomer(customerID)
         }
@@ -67,30 +88,32 @@ class ProfileFragment : Fragment() {
             ).show()
 
         }
-        profileViewModel.getCustomerInfo().observe(viewLifecycleOwner, Observer<Customer?>{
-            if (it!=null){
+        profileViewModel.getCustomerInfo().observe(viewLifecycleOwner, Observer<Customer?> {
+            if (it != null) {
                 binding.nameEdt.setText(it.firstName)
                 binding.phoneEdt.setText(it.phone)
                 customerPassword = it.note.toString()
             }
         })
-        profileViewModel.getPostResult().observe(viewLifecycleOwner, Observer<CustomerX?>{
-            if (it!=null){
-                Timber.i("olaa update profile "+it)
+        profileViewModel.getPostResult().observe(viewLifecycleOwner, Observer<CustomerX?> {
+            if (it != null) {
+                Timber.i("olaa update profile " + it)
                 view.findNavController().popBackStack()
-            }
-            else(
+            } else (
                     Timber.i("olaa update profile null")
-            )
+                    )
 
         })
         binding.passBtnShow.setOnClickListener {
+            binding.passGroup.startAnimation(slideDown)
             binding.passGroup.visibility=View.VISIBLE
             binding.passBtnShow.visibility=View.GONE
             binding.passBtnHide.visibility=View.VISIBLE
 
+
         }
         binding.passBtnHide.setOnClickListener {
+            binding.passGroup.startAnimation(slideUp)
             binding.passGroup.visibility=View.GONE
             binding.passBtnHide.visibility=View.GONE
             binding.passBtnShow.visibility=View.VISIBLE

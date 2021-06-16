@@ -80,9 +80,10 @@ class AddAddressFragment : Fragment() {
         addressViewModel.createCustomerAddress().observe(viewLifecycleOwner, Observer<Addresse?> {
             Timber.i("olaaaa address" + it)
             if (it != null) {
-                val action =
-                    AddAddressFragmentDirections.actionAddAddressFragmentToAddressFragment()
-                findNavController().navigate(action)
+//                val action =
+//                    AddAddressFragmentDirections.actionAddAddressFragmentToAddressFragment()
+//                findNavController().navigate(action)
+                view?.findNavController()?.popBackStack()
             } else {
                 Toast.makeText(
                     context,
@@ -213,8 +214,10 @@ class AddAddressFragment : Fragment() {
                 address2Edt.setText(item.address2.toString())
                 postCodeEdt.setText(item.zip)
                 stateEdt.setText(item.province)
-                addressSwitch.isChecked = item.default == true
-
+              if (item.default==true)
+                  addressLayout.visibility=View.INVISIBLE
+                  else
+                  addressSwitch.isChecked = item.default == true
             }
         }
     }

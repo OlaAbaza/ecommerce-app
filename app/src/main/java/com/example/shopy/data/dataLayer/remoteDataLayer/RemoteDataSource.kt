@@ -32,7 +32,7 @@ interface RemoteDataSource {
 
     suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX?
     fun createOrder(order: Orders)
-    fun getCreateOrderResponse(): MutableLiveData<Boolean>
+    fun getCreateOrderResponse(): MutableLiveData<GetOrders?>
 
      //shopTab
      fun getWomanProductsList() : MutableLiveData<ProductsList>
@@ -43,8 +43,6 @@ interface RemoteDataSource {
      fun getAllDiscountCodeList() : MutableLiveData<AllCodes>
 
     fun getProuduct(id : Long)
-
-    fun isOnline(context: Context): Boolean
 
     fun fetchCatProducts(colID:Long):MutableLiveData<List<Product>>
     fun fetchAllProducts():MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>

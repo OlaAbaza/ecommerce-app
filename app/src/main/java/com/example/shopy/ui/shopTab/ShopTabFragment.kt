@@ -40,7 +40,7 @@ class ShopTabFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        requireActivity().toolbar_title.text = "Home"
+        requireActivity().toolbar_title.text = "Shop"
 
         setUpTabBar()
         changeToolbar()
@@ -62,9 +62,6 @@ class ShopTabFragment : Fragment() {
 
         requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         requireActivity().toolbar.setNavigationIcon(null)
-//        requireActivity().toolbar.setNavigationOnClickListener {
-//            view?.findNavController()?.popBackStack()
-//        }
     }
     private fun setUpTabBar() {
         val adapter = FragmentPagerItemAdapter(

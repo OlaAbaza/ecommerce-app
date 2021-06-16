@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
@@ -72,7 +74,7 @@ class SignInFragment : Fragment() {
 
         signinViewModel.getCustomerList().observe(viewLifecycleOwner, Observer<List<Customer>?> {
             Timber.i("we lodged")
-            Timber.i("olaa sigin in email"+email)
+            Timber.i("olaa sigin in email" + email)
             val customer: List<Customer> =
                 it.filter {
                     it.email?.toLowerCase() ?: 0 == email
@@ -82,13 +84,13 @@ class SignInFragment : Fragment() {
             if (customer.isEmpty()) {
                 Toast.makeText(context, "you do not have an account", Toast.LENGTH_SHORT).show()
             } else {
-                if (customer.get(0).note == binding.passwordEdt.text.toString()||isLoginWithfirebase) {
+                if (customer.get(0).note == binding.passwordEdt.text.toString() || isLoginWithfirebase) {
 
                     meDataSourceReo.saveUsertState(true)
                     meDataSourceReo.saveUsertId(customer[0].id.toString())
                     meDataSourceReo.saveUsertName(customer[0].firstName.toString())
                     Timber.i("we lodged")
-                 ///   view.findNavController().currentBackStackEntry
+                    ///   view.findNavController().currentBackStackEntry
                     view.findNavController().popBackStack()
                 } else {
                     Toast.makeText(context, "incorrect password", Toast.LENGTH_SHORT).show()
@@ -127,7 +129,6 @@ class SignInFragment : Fragment() {
         }
 
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SIGN_IN_RESULT_CODE) {
@@ -153,7 +154,7 @@ class SignInFragment : Fragment() {
             AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setAvailableProviders(provider)
-               // .setIsSmartLockEnabled(false)
+                // .setIsSmartLockEnabled(false)
                 .build(), SIGN_IN_RESULT_CODE
         )
     }
@@ -167,8 +168,7 @@ class SignInFragment : Fragment() {
                         email = FirebaseAuth.getInstance().currentUser?.email.toString()
                         if (NetworkChangeReceiver.isOnline) {
                             signinViewModel.getAllCustomers()
-                        }
-                        else {
+                        } else {
                             Toast.makeText(
                                 requireContext(),
                                 getString(R.string.thereIsNoNetwork),
@@ -176,7 +176,7 @@ class SignInFragment : Fragment() {
                             ).show()
 
                         }
-                        isLoginWithfirebase=true
+                        isLoginWithfirebase = true
                     }
                     else -> {
                         meDataSourceReo.saveUsertState(false)

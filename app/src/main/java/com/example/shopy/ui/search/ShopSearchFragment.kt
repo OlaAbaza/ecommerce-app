@@ -1,5 +1,7 @@
 package com.example.shopy.ui.search
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -8,6 +10,7 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.SearchCategoryItemAdapter
 import com.example.shopy.NavGraphDirections
@@ -23,6 +26,7 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopTabViewModel
 import com.example.shopy.domainLayer.Utils
 import com.example.shopy.ui.category.ItemsRecyclerClick
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
@@ -48,12 +52,8 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
     ): View? {
         _binding = FragmentShopSearchBinding.inflate(inflater, container, false)
         val view = binding.root
-        if(Utils.toolbarImg.visibility == View.VISIBLE){
-            Utils.toolbarImg.visibility = View.GONE
-        }
-        if(Utils.cartView.visibility == View.VISIBLE){
-            Utils.cartView.visibility = View.GONE
-        }
+        changeToolbar()
+
         val application = requireNotNull(this.activity).application
         val repository = Repository(
             RemoteDataSourceImpl(),
@@ -131,8 +131,8 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                 if (parent!!.getItemAtPosition(position).equals("shoes")){
                     productFilter="shoes"
                 }
-                else if (parent!!.getItemAtPosition(position).equals("shirts")){
-                    productFilter="shirts"
+                else if (parent!!.getItemAtPosition(position).equals("t-shirts")){
+                    productFilter="t-shirts"
                 }
                 else if (parent!!.getItemAtPosition(position).equals("accessories")){
                     productFilter="accessories"
@@ -172,6 +172,20 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
     override fun itemOnClick(itemId: Long) {
         val action = NavGraphDirections.actionGlobalProuductDetailsFragment(itemId)
         findNavController().navigate(action)
+    }
+    private fun changeToolbar() {
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+        requireActivity().toolbar.visibility = View.VISIBLE
+
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.black_arrow))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+        //requireActivity().bottom_nav.visibility = View.VISIBLE
+        requireActivity().toolbar_title.text = "Search"
+        requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.INVISIBLE
     }
 }
 

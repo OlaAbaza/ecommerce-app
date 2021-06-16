@@ -21,8 +21,13 @@ import com.example.shopy.domainLayer.Utils
 import androidx.navigation.fragment.findNavController
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
+import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.fragment_on_sale_product.*
+import kotlinx.android.synthetic.main.fragment_on_sale_product.networkSaleView
 import kotlinx.android.synthetic.main.list_toolbar_view.view.*
 
 
@@ -63,7 +68,12 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         super.onSubClick(position)
         subCategoryIndex=position
         subList=getSubCategoryItems(position)
-        binding.itemsRecView.adapter= CategoryItemAdapter(subList,requireContext(),this)
+        if (subList.size!=0) {
+            binding.placeHolder.visibility=View.GONE
+            binding.itemsRecView.adapter = CategoryItemAdapter(subList, requireContext(), this)
+        }else{
+            binding.placeHolder.visibility=View.VISIBLE
+        }
         binding.subcategoriesRecView.adapter!!.notifyDataSetChanged()
     }
     override fun onMainClick(position: Int) {
@@ -72,12 +82,21 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         binding.subcategoriesRecView.adapter!!.notifyDataSetChanged()
         mainCategoryIndex=position
         colID=getMainCategory(position)
-        catViewModel.fetchCatProducts(colID).observe(requireActivity(),{
-            products=it
-            binding.itemsRecView.adapter= CategoryItemAdapter(products,requireContext(),this)
-            Log.d("hitler","list size: "+it.size)
-            binding.itemsRecView.adapter!!.notifyDataSetChanged()
-        })
+        if (NetworkChangeReceiver.isOnline) {
+            networkCatView.visibility = View.GONE
+            category_constraintlayout.visibility = View.VISIBLE
+            catViewModel.fetchCatProducts(colID).observe(requireActivity(), {
+                products = it
+                binding.placeHolder.visibility=View.GONE
+                binding.itemsRecView.adapter = CategoryItemAdapter(products, requireContext(), this)
+                Log.d("hitler", "list size: " + it.size)
+                binding.itemsRecView.adapter!!.notifyDataSetChanged()
+            })
+        }else{
+            networkCatView.visibility = View.VISIBLE
+            category_constraintlayout.visibility = View.GONE
+
+        }
         binding.mainCategoriesRecView.adapter!!.notifyDataSetChanged()
 
         /*binding.mainCategoriesRecView.findViewHolderForAdapterPosition(position)!!.itemView.underLine.background=
@@ -91,10 +110,17 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         var mainCatList= arrayOf("Home","kids","Men","Sales","Women")
         binding.subcategoriesRecView.adapter= SubCategoriesAdapter(subcatList,this)
         binding.mainCategoriesRecView.adapter= MainCategoriesAdapter(mainCatList,this)
-        catViewModel.fetchCatProducts(267715608774).observe(requireActivity(),{
-            products=it
-            binding.itemsRecView.adapter= CategoryItemAdapter(products,requireContext(),this)
-        })
+        if (NetworkChangeReceiver.isOnline) {
+            networkCatView.visibility = View.GONE
+            category_constraintlayout.visibility = View.VISIBLE
+            catViewModel.fetchCatProducts(267715608774).observe(requireActivity(), {
+                products = it
+                binding.itemsRecView.adapter = CategoryItemAdapter(products, requireContext(), this)
+            })
+        }else{
+            networkCatView.visibility = View.VISIBLE
+            category_constraintlayout.visibility = View.GONE
+        }
     }
 
     fun getMainCategory(position:Int):Long{

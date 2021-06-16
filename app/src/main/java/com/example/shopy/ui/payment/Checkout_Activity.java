@@ -13,7 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.shopy.R;
 import com.example.shopy.base.ViewModelFactory;
@@ -117,6 +120,15 @@ import okhttp3.Response;
                     Objects.requireNonNull("pk_test_51J0wUlCvjNQPIjCLpBSsARNPFduF1xrgZp5dFG5ekZQBIsPfzIOERByyqlrKjKHgYBL3yTKuhon1hjD7Nyhtdfk8006sfOPu0U")
             );
             startCheckout();
+        }
+
+        @Override
+        public void onBackPressed() {
+            super.onBackPressed();
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+
         }
 
         private void startCheckout() {
@@ -260,12 +272,12 @@ import okhttp3.Response;
                     Toast.makeText(activity,"Ordered Successfully",Toast.LENGTH_LONG).show();
                     try {
                         Thread.sleep(1500);
-                        Toast.makeText(activity,"Open Home Activity",Toast.LENGTH_LONG).show();
+                       // Toast.makeText(activity,"Open Home Activity",Toast.LENGTH_LONG).show();
                         paymentViewModel.cancelOrder(order.getId());
                         paymentViewModel.createOrderInPayment(order);
 
-                        Intent login = new Intent(mContext, MainActivity.class);
-                        mContext.startActivity(login);
+                        Intent intent = new Intent(mContext, MainActivity.class);
+                        mContext.startActivity(intent);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();

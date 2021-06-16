@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f6f6f6"
     tools:context=".ui.settings.SettingsFragment">
 
     <ScrollView
@@ -23,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="4dp"
+                android:padding="8dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -40,10 +42,12 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:elegantTextHeight="true"
+                        android:gravity="center"
                         android:padding="10dp"
                         android:text="@string/edit_profile"
                         android:textColor="@color/black"
                         android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.05"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +60,7 @@
                         android:background="@drawable/ic_baseline_arrow_forward_ios_24"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
+                        app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="4dp"
+                android:padding="8dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -86,10 +91,12 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:elegantTextHeight="true"
+                        android:gravity="center"
                         android:padding="10dp"
                         android:text="@string/address_book"
                         android:textColor="@color/black"
                         android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.05"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -102,7 +109,7 @@
                         android:background="@drawable/ic_baseline_arrow_forward_ios_24"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
+                        app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -116,6 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="4dp"
+                android:padding="8dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -126,16 +134,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/faqRecView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/FAQlabel"
-                        tools:listitem="@layout/faq_item" />
-
                     <TextView
                         android:id="@+id/FAQlabel"
                         android:layout_width="wrap_content"
@@ -143,35 +141,25 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:elegantTextHeight="true"
+                        android:gravity="center"
                         android:padding="10dp"
                         android:text="FAQ"
                         android:textColor="@color/black"
                         android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.05"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageButton
                         android:id="@+id/faq_btn"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/faqRecView"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <ImageButton
-                        android:id="@+id/faq_btn_hide"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:visibility="gone"
-                        android:background="@drawable/ic_baseline_keyboard_arrow_up_24"
-                        app:layout_constraintBottom_toTopOf="@id/faqRecView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
+                        app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -185,6 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="4dp"
+                android:padding="8dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -195,20 +184,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
-                    <TextView
-                        android:id="@+id/aboutTV"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:elegantTextHeight="true"
-                        android:padding="10dp"
-                        android:text="@string/it_s_an_e_commerce_app_based_exclusive_in_egypt_where_you_can_find_categories_and_sub_categories_for_all_clothes_shoes_and_accessories"
-                        android:textSize="20sp"
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/aboutLabel" />
-
                     <TextView
                         android:id="@+id/aboutLabel"
                         android:layout_width="wrap_content"
@@ -216,35 +191,25 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:elegantTextHeight="true"
+                        android:gravity="center"
                         android:padding="10dp"
                         android:text="@string/about_shopy"
                         android:textColor="@color/black"
                         android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.05"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageButton
                         android:id="@+id/about_btn"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
-                        app:layout_constraintBottom_toTopOf="@id/aboutTV"
+                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <ImageButton
-                        android:id="@+id/about_btn_hide"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:visibility="gone"
-                        android:background="@drawable/ic_baseline_keyboard_arrow_up_24"
-                        app:layout_constraintBottom_toTopOf="@id/aboutTV"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
+                        app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -257,6 +222,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:elevation="4dp"
+                android:padding="8dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -267,62 +233,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/devByRecView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/grey"
-                        android:visibility="gone"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/developedByLabel"
-                        tools:listitem="@layout/dev_by_item" />
-
                     <TextView
                         android:id="@+id/developedByLabel"
-                        android:text="@string/developed_by"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:elegantTextHeight="true"
+                        android:gravity="center"
                         android:padding="10dp"
+                        android:text="@string/developed_by"
                         android:textColor="@color/black"
                         android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.05"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageButton
                         android:id="@+id/developedBy_btn"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
-                        app:layout_constraintBottom_toTopOf="@id/devByRecView"
+                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
-                        android:visibility="visible"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    <ImageButton
-                        android:id="@+id/developedBy_btn_hide"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:visibility="gone"
-                        android:background="@drawable/ic_baseline_keyboard_arrow_up_24"
-                        app:layout_constraintBottom_toTopOf="@id/devByRecView"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
+                        app:layout_constraintHorizontal_bias="0.9"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
