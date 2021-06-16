@@ -84,32 +84,32 @@ class Repository(
     fun createOrder(order: Orders) =
         remoteDataSource.createOrder(order)
 
-     fun getCreateOrderResponse()= remoteDataSource.getCreateOrderResponse()
-   // suspend fun getPriceRulesList()=remoteDataSource.getPriceRulesList()
+    fun getCreateOrderResponse() = remoteDataSource.getCreateOrderResponse()
+    // suspend fun getPriceRulesList()=remoteDataSource.getPriceRulesList()
 
     ///////////////////products/////////////////////////
-    fun getWomanProductsList() : MutableLiveData<ProductsList>{
-       return remoteDataSource.getWomanProductsList()
+    fun getWomanProductsList(): MutableLiveData<ProductsList> {
+        return remoteDataSource.getWomanProductsList()
     }
 
-    fun getKidsProductsList()  : MutableLiveData<ProductsList>{
+    fun getKidsProductsList(): MutableLiveData<ProductsList> {
         return remoteDataSource.getKidsProductsList()
     }
 
-    fun getMenProductsList() : MutableLiveData<ProductsList> {
+    fun getMenProductsList(): MutableLiveData<ProductsList> {
         return remoteDataSource.getMenProductsList()
     }
 
-    fun getOnSaleProductsList()  : MutableLiveData<ProductsList>{
+    fun getOnSaleProductsList(): MutableLiveData<ProductsList> {
         return remoteDataSource.getOnSaleProductsList()
     }
 
-    fun getAllProductsList():  MutableLiveData<AllProducts>{
+    fun getAllProductsList(): MutableLiveData<AllProducts> {
         return remoteDataSource.getAllProductsList()
     }
 
-    fun getAllDiscountCodeList() : MutableLiveData<AllCodes> {
-       return remoteDataSource.getAllDiscountCodeList()
+    fun getAllDiscountCodeList(): MutableLiveData<AllCodes> {
+        return remoteDataSource.getAllDiscountCodeList()
     }
     // fun getAllDiscountCodes() = remoteDataSource.getAllDiscountCodesData()
 
@@ -193,9 +193,13 @@ class Repository(
     }
 
     fun deleteOrder(order_id: Long) {
-       // remoteDataSource.deleteOrder(order_id)
+        // remoteDataSource.deleteOrder(order_id)
         remoteDataSource.deleteOrder(order_id)
     }
+
     fun observeDeleteOrder() = remoteDataSource.observeDeleteOrder()
 
+    fun getOneOrders(id: Long): Observable<GetOrders.Order> {
+       return remoteDataSource.getOneOrders(id)
+    }
 }

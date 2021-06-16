@@ -1,7 +1,6 @@
 package com.example.shopy.domainLayer
 
 import android.annotation.SuppressLint
-import android.util.Log
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.datalayer.entity.allproducts.allProduct
 
@@ -22,11 +21,9 @@ class FilterData {
         }
 
 
-//        fun getProductsIDs(fulfillments: List<GetOrders.Order.LineItem?>): List<Long> {
-//            return fulfillments.map { it!!.id }
-//        }
+
         fun ProductsIDs(orders: List<GetOrders.Order?>): List<List<Long>> {
-            var list : MutableList<List<Long>> = arrayListOf()
+            val list : MutableList<List<Long>> = arrayListOf()
              orders.forEach {
                  order ->
                 val  line_items= order?.line_items?.map { it!!.product_id }

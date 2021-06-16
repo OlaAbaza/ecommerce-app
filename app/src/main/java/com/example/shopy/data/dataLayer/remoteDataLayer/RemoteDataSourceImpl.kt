@@ -8,7 +8,6 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
-import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.data.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
@@ -495,6 +494,10 @@ class RemoteDataSourceImpl : RemoteDataSource {
     }
     override fun observeDeleteOrder():MutableLiveData<Boolean>{
         return deleteOrder
+    }
+
+    override fun getOneOrders(id: Long): Observable<GetOrders.Order> {
+        return Network.apiService.getOneOrders(id)
     }
 
 }

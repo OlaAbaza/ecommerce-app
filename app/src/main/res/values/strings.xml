@@ -154,6 +154,14 @@
     <string name="it_is_empty_here">It is empty here :-(</string>
     <string name="empty">Empty</string>
     <string name="waiting_for_payment">waiting for payment</string>
+    <string name="payment_type">Payment Type</string>
+    <string name="order_product_1_item">Order Product (1 item)</string>
+    <string name="title">title</string>
+    <string name="variant">Variant</string>
+    <string name="quantity">Quantity  x</string>
+    <string name="_5_black">5 / black</string>
+    <string name="quantity_x">quantity X</string>
+    <string name="price">Price</string>
 
     ////////////////abdelrahman/////////////
     <string-array name="sortArr">

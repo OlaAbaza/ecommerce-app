@@ -10,7 +10,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f6f6f6"
+        android:background="#E8E2DC"
         tools:context=".ui.displayOrderFragment.DisplayOrderFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +18,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.tabs.TabLayout
-                android:backgroundTint="#6A6968"
+                android:backgroundTint="#B3AC8A"
                 android:id="@+id/tapLayout"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

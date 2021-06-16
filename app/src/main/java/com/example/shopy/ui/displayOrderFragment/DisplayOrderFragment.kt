@@ -15,8 +15,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.StringsUtils
@@ -91,11 +93,11 @@ class DisplayOrderFragment : Fragment() {
 
         //make new call to update view with the new data
         callOrders(displayOrderViewModel, view)
-        var adapterImages  = WeakReference(ProductsImageAdapter(emptyList())).get()!!
         val adapter = WeakReference(
-            OrderDisplayAdapter(adapterImages,requireContext(),
+            OrderDisplayAdapter(requireContext(),
                 ArrayList(), listOf(),
                 displayOrderViewModel.payNowMutableData,
+                displayOrderViewModel.showOrderDetails,
                 displayOrderViewModel.cancelMutableData
             )
         ).get()
@@ -108,6 +110,10 @@ class DisplayOrderFragment : Fragment() {
 
         changeToolbar()
 
+        displayOrderViewModel.showOrderDetails.observe(viewLifecycleOwner,{
+            val action = NavGraphDirections.actionGlobalShowOneOrderFragment(it)
+            findNavController().navigate(action)
+        })
 
 
 
@@ -287,6 +293,7 @@ class DisplayOrderFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        displayOrderViewModel.showOrderDetails = MutableLiveData()
         displayOrderViewModel.deleteOrder = MutableLiveData()
         displayOrderViewModel.cancelMutableData = MutableLiveData()
         displayOrderViewModel.payNowMutableData = MutableLiveData()

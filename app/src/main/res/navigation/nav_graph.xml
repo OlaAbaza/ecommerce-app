@@ -171,6 +171,16 @@
         tools:layout="@layout/fragment_shop_search" />
     <action android:id="@+id/action_global_shopSearchFragment"
         app:destination="@id/shopSearchFragment"/><action android:id="@+id/action_global_cartFragment2" app:destination="@id/cartFragment2"/>
+    <fragment
+        android:id="@+id/showOneOrderFragment"
+        android:name="com.example.shopy.ui.showOneOrderDetails.ShowOneOrderFragment"
+        android:label="ShowOneOrderFragment" >
+        <argument
+            android:name="productId"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+    <action android:id="@+id/action_global_showOneOrderFragment" app:destination="@id/showOneOrderFragment" />
 
 
 </navigation>

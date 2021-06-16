@@ -17,11 +17,10 @@ import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import java.lang.ref.WeakReference
 
 
-class OrderDisplayAdapter(
-    adapter: ProductsImageAdapter,
-    context: Context,
+class OrderDisplayAdapter(context: Context,
     list: List<GetOrders.Order?>, imagelist: List<List<String>>,
     private var payNowMutableData: MutableLiveData<GetOrders.Order>,
+    private var showOrderDetails: MutableLiveData<Long>,
     private var cancelMutableData: MutableLiveData<GetOrders.Order>
 ) : RecyclerView.Adapter<OrderDisplayAdapter.ViewHolder>() {
     var list:
@@ -34,13 +33,11 @@ class OrderDisplayAdapter(
             List<List<String>> = imagelist
         set(value) {
             field = value
-//            adapter.imageList = value[positionA]
             notifyDataSetChanged()
         }
     var positionA: Int = 0
     var context: Context = context
 
-//    var adapter = adapter
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -60,6 +57,10 @@ class OrderDisplayAdapter(
 
         }else{
             holder.bindingRecycler(context, adapterImages, emptyList())
+        }
+
+        holder.itemView.setOnClickListener {
+            showOrderDetails.value = list[position]?.id
         }
 
 

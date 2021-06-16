@@ -114,8 +114,10 @@ interface NetworkService {
 
 
     @GET("orders.json")
-//    fun getAllOrders() : Call<GetOrders>
     fun getAllOrders() : Observable<GetOrders>
+
+    @GET("orders/{id}.json")
+    fun getOneOrders(@Path("id") id: Long) : Observable<GetOrders.Order>
 
     @DELETE("orders/{id}.json")
     fun deleteOrder(@Path("id")order_id : Long) :Call<Delete>
