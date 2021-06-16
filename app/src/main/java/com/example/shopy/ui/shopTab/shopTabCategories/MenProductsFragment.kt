@@ -69,8 +69,8 @@ class MenProductsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         if (NetworkChangeReceiver.isOnline) {
-            networkKidsView.visibility = View.GONE
-            kids_lin.visibility = View.VISIBLE
+            networkMenView.visibility = View.GONE
+            Men_lin.visibility = View.VISIBLE
         shopTabViewModel.fetchMenProductsList().observe(viewLifecycleOwner,{
             Log.i("output",it.toString()+"******************")
             if (it != null){
