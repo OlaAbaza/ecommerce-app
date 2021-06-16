@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp"
+    android:backgroundTint="@color/white"
     android:layout_margin="10dp">
 
 
@@ -22,7 +24,9 @@
             android:elegantTextHeight="true"
             android:padding="10dp"
             android:textSize="20sp"
+            android:textColor="@color/gray"
             android:textStyle="bold"
+            tools:text="Is this app available on in Egypt?"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,10 +37,12 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@color/grey"
+            android:background="@color/light_gray"
             android:elegantTextHeight="true"
             android:padding="10dp"
             android:textSize="20sp"
+            android:textColor="@color/gray"
+            tools:text="Is this app available on in Egypt?"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

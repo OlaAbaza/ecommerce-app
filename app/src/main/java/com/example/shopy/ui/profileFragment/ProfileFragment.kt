@@ -62,9 +62,9 @@ class ProfileFragment : Fragment() {
             ).get(ProfileViewModel::class.java)
         if(meDataSourceReo.loadUsertstate())
             customerID =meDataSourceReo.loadUsertId()
-        else {
-            findNavController().navigate(NavGraphDirections.actionGlobalSignInFragment())
-        }
+//        else {
+//            findNavController().navigate(NavGraphDirections.actionGlobalSignInFragment())
+//        }
         // Inflate the layout for this fragment
         return binding.root
     }

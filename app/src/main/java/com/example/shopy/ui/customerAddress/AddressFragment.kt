@@ -65,8 +65,8 @@ class AddressFragment : Fragment() {
 
         if(meDataSourceReo.loadUsertstate())
            customerID =meDataSourceReo.loadUsertId()
-        else
-         findNavController().navigate( NavGraphDirections.actionGlobalSignInFragment())
+//        else
+//         findNavController().navigate( NavGraphDirections.actionGlobalSignInFragment())
 
         if (NetworkChangeReceiver.isOnline) {
             addressViewModel.getCustomersAddressList(customerID)

@@ -48,6 +48,7 @@ class SettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         changeToolbar()
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
+
         val repository = Repository(
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
@@ -60,21 +61,27 @@ class SettingsFragment : Fragment() {
 
 
 
-        binding.developedByLabel.setOnClickListener {
+        binding.cvDevelopedBy.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToDevelopedByFragment())
         }
-        binding.editAddress.setOnClickListener {
+        binding.cvAddress.setOnClickListener {
+            if(meDataSourceReo.loadUsertstate())
             findNavController().navigate(NavGraphDirections.actionGlobalAddressFragment())
+            else
+            findNavController().navigate( NavGraphDirections.actionGlobalSignInFragment())
         }
-        binding.editProfile.setOnClickListener {
-            findNavController().navigate(NavGraphDirections.actionGlobalProfileFragment())
+        binding.cvProfile.setOnClickListener {
+            if(meDataSourceReo.loadUsertstate())
+                findNavController().navigate(NavGraphDirections.actionGlobalProfileFragment())
+            else
+                findNavController().navigate( NavGraphDirections.actionGlobalSignInFragment())
         }
 
-        binding.aboutLabel.setOnClickListener {
+        binding.cvAbout.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToAboutFragment())
         }
 
-        binding.FAQlabel.setOnClickListener {
+        binding.cvFAQ.setOnClickListener {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFAQFragment())
 
         }

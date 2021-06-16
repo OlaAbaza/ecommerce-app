@@ -5,10 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.example.myapplication.SettingsAdapter
 import com.example.shopy.R
 import com.example.shopy.databinding.FragmentDevelopedByBinding
 import com.example.shopy.datalayer.entity.settings.DeveloperModel
+import kotlinx.android.synthetic.main.activity_main.*
 
 class DevelopedByFragment : Fragment() {
    lateinit var binding:FragmentDevelopedByBinding
@@ -23,6 +25,7 @@ class DevelopedByFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        changeToolbar()
         binding.devByRecView.adapter = SettingsAdapter(
             listOf(
                 DeveloperModel(
@@ -47,5 +50,13 @@ class DevelopedByFragment : Fragment() {
                 )
             )
         )
+    }
+    fun changeToolbar() {
+        requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_baseline_arrow_back_ios_24))
+        requireActivity().toolbar.setNavigationOnClickListener {
+            view?.findNavController()?.popBackStack()
+        }
+
+        requireActivity().toolbar_title.text = "Developed By"
     }
 }

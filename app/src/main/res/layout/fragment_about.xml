@@ -14,8 +14,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_us"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,8 +27,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_us_tv"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:padding="5dp"
+            android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/aboutUsLabel" />
 
@@ -35,9 +39,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
             android:text="@string/our_mission"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/aboutUsTV" />
@@ -47,8 +52,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/our_mission_tv"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            android:padding="5dp"
+            android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ourMissionLabel" />
     </androidx.constraintlayout.widget.ConstraintLayout>

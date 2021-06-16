@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f6f6f6"
     tools:context=".ui.settings.SettingsFragment">
 
     <ScrollView
@@ -17,99 +18,272 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/editProfile"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elegantTextHeight="true"
-                android:padding="10dp"
-                android:text="@string/edit_profile"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:elevation="4dp"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/editAddress"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/editProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:elegantTextHeight="true"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/edit_profile"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/profile_btn"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elegantTextHeight="true"
-                android:padding="10dp"
-                android:text="@string/edit_address"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:elevation="4dp"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editProfile" />
+                app:layout_constraintTop_toBottomOf="@id/cv_profile">
 
-            <TextView
-                android:id="@+id/FAQlabel"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/editAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:elegantTextHeight="true"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/address_book"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/address_btn"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_FAQ"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elegantTextHeight="true"
-                android:padding="10dp"
-                android:text="@string/faq"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:elevation="4dp"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/editAddress" />
+                app:layout_constraintTop_toBottomOf="@id/cv_address">
 
-            <TextView
-                android:id="@+id/aboutLabel"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/FAQlabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:elegantTextHeight="true"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="FAQ"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/faq_btn"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elegantTextHeight="true"
-                android:padding="10dp"
-                android:text="@string/about_us"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:elevation="4dp"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/FAQlabel" />
+                app:layout_constraintTop_toBottomOf="@id/cv_FAQ">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/developedByLabel"
+                    <TextView
+                        android:id="@+id/aboutLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:elegantTextHeight="true"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/about_shopy"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/about_btn"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_developedBy"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elegantTextHeight="true"
-                android:padding="10dp"
-                android:text="@string/developed_by"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:layout_margin="10dp"
+                android:elevation="4dp"
+                android:padding="8dp"
+                app:cardCornerRadius="2dp"
+                app:cardUseCompatPadding="true"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aboutLabel" />
+                app:layout_constraintTop_toBottomOf="@id/cv_about">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/devByRecView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/grey"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/developedByLabel"
-                tools:listitem="@layout/dev_by_item" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/developedByLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:elegantTextHeight="true"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="@string/developed_by"
+                        android:textColor="@color/black"
+                        android:textSize="17sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/developedBy_btn"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <TextView
+
+    <Button
         android:id="@+id/signout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elegantTextHeight="true"
+        android:layout_margin="10dp"
+        android:elevation="10dp"
         android:gravity="center"
         android:padding="10dp"
         android:text="SIGN OUT"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textAllCaps="true"
         android:textColor="@color/redLight"
-        android:textSize="20sp"
+        android:textSize="15dp"
         android:textStyle="bold"
-        android:visibility="gone"
+        app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
