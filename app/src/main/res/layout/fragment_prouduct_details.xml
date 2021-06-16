@@ -10,13 +10,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f6f6f6"
-        tools:context=".ui.productDetailsActivity.ProuductDetailsFragment">
+        tools:context=".ui.productDetailsActivity.ProuductDetailsFragment"
+        android:background="#f6f6f6">
 
         <ScrollView
+            android:fillViewport="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -29,24 +29,24 @@
                     android:id="@+id/viewPagerMain"
                     android:layout_width="0dp"
                     android:layout_height="250dp"
-                    app:layout_constraintBottom_toTopOf="@id/linlay1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/linlay1"/>
 
                 <LinearLayout
                     android:id="@+id/linlay1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="15dp"
-                    app:layout_constraintBottom_toTopOf="@id/productTitle"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@id/viewPagerMain"
-                    tools:ignore="NotSibling">
+                    app:layout_constraintBottom_toTopOf="@id/productTitle"
+                    android:background="@color/white"
+                    tools:ignore="NotSibling"
+                    android:padding="15dp">
 
                     <TextView
                         android:id="@+id/productTitle"
@@ -55,46 +55,47 @@
                         android:text="Clear Faux Pearl Decor Slide Sandals"
                         android:textColor="#696969"
                         android:textSize="13sp"
-                        app:layout_constraintBottom_toTopOf="@id/prise"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.113"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/prise"/>
 
                     <TextView
                         android:id="@+id/prise"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/productTitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginTop="4dp"
                         android:text="US$12.00"
                         android:textColor="@color/black"
-                        android:textSize="20sp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/productTitle" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/colorNotEditable"
                         style="@style/text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="7dp"
                         android:text="@string/color"
-                        app:layout_constraintBottom_toTopOf="@id/colorEditable"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="7dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/prise" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/prise"
+                        app:layout_constraintBottom_toTopOf="@id/colorEditable"
+                        />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/colorEditable"
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
-                        android:layout_marginTop="7dp"
                         android:orientation="horizontal"
-                        app:layout_constraintBottom_toTopOf="@id/sizeNotEditable"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="7dp"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/colorNotEditable"
+                        app:layout_constraintBottom_toTopOf="@id/sizeNotEditable"
                         tools:listitem="@layout/options_item" />
 
                     <TextView
@@ -106,16 +107,16 @@
                         android:text="@string/size"
                         android:textColor="@color/black"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linf2" />
+                        app:layout_constraintTop_toBottomOf="@id/linf2"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/sizeEditable"
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
-                        android:layout_marginTop="7dp"
                         android:orientation="horizontal"
+                        android:layout_marginTop="7dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/sizeNotEditable"
@@ -128,31 +129,29 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:background="@color/light_gray"
-                        android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/qty" />
-
+                        app:layout_constraintTop_toBottomOf="@id/qty"
+                        android:orientation="vertical" />
                     <LinearLayout
                         android:id="@+id/qtylin"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal">
-
                         <TextView
                             android:id="@+id/qty"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:layout_weight="2"
-                            android:text="Quantity:" />
-
+                            android:layout_height="wrap_content"
+                            android:text="Quantity:"
+                            android:textColor="@color/black"
+                            android:layout_gravity="center"/>
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:layout_weight="2"
+                            android:layout_height="wrap_content"
                             android:backgroundTint="@color/gray"
                             app:layout_constraintBottom_toBottomOf="@id/itemCartImage"
                             app:layout_constraintStart_toStartOf="@id/itemCartTitle"
@@ -200,183 +199,154 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
                 <LinearLayout
                     android:id="@+id/linlay2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@color/white"
-                    android:orientation="vertical"
-                    android:padding="5dp"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/linlay1">
-
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@id/linlay1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:padding="5dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="10dp"
-                            android:paddingRight="10dp">
-
-                            <TextView
-                                android:id="@+id/stateNotEditable"
-                                style="@style/text_style"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/status"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/state_btn"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_gravity="end"
-                                android:layout_marginStart="150dp"
-                                android:background="@drawable/ic_baseline_arrow_forward_ios_24"
-                                android:paddingTop="10dp" />
-
-                        </LinearLayout>
-
+                        android:weightSum="3"
+                        android:padding="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/stateNotEditable"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:layout_marginStart="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status"
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
                         <TextView
                             android:id="@+id/stateEditable"
                             android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="3"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="#696969"
+                            android:layout_weight="2"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
                             android:textSize="12sp"
-                            android:visibility="gone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/stateNotEditable"
-                            app:layout_constraintTop_toTopOf="@id/stateNotEditable" />
+                            android:textColor="#696969"
+                            tools:text="active" />
                     </LinearLayout>
-
+                    <LinearLayout
+                        android:id="@+id/linf3"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/light_gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/qty"
+                        android:orientation="vertical" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:orientation="horizontal"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="10dp"
-                            android:paddingRight="10dp">
-
-                            <TextView
-                                android:id="@+id/vendorNotEditable"
-                                style="@style/text_style"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/vendor"
-                                app:layout_constraintStart_toStartOf="parent" />
-
-                            <ImageView
-                                android:id="@+id/vendor_btn"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_gravity="right"
-                                android:layout_marginStart="150dp"
-                                android:background="@drawable/ic_baseline_arrow_forward_ios_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-
-                        </LinearLayout>
-
+                        android:weightSum="3"
+                        android:padding="7dp"
+                        android:orientation="horizontal">
                         <TextView
-                            android:id="@+id/vendorEditable"
-                            style="@style/text_style"
+                            android:id="@+id/vendorNotEditable"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
-                            android:textColor="#696969"
+                            android:layout_weight="1"
+                            android:textColor="@color/black"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/vendor"
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+                        <TextView
+                            android:id="@+id/vendorEditable"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:textSize="12sp"
-                            android:visibility="gone"
+                            android:layout_weight="2"
+                            android:visibility="visible"
+                            android:textColor="#696969"
+                            tools:text="DR MARTENS"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/vendorNotEditable"
                             app:layout_constraintTop_toTopOf="@id/vendorNotEditable" />
                     </LinearLayout>
-
+                    <LinearLayout
+                        android:id="@+id/linf8"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/light_gray"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/qty"
+                        android:orientation="vertical" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:padding="5dp"
                         android:orientation="vertical">
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
                             android:orientation="horizontal"
+                            android:weightSum="5"
                             android:paddingLeft="10dp"
-                            android:paddingTop="10dp"
-                            android:paddingRight="10dp">
-
+                            android:paddingRight="10dp"
+                            android:paddingTop="10dp">
                             <TextView
                                 android:id="@+id/descriptionNotEditable"
-                                style="@style/text_style"
+                                android:textColor="@color/black"
+                                android:layout_weight="5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="@string/description"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/vendorEditable" />
-
-                            <ImageView
+                            <ImageButton
                                 android:id="@+id/description_btn"
-                                android:layout_width="15dp"
-                                android:layout_height="15dp"
-                                android:layout_marginStart="125dp"
-                                android:background="@drawable/ic_baseline_arrow_forward_ios_24"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginBottom="5dp"
+                                android:layout_gravity="end"
+                                android:background="@drawable/ic_baseline_keyboard_arrow_down_24" />
 
                         </LinearLayout>
-
                         <TextView
                             android:id="@+id/descriptionEditable"
                             style="@style/text_style"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:paddingLeft="15dp"
-                            android:paddingTop="5dp"
-                            android:paddingRight="15dp"
-                            android:paddingBottom="5dp"
                             android:text="@string/description"
                             android:textColor="#696969"
                             android:textSize="12sp"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
                             android:visibility="gone"
+                            android:layout_marginLeft="5dp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/descriptionNotEditable" />
                     </LinearLayout>
                 </LinearLayout>
-
                 <ProgressBar
                     android:id="@+id/progressPar"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:background="@color/white"
-                    android:indeterminateTint="@color/black"
+                    android:indeterminateTint="@color/yello"
                     android:padding="130dp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -386,39 +356,37 @@
         </ScrollView>
 
         <LinearLayout
+            android:background="@color/white"
+            android:paddingVertical="10dp"
             android:id="@+id/card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="@color/white"
-            android:paddingVertical="10dp"
             app:cardElevation="4dp">
 
             <ImageView
+                android:layout_weight="1"
                 android:id="@+id/addToWishList"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="15dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/add_to_wish_list"
-                android:src="@drawable/heart" />
-
+                android:src="@drawable/ic__favorite_border_24"
+                android:contentDescription="@string/add_to_wish_list" />
 
             <Button
-                android:id="@+id/addToCart"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="4"
+                android:id="@+id/addToCart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:backgroundTint="@color/black"
                 android:text="@string/add_to_bag"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textStyle="bold" />
-
+                android:textStyle="bold"/>
         </LinearLayout>
 
     </FrameLayout>

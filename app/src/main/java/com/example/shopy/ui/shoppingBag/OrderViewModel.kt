@@ -22,6 +22,7 @@ import timber.log.Timber
 
 class OrderViewModel(val repository: Repository, application: Application) :
     AndroidViewModel(application) {
+    private val orderDetalis = SingleLiveEvent<Long>()
     private val delOrder = SingleLiveEvent<Long>()
     private val favOrder = SingleLiveEvent<ProductCartModule>()
     private val ChangeQuntityListener = SingleLiveEvent<Boolean>()
@@ -38,12 +39,14 @@ class OrderViewModel(val repository: Repository, application: Application) :
         return customerAddresses
     }
 
-    fun getPostOrder(): LiveData<Boolean> {
-        return repository.getCreateOrderResponse()
-    }
+    fun getPostOrder()= repository.getCreateOrderResponse()
+
 
     fun getdelOrderID(): LiveData<Long> {
         return delOrder
+    }
+    fun getDetalisOrderID(): LiveData<Long> {
+        return orderDetalis
     }
 
     fun getOrderQuntity(): LiveData<Boolean> {
@@ -57,6 +60,9 @@ class OrderViewModel(val repository: Repository, application: Application) :
     fun delAllItems() = viewModelScope.launch { repository.deleteAllFromCart() }
     fun onDelClick(id: Long) {
         delOrder.postValue(id)
+    }
+    fun onImgClick(id: Long) {
+        orderDetalis.postValue(id)
     }
     fun onFavClick(item: ProductCartModule) {
         favOrder.postValue(item)
