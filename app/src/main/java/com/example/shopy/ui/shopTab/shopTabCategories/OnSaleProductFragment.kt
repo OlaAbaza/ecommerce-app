@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -27,6 +28,7 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_kids_product.*
 import kotlinx.android.synthetic.main.fragment_on_sale_product.*
 import kotlinx.android.synthetic.main.fragment_woman_products.*
 import kotlinx.android.synthetic.main.fragment_woman_products.ads
@@ -70,41 +72,49 @@ class OnSaleProductFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        shopTabViewModel.fetchOnSaleProductsList().observe(viewLifecycleOwner, {
-            Log.i("output", it.toString() + "******************")
-            if (it != null) {
-                bindWomanProductRecyclerView(it.products, shopTabViewModel.intentTOProductDetails)
-            }
-            Log.i("output", it.products.get(0).toString())
 
-        })
-
-//        requireActivity().toolbar_title.text = "Sales Products"
-
-        shopTabViewModel.intentTOProductDetails.observe(requireActivity(), {
-            shopTabViewModel.intentTOProductDetails = MutableLiveData()
-            val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id.toLong())
-            findNavController().navigate(action)
-        })
-
-        shopTabViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, {
-            val allCodes = it
-            if (allCodes != null) {
-                startbtn.setOnClickListener {
-                    startbtn.visibility = View.GONE
-                    Glide.with(this)
-                        .load(R.drawable.sale_gif)
-                        .into(ads)
-                    GlobalScope.launch(Dispatchers.Main) {
-                        delay(1500)
-                        lin.visibility = View.VISIBLE
-                        codeTextView.text = allCodes.discountCodes[0].code
-                    }
+        if (NetworkChangeReceiver.isOnline) {
+            networkSaleView.visibility = View.GONE
+            Sale_lin.visibility = View.VISIBLE
+            shopTabViewModel.fetchOnSaleProductsList().observe(viewLifecycleOwner, {
+                Log.i("output", it.toString() + "******************")
+                if (it != null) {
+                    bindWomanProductRecyclerView(
+                        it.products,
+                        shopTabViewModel.intentTOProductDetails
+                    )
                 }
+                Log.i("output", it.products.get(0).toString())
 
-            }
-        })
+            })
 
+            shopTabViewModel.intentTOProductDetails.observe(requireActivity(), {
+                shopTabViewModel.intentTOProductDetails = MutableLiveData()
+                val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id.toLong())
+                findNavController().navigate(action)
+            })
+
+            shopTabViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, {
+                val allCodes = it
+                if (allCodes != null) {
+                    startbtn.setOnClickListener {
+                        startbtn.visibility = View.GONE
+                        Glide.with(this)
+                            .load(R.drawable.sale_gif)
+                            .into(ads)
+                        GlobalScope.launch(Dispatchers.Main) {
+                            delay(1500)
+                            lin.visibility = View.VISIBLE
+                            codeTextView.text = allCodes.discountCodes[0].code
+                        }
+                    }
+
+                }
+            })
+        }else{
+            networkSaleView.visibility = View.VISIBLE
+            Sale_lin.visibility = View.GONE
+        }
         codeTextView.setOnClickListener {
             val clipboard = ContextCompat.getSystemService(requireContext(),ClipboardManager::class.java)
             clipboard?.setPrimaryClip(ClipData.newPlainText("",codeTextView.text))
