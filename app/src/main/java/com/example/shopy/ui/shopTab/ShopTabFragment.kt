@@ -62,9 +62,6 @@ class ShopTabFragment : Fragment() {
 
         requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         requireActivity().toolbar.setNavigationIcon(null)
-//        requireActivity().toolbar.setNavigationOnClickListener {
-//            view?.findNavController()?.popBackStack()
-//        }
     }
     private fun setUpTabBar() {
         val adapter = FragmentPagerItemAdapter(

@@ -207,7 +207,7 @@
                     </LinearLayout>
 
                     <androidx.appcompat.widget.Toolbar
-                        android:id="@+id/toolbar"
+                        android:id="@+id/toolbar_shop"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize" />
 
