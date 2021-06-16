@@ -45,61 +45,81 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-        <LinearLayout
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:weightSum="8"
-            android:layout_height="match_parent">
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="4dp">
+
             <include
-                android:layout_weight="1"
                 android:id="@+id/favourite"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                layout="@layout/list_toolbar_view"/>
+                layout="@layout/list_toolbar_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/toolbar_title"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <TextView
-                android:layout_weight="5"
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginEnd="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="3dp"
                 android:lines="1"
                 android:text="Shopy"
                 android:textColor="@color/black"
                 android:textSize="19sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/settingIcon"
+                app:layout_constraintEnd_toStartOf="@+id/searchIcon"
+                app:layout_constraintStart_toEndOf="@+id/favourite" />
+
             <ImageButton
-                android:layout_width="wrap_content"
                 android:id="@+id/settingIcon"
-                android:layout_height="35dp"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
                 android:background="@null"
                 android:src="@drawable/ic_baseline_settings_24"
-                android:layout_weight="1"
                 android:visibility="visible"
-                />
+                app:layout_constraintHorizontal_bias="4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cartView"
+                app:layout_constraintStart_toEndOf="@+id/toolbar_title"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <ImageButton
-                android:layout_width="wrap_content"
                 android:id="@+id/searchIcon"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_baseline_search_24"
-                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="@null"
+                android:src="@drawable/ic_baseline_search_24"
                 android:visibility="visible"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cartView"
+                app:layout_constraintStart_toEndOf="@+id/toolbar_title"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <include
-                android:layout_weight="1"
                 android:id="@+id/cartView"
                 style="@style/Widget.AppCompat.Button.Borderless"
                 layout="@layout/cart_toolbar_view"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
                 android:visibility="visible"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/searchIcon"
+                app:layout_constraintTop_toTopOf="@+id/searchIcon" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

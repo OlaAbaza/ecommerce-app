@@ -44,8 +44,6 @@ interface RemoteDataSource {
 
     fun getProuduct(id : Long)
 
-    fun isOnline(context: Context): Boolean
-
     fun fetchCatProducts(colID:Long):MutableLiveData<List<Product>>
     fun fetchAllProducts():MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>
 

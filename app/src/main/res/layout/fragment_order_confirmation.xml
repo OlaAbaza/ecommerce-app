@@ -167,19 +167,21 @@
                             android:id="@+id/radioCash"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="@color/dark_gray"
+                            android:buttonTint="@color/gray"
+                            android:padding="7dp"
                             android:checked="true"
                           android:textSize="17dp"
                             android:drawableLeft="@drawable/ic_money"
-                            android:text=" Cash on delivery" />
+                            android:text="   Cash on delivery" />
 
                         <com.google.android.material.radiobutton.MaterialRadioButton
                             android:id="@+id/radioCredit"
+                            android:padding="7dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="@color/dark_gray"
+                            android:buttonTint="@color/gray"
                             android:drawableLeft="@drawable/ic_credit_card"
-                            android:text=" Credit/Debit Card"
+                            android:text="   Credit/Debit Card"
                            android:textSize="17dp" />
 
                     </RadioGroup>
@@ -210,34 +212,40 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="5dp"
+                        android:gravity="center"
                         android:text="@string/apply_voucher"
                         android:textColor="@color/black"
+                       app:layout_constraintBottom_toTopOf="@id/discount_edt"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
                     <ImageButton
                         android:id="@+id/discount_btn"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
                         android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
+                        app:layout_constraintHorizontal_bias="0.95"
                         app:layout_constraintStart_toEndOf="@id/voucher_txt"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.5" />
                     <ImageButton
                         android:id="@+id/discount_btn_hide"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:layout_marginTop="5dp"
                         android:visibility="gone"
                         android:background="@drawable/ic_baseline_keyboard_arrow_up_24"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.8"
+                        app:layout_constraintHorizontal_bias="0.95"
+                        app:layout_constraintBottom_toTopOf="@id/discount_edt"
                         app:layout_constraintStart_toEndOf="@id/voucher_txt"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.5" />
@@ -252,7 +260,7 @@
                         android:textColorHint="@color/light_gray"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="15dp"
-                        android:visibility="invisible"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/voucher_txt"
                         app:layout_constraintTop_toBottomOf="@id/voucher_txt" />

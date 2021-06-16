@@ -146,7 +146,7 @@ class OrderConfirmationFragment : Fragment() {
             binding.discountBtnHide.visibility = View.VISIBLE
         }
         binding.discountBtnHide.setOnClickListener {
-            discount_edt.visibility = View.INVISIBLE
+            discount_edt.visibility = View.GONE
             binding.discountBtnHide.visibility = View.INVISIBLE
             binding.discountBtn.visibility = View.VISIBLE
         }
@@ -309,6 +309,6 @@ class OrderConfirmationFragment : Fragment() {
         requireActivity().toolbar.setNavigationOnClickListener {
             view?.findNavController()?.popBackStack()
         }
-        requireActivity().toolbar_title.text = "Order Confirmation"
+        requireActivity().toolbar_title.text = "OrderConfirmation"
     }
 }

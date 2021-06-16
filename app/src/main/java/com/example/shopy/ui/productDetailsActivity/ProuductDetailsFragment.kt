@@ -292,32 +292,13 @@ class ProuductDetailsFragment : Fragment() {
         bindingProductDetailsFragment.descriptionBtn.setOnClickListener {
             if (bindingProductDetailsFragment.descriptionEditable.visibility == View.GONE) {
                 bindingProductDetailsFragment.descriptionEditable.visibility = View.VISIBLE
-                bindingProductDetailsFragment.descriptionBtn.setBackgroundResource(R.drawable.ic_arrow_down_24)
+                bindingProductDetailsFragment.descriptionBtn.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24)
             }else{
                 bindingProductDetailsFragment.descriptionEditable.visibility = View.GONE
-                bindingProductDetailsFragment.descriptionBtn.setBackgroundResource(R.drawable.ic_baseline_arrow_forward_ios_24)
+                bindingProductDetailsFragment.descriptionBtn.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
             }
         }
 
-        bindingProductDetailsFragment.stateBtn.setOnClickListener {
-            if (bindingProductDetailsFragment.stateEditable.visibility == View.GONE) {
-                bindingProductDetailsFragment.stateEditable.visibility = View.VISIBLE
-                bindingProductDetailsFragment.stateBtn.setBackgroundResource(R.drawable.ic_arrow_down_24)
-            }else{
-                bindingProductDetailsFragment.stateEditable.visibility = View.GONE
-                bindingProductDetailsFragment.stateBtn.setBackgroundResource(R.drawable.ic_baseline_arrow_forward_ios_24)
-
-            }
-        }
-        bindingProductDetailsFragment.vendorBtn.setOnClickListener {
-            if (bindingProductDetailsFragment.vendorEditable.visibility == View.GONE) {
-                bindingProductDetailsFragment.vendorEditable.visibility = View.VISIBLE
-                bindingProductDetailsFragment.vendorBtn.setBackgroundResource(R.drawable.ic_arrow_down_24)
-            }else{
-                bindingProductDetailsFragment.vendorEditable.visibility = View.GONE
-                bindingProductDetailsFragment.vendorBtn.setBackgroundResource(R.drawable.ic_baseline_arrow_forward_ios_24)
-            }
-        }
 
     }
 
