@@ -49,7 +49,7 @@ class WelcomeActivity : AppCompatActivity() {
         mList.add(
             ScreenItem(
                 "NEW USERS",
-                "Get US$3 off your first order over US$29",
+                "Get US$10 off if you clicked on ads",
                 R.drawable.img4
             )
         )

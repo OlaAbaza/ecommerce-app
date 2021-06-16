@@ -1,9 +1,13 @@
 package com.example.shopy.ui.shopTab.shopTabCategories
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
+import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
@@ -53,38 +58,56 @@ class WomanProductsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        shopTabViewModel.fetchWomanProductsList().observe(viewLifecycleOwner, {
-            if (it != null) {
-                bindWomanProductRecyclerView(it.products,shopTabViewModel.intentTOProductDetails)
-            }
-        })
-
-//        requireActivity().toolbar_title.text = "Woman Products"
-
-        //product details fragment
-        shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{
-            shopTabViewModel.intentTOProductDetails= MutableLiveData()
-            val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id.toLong())
-            findNavController().navigate(action)
-        })
 
 
-        shopTabViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, {
-            val allCodes = it
-            if (allCodes != null) {
-                ads.setOnClickListener {
-                    Glide.with(this@WomanProductsFragment)
-                        .load(R.drawable.woman_three)
-                        .into(ads)
-                    GlobalScope.launch(Dispatchers.Main) {
-                        delay(1500)
-                        lin.visibility = View.VISIBLE
-                        codeTextView.text = allCodes.discountCodes[3].code
-                    }
+        if (NetworkChangeReceiver.isOnline) {
+            networkView.visibility = View.GONE
+            woman_linear.visibility = View.VISIBLE
+            shopTabViewModel.fetchWomanProductsList().observe(viewLifecycleOwner, {
+                if (it != null) {
+                    bindWomanProductRecyclerView(
+                        it.products,
+                        shopTabViewModel.intentTOProductDetails
+                    )
                 }
+            })
 
-            }
-        })
+            //product details fragment
+            shopTabViewModel.intentTOProductDetails.observe(requireActivity(), {
+                shopTabViewModel.intentTOProductDetails = MutableLiveData()
+                val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id.toLong())
+                findNavController().navigate(action)
+            })
+
+
+            shopTabViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, {
+                val allCodes = it
+                if (allCodes != null) {
+                    play.setOnClickListener {
+                        play.visibility = View.GONE
+                        Glide.with(this@WomanProductsFragment)
+                            .load(R.drawable.woman_three)
+                            .into(ads)
+                        GlobalScope.launch(Dispatchers.Main) {
+                            delay(1500)
+                            lin.visibility = View.VISIBLE
+                            codeTextView.text = allCodes.discountCodes[3].code
+                        }
+                    }
+
+                }
+            })
+        }else{
+            networkView.visibility = View.VISIBLE
+            woman_linear.visibility = View.GONE
+        }
+
+        codeTextView.setOnClickListener {
+            val clipboard = ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
+            clipboard?.setPrimaryClip(ClipData.newPlainText("",codeTextView.text))
+            Toast.makeText(requireContext(),"Copied", Toast.LENGTH_SHORT).show()
+
+        }
 
     }
 

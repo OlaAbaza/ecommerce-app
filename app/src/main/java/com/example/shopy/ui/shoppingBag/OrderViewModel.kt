@@ -7,6 +7,7 @@ import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.entity.priceRules.PriceRule
 import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
+import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.models.Addresse
 
@@ -15,11 +16,15 @@ import kotlinx.coroutines.launch
 
 import com.example.shopy.models.OrderResponse
 import com.example.shopy.models.Orders
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
 class OrderViewModel(val repository: Repository, application: Application) :
     AndroidViewModel(application) {
+    private val orderDetalis = SingleLiveEvent<Long>()
     private val delOrder = SingleLiveEvent<Long>()
+    private val favOrder = SingleLiveEvent<ProductCartModule>()
     private val ChangeQuntityListener = SingleLiveEvent<Boolean>()
     private val customerAddresses = SingleLiveEvent<List<Addresse>?>()
     private val priceRules = SingleLiveEvent<List<PriceRule>?>()
@@ -27,17 +32,21 @@ class OrderViewModel(val repository: Repository, application: Application) :
     fun getPriceRules(): LiveData<List<PriceRule>?> {
         return priceRules
     }
-
+    fun getFavOrder(): LiveData<ProductCartModule> {
+        return favOrder
+    }
     fun getAddressList(): LiveData<List<Addresse>?> {
         return customerAddresses
     }
 
-    fun getPostOrder(): LiveData<Boolean> {
-        return repository.getCreateOrderResponse()
-    }
+    fun getPostOrder()= repository.getCreateOrderResponse()
+
 
     fun getdelOrderID(): LiveData<Long> {
         return delOrder
+    }
+    fun getDetalisOrderID(): LiveData<Long> {
+        return orderDetalis
     }
 
     fun getOrderQuntity(): LiveData<Boolean> {
@@ -51,6 +60,12 @@ class OrderViewModel(val repository: Repository, application: Application) :
     fun delAllItems() = viewModelScope.launch { repository.deleteAllFromCart() }
     fun onDelClick(id: Long) {
         delOrder.postValue(id)
+    }
+    fun onImgClick(id: Long) {
+        orderDetalis.postValue(id)
+    }
+    fun onFavClick(item: ProductCartModule) {
+        favOrder.postValue(item)
     }
 
     fun onChangeQuntity() {
@@ -66,6 +81,11 @@ class OrderViewModel(val repository: Repository, application: Application) :
             customerAddresses.postValue(data)
 
             Timber.i("olaaa+" + data)
+        }
+    }
+    fun saveWishList(wishItem: Product) {
+        viewModelScope.launch  {
+            repository.saveWishList(wishItem)
         }
     }
 

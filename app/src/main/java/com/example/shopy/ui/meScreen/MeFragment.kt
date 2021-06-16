@@ -53,8 +53,11 @@ class MeFragment : Fragment() {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
-        val repository = Repository(RemoteDataSourceImpl(), RoomDataSourceImpl(RoomService.getInstance(requireActivity().application)))
-        val viewModelFactory = ViewModelFactory(repository,requireActivity().application)
+        val repository = Repository(
+            RemoteDataSourceImpl(),
+            RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
+        )
+        val viewModelFactory = ViewModelFactory(repository, requireActivity().application)
         meViewModel = ViewModelProvider(
             requireActivity(),
             viewModelFactory
@@ -80,18 +83,33 @@ class MeFragment : Fragment() {
 
 
         withListAdapter =
-            WishListAdapter(wishListData, meViewModel.intentTOProductDetails, meViewModel.deleteItem)
+            WishListAdapter(
+                wishListData,
+                meViewModel.intentTOProductDetails,
+                meViewModel.deleteItem
+            )
         bindingMeScreen.wishRecyclerView.apply {
             this.adapter = withListAdapter
             this.layoutManager = GridLayoutManager(requireContext(), 2)
         }
 
-
+        bindingMeScreen.goHomeBtn.setOnClickListener {
+            val action = NavGraphDirections.actionGlobalShopTabFragment2()
+            findNavController().navigate(action)
+        }
         meViewModel.getFourWishList().observe(requireActivity(), {
-            if (it.isEmpty())
-                bindingMeScreen.emptyAnimationView.visibility=View.VISIBLE
-            else
-                bindingMeScreen.emptyAnimationView.visibility=View.GONE
+            if (it.isEmpty()&&(isLoged())) {
+                bindingMeScreen.emptyStateGroup.visibility = View.VISIBLE
+                bindingMeScreen.emptyStateGroup1.visibility = View.VISIBLE
+            }
+            else if(!(isLoged())){
+                bindingMeScreen.emptyStateGroup1.visibility = View.VISIBLE
+                bindingMeScreen.tvLogged.visibility = View.VISIBLE
+            }
+            else {
+                bindingMeScreen.emptyStateGroup.visibility = View.GONE
+                bindingMeScreen.emptyStateGroup1.visibility = View. GONE
+            }
 
             wishListData = it
             withListAdapter.productList = wishListData
@@ -143,8 +161,8 @@ class MeFragment : Fragment() {
                 meViewModel.unPaidOrders.observe(viewLifecycleOwner, {
                     bindingMeScreen.UnPaidNumbers.text = it.toString()
                 })
-            }else{
-                Toast.makeText(requireContext(),"There is no network",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "There is no network", Toast.LENGTH_SHORT).show()
             }
 
             bindingMeScreen.hiText.text = "Hi! ${meDataSourceReo.loadUsertName()}"
@@ -154,9 +172,11 @@ class MeFragment : Fragment() {
             bindingMeScreen.paidNumbers.visibility = View.VISIBLE
             bindingMeScreen.seeAllText.visibility = View.VISIBLE
             bindingMeScreen.seeAllArrow.visibility = View.VISIBLE
-            bindingMeScreen.pleaseLogIn.visibility=View.INVISIBLE
-            bindingMeScreen.UnPaidNumbers.visibility=View.VISIBLE
-            bindingMeScreen.paidNumbers.visibility=View.VISIBLE
+            bindingMeScreen.tvLogged.visibility = View.INVISIBLE
+            bindingMeScreen.UnPaidNumbers.visibility = View.VISIBLE
+            bindingMeScreen.paidNumbers.visibility = View.VISIBLE
+            bindingMeScreen.emptyStateGroup.visibility = View.INVISIBLE
+            bindingMeScreen.emptyStateGroup1.visibility = View.INVISIBLE
         } else {
             bindingMeScreen.regesterAndLogin.visibility = View.VISIBLE
             bindingMeScreen.hiText.visibility = View.INVISIBLE
@@ -164,9 +184,12 @@ class MeFragment : Fragment() {
             bindingMeScreen.paidNumbers.visibility = View.INVISIBLE
             bindingMeScreen.seeAllText.visibility = View.INVISIBLE
             bindingMeScreen.seeAllArrow.visibility = View.INVISIBLE
-            bindingMeScreen.pleaseLogIn.visibility=View.VISIBLE
-            bindingMeScreen.UnPaidNumbers.visibility=View.INVISIBLE
-            bindingMeScreen.paidNumbers.visibility=View.INVISIBLE
+            bindingMeScreen.emptyStateGroup.visibility = View.INVISIBLE
+            bindingMeScreen.emptyAnimationView.visibility = View.VISIBLE
+            bindingMeScreen.emptyStateGroup1.visibility = View.VISIBLE
+            bindingMeScreen.tvLogged.visibility = View.VISIBLE
+            bindingMeScreen.UnPaidNumbers.visibility = View.INVISIBLE
+            bindingMeScreen.paidNumbers.visibility = View.INVISIBLE
         }
     }
 
@@ -186,22 +209,28 @@ class MeFragment : Fragment() {
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindingMeScreen.points.setOnClickListener {
-            findNavController().navigate(MeFragmentDirections.actionMeFragmentToSettingsFragment())
-        }
+//        bindingMeScreen.points.setOnClickListener {
+//            findNavController().navigate(MeFragmentDirections.actionMeFragmentToSettingsFragment())
+//        }
         requireActivity().findViewById<View>(R.id.settingIcon).setOnClickListener {
             findNavController().navigate(MeFragmentDirections.actionMeFragmentToSettingsFragment())
         }
         changeToolbar()
     }
+
     private fun changeToolbar() {
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.VISIBLE
         requireActivity().toolbar.visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(getResources().getColor(R.color.black))
-        requireActivity().findViewById<View>(R.id.cartView).cartButton.setColorFilter(getResources().getColor(R.color.black))
+        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(
+            getResources().getColor(R.color.black)
+        )
+        requireActivity().findViewById<View>(R.id.cartView).cartButton.setColorFilter(
+            getResources().getColor(
+                R.color.black
+            )
+        )
         requireActivity().settingIcon.setColorFilter(getResources().getColor(R.color.black))
         requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.VISIBLE
@@ -214,6 +243,7 @@ class MeFragment : Fragment() {
         requireActivity().toolbar_title.text = "Me"
 
     }
+
     private fun deleteAlert(id: Long) {
 
         val builder = AlertDialog.Builder(requireContext())

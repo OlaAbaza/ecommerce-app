@@ -7,18 +7,12 @@ import com.bumptech.glide.Glide
 import com.example.shopy.R
 import com.example.shopy.databinding.ItemCartBinding
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
-import com.example.shopy.models.Variants
+
 
 class CartAdapter(
     var orderList: ArrayList<ProductCartModule>, var orderViewModel: OrderViewModel
 ) : RecyclerView.Adapter<CartAdapter.VH>() {
 
-    fun updateOrder(newOrder: ProductCartModule?) {
-        newOrder?.let {
-            orderList.add(it)
-            notifyDataSetChanged()  }
-
-    }
     fun addNewList(orderNewList: List<ProductCartModule>) {
         orderList.clear()
         orderList.addAll(orderNewList)
@@ -67,6 +61,13 @@ class CartAdapter(
             orderList[position].variants?.get(0)?.inventory_quantity = num
             holder.myView.itemCountText.text=num.toString()
             orderViewModel.onChangeQuntity()
+        }
+        holder.myView.btnFav.setOnClickListener {
+            orderViewModel.onFavClick( orderList[position])
+        }
+        holder.myView.itemCartImage.setOnClickListener {
+
+            orderViewModel.onImgClick( orderList[position].id)
         }
     }
 

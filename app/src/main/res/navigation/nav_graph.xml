@@ -84,7 +84,7 @@
             app:destination="@id/addAddressFragment"
             app:popUpTo="@id/addAddressFragment"
             app:popUpToInclusive="true"/>
-        />
+        
 
     </fragment>
 
@@ -160,7 +160,9 @@
         tools:layout="@layout/fragment_settings" >
         <action
             android:id="@+id/action_settingsFragment_to_meFragment"
-            app:destination="@id/meFragment" />
+            app:destination="@id/meFragment"
+            app:popUpTo="@id/settingsFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_settingsFragment_to_FAQFragment"
             app:destination="@id/FAQFragment" />
@@ -170,6 +172,7 @@
         <action
             android:id="@+id/action_settingsFragment_to_developedByFragment"
             app:destination="@id/developedByFragment" />
+
     </fragment>
 
     <!--    <activity-->
@@ -182,22 +185,22 @@
 
         app:destination="@id/shopSearchFragment"/><action android:id="@+id/action_global_cartFragment2" app:destination="@id/cartFragment2"/>
 
-        app:destination="@id/shopSearchFragment"/>
-    <fragment
-        android:id="@+id/FAQFragment"
-        android:name="com.example.shopy.ui.settings.FAQFragment"
-        android:label="fragment_f_a_q"
-        tools:layout="@layout/fragment_f_a_q" />
-    <fragment
-        android:id="@+id/aboutFragment"
-        android:name="com.example.shopy.ui.settings.AboutFragment"
-        android:label="fragment_about"
-        tools:layout="@layout/fragment_about" />
-    <fragment
-        android:id="@+id/developedByFragment"
-        android:name="com.example.shopy.ui.settings.DevelopedByFragment"
-        android:label="fragment_developed_by"
-        tools:layout="@layout/fragment_developed_by" />
+    <!-- app:destination="@id/shopSearchFragment"/> -->
+<fragment
+  android:id="@+id/FAQFragment"
+  android:name="com.example.shopy.ui.settings.FAQFragment"
+  android:label="fragment_f_a_q"
+  tools:layout="@layout/fragment_f_a_q" />
+<fragment
+  android:id="@+id/aboutFragment"
+  android:name="com.example.shopy.ui.settings.AboutFragment"
+  android:label="fragment_about"
+  tools:layout="@layout/fragment_about" />
+<fragment
+  android:id="@+id/developedByFragment"
+  android:name="com.example.shopy.ui.settings.DevelopedByFragment"
+  android:label="fragment_developed_by"
+  tools:layout="@layout/fragment_developed_by" />
 
 
 

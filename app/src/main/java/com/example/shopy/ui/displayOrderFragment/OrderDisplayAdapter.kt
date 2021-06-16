@@ -56,6 +56,19 @@ class OrderDisplayAdapter(list:
             currencyCode.text = order.presentment_currency?:"not known"
             createdAt.text = order.created_at?:"not known"
 
+            if (order.note=="Cash"){
+                payNow.visibility=View.GONE
+                cash.visibility=View.VISIBLE
+
+                if (order.financial_status == "paid"){
+                    cancel.visibility=View.GONE
+                    cash.visibility=View.GONE
+                }else{
+                    cancel.visibility=View.VISIBLE
+                }
+
+            }else{
+                cash.visibility=View.GONE
             if (order.financial_status == "paid"){
                 payNow.visibility=View.GONE
                 cancel.visibility=View.GONE
@@ -63,15 +76,9 @@ class OrderDisplayAdapter(list:
                 payNow.visibility=View.VISIBLE
                 cancel.visibility=View.VISIBLE
             }
+        }
 
 
-            if (order.note=="Cash"){
-                payNow.visibility=View.GONE
-                cash.visibility=View.VISIBLE
-            }else{
-                payNow.visibility=View.VISIBLE
-                cash.visibility=View.GONE
-            }
         }
 
     }}

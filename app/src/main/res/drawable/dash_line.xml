@@ -5,5 +5,5 @@
         android:dashGap="3dp"
         android:dashWidth="4dp"
         android:width="2dp"
-        android:color="@color/ligtt_blue" />
+        android:color="@color/light_blue" />
 </shape>

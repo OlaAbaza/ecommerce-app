@@ -7,7 +7,7 @@ import com.example.shopy.R
 import com.example.shopy.databinding.ItemCartBinding
 import com.example.shopy.databinding.ItemOrderConfirmationBinding
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
-import com.example.shopy.models.Variants
+
 
 class OrderItemsAdapter(
     var orderList: ArrayList<ProductCartModule>, var orderViewModel: OrderViewModel

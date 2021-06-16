@@ -21,6 +21,7 @@ import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCartBinding
+import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
@@ -39,10 +40,7 @@ class CartFragment : Fragment() {
 
     private var customerID = ""
     private var totalPrice = 0.0
-    init {
-        setHasOptionsMenu(true)
 
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,9 +68,10 @@ class CartFragment : Fragment() {
         }
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       changeToolbar()
+        changeToolbar()
 
 
         cartAdapter = CartAdapter(arrayListOf(), orderViewModel)
@@ -112,14 +111,76 @@ class CartFragment : Fragment() {
                 binding.group.visibility = View.VISIBLE
                 binding.emptyCartGroup.visibility = View.GONE
                 var products = it.toMutableList()
-//            for (x in products)
-//                x.variants?.get(0)?.inventory_quantity = 1
                 cartAdapter.addNewList(products)
                 calcTotal(products)
             }
 
         })
+        orderViewModel.getFavOrder().observe(viewLifecycleOwner, {
+            favAlert(it)
 
+        })
+        orderViewModel.getDetalisOrderID().observe(viewLifecycleOwner, {
+            val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.toLong())
+            findNavController().navigate(action)
+        })
+
+    }
+
+    private fun favAlert(item: ProductCartModule?) {
+        val builder = AlertDialog.Builder(requireContext())
+        //  builder.setTitle(De)
+        builder.setMessage("Are you sure moving the product to wishlist from shopping bag?")
+
+        builder.setPositiveButton("YES") { dialogInterface, which ->
+            //  Toast.makeText(requireContext(), "clicked yes", Toast.LENGTH_LONG).show()
+            if (NetworkChangeReceiver.isOnline) {
+                item?.let {
+                    var product = Product(
+                        item.id,
+                        item.title,
+                        item.body_html,
+                        item.vendor,
+                        item.product_type,
+                        item.created_at,
+                        item.handle,
+                        item.updated_at,
+                        item.published_at,
+                        item.template_suffix,
+                        item.status,
+                        item.published_scope,
+                        item.tags,
+                        item.admin_graphql_api_id,
+                        item.variants,
+                        item.options,
+                        item.images,
+                        item.image
+                    )
+                    orderViewModel.saveWishList(product)
+                    orderViewModel.delOrder(item.id)                }
+
+
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.thereIsNoNetwork),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+        }
+
+        builder.setNegativeButton("NO") { dialogInterface, which ->
+            //  Toast.makeText(requireContext(),"clicked No",Toast.LENGTH_LONG).show()
+        }
+        // Create the AlertDialog
+        val alertDialog: AlertDialog = builder.create()
+        // Set other dialog properties
+        alertDialog.setCancelable(false)
+        alertDialog.show()
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK)
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
     }
 
     private fun calcTotal(item: List<ProductCartModule>?) {
@@ -130,7 +191,7 @@ class CartFragment : Fragment() {
                 )
             }
         }
-        totalPrice = (price?.sumByDouble { it ?: 0.0 })?.toDouble() ?: 0.0
+        totalPrice = (price?.sumByDouble { it ?: 0.0 }) ?: 0.0
         binding.totalPriceText.text = (price?.sumByDouble { it ?: 0.0 }).toString() + "EGP"
 
         Timber.i("price" + price + "lj")
@@ -140,13 +201,13 @@ class CartFragment : Fragment() {
         inflater.inflate(R.menu.empty_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         Timber.i("olaonDestroyView" + cartAdapter.orderList)
         if (NetworkChangeReceiver.isOnline) {
             orderViewModel.insertAllOrder(cartAdapter.orderList)
-        }
-        else {
+        } else {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.thereIsNoNetwork),
@@ -166,8 +227,7 @@ class CartFragment : Fragment() {
             //  Toast.makeText(requireContext(), "clicked yes", Toast.LENGTH_LONG).show()
             if (NetworkChangeReceiver.isOnline) {
                 orderViewModel.delOrder(id)
-            }
-            else {
+            } else {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.thereIsNoNetwork),
@@ -193,6 +253,7 @@ class CartFragment : Fragment() {
     private fun isLoged(): Boolean {
         return meDataSourceReo.loadUsertstate()
     }
+
     private fun changeToolbar() {
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE

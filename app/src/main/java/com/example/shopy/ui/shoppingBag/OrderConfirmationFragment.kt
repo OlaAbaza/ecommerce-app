@@ -1,5 +1,6 @@
 package com.example.shopy.ui.shoppingBag
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,6 +14,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,6 +23,7 @@ import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.data.dataLayer.entity.priceRules.PriceRule
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
@@ -30,10 +33,12 @@ import com.example.shopy.datalayer.entity.ads_discount_codes.DiscountCode
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.models.*
+import com.example.shopy.ui.payment.Checkout_Activity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_order_confirmation.*
 import timber.log.Timber
+import java.io.Serializable
 
 
 class OrderConfirmationFragment : Fragment() {
@@ -130,7 +135,7 @@ class OrderConfirmationFragment : Fragment() {
             }
 
         })
-        binding.cvAddress.setOnClickListener {
+        binding.addressBtn.setOnClickListener {
             val action = NavGraphDirections.actionGlobalAddressFragment()
             findNavController().navigate(action)
         }
@@ -141,7 +146,7 @@ class OrderConfirmationFragment : Fragment() {
             binding.discountBtnHide.visibility = View.VISIBLE
         }
         binding.discountBtnHide.setOnClickListener {
-            discount_edt.visibility = View.INVISIBLE
+            discount_edt.visibility = View.GONE
             binding.discountBtnHide.visibility = View.INVISIBLE
             binding.discountBtn.visibility = View.VISIBLE
         }
@@ -154,12 +159,25 @@ class OrderConfirmationFragment : Fragment() {
                 Toast.makeText(context, "please, set your address", Toast.LENGTH_SHORT).show()
             }
         }
-        orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<Boolean> {
-            if (it) {
+        orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<GetOrders?> {
+            if (it!=null) {
                 Timber.i("order+" + it)
                 orderViewModel.delAllItems()
-                val action = NavGraphDirections.actionGlobalShopTabFragment2()
-                findNavController().navigate(action)
+//                val action = NavGraphDirections.actionGlobalShopTabFragment2()
+//                findNavController().navigate(action)
+                it?.let {
+                   // findNavController().popBackStack(R.id.meFragment, true)
+                    //val navOption = NavOptions.Builder().setPopUpTo(R.id.meFragment, false).build()
+                    startActivity(
+                        Intent(requireActivity(), Checkout_Activity::class.java).putExtra(
+                            "amount",
+                            totalPrice.toString()
+                        )
+                            .putExtra("order", it.orders as? Serializable)
+                    )
+                    findNavController().navigateUp()
+                }
+
             } else {
                 Toast.makeText(context, "error Try again please", Toast.LENGTH_SHORT).show()
             }
@@ -219,16 +237,17 @@ class OrderConfirmationFragment : Fragment() {
         if (discount.isEmpty()) {
             isDiscount=false
             binding.discountEdt.setError("Sorry, this coupon is invalid")
-            binding.totalDiscountTxt.text = "0.0"
+            binding.totalDiscountTxt.text = "---"
             binding.totalPriceTxt.text=(totalPrice).toString() + " EGP"
            // Toast.makeText(context, "Sorry, this coupon is invalid", Toast.LENGTH_SHORT).show()
         } else {
             isDiscount=true
-            binding.totalDiscountTxt.text = "10 %"
+            binding.totalDiscountTxt.text = "10%"
             discountAmount = ((totalPrice*10)/100)
             discountCode=discount.get(0).code
             Timber.i("olaaa discountAmount"+discountAmount+"  "+totalDiscont+"  "+totalPrice)
-            binding.totalPriceTxt.text=(totalPrice-discountAmount).toString() + " EGP"
+            totalPrice=(totalPrice-discountAmount)
+            binding.totalPriceTxt.text=totalPrice.toString() + " EGP"
 
         }
     }
@@ -290,6 +309,6 @@ class OrderConfirmationFragment : Fragment() {
         requireActivity().toolbar.setNavigationOnClickListener {
             view?.findNavController()?.popBackStack()
         }
-        requireActivity().toolbar_title.text = "Order Confirmation"
+        requireActivity().toolbar_title.text = "OrderConfirmation"
     }
 }
