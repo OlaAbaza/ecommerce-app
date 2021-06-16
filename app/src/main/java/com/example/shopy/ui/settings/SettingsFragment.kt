@@ -57,87 +57,26 @@ class SettingsFragment : Fragment() {
             requireActivity(),
             viewModelFactory
         )[SettingsViewModel::class.java]
-        binding.devByRecView.adapter = SettingsAdapter(
-            listOf(
-                DeveloperModel(
-                    "AbdElRahman Nabil",
-                    "https://github.com/AbdelrahmanNabil77",
-                    "https://www.linkedin.com/in/abdelrahman-nabil-060124111/"
-                ),
-                DeveloperModel(
-                    "Esraa Fathy",
-                    "https://github.com/EsraaFathy/EsraaFathy",
-                    "https://www.linkedin.com/in/esraafathy1998/"
-                ),
-                DeveloperModel(
-                    "Ola Abaza",
-                    "https://github.com/OlaAbaza",
-                    "https://www.linkedin.com/in/ola-abaza/"
-                ),
-                DeveloperModel(
-                    "Fayza ElShorbagy",
-                    "https://github.com/fayza55elshorbagy",
-                    "https://www.linkedin.com/in/fayza-elshorbagy/"
-                )
-            )
-        )
-
-        binding.developedByBtn.setOnClickListener {
-            binding.developedByBtn.visibility = View.GONE
-            binding.developedByBtnHide.visibility = View.VISIBLE
-            binding.devByRecView.visibility = View.VISIBLE
 
 
+
+        binding.developedByLabel.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToDevelopedByFragment())
         }
-        binding.developedByBtnHide.setOnClickListener {
-            binding.developedByBtnHide.visibility = View.GONE
-            binding.devByRecView.visibility = View.GONE
-            binding.developedByBtn.visibility = View.VISIBLE
-
-
-        }
-        binding.addressBtn.setOnClickListener {
+        binding.editAddress.setOnClickListener {
             findNavController().navigate(NavGraphDirections.actionGlobalAddressFragment())
         }
-        binding.profileBtn.setOnClickListener {
+        binding.editProfile.setOnClickListener {
             findNavController().navigate(NavGraphDirections.actionGlobalProfileFragment())
         }
-        binding.aboutBtn.setOnClickListener {
 
-            binding.aboutBtn.visibility = View.GONE
-            binding.aboutBtnHide.visibility = View.VISIBLE
-
-            binding.aboutTV.visibility = View.VISIBLE
-
-        }
-        binding.aboutBtnHide.setOnClickListener {
-            binding.aboutBtnHide.visibility = View.GONE
-            binding.aboutTV.visibility = View.GONE
-            binding.aboutBtn.visibility = View.VISIBLE
-
+        binding.aboutLabel.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToAboutFragment())
         }
 
-        var faqList = listOf(
-            FAQModel("Is this app available on in Egypt?", "Yes, it's exclusive in Egypt."),
-            FAQModel("How much are the delivery fees?", "It's based on your location."),
-            FAQModel("What are the payment methods?", "You can pay either online or on delivery."),
-            FAQModel(
-                "What is the return policy?",
-                "You have 14 days to return the product but it needs to a brand-new, or 30 days if there is any defect in it."
-            )
-        )
-        binding.faqRecView.adapter = FAQAdapter(faqList)
+        binding.FAQlabel.setOnClickListener {
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFAQFragment())
 
-        binding.faqBtn.setOnClickListener {
-            binding.faqBtn.visibility = View.GONE
-            binding.faqBtnHide.visibility = View.VISIBLE
-            binding.faqRecView.visibility = View.VISIBLE
-
-        }
-        binding.faqBtnHide.setOnClickListener {
-            binding.faqBtnHide.visibility = View.GONE
-            binding.faqRecView.visibility = View.GONE
-            binding.faqBtn.visibility = View.VISIBLE
         }
         binding.signout.setOnClickListener {
 
@@ -161,7 +100,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun changeToolbar() {
+     fun changeToolbar() {
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
