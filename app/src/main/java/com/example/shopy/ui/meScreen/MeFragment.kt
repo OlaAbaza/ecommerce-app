@@ -98,17 +98,15 @@ class MeFragment : Fragment() {
             findNavController().navigate(action)
         }
         meViewModel.getFourWishList().observe(requireActivity(), {
-            if (it.isEmpty()&&(isLoged())) {
+            if (it.isEmpty() && (isLoged())) {
                 bindingMeScreen.emptyStateGroup.visibility = View.VISIBLE
                 bindingMeScreen.emptyStateGroup1.visibility = View.VISIBLE
-            }
-            else if(!(isLoged())){
+            } else if (!(isLoged())) {
                 bindingMeScreen.emptyStateGroup1.visibility = View.VISIBLE
                 bindingMeScreen.tvLogged.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 bindingMeScreen.emptyStateGroup.visibility = View.GONE
-                bindingMeScreen.emptyStateGroup1.visibility = View. GONE
+                bindingMeScreen.emptyStateGroup1.visibility = View.GONE
             }
 
             wishListData = it
@@ -156,16 +154,27 @@ class MeFragment : Fragment() {
                 meViewModel.getUnPaidOrders(meDataSourceReo.loadUsertId().toLong())
 
                 meViewModel.paidOrders.observe(viewLifecycleOwner, {
-                    bindingMeScreen.paidNumbers.text = it.toString()
+                    if (it == 0)
+                        bindingMeScreen.paidNumbers.visibility = View.INVISIBLE
+                    else {
+                        bindingMeScreen.paidNumbers.text = it.toString()
+                        bindingMeScreen.paidNumbers.visibility = View.VISIBLE
+                    }
                 })
                 meViewModel.unPaidOrders.observe(viewLifecycleOwner, {
-                    bindingMeScreen.UnPaidNumbers.text = it.toString()
+                    if (it == 0)
+                        bindingMeScreen.UnPaidNumbers.visibility = View.INVISIBLE
+                    else {
+                        bindingMeScreen.UnPaidNumbers.text = it.toString()
+                        bindingMeScreen.UnPaidNumbers.visibility = View.VISIBLE
+                    }
+
                 })
             } else {
                 Toast.makeText(requireContext(), "There is no network", Toast.LENGTH_SHORT).show()
             }
 
-            bindingMeScreen.hiText.text = "Hi! ${meDataSourceReo.loadUsertName()}"
+            bindingMeScreen.hiText.text = "Hi, ${meDataSourceReo.loadUsertName()}"
             bindingMeScreen.hiText.visibility = View.VISIBLE
             bindingMeScreen.wishRecyclerView.visibility = View.VISIBLE
             bindingMeScreen.regesterAndLogin.visibility = View.INVISIBLE
@@ -234,13 +243,13 @@ class MeFragment : Fragment() {
         requireActivity().settingIcon.setColorFilter(getResources().getColor(R.color.black))
         requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
         requireActivity().toolbar_title.setTextColor(Color.BLACK)
 
         requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         requireActivity().toolbar.setNavigationIcon(null)
-        requireActivity().toolbar_title.text = "Me"
+        requireActivity().toolbar_title.text = ""
 
     }
 
