@@ -68,7 +68,12 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         super.onSubClick(position)
         subCategoryIndex=position
         subList=getSubCategoryItems(position)
-        binding.itemsRecView.adapter= CategoryItemAdapter(subList,requireContext(),this)
+        if (subList.size!=0) {
+            binding.placeHolder.visibility=View.GONE
+            binding.itemsRecView.adapter = CategoryItemAdapter(subList, requireContext(), this)
+        }else{
+            binding.placeHolder.visibility=View.VISIBLE
+        }
         binding.subcategoriesRecView.adapter!!.notifyDataSetChanged()
     }
     override fun onMainClick(position: Int) {
@@ -82,6 +87,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
             category_constraintlayout.visibility = View.VISIBLE
             catViewModel.fetchCatProducts(colID).observe(requireActivity(), {
                 products = it
+                binding.placeHolder.visibility=View.GONE
                 binding.itemsRecView.adapter = CategoryItemAdapter(products, requireContext(), this)
                 Log.d("hitler", "list size: " + it.size)
                 binding.itemsRecView.adapter!!.notifyDataSetChanged()
