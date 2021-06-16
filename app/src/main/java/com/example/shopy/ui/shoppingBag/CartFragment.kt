@@ -275,7 +275,7 @@ class CartFragment : Fragment() {
         requireActivity().findViewById<View>(R.id.favourite).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.cartView).visibility = View.INVISIBLE
         requireActivity().toolbar_title.setTextColor(Color.WHITE)
-
     }
+
 }
 

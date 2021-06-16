@@ -10,10 +10,10 @@ import java.util.regex.Pattern
 class Utils {
 
     companion object{
-        //toolbar Image
-        lateinit var toolbarImg: ImageView
-        //toolbar cart
-        lateinit var cartView : View
+//        //toolbar Image
+//        lateinit var toolbarImg: ImageView
+//        //toolbar cart
+//        lateinit var cartView : View
 
         fun validateEmail(userEmail: String):Boolean{
             val patternEmail: Pattern = Pattern.compile("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}\$")

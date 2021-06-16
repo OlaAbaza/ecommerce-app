@@ -336,11 +336,9 @@ class ProuductDetailsFragment : Fragment() {
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
-        requireActivity().findViewById<View>(R.id.favourite).favouriteButton.visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.favourite).favouriteItems.visibility = View.INVISIBLE
 
-        requireActivity().findViewById<View>(R.id.cartView).cartButton.visibility = View.VISIBLE
-        requireActivity().findViewById<View>(R.id.cartView).cartItems.visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.favourite).visibility = View.INVISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
 
         requireActivity().toolbar_title.setTextColor(Color.BLACK)
 
