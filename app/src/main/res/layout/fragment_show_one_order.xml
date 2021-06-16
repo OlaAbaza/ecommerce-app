@@ -15,6 +15,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp">
+
+            <LinearLayout
+                android:id="@+id/line1"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/state_circle_shape"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/tv_pay"
+                app:layout_constraintTop_toTopOf="parent"/>
             <TextView
                 android:id="@+id/tv_pay"
                 android:layout_width="wrap_content"
@@ -27,7 +38,7 @@
                 android:textColor="@color/black"
                 app:layout_constraintHorizontal_bias="0.01"
                 app:layout_constraintBottom_toTopOf="@id/orderIDNotEditable"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/line1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,12 +110,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="@string/created_at"
+                android:padding="5dp"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintTop_toBottomOf="@id/totalPriceEditable" />
 
             <TextView
+                android:padding="5dp"
                 android:id="@+id/createdAtEditable"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
@@ -124,10 +137,12 @@
                 app:layout_constraintTop_toBottomOf="@id/created_at"
                 app:layout_constraintStart_toStartOf="parent"
                 android:text="@string/payment_type"
+                android:padding="5dp"
                 style="@style/text_style"
                 android:id="@+id/paymentTypeNotEditable"
                 />
             <TextView
+                android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/created_at"
@@ -147,16 +162,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/paymentTypeEditable"
                 />
-<!--            <View-->
-<!--                android:id="@+id/line1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="1dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:background="@color/gray"-->
-<!--                android:orientation="horizontal"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/imageItemsRecycler" />-->
+
+
 
 <!--            <Button-->
 <!--                android:id="@+id/cancelButton"-->
@@ -185,20 +192,6 @@
 <!--                android:textColor="@color/white"-->
 <!--                app:layout_constraintEnd_toEndOf="parent"-->
 <!--                app:layout_constraintStart_toEndOf="@id/cancelButton"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/line1" />-->
-<!--            <TextView-->
-<!--                android:id="@+id/cashText"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:text="@string/cash"-->
-<!--                android:visibility="gone"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="17sp"-->
-<!--                android:textColor="@color/green"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toEndOf="@id/cancelButton"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
 <!--                app:layout_constraintTop_toBottomOf="@id/line1" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 package com.example.shopy.ui.displayOrderFragment
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.data.dataLayer.Repository
@@ -52,8 +51,6 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
         disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
-                Log.d("TAG", "getUnPaidOrders(userId: Long)")
-
                 orders.postValue(
                     FilterData.getUnPaidData(
                         FilterData.getAllData(vehicles.orders!!, userId)

@@ -1,6 +1,7 @@
 package com.example.shopy.ui.displayOrderFragment
 
 //import android.util.Log
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
@@ -81,12 +82,14 @@ class OrderDisplayAdapter(context: Context,
         private val textId = itemView.findViewById<TextView>(R.id.orderIdEditable)
         private val textPrice = itemView.findViewById<TextView>(R.id.totalPriceEditable)
         private val currencyCode = itemView.findViewById<TextView>(R.id.currency_code)
+        private val tvPay = itemView.findViewById<TextView>(R.id.tv_pay)
         private val cash = itemView.findViewById<TextView>(R.id.cashText)
         private val createdAt = itemView.findViewById<TextView>(R.id.createdAtEditable)
         val payNow: Button = itemView.findViewById(R.id.payButton)
         val cancel: Button = itemView.findViewById(R.id.cancelButton)
         val imageorderRecycler = itemView.findViewById<RecyclerView>(R.id.imageItemsRecycler)
 
+        @SuppressLint("SetTextI18n")
         fun binding(order: GetOrders.Order?) {
             textId.text = "#" + order!!.id.toString()
             textPrice.text = order.total_price ?: "not known"
@@ -109,7 +112,9 @@ class OrderDisplayAdapter(context: Context,
                 if (order.financial_status == "paid") {
                     payNow.visibility = View.GONE
                     cancel.visibility = View.GONE
+                    tvPay.text = "Paid Order"
                 } else {
+                    tvPay.text = "waiting for payment"
                     payNow.visibility = View.VISIBLE
                     cancel.visibility = View.VISIBLE
                 }

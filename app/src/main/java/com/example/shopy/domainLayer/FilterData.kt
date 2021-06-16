@@ -1,7 +1,9 @@
 package com.example.shopy.domainLayer
 
 import android.annotation.SuppressLint
+import android.util.Log
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.datalayer.entity.allproducts.allProduct
 
 class FilterData {
@@ -52,5 +54,27 @@ class FilterData {
             }
             return imagesOrders
         }
+        fun getProductsIDs(order : OneOrderResponce.Order): List<Long?>{
+            val list : MutableList<Long> = arrayListOf()
+            for (line in order.line_items!!){
+                list.add(line?.product_id ?:0)
+            }
+
+            return list
+        }
+
+        fun getListOfImageForOneItem(listIDs :List<Long?>, products: List<allProduct>): MutableList<String>{
+            val imagesOrders : MutableList<String> = arrayListOf()
+            for (itemID in listIDs){
+                for (item in products){
+                    if (itemID == item.id.toLong())
+                        imagesOrders.add(item.image.src)
+                }
+            }
+            return imagesOrders
+        }
     }
+
+
+
 }

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +26,6 @@ import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentDisplayOrderBinding
-import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import com.example.shopy.domainLayer.FilterData
@@ -45,7 +43,6 @@ class DisplayOrderFragment : Fragment() {
     private var tabId: Int = 0
     private var userID: Long = 0
     private lateinit var displayOrderViewModel: DisplayOrderViewModel
-    private var imagesOrders: MutableList<List<String>> = arrayListOf()
 
     @SuppressLint("LogNotTimber")
     override fun onCreateView(
@@ -145,9 +142,11 @@ class DisplayOrderFragment : Fragment() {
                     view.progressPar.visibility = View.VISIBLE
                     when (tab.position) {
                         0 -> {
+                            tabId = 0
                             displayOrderViewModel.getPaidOrders(userID)
                         }
                         1 -> {
+                            tabId = 1
                             displayOrderViewModel.getUnPaidOrders(userID)
                         }
                     }
@@ -273,6 +272,7 @@ class DisplayOrderFragment : Fragment() {
     }
 
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun changeToolbar() {
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE

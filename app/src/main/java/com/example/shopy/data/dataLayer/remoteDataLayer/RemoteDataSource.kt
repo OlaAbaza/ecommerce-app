@@ -4,6 +4,7 @@ package com.example.shopy.data.dataLayer.remoteDataLayer
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.allproducts.AllProducts
 import com.example.shopy.datalayer.entity.custom_product.Product
@@ -56,7 +57,7 @@ interface RemoteDataSource {
     fun deleteOrder(order_id : Long)
     fun observeDeleteOrder():MutableLiveData<Boolean>
 
-    fun getOneOrders(id: Long) : Observable<GetOrders.Order>
+    fun getOneOrders(id: Long) : Observable<OneOrderResponce>
 
 
 }

@@ -2,6 +2,7 @@ package com.example.shopy.datalayer.network
 
 import com.example.shopy.data.dataLayer.entity.discount.discountCodes
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.data.dataLayer.itemPojo.Delete
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
@@ -117,7 +118,7 @@ interface NetworkService {
     fun getAllOrders() : Observable<GetOrders>
 
     @GET("orders/{id}.json")
-    fun getOneOrders(@Path("id") id: Long) : Observable<GetOrders.Order>
+    fun getOneOrders(@Path("id") id: Long) : Observable<OneOrderResponce>
 
     @DELETE("orders/{id}.json")
     fun deleteOrder(@Path("id")order_id : Long) :Call<Delete>
