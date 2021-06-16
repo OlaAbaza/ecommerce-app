@@ -175,7 +175,7 @@ class OrderConfirmationFragment : Fragment() {
                         )
                             .putExtra("order", it.orders as? Serializable)
                     )
-                    findNavController().navigateUp()
+               //  findNavController().backStack.clear()
                 }
 
             } else {

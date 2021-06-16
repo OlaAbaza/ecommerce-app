@@ -1,20 +1,13 @@
 package com.example.shopy.ui.mainActivity
 
-import android.app.Activity
 import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
@@ -24,10 +17,8 @@ import com.example.shopy.data.dataLayer.Repository
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.domainLayer.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 
 class MainActivity : AppCompatActivity() {
