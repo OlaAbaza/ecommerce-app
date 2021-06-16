@@ -5,28 +5,34 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.search.ShopSearchFragment"
-    android:layout_marginTop="20dp">
+    android:layout_marginTop="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
 
     <Spinner
+        android:gravity="center"
         android:id="@+id/sortSpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:entries="@array/sortArr"
+        android:layout_marginLeft="20dp"
         />
     <Spinner
         android:id="@+id/filterSpinner"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:entries="@array/filterArr"
+        android:layout_marginRight="30dp"
         />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/itemsRecView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sortSpinner"
         app:layout_constraintBottom_toBottomOf="parent"

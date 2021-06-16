@@ -23,6 +23,7 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopTabViewModel
 import com.example.shopy.domainLayer.Utils
 import com.example.shopy.ui.category.ItemsRecyclerClick
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
@@ -48,6 +49,9 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
     ): View? {
         _binding = FragmentShopSearchBinding.inflate(inflater, container, false)
         val view = binding.root
+        requireActivity().toolbar_title.text = "Search"
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+
         if(Utils.toolbarImg.visibility == View.VISIBLE){
             Utils.toolbarImg.visibility = View.GONE
         }
