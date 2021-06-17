@@ -69,6 +69,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
             binding.placeHolder.visibility=View.GONE
             binding.itemsRecView.adapter = CategoryItemAdapter(subList, requireContext(), this)
         }else{
+            binding.itemsRecView.adapter = CategoryItemAdapter(subList, requireContext(), this)
             binding.placeHolder.visibility=View.VISIBLE
         }
         binding.subcategoriesRecView.adapter!!.notifyDataSetChanged()
