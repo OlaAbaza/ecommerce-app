@@ -12,7 +12,7 @@ import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         val wishLiNotificationAdapter  = WishListNotificationAdapter(findViewById(R.id.favourite))
         val cartIconAdapter  = CartNotificationAdapter(findViewById(R.id.cartView))
         val viewModelFactory = ViewModelFactory(
-            Repository(
+            RepositoryImpl(
                 RemoteDataSourceImpl(),
                 RoomDataSourceImpl(RoomService.getInstance(this.application))
             ), this.application

@@ -5,7 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.models.Addresse
 import com.example.shopy.models.CreateAddress
 import com.example.shopy.models.CreateAddressX
@@ -13,7 +14,7 @@ import com.example.shopy.models.UpdateAddresse
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class AddressViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
+class AddressViewModel(val repositoryImpl: IRepository, application: Application) : AndroidViewModel(application) {
 
     private val postCustomerAddress = SingleLiveEvent<Addresse?>()
     private val defaultCustomerAddress = SingleLiveEvent<Addresse?>()
@@ -65,7 +66,7 @@ class AddressViewModel(val repository: Repository, application: Application) : A
          var data: CreateAddressX? = null
          val jop = viewModelScope.launch {
              data =
-                 repository.getCustomerAddress(id, addressID)
+                 repositoryImpl.getCustomerAddress(id, addressID)
          }
          jop.invokeOnCompletion {
 
@@ -79,7 +80,7 @@ class AddressViewModel(val repository: Repository, application: Application) : A
         var data: CreateAddressX? = null
         val jop = viewModelScope.launch {
             data =
-                repository.createCustomerAddress(id, addressObj)
+                repositoryImpl.createCustomerAddress(id, addressObj)
 
         }
         jop.invokeOnCompletion {
@@ -92,7 +93,7 @@ class AddressViewModel(val repository: Repository, application: Application) : A
     fun getCustomersAddressList(id: String) {
         var data: List<Addresse>? = null
         val jop = viewModelScope.launch {
-            data = repository.getCustomerAddresses(id)
+            data = repositoryImpl.getCustomerAddresses(id)
         }
         jop.invokeOnCompletion {
             customerAddresses.postValue(data)
@@ -105,7 +106,7 @@ class AddressViewModel(val repository: Repository, application: Application) : A
          var data: CreateAddressX? = null
          val jop = viewModelScope.launch {
              data =
-                 repository.updateCustomerAddresses(id, addressID, customerAddress)
+                 repositoryImpl.updateCustomerAddresses(id, addressID, customerAddress)
          }
          jop.invokeOnCompletion {
 
@@ -118,14 +119,14 @@ class AddressViewModel(val repository: Repository, application: Application) : A
 
     fun delCustomerAddresses(id: String, addressID: String) {
          viewModelScope.launch {
-            repository.delCustomerAddresses(id, addressID)
+            repositoryImpl.delCustomerAddresses(id, addressID)
         }
     }
 
     fun setDafaultCustomerAddress(id: String, addressID: String) {
         var data: CreateAddressX? = null
         val jop = viewModelScope.launch {
-            repository.setDafaultCustomerAddress(id, addressID)
+            repositoryImpl.setDafaultCustomerAddress(id, addressID)
         }
         jop.invokeOnCompletion {
             defaultCustomerAddress.postValue(data?.address)

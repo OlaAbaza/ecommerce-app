@@ -18,16 +18,14 @@ import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_kids_product.*
-import kotlinx.android.synthetic.main.fragment_woman_products.*
 import kotlinx.android.synthetic.main.fragment_woman_products.ads
 import kotlinx.android.synthetic.main.fragment_woman_products.codeTextView
 import kotlinx.android.synthetic.main.fragment_woman_products.itemsRecView
@@ -53,7 +51,7 @@ class KidsProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val application = requireNotNull(this.activity).application
-        val repository = Repository(
+        val repository = RepositoryImpl(
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(application))
         )

@@ -12,7 +12,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
@@ -20,19 +19,15 @@ import com.example.shopy.R
 import com.example.shopy.ui.allWishListFragment.WishListAdapter
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentMeBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
-import com.example.shopy.domainLayer.Utils
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
-import kotlinx.android.synthetic.main.fragment_sign_in.view.*
-import kotlinx.android.synthetic.main.list_toolbar_view.view.*
 import kotlinx.android.synthetic.main.list_toolbar_view.view.favouriteButton
 
 
@@ -53,7 +48,7 @@ class MeFragment : Fragment() {
         bindingMeScreen = FragmentMeBinding.inflate(inflater, container, false)
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
-        val repository = Repository(
+        val repository = RepositoryImpl(
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
         )

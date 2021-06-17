@@ -2,11 +2,12 @@ package com.example.shopy.ui.mainActivity
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 
-class MainActivityViewModel(val repository: Repository, application: Application): AndroidViewModel(application) {
+class MainActivityViewModel(val repositoryImpl: IRepository, application: Application): AndroidViewModel(application) {
 
-    fun getAllWishList()= repository.getAllWishList()
+    fun getAllWishList()= repositoryImpl.getAllWishList()
 
-    fun getAllCartList() = repository.getAllCartList()
+    fun getAllCartList() = repositoryImpl.getAllCartList()
 }

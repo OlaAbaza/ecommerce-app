@@ -3,9 +3,9 @@ package com.example.shopy.ui.shoppingBag
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.entity.priceRules.PriceRule
-import com.example.shopy.data.dataLayer.entity.priceRules.priceRules
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
@@ -14,13 +14,10 @@ import com.example.shopy.models.Addresse
 
 import kotlinx.coroutines.launch
 
-import com.example.shopy.models.OrderResponse
 import com.example.shopy.models.Orders
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
 
-class OrderViewModel(val repository: Repository, application: Application) :
+class OrderViewModel(val repositoryImpl: IRepository, application: Application) :
     AndroidViewModel(application) {
     private val orderDetalis = SingleLiveEvent<Long>()
     private val delOrder = SingleLiveEvent<Long>()
@@ -39,7 +36,7 @@ class OrderViewModel(val repository: Repository, application: Application) :
         return customerAddresses
     }
 
-    fun getPostOrder()= repository.getCreateOrderResponse()
+    fun getPostOrder()= repositoryImpl.getCreateOrderResponse()
 
 
     fun getdelOrderID(): LiveData<Long> {
@@ -53,11 +50,11 @@ class OrderViewModel(val repository: Repository, application: Application) :
         return ChangeQuntityListener
     }
 
-    fun insertAllOrder(dataList: List<ProductCartModule>) = repository.saveAllCartList(dataList)
-    fun getAllCartList() = repository.getAllCartList()
+    fun insertAllOrder(dataList: List<ProductCartModule>) = repositoryImpl.saveAllCartList(dataList)
+    fun getAllCartList() = repositoryImpl.getAllCartList()
 
-    fun delOrder(id: Long) = viewModelScope.launch { repository.deleteOnCartItem(id) }
-    fun delAllItems() = viewModelScope.launch { repository.deleteAllFromCart() }
+    fun delOrder(id: Long) = viewModelScope.launch { repositoryImpl.deleteOnCartItem(id) }
+    fun delAllItems() = viewModelScope.launch { repositoryImpl.deleteAllFromCart() }
     fun onDelClick(id: Long) {
         delOrder.postValue(id)
     }
@@ -75,7 +72,7 @@ class OrderViewModel(val repository: Repository, application: Application) :
     fun getCustomersAddressList(id: String) {
         var data: List<Addresse>? = null
         val jop = viewModelScope.launch {
-            data = repository.getCustomerAddresses(id)
+            data = repositoryImpl.getCustomerAddresses(id)
         }
         jop.invokeOnCompletion {
             customerAddresses.postValue(data)
@@ -85,7 +82,7 @@ class OrderViewModel(val repository: Repository, application: Application) :
     }
     fun saveWishList(wishItem: Product) {
         viewModelScope.launch  {
-            repository.saveWishList(wishItem)
+            repositoryImpl.saveWishList(wishItem)
         }
     }
 
@@ -101,13 +98,13 @@ class OrderViewModel(val repository: Repository, application: Application) :
 //        }
 //    }
     fun fetchallDiscountCodeList(): MutableLiveData<AllCodes> {
-       return  repository.getAllDiscountCodeList()
+       return  repositoryImpl.getAllDiscountCodeList()
     }
 //    fun getallDiscountCodeList(): MutableLiveData<AllCodes> {
 //        return repository.getAllDiscountCodes()
 //    }
 
-    fun createOrder(order: Orders) = repository.createOrder(order)
+    fun createOrder(order: Orders) = repositoryImpl.createOrder(order)
 
 
 }

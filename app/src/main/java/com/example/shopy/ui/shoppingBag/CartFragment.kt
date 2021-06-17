@@ -18,7 +18,7 @@ import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCartBinding
@@ -26,10 +26,7 @@ import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
-import com.example.shopy.ui.customerAddress.AddressFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
 import timber.log.Timber
 
 
@@ -55,7 +52,7 @@ class CartFragment : Fragment() {
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
         binding = FragmentCartBinding.inflate(layoutInflater)
         val application = requireNotNull(this.activity).application
-        val repository = Repository(
+        val repository = RepositoryImpl(
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(application))
         )
