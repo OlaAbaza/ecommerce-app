@@ -346,7 +346,7 @@
                     android:background="@color/white"
                     android:indeterminateTint="@color/yello"
                     android:padding="130dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

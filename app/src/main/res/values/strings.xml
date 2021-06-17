@@ -152,7 +152,7 @@
     <string name="developed_by">Developed By</string>
     <string name="empty">Empty</string>
     <string name="waiting_for_payment">waiting for payment</string>
-    <string name="payment_type">Payment Type</string>
+    <string name="payment_type">Payment Method:</string>
     <string name="order_product_1_item">Order Product (1 item)</string>
     <string name="title">title</string>
     <string name="variant">Variant</string>

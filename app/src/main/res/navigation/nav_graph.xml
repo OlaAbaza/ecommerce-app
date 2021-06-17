@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/shopTabFragment2">
-
+    <activity
+        android:id="@+id/Checkout_Activity"
+        android:name="com.example.shopy.ui.payment.Checkout_Activity" />
     <fragment
         android:id="@+id/shopTabFragment2"
         android:name="com.example.shopy.ui.shopTab.ShopTabFragment"
@@ -92,7 +94,13 @@
         android:id="@+id/cartFragment2"
         android:name="com.example.shopy.ui.shoppingBag.CartFragment"
         android:label="CartFragment"
-        tools:layout="@layout/fragment_cart"/>
+        tools:layout="@layout/fragment_cart">
+        <action
+            android:id="@+id/action_cartFragment2_to_orderConfirmationFragment"
+            app:destination="@id/orderConfirmationFragment"
+            app:popUpTo="@id/cartFragment2"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/prouductDetailsFragment"
         android:name="com.example.shopy.ui.productDetailsActivity.ProuductDetailsFragment"
@@ -105,9 +113,12 @@
         android:id="@+id/allWishListFragment"
         android:name="com.example.shopy.ui.allWishListFragment.AllWishListFragment"
         android:label="AllWishListFragment" />
-    <action android:id="@+id/action_global_prouductDetailsFragment" app:destination="@id/prouductDetailsFragment" />
-    <action android:id="@+id/action_global_allWishListFragment" app:destination="@id/allWishListFragment" />
-    <action android:id="@+id/action_global_signInFragment" app:destination="@id/signInFragment"/>
+    <action android:id="@+id/action_global_prouductDetailsFragment" app:destination="@id/prouductDetailsFragment"  app:popUpTo="@+id/prouductDetailsFragment"
+        app:launchSingleTop="true" />
+    <action android:id="@+id/action_global_allWishListFragment" app:destination="@id/allWishListFragment"  app:popUpTo="@+id/allWishListFragment"
+        app:launchSingleTop="true" />
+    <action android:id="@+id/action_global_signInFragment" app:destination="@id/signInFragment" app:popUpTo="@+id/signInFragment"
+        app:launchSingleTop="true"/>
     <fragment
         android:id="@+id/orderConfirmationFragment"
         android:name="com.example.shopy.ui.shoppingBag.OrderConfirmationFragment"
@@ -117,6 +128,12 @@
             android:name="totalPrice"
             app:argType="float"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_orderConfirmationFragment_to_shopTabFragment2"
+            app:destination="@id/shopTabFragment2"
+            app:popUpTo="@id/prouductDetailsFragment"
+            app:popUpToInclusive="true"/>
+
     </fragment>
     <action android:id="@+id/action_global_orderConfirmationFragment" app:destination="@id/orderConfirmationFragment"/>
     <action android:id="@+id/action_global_addressFragment" app:destination="@id/addressFragment" />
@@ -143,7 +160,8 @@
         android:id="@+id/profileFragment"
         android:name="com.example.shopy.ui.profileFragment.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"/><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
+        tools:layout="@layout/fragment_profile"/>
+    <action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
     <fragment
         android:id="@+id/displayOrderFragment"
         android:name="com.example.shopy.ui.displayOrderFragment.DisplayOrderFragment"
@@ -152,7 +170,8 @@
             android:name="tabID"
             app:argType="integer"
             android:defaultValue="0" />
-    </fragment><action android:id="@+id/action_global_displayOrderFragment" app:destination="@id/displayOrderFragment"/>
+    </fragment>
+    <action android:id="@+id/action_global_displayOrderFragment" app:destination="@id/displayOrderFragment"/>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.shopy.ui.settings.SettingsFragment"
@@ -181,9 +200,8 @@
         android:name="com.example.shopy.ui.search.ShopSearchFragment"
         android:label="fragment_shop_search"
         tools:layout="@layout/fragment_shop_search" />
-    <action android:id="@+id/action_global_shopSearchFragment"
-
-        app:destination="@id/shopSearchFragment"/><action android:id="@+id/action_global_cartFragment2" app:destination="@id/cartFragment2"/>
+    <action android:id="@+id/action_global_shopSearchFragment" app:destination="@id/shopSearchFragment"/>
+    <action android:id="@+id/action_global_cartFragment2" app:destination="@id/cartFragment2"/>
     <fragment
         android:id="@+id/showOneOrderFragment"
         android:name="com.example.shopy.ui.showOneOrderDetails.ShowOneOrderFragment"
@@ -211,6 +229,7 @@
   android:name="com.example.shopy.ui.settings.DevelopedByFragment"
   android:label="fragment_developed_by"
   tools:layout="@layout/fragment_developed_by" />
+    <action android:id="@+id/action_global_meFragment" app:destination="@id/meFragment"/>
 
 
 

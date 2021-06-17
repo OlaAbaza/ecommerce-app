@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -83,40 +84,50 @@ class OrderDisplayAdapter(context: Context,
         private val textPrice = itemView.findViewById<TextView>(R.id.totalPriceEditable)
         private val currencyCode = itemView.findViewById<TextView>(R.id.currency_code)
         private val tvPay = itemView.findViewById<TextView>(R.id.tv_pay)
-        private val cash = itemView.findViewById<TextView>(R.id.cashText)
+       // private val cash = itemView.findViewById<TextView>(R.id.cashText)
          val seaAllDetails = itemView.findViewById<LinearLayout>(R.id.seeAllDeatails)
-        private val createdAt = itemView.findViewById<TextView>(R.id.createdAtEditable)
+      //  private val createdAt = itemView.findViewById<TextView>(R.id.createdAtEditable)
+        private val paymentMethod = itemView.findViewById<TextView>(R.id.paymentTypeEditable)
         val payNow: Button = itemView.findViewById(R.id.payButton)
         val cancel: Button = itemView.findViewById(R.id.cancelButton)
+        val circle:LinearLayout = itemView.findViewById(R.id.circle)
         val imageorderRecycler = itemView.findViewById<RecyclerView>(R.id.imageItemsRecycler)
 
         @SuppressLint("SetTextI18n")
         fun binding(order: GetOrders.Order?) {
             textPrice.text = order!!.total_price ?: "not known"
             currencyCode.text = order.presentment_currency ?: "not known"
-            createdAt.text = order.created_at ?: "not known"
+          //  createdAt.text = order.created_at ?: "not known"
 
             if (order.note == "Cash") {
                 payNow.visibility = View.GONE
-                cash.visibility = View.VISIBLE
+                paymentMethod.text="Cash on delivery"
+               // cash.visibility = View.VISIBLE
 
                 if (order.financial_status == "paid") {
                     cancel.visibility = View.GONE
-                    cash.visibility = View.GONE
+                    circle.setBackgroundResource(R.drawable.state_paid)
+                    tvPay.text = "Paid Order"
+                    //cash.visibility = View.GONE
                 } else {
+                    tvPay.text = "waiting for payment"
                     cancel.visibility = View.VISIBLE
+                    circle.setBackgroundResource(R.drawable.state_circle_shape)
                 }
 
             } else {
-                cash.visibility = View.GONE
+                paymentMethod.text="Credit/Debit Card"
+              //  cash.visibility = View.GONE
                 if (order.financial_status == "paid") {
                     payNow.visibility = View.GONE
                     cancel.visibility = View.GONE
                     tvPay.text = "Paid Order"
+                    circle.setBackgroundResource(R.drawable.state_paid)
                 } else {
                     tvPay.text = "waiting for payment"
                     payNow.visibility = View.VISIBLE
                     cancel.visibility = View.VISIBLE
+                    circle.setBackgroundResource(R.drawable.state_circle_shape)
                 }
             }
 

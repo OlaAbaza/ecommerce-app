@@ -7,6 +7,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.base.SingleLiveEvent
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.data.dataLayer.itemPojo.Delete
@@ -39,7 +40,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     var allDiscountCode = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
     var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    var createOrder = MutableLiveData<GetOrders?>()
+    var createOrder = SingleLiveEvent<GetOrders?>()
     var catProducts = MutableLiveData<List<Product>>()
     var allProducts = MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>()
 

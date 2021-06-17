@@ -3,6 +3,7 @@ package com.example.shopy.data.dataLayer.remoteDataLayer
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.example.shopy.base.SingleLiveEvent
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.datalayer.entity.ads_discount_codes.AllCodes
@@ -32,7 +33,7 @@ interface RemoteDataSource {
 
     suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX?
     fun createOrder(order: Orders)
-    fun getCreateOrderResponse(): MutableLiveData<GetOrders?>
+    fun getCreateOrderResponse(): SingleLiveEvent<GetOrders?>
 
      //shopTab
      fun getWomanProductsList() : MutableLiveData<ProductsList>

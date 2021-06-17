@@ -26,6 +26,7 @@ import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.example.shopy.ui.customerAddress.AddressFragmentDirections
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
@@ -102,10 +103,12 @@ class CartFragment : Fragment() {
 
         })
         binding.checkoutButton.setOnClickListener {
-            val action = NavGraphDirections.actionGlobalOrderConfirmationFragment(
-                totalPrice.toFloat()
-            )
-            findNavController().navigate(action)
+//            val action = NavGraphDirections.actionGlobalOrderConfirmationFragment(
+//                totalPrice.toFloat()
+//            )
+//            findNavController().navigate(action)
+            view.findNavController()
+                    .navigate(CartFragmentDirections.actionCartFragment2ToOrderConfirmationFragment( totalPrice.toFloat()))
         }
 
         orderViewModel.getAllCartList().observe(viewLifecycleOwner, {

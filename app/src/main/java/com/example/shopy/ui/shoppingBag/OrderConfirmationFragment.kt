@@ -1,5 +1,6 @@
 package com.example.shopy.ui.shoppingBag
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -14,7 +15,9 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavOptions
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -55,6 +58,7 @@ class OrderConfirmationFragment : Fragment() {
     private var paymentMethod = ""
     private var isDefaultAddress = false
     private var isDiscount = false
+    private var isCash = false
     private var priceRulesList: List<PriceRule> = arrayListOf()
     private var discountCodesList: List<DiscountCode> = arrayListOf()
 
@@ -166,15 +170,23 @@ class OrderConfirmationFragment : Fragment() {
 //                val action = NavGraphDirections.actionGlobalShopTabFragment2()
 //                findNavController().navigate(action)
                 it?.let {
-                   // findNavController().popBackStack(R.id.meFragment, true)
-                    //val navOption = NavOptions.Builder().setPopUpTo(R.id.meFragment, false).build()
-                    startActivity(
-                        Intent(requireActivity(), Checkout_Activity::class.java).putExtra(
-                            "amount",
-                            totalPrice.toString()
+                    if(isCash) {
+//                        val action = NavGraphDirections.actionGlobalShopTabFragment2()
+//                        findNavController().navigate(action)
+                        view.findNavController()
+                            .navigate(OrderConfirmationFragmentDirections.actionOrderConfirmationFragmentToShopTabFragment2())
+                    }
+                    else {
+                       // Navigation.findNavController(view).navigate(R.id.Checkout_Activity)
+
+                        startActivity(
+                            Intent(requireActivity(), Checkout_Activity::class.java).putExtra(
+                                "amount",
+                                totalPrice.toString()
+                            )
+                                .putExtra("order", it.orders as? Serializable)
                         )
-                            .putExtra("order", it.orders as? Serializable)
-                    )
+                    }
                //  findNavController().backStack.clear()
                 }
 
@@ -286,10 +298,16 @@ class OrderConfirmationFragment : Fragment() {
     }
 
     private fun getPaymentMethod() {
-        if (binding.radioCash.isChecked)
+        if (binding.radioCash.isChecked){
             paymentMethod = "Cash"
-        else if (binding.radioCredit.isChecked)
+            isCash=true
+        }
+
+        else if (binding.radioCredit.isChecked){
             paymentMethod = "Card"
+            isCash=false
+        }
+
     }
 
     private fun isLoged(): Boolean {
