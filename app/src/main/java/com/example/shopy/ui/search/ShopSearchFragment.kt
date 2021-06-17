@@ -153,7 +153,17 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                 Log.i("output","***********iiii")
 
                 var filteredProducts = sortedProducts.filter { it.title!!.contains(query?:"none",true)&& it.productType!!.contains(productFilter,true)}
-                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext(),this@ShopSearchFragment)
+                if(filteredProducts.size!=0) {
+                    binding.placeHolder.visibility=View.GONE
+                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(
+                        filteredProducts,
+                        requireContext(),
+                        this@ShopSearchFragment
+                    )
+                }
+                else{
+                    binding.placeHolder.visibility=View.VISIBLE
+                }
                 return true
             }
 
@@ -161,7 +171,17 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                 Log.i("output","***********ppp")
 
                 var filteredProducts = sortedProducts.filter { it.title!!.contains(newText?:"none",true)&& it.productType!!.contains(productFilter,true) }//&& it.productType.equals("shoes",true)}
-                binding.itemsRecView.adapter= SearchCategoryItemAdapter(filteredProducts,requireContext(),this@ShopSearchFragment)
+                if(filteredProducts.size!=0) {
+                    binding.placeHolder.visibility=View.GONE
+                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(
+                        filteredProducts,
+                        requireContext(),
+                        this@ShopSearchFragment
+                    )
+                }
+                else{
+                    binding.placeHolder.visibility=View.VISIBLE
+                }
                 return true
             }
 
