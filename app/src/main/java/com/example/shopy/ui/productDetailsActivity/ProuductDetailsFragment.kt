@@ -21,7 +21,7 @@ import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.StringsUtils
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentProuductDetailsBinding
@@ -31,9 +31,6 @@ import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
-import kotlinx.android.synthetic.main.list_toolbar_view.view.*
 import java.lang.ref.WeakReference
 
 
@@ -77,7 +74,7 @@ class ProuductDetailsFragment : Fragment() {
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
 
         val repository = WeakReference(
-            Repository(
+            RepositoryImpl(
                 RemoteDataSourceImpl(),
                 RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
             )

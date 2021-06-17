@@ -2,7 +2,6 @@ package com.example.shopy.ui.shopTab.shopTabCategories
 
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -20,17 +18,14 @@ import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_kids_product.*
 import kotlinx.android.synthetic.main.fragment_on_sale_product.*
-import kotlinx.android.synthetic.main.fragment_woman_products.*
 import kotlinx.android.synthetic.main.fragment_woman_products.ads
 import kotlinx.android.synthetic.main.fragment_woman_products.codeTextView
 import kotlinx.android.synthetic.main.fragment_woman_products.itemsRecView
@@ -57,7 +52,7 @@ class OnSaleProductFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val application = requireNotNull(this.activity).application
-        val repository = Repository(
+        val repository = RepositoryImpl(
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(application))
         )

@@ -1,7 +1,5 @@
 package com.example.shopy.ui.search
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -16,7 +14,7 @@ import com.example.myapplication.SearchCategoryItemAdapter
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentShopSearchBinding
@@ -24,7 +22,6 @@ import com.example.shopy.datalayer.entity.allproducts.allProduct
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 
 import com.example.shopy.ui.shopTab.ShopTabViewModel
-import com.example.shopy.domainLayer.Utils
 import com.example.shopy.ui.category.ItemsRecyclerClick
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -55,7 +52,7 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
         changeToolbar()
 
         val application = requireNotNull(this.activity).application
-        val repository = Repository(
+        val repository = RepositoryImpl(
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(application))
         )

@@ -3,8 +3,8 @@ package com.example.shopy.ui.productDetailsActivity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.data.dataLayer.Repository
-import com.example.shopy.datalayer.entity.itemPojo.Options
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class ProductDetailsViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
+class ProductDetailsViewModel(val repositoryImpl: IRepository, application: Application) : AndroidViewModel(application) {
 
     private var saveWishListJob: Job? = null
     private var deleteOneWishItemJob: Job? = null
@@ -24,30 +24,30 @@ class ProductDetailsViewModel(val repository: Repository, application: Applicati
      val progressPar : MutableLiveData<Boolean> = MutableLiveData()
 
     fun getProductByIdFromNetwork(id: Long) {
-        repository.getProuduct(id)
+        repositoryImpl.getProuduct(id)
     }
 
-    fun observeProductDetails() = repository.prouductDetaild
+    fun observeProductDetails() = repositoryImpl.prouductDetaild
 
     fun saveWishList(wishItem: Product) {
         saveWishListJob = CoroutineScope(Dispatchers.IO).launch {
-            repository.saveWishList(wishItem)
+            repositoryImpl.saveWishList(wishItem)
         }
     }
 
     fun deleteOneWishItem(id: Long) {
         deleteOneWishItemJob = CoroutineScope(Dispatchers.IO).launch {
-            repository.deleteOneWishItem(id)
+            repositoryImpl.deleteOneWishItem(id)
         }
     }
 
-    fun getOneWithItemFromRoom(id: Long) = repository.getOneWithItem(id)
+    fun getOneWithItemFromRoom(id: Long) = repositoryImpl.getOneWithItem(id)
 
 
     fun saveCartList(cartItem: ProductCartModule) {
         if (isSignin()) {
             saveToCartJob = CoroutineScope(Dispatchers.IO).launch {
-                repository.saveCartList(cartItem)
+                repositoryImpl.saveCartList(cartItem)
             }
         }else{
             signInBoolesn.value = true

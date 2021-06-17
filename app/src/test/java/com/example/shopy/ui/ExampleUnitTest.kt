@@ -1,4 +1,4 @@
-package com.example.shopy
+package com.example.shopy.ui
 
 import org.junit.Test
 

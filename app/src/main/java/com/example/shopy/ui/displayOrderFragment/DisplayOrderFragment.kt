@@ -22,7 +22,7 @@ import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.StringsUtils
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentDisplayOrderBinding
@@ -57,7 +57,7 @@ class DisplayOrderFragment : Fragment() {
 
 
         val viewModelFactory = ViewModelFactory(
-            Repository(
+            RepositoryImpl(
                 RemoteDataSourceImpl(),
                 RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
             ), requireActivity().application

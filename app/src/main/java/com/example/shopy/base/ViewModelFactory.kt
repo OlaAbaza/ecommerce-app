@@ -20,7 +20,8 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.CategoriesViewModel
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.ui.profileFragment.ProfileViewModel
 import com.example.shopy.ui.allWishListFragment.AllWishListViewModel
 import com.example.shopy.ui.customerAddress.AddressViewModel
@@ -36,51 +37,54 @@ import com.example.shopy.ui.showOneOrderDetails.ShowOneOrderDetailsViewModel
 import com.example.shopy.ui.signIn.SignInViewModel
 
 class ViewModelFactory(
-    private val repository: Repository,
+    private val repositoryImpl: IRepository,
     private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SignInViewModel::class.java)) {
-            return SignInViewModel(repository,application) as T
+            return SignInViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(AddressViewModel::class.java)) {
-            return AddressViewModel(repository,application) as T
+            return AddressViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(OrderViewModel::class.java)) {
-            return OrderViewModel(repository,application) as T
+            return OrderViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(CategoriesViewModel::class.java)) {
-            return CategoriesViewModel(repository,application) as T
+            return CategoriesViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(AllWishListViewModel::class.java)) {
-            return AllWishListViewModel(repository,application) as T
+            return AllWishListViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(MeViewModel::class.java)) {
-            return MeViewModel(repository,application) as T
+            return MeViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(ProductDetailsViewModel::class.java)) {
-            return ProductDetailsViewModel(repository,application) as T
+            return ProductDetailsViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
-            return ProfileViewModel(repository,application) as T
+            return ProfileViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(DisplayOrderViewModel::class.java)) {
-            return DisplayOrderViewModel(repository,application) as T
+            return DisplayOrderViewModel(repositoryImpl,application) as T
         }
         else if (modelClass.isAssignableFrom(MainActivityViewModel::class.java)) {
-            return MainActivityViewModel(repository,application) as T
+            return MainActivityViewModel(repositoryImpl,application) as T
         }
         else if(modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
-            return SettingsViewModel(repository, application) as T
+            return SettingsViewModel(repositoryImpl, application) as T
         }
         else if(modelClass.isAssignableFrom(ShopTabViewModel::class.java)) {
-            return ShopTabViewModel(repository, application) as T
+            return ShopTabViewModel(repositoryImpl, application) as T
         }
         else if(modelClass.isAssignableFrom(PaymentViewModel::class.java)) {
-            return PaymentViewModel(repository, application) as T
+            return PaymentViewModel(repositoryImpl, application) as T
         }
         else if(modelClass.isAssignableFrom(ShowOneOrderDetailsViewModel::class.java)) {
-            return ShowOneOrderDetailsViewModel(repository, application) as T
+            return ShowOneOrderDetailsViewModel(repositoryImpl, application) as T
+        }
+        else {
+            throw IllegalArgumentException("ViewModel Not Found")
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
