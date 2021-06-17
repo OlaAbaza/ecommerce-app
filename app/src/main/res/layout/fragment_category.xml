@@ -99,20 +99,41 @@
             app:layout_constraintTop_toBottomOf="@id/mainCategoriesRecView"
             app:spanCount="2"
             tools:itemCount="30"
+            android:visibility="visible"
             tools:listitem="@layout/category_item" />
-        <ImageView
+
+        <androidx.constraintlayout.widget.Group
             android:id="@+id/placeHolder"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/placeholder"
-            android:scaleType="fitCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:visibility="gone"
+            app:constraint_referenced_ids="empty_text,empty_img" />
+        <ImageView
+            android:id="@+id/empty_img"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:background="@drawable/ic_empty_page"
+            android:visibility="visible"
+           app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/subcategoriesRecView"
-            app:layout_constraintTop_toBottomOf="@id/mainCategoriesRecView" />
+            app:layout_constraintTop_toBottomOf="@id/mainCategoriesRecView"
+            />
 
-
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/dark_gray"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/subcategoriesRecView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/empty_img"
+            android:text="@string/it_is_empty_here" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
