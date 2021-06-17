@@ -159,6 +159,11 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                     )
                 }
                 else{
+                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(
+                        filteredProducts,
+                        requireContext(),
+                        this@ShopSearchFragment
+                    )
                     binding.placeHolder.visibility=View.VISIBLE
                 }
                 return true
@@ -177,6 +182,11 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                     )
                 }
                 else{
+                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(
+                        filteredProducts,
+                        requireContext(),
+                        this@ShopSearchFragment
+                    )
                     binding.placeHolder.visibility=View.VISIBLE
                 }
                 return true
