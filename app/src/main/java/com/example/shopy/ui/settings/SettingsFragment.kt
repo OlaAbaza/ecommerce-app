@@ -82,12 +82,12 @@ class SettingsFragment : Fragment() {
 
         }
         binding.signout.setOnClickListener {
-
-            meDataSourceReo.saveUsertState(false)
-            meDataSourceReo.saveUsertName("")
-            meDataSourceReo.saveUsertId("")
             if (NetworkChangeReceiver.isOnline) {
+                meDataSourceReo.saveUsertState(false)
+                meDataSourceReo.saveUsertName("")
+                meDataSourceReo.saveUsertId("")
                 settingsViewModel.clearRoom()
+                findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToMeFragment())
             }
             else {
                 Toast.makeText(
@@ -97,8 +97,6 @@ class SettingsFragment : Fragment() {
                 ).show()
 
             }
-
-            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToMeFragment())
 
         }
     }

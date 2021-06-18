@@ -13,8 +13,8 @@ import com.example.shopy.R
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 
-class OrdersListAdapter(line_items: List<OneOrderResponce.Order.LineItem?>,images : List<String>?) : RecyclerView.Adapter<OrdersListAdapter.ViewHolder>() {
-    var line_items: List<OneOrderResponce.Order.LineItem?> = line_items
+class OrdersListAdapter(line_items: List<GetOrders.Order.LineItem?>,images : List<String>?) : RecyclerView.Adapter<OrdersListAdapter.ViewHolder>() {
+    var line_items: List<GetOrders.Order.LineItem?> = line_items
     set(value) {
         field=value
         notifyDataSetChanged()
@@ -32,7 +32,7 @@ class OrdersListAdapter(line_items: List<OneOrderResponce.Order.LineItem?>,image
         val  quantityEditable =itemView.findViewById<TextView>(R.id.quantityEditable)
         val  itemImageOrder =itemView.findViewById<ImageView>(R.id.itemImageOrder)
         val color = itemView.findViewById<TextView>(R.id.color)
-        fun binding(lineItem: OneOrderResponce.Order.LineItem?,image :String?) {
+        fun binding(lineItem: GetOrders.Order.LineItem?,image :String?) {
             title.text = lineItem?.title ?: "Not Known"
             priceEdible.text = lineItem?.price+"EGP"
             var size = lineItem?.variant_title ?: "Not Known"

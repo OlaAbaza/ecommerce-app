@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shopy.R
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.RepositoryImpl
+import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
@@ -41,7 +42,7 @@ class ShowOneOrderFragment : Fragment() {
     private lateinit var fragmentShowOneOrderBinding:FragmentShowOneOrderBinding
     private lateinit var showOrderViewModel:ShowOneOrderDetailsViewModel
     private lateinit var images : List<String>
-    lateinit var order : OneOrderResponce.Order
+    lateinit var order : GetOrders.Order
 
 
     @SuppressLint("SetTextI18n")
@@ -123,8 +124,8 @@ class ShowOneOrderFragment : Fragment() {
 
             }
             if(it.order.note == "Cash"){
-                fragmentShowOneOrderBinding.paymentTypeEditable.text = it.order.note
-                fragmentShowOneOrderBinding.payButton.visibility = View.GONE
+                fragmentShowOneOrderBinding.paymentTypeEditable.text = it.order.note.toString()
+                fragmentShowOneOrderBinding.payButton.visibility = View.INVISIBLE
                 if (it.order.financial_status == "paid"){
                     fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
@@ -138,7 +139,7 @@ class ShowOneOrderFragment : Fragment() {
 
             }else{
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = "Credit Card"
-                fragmentShowOneOrderBinding.payButton.visibility = View.GONE
+                fragmentShowOneOrderBinding.payButton.visibility = View.VISIBLE
                 if (it.order.financial_status == "paid"){
                     fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)

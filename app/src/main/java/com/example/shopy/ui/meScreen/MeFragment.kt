@@ -137,10 +137,27 @@ class MeFragment : Fragment() {
     private fun handelViability() {
         if (isLoged()) {
             bindingMeScreen.unPaied.setOnClickListener {
-                findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(1))
+                if (NetworkChangeReceiver.isOnline) {
+                    findNavController().navigate(
+                        NavGraphDirections.actionGlobalDisplayOrderFragment(
+                            1
+                        )
+                    )
+                } else
+                    Toast.makeText(requireContext(), "There is no network", Toast.LENGTH_SHORT)
+                        .show()
+
             }
             bindingMeScreen.paidLayout.setOnClickListener {
-                findNavController().navigate(NavGraphDirections.actionGlobalDisplayOrderFragment(0))
+                if (NetworkChangeReceiver.isOnline) {
+                    findNavController().navigate(
+                        NavGraphDirections.actionGlobalDisplayOrderFragment(
+                            0
+                        )
+                    )
+                } else
+                    Toast.makeText(requireContext(), "There is no network", Toast.LENGTH_SHORT)
+                        .show()
             }
 
 
@@ -173,12 +190,11 @@ class MeFragment : Fragment() {
             bindingMeScreen.hiText.visibility = View.VISIBLE
             bindingMeScreen.wishRecyclerView.visibility = View.VISIBLE
             bindingMeScreen.regesterAndLogin.visibility = View.INVISIBLE
-            bindingMeScreen.paidNumbers.visibility = View.VISIBLE
+            bindingMeScreen.paidNumbers.visibility = View.INVISIBLE
             bindingMeScreen.seeAllText.visibility = View.VISIBLE
             bindingMeScreen.seeAllArrow.visibility = View.VISIBLE
             bindingMeScreen.tvLogged.visibility = View.INVISIBLE
-            bindingMeScreen.UnPaidNumbers.visibility = View.VISIBLE
-            bindingMeScreen.paidNumbers.visibility = View.VISIBLE
+            bindingMeScreen.UnPaidNumbers.visibility = View.INVISIBLE
             bindingMeScreen.emptyStateGroup.visibility = View.INVISIBLE
             bindingMeScreen.emptyStateGroup1.visibility = View.INVISIBLE
         } else {

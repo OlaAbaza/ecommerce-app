@@ -54,7 +54,7 @@ class FilterData {
             }
             return imagesOrders
         }
-        fun getProductsIDs(order : OneOrderResponce.Order): List<Long?>{
+        fun getProductsIDs(order : GetOrders.Order): List<Long?>{
             val list : MutableList<Long> = arrayListOf()
             for (line in order.line_items!!){
                 list.add(line?.product_id ?:0)

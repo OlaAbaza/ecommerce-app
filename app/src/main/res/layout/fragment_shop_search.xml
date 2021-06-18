@@ -37,7 +37,6 @@
         app:layout_constraintTop_toBottomOf="@id/sortSpinner"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/category_item"
-        android:visibility="visible"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="3"
         />
@@ -56,7 +55,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/ic_search"
-        android:visibility="visible"
         />
 
     <TextView

@@ -206,6 +206,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="15sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/layoutOfMyOrders"
                 app:layout_constraintEnd_toEndOf="@id/layoutOfMyOrders"
                 app:layout_constraintHorizontal_bias=".21"
@@ -220,6 +221,7 @@
                 android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="15sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="@id/layoutOfMyOrders"
                 app:layout_constraintEnd_toEndOf="@id/layoutOfMyOrders"
                 app:layout_constraintHorizontal_bias=".8"
@@ -270,7 +272,7 @@
                 android:id="@+id/wishRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:background="@color/white"
                 android:paddingTop="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -282,7 +284,7 @@
                 android:id="@+id/empty_state_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:constraint_referenced_ids="goHome_btn,empty_text1" />
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/empty_state_group1"
@@ -335,7 +337,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/goHome_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:visibility="visible"

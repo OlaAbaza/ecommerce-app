@@ -165,6 +165,7 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                         this@ShopSearchFragment
                     )
                     binding.placeHolder.visibility=View.VISIBLE
+
                 }
                 return true
             }
