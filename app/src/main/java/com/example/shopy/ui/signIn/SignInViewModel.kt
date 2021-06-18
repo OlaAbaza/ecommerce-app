@@ -3,7 +3,8 @@ package com.example.shopy.ui.signIn
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.shopy.base.SingleLiveEvent
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 
 import kotlinx.coroutines.launch
 
@@ -11,9 +12,16 @@ import com.example.shopy.models.Customer
 import com.example.shopy.models.CustomerX
 import timber.log.Timber
 
-class SignInViewModel(val repository: Repository, application: Application) : AndroidViewModel(application) {
+class SignInViewModel(val repositoryImpl: IRepository, application: Application) : AndroidViewModel(application) {
     private val customerList = SingleLiveEvent<List<Customer>>()
     private val postResult = SingleLiveEvent<CustomerX?>()
+
+    //for testing
+//      init {
+//        getAllCustomers()
+//        createCustomers("ola","ola2@gmail.com","12345")
+//     }
+
     fun getPostResult(): LiveData<CustomerX?> {
         return postResult
     }
@@ -34,9 +42,10 @@ class SignInViewModel(val repository: Repository, application: Application) : An
         }
     }
 
+
     fun getAllCustomers() {
         viewModelScope.launch {
-            var list = repository.fetchCustomersData()
+            var list = repositoryImpl.fetchCustomersData()
             list.let { customerList.postValue(list!!) }
         }
     }
@@ -46,11 +55,11 @@ class SignInViewModel(val repository: Repository, application: Application) : An
         var customerx :CustomerX?= CustomerX(customer)
 
         val jop = viewModelScope.launch { customerx =
-            customerx?.let { repository.createCustomers(it) }
+            customerx?.let { repositoryImpl.createCustomers(it) }
         }
         jop.invokeOnCompletion {
                 postResult.postValue(customerx)
-                Timber.i("isLoggedjk+" + customerx)
+                Timber.i("isLogged" + customerx)
 
         }
     }

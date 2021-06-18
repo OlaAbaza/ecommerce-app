@@ -22,100 +22,100 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class Repository(
-    val remoteDataSource: RemoteDataSource,
-    val roomDataSourceImpl: RoomDataSourceImpl
-) {
-    var prouductDetaild: MutableLiveData<ProductItem> = MutableLiveData()
+class RepositoryImpl(
+    override val remoteDataSource: RemoteDataSource,
+    override val roomDataSourceImpl: RoomDataSourceImpl
+) : IRepository {
+    override var prouductDetaild: MutableLiveData<ProductItem> = MutableLiveData()
 
     ////////////////////cart list////////////////
-    fun getAllCartList(): LiveData<List<ProductCartModule>> {
+    override fun getAllCartList(): LiveData<List<ProductCartModule>> {
         return roomDataSourceImpl.getAllCartList()
     }
 
-    suspend fun saveCartList(withItem: ProductCartModule) {
+    override suspend fun saveCartList(withItem: ProductCartModule) {
         roomDataSourceImpl.saveCartList(withItem)
     }
 
-    suspend fun deleteOnCartItem(id: Long) {
+    override suspend fun deleteOnCartItem(id: Long) {
         roomDataSourceImpl.deleteOnCartItem(id)
     }
 
-    suspend fun deleteAllFromCart() {
+    override suspend fun deleteAllFromCart() {
         roomDataSourceImpl.deleteAllFromCart()
     }
 
-    suspend fun deleteAllFromWish() {
+    override suspend fun deleteAllFromWish() {
         roomDataSourceImpl.deleteAllFromWishlist()
     }
 
-    fun saveAllCartList(dataList: List<ProductCartModule>) {
+    override fun saveAllCartList(dataList: List<ProductCartModule>) {
         roomDataSourceImpl.saveAllCartList(dataList)
     }
 
     /////////////customer address/////////////////
-    suspend fun createCustomerAddress(id: String, customerAddress: CreateAddress) =
+    override suspend fun createCustomerAddress(id: String, customerAddress: CreateAddress) =
         remoteDataSource.createCustomerAddress(id, customerAddress)
 
-    suspend fun getCustomerAddresses(id: String) = remoteDataSource.getCustomerAddresses(id)
-    suspend fun updateCustomerAddresses(
+    override suspend fun getCustomerAddresses(id: String) = remoteDataSource.getCustomerAddresses(id)
+    override suspend fun updateCustomerAddresses(
         id: String,
         addressID: String,
         customerAddress: UpdateAddresse
     ) = remoteDataSource.updateCustomerAddresses(id, addressID, customerAddress)
 
-    suspend fun delCustomerAddresses(id: String, addressID: String) =
+    override suspend fun delCustomerAddresses(id: String, addressID: String) =
         remoteDataSource.delCustomerAddresses(id, addressID)
 
 
-    suspend fun setDafaultCustomerAddress(id: String, addressID: String) =
+    override suspend fun setDafaultCustomerAddress(id: String, addressID: String) =
         remoteDataSource.setDafaultCustomerAddress(id, addressID)
 
-    suspend fun getCustomerAddress(id: String, addressID: String) =
+    override suspend fun getCustomerAddress(id: String, addressID: String) =
         remoteDataSource.getCustomerAddress(id, addressID)
 
     ////////////////////customer///////////////////
-    suspend fun fetchCustomersData() = remoteDataSource.fetchCustomersData()
-    suspend fun createCustomers(customer: CustomerX) = remoteDataSource.createCustomers(customer)
-    suspend fun getCustomer(id: String) = remoteDataSource.getCustomer(id)
-    suspend fun updateCustomer(id: String, customer: CustomerProfile) =
+    override suspend fun fetchCustomersData() = remoteDataSource.fetchCustomersData()
+    override suspend fun createCustomers(customer: CustomerX) = remoteDataSource.createCustomers(customer)
+    override suspend fun getCustomer(id: String) = remoteDataSource.getCustomer(id)
+    override suspend fun updateCustomer(id: String, customer: CustomerProfile) =
         remoteDataSource.updateCustomer(id, customer)
 
     /////////////////////create order/////////////////////////////
-    fun createOrder(order: Orders) =
+    override fun createOrder(order: Orders) =
         remoteDataSource.createOrder(order)
 
-    fun getCreateOrderResponse() = remoteDataSource.getCreateOrderResponse()
+    override fun getCreateOrderResponse() = remoteDataSource.getCreateOrderResponse()
     // suspend fun getPriceRulesList()=remoteDataSource.getPriceRulesList()
 
     ///////////////////products/////////////////////////
-    fun getWomanProductsList(): MutableLiveData<ProductsList> {
+    override fun getWomanProductsList(): MutableLiveData<ProductsList> {
         return remoteDataSource.getWomanProductsList()
     }
 
-    fun getKidsProductsList(): MutableLiveData<ProductsList> {
+    override fun getKidsProductsList(): MutableLiveData<ProductsList> {
         return remoteDataSource.getKidsProductsList()
     }
 
-    fun getMenProductsList(): MutableLiveData<ProductsList> {
+    override fun getMenProductsList(): MutableLiveData<ProductsList> {
         return remoteDataSource.getMenProductsList()
     }
 
-    fun getOnSaleProductsList(): MutableLiveData<ProductsList> {
+    override fun getOnSaleProductsList(): MutableLiveData<ProductsList> {
         return remoteDataSource.getOnSaleProductsList()
     }
 
-    fun getAllProductsList(): MutableLiveData<AllProducts> {
+    override fun getAllProductsList(): MutableLiveData<AllProducts> {
         return remoteDataSource.getAllProductsList()
     }
 
-    fun getAllDiscountCodeList(): MutableLiveData<AllCodes> {
+    override fun getAllDiscountCodeList(): MutableLiveData<AllCodes> {
         return remoteDataSource.getAllDiscountCodeList()
     }
     // fun getAllDiscountCodes() = remoteDataSource.getAllDiscountCodesData()
 
 
-    fun getProuduct(id: Long) {
+    override fun getProuduct(id: Long) {
         remoteDataSource.getProuduct(id)
         Network.apiService.getOneProduct(id).enqueue(object : Callback<ProductItem?> {
             override fun onResponse(
@@ -134,34 +134,34 @@ class Repository(
     }
 
 
-    fun fetchCatProducts(colID: Long): MutableLiveData<List<Product>> {
+    override fun fetchCatProducts(colID: Long): MutableLiveData<List<Product>> {
         return remoteDataSource.fetchCatProducts(colID)
     }
 
-    fun fetchAllProducts(): MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
+    override fun fetchAllProducts(): MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
         return remoteDataSource.fetchAllProducts()
     }
 /////////////////////////////////////////////////////////////////////
 
-    fun getAllOrderList(): LiveData<List<OrderObject>> {
+    override fun getAllOrderList(): LiveData<List<OrderObject>> {
         return roomDataSourceImpl.getAllOrderList()
     }
 
 
     // wish list
-    fun getFourFromWishList(): LiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
+    override fun getFourFromWishList(): LiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
         return roomDataSourceImpl.getFourFromWishList()
     }
 
-    fun getAllWishList(): LiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
+    override fun getAllWishList(): LiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>> {
         return roomDataSourceImpl.getAllWishList()
     }
 
-    suspend fun saveWishList(withItem: com.example.shopy.datalayer.entity.itemPojo.Product) {
+    override suspend fun saveWishList(withItem: com.example.shopy.datalayer.entity.itemPojo.Product) {
         roomDataSourceImpl.saveWishList(withItem)
     }
 
-    suspend fun deleteOneWithItem(id: Long) {
+    override suspend fun deleteOneWithItem(id: Long) {
         roomDataSourceImpl.deleteOneWithItem(id)
     }
 
@@ -175,29 +175,29 @@ class Repository(
 //    }
 
 
-    fun getFourWishList() = roomDataSourceImpl.getFourWishList()
+    override fun getFourWishList() = roomDataSourceImpl.getFourWishList()
 
     /////////////////////////////////is online//////////
 
-    suspend fun deleteOneWishItem(id: Long) = roomDataSourceImpl.deleteOneWithItem(id)
+    override suspend fun deleteOneWishItem(id: Long) = roomDataSourceImpl.deleteOneWithItem(id)
 
-    fun getOneWithItem(id: Long) = roomDataSourceImpl.getOneWithItem(id)
+    override fun getOneWithItem(id: Long) = roomDataSourceImpl.getOneWithItem(id)
 
     //     fun getAllOrders(): Call<GetOrders>{
 //        return remoteDataSource.getAllOrders()
 //    }
-    fun getAllOrders(): Observable<GetOrders> {
+    override fun getAllOrders(): Observable<GetOrders> {
         return remoteDataSource.getAllOrders()
     }
 
-    fun deleteOrder(order_id: Long) {
+    override fun deleteOrder(order_id: Long) {
         // remoteDataSource.deleteOrder(order_id)
         remoteDataSource.deleteOrder(order_id)
     }
 
-    fun observeDeleteOrder() = remoteDataSource.observeDeleteOrder()
+    override fun observeDeleteOrder() = remoteDataSource.observeDeleteOrder()
 
-    fun getOneOrders(id: Long): Observable<OneOrderResponce> {
+    override fun getOneOrders(id: Long): Observable<OneOrderResponce> {
        return remoteDataSource.getOneOrders(id)
     }
 }

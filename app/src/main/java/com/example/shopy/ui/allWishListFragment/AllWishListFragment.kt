@@ -16,14 +16,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentAllWishListBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.view.*
 
 class AllWishListFragment : Fragment() {
 
@@ -42,7 +41,7 @@ class AllWishListFragment : Fragment() {
         bindingAllWishListFragment = FragmentAllWishListBinding.inflate(inflater, container, false)
 
 
-        val repository = Repository(
+        val repository = RepositoryImpl(
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(requireActivity().application))
         )
@@ -130,7 +129,7 @@ class AllWishListFragment : Fragment() {
         requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.favourite).visibility = View.GONE
-        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
+        requireActivity().findViewById<View>(R.id.cartView).visibility = View.INVISIBLE
         requireActivity().toolbar_title.setTextColor(Color.WHITE)
 
         requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.BLACK))

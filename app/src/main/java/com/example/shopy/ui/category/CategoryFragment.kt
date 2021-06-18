@@ -11,13 +11,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.*
 import com.example.shopy.base.ViewModelFactory
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentCategoryBinding
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.example.shopy.domainLayer.Utils
 import androidx.navigation.fragment.findNavController
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
@@ -26,8 +25,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
 import kotlinx.android.synthetic.main.fragment_category.*
-import kotlinx.android.synthetic.main.fragment_on_sale_product.*
-import kotlinx.android.synthetic.main.fragment_on_sale_product.networkSaleView
 import kotlinx.android.synthetic.main.list_toolbar_view.view.*
 
 
@@ -52,7 +49,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         val view = binding.root
         val application = requireNotNull(this.activity).application
         val remoteDataSource = RemoteDataSourceImpl()
-        val repository = Repository(
+        val repository = RepositoryImpl(
             RemoteDataSourceImpl(),
             RoomDataSourceImpl(RoomService.getInstance(application))
         )
@@ -72,6 +69,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
             binding.placeHolder.visibility=View.GONE
             binding.itemsRecView.adapter = CategoryItemAdapter(subList, requireContext(), this)
         }else{
+            binding.itemsRecView.adapter = CategoryItemAdapter(subList, requireContext(), this)
             binding.placeHolder.visibility=View.VISIBLE
         }
         binding.subcategoriesRecView.adapter!!.notifyDataSetChanged()

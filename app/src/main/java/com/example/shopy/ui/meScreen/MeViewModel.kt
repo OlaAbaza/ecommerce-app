@@ -3,7 +3,8 @@ package com.example.shopy.ui.meScreen
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.domainLayer.FilterData
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,7 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class MeViewModel(val repository: Repository, application: Application): AndroidViewModel(application) {
+class MeViewModel(val repositoryImpl: IRepository, application: Application): AndroidViewModel(application) {
 
     var intentTOProductDetails : MutableLiveData<Product> = MutableLiveData()
     var deleteItem : MutableLiveData<Product> = MutableLiveData()
@@ -26,11 +27,11 @@ class MeViewModel(val repository: Repository, application: Application): Android
     lateinit var deleteOneItemFromWish: Job
 
 
-    fun getFourWishList() = repository.getFourWishList()
+    fun getFourWishList() = repositoryImpl.getFourWishList()
 
     fun deleteOneItemFromWishList(id : Long) {
        deleteOneItemFromWish = CoroutineScope(Dispatchers.IO).launch {
-            repository.deleteOneWishItem(id)
+            repositoryImpl.deleteOneWishItem(id)
         }
     }
 
@@ -38,7 +39,7 @@ class MeViewModel(val repository: Repository, application: Application): Android
 
 
     fun getPaidOrders( userId: Long) {
-        disposablePaidOrder = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
+        disposablePaidOrder = repositoryImpl.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
                 paidOrders.postValue(
@@ -65,7 +66,7 @@ class MeViewModel(val repository: Repository, application: Application): Android
     }
 
     fun getUnPaidOrders(userId: Long) {
-        disposableUnPaidOrder = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
+        disposableUnPaidOrder = repositoryImpl.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
                 unPaidOrders.postValue(

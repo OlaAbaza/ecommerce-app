@@ -13,22 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.shopy.R;
 import com.example.shopy.base.ViewModelFactory;
-import com.example.shopy.data.dataLayer.Repository;
+import com.example.shopy.data.dataLayer.RepositoryImpl;
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders;
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl;
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl;
 import com.example.shopy.datalayer.localdatabase.room.RoomService;
-import com.example.shopy.models.CustomerOrder;
-import com.example.shopy.models.LineItem;
-import com.example.shopy.models.Order;
-import com.example.shopy.models.Orders;
 import com.example.shopy.ui.mainActivity.MainActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -64,7 +57,7 @@ import okhttp3.Response;
         String amount;
         private static Context mContext;
         public static GetOrders.Order order;
-        public static Repository repository;
+        public static RepositoryImpl repositoryImpl;
         //https://strip-payment-backend.herokuapp.com/
         private OkHttpClient httpClient = new OkHttpClient();
         private String paymentIntentClientSecret;
@@ -108,9 +101,9 @@ import okhttp3.Response;
                 }
             });
 
-            repository = new Repository(new RemoteDataSourceImpl(), new RoomDataSourceImpl(RoomService.Companion.getInstance(getApplication())));
+            repositoryImpl = new RepositoryImpl(new RemoteDataSourceImpl(), new RoomDataSourceImpl(RoomService.Companion.getInstance(getApplication())));
 
-            ViewModelFactory viewModelFactory = new ViewModelFactory(repository, getApplication());
+            ViewModelFactory viewModelFactory = new ViewModelFactory(repositoryImpl, getApplication());
             paymentViewModel =  new ViewModelProvider(this, viewModelFactory).get(PaymentViewModel.class);
             amount = getIntent().getStringExtra("amount");
             order = (GetOrders.Order) getIntent().getSerializableExtra("order");

@@ -2,14 +2,15 @@ package com.example.shopy.ui.payment
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.models.CustomerOrder
 import com.example.shopy.models.LineItem
 import com.example.shopy.models.Order
 import com.example.shopy.models.Orders
 
-class PaymentViewModel(val repository: Repository, application: Application) : AndroidViewModel(
+class PaymentViewModel(val repositoryImpl: IRepository, application: Application) : AndroidViewModel(
     application
 ) {
 
@@ -26,11 +27,11 @@ class PaymentViewModel(val repository: Repository, application: Application) : A
         }
         val ord = Order(customerOrder, "paid", lineItems, "card", order.discount_codes)
         val orders = Orders(ord)
-        repository.createOrder(orders)
+        repositoryImpl.createOrder(orders)
     }
 
     fun cancelOrder(orderId: Long){
-        repository.deleteOrder(orderId)
+        repositoryImpl.deleteOrder(orderId)
     }
 
 

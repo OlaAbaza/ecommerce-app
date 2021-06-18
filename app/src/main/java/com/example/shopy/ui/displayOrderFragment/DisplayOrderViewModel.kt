@@ -3,14 +3,15 @@ package com.example.shopy.ui.displayOrderFragment
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.example.shopy.data.dataLayer.Repository
+import com.example.shopy.data.dataLayer.IRepository
+import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import com.example.shopy.domainLayer.FilterData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.internal.schedulers.IoScheduler
 
-class DisplayOrderViewModel(val repository: Repository, application: Application) :
+class DisplayOrderViewModel(val repositoryImpl: IRepository, application: Application) :
     AndroidViewModel(application) {
     lateinit var disposable: Disposable
     var orders: MutableLiveData<List<GetOrders.Order?>> = MutableLiveData()
@@ -22,7 +23,7 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
 
 
     fun getPaidOrders( userId: Long) {
-        disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
+        disposable = repositoryImpl.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
                 orders.postValue(
@@ -37,7 +38,7 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
 
     }
 
-    fun getProductAllProuducts()= repository.getAllProductsList()
+    fun getProductAllProuducts()= repositoryImpl.getAllProductsList()
 
     override fun onCleared() {
         super.onCleared()
@@ -48,7 +49,7 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
 
     fun getUnPaidOrders(userId: Long) {
 
-        disposable = repository.getAllOrders().observeOn(AndroidSchedulers.mainThread())
+        disposable = repositoryImpl.getAllOrders().observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(IoScheduler())
             .subscribe({ vehicles ->
                 orders.postValue(
@@ -62,10 +63,10 @@ class DisplayOrderViewModel(val repository: Repository, application: Application
     }
 
     fun deleteOrder(order_id: Long){
-         repository.deleteOrder(order_id)
+         repositoryImpl.deleteOrder(order_id)
     }
 
     fun observeDeleteOrder():MutableLiveData<Boolean>{
-        return repository.observeDeleteOrder()
+        return repositoryImpl.observeDeleteOrder()
     }
 }
