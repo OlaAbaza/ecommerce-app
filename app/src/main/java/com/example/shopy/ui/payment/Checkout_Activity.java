@@ -2,6 +2,9 @@ package com.example.shopy.ui.payment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -65,7 +69,7 @@ import okhttp3.Response;
         public static PaymentViewModel paymentViewModel;
         ImageButton img1;
         ImageButton img2;
-        Button payButton;
+        CircularProgressButton payButton;
         CardInputWidget cardInputWidget;
 
         @Override
@@ -156,6 +160,15 @@ import okhttp3.Response;
 
             // Hook up the pay button to the card widget and stripe instance
             payButton.setOnClickListener((View view) -> {
+                payButton.startAnimation();
+
+                //[do some async task. When it finishes]
+                //You can choose the color and the image after the loading is finished
+                Bitmap bitmap =
+                        BitmapFactory.decodeResource(getResources(), R.drawable.ic_baseline_check_24);
+                if (bitmap != null) {
+                    payButton.doneLoadingAnimation(Color.WHITE, bitmap);
+                }
                 PaymentMethodCreateParams params = cardInputWidget.getPaymentMethodCreateParams();
                 if (params != null) {
                     ConfirmPaymentIntentParams confirmParams = ConfirmPaymentIntentParams
@@ -268,7 +281,6 @@ import okhttp3.Response;
                        // Toast.makeText(activity,"Open Home Activity",Toast.LENGTH_LONG).show();
                        paymentViewModel.cancelOrder(order.getId());
                         paymentViewModel.createOrderInPayment(order);
-
                         Intent intent = new Intent(mContext, MainActivity.class);
                         mContext.startActivity(intent);
 
@@ -296,8 +308,12 @@ import okhttp3.Response;
             }
         }
 
-
-//        var customerOrder = CustomerOrder(customerID.toLong())
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+            payButton.dispose();
+        }
+        //        var customerOrder = CustomerOrder(customerID.toLong())
 //        var lineItem: MutableList<LineItem> = arrayListOf()
 //
 //        val items = orderItemsAdapter.orderList.map {

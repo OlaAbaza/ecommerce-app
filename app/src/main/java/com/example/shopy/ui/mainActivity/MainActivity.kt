@@ -2,6 +2,10 @@ package com.example.shopy.ui.mainActivity
 
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.DisplayMetrics
+import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,8 +20,10 @@ import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.datalayer.localdatabase.room.RoomService
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import meow.bottomnavigation.MeowBottomNavigation
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         if (navController != null) {
             bottomNavigationView.setupWithNavController(navController!!)
         }
-
 
         setSupportActionBar(toolbar)
 //        Utils.toolbarImg = toolbar.searchIcon
@@ -57,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             this,
             viewModelFactory
         )[MainActivityViewModel::class.java]
-        viewModel.getAllWishList().observe(this,{
+        viewModel.getAllWishList().observe(this, {
             wishLiNotificationAdapter.updateView(it.size)
         })
         wishLiNotificationAdapter.favouriteButton.setOnClickListener {
@@ -71,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             val action = NavGraphDirections.actionGlobalAllWishListFragment()
             navController?.navigate(action)
         }
-        viewModel.getAllCartList().observe(this,{
+        viewModel.getAllCartList().observe(this, {
             cartIconAdapter.updateView(it.size)
         })
         cartIconAdapter.favouriteButton.setOnClickListener {
