@@ -1,5 +1,6 @@
 package com.example.shopy.ui.customerAddress
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -48,7 +49,7 @@ class AddressFragment : Fragment() {
             ViewModelProvider(
                 this, viewModelFactory
             ).get(AddressViewModel::class.java)
-        addressAdapter = AddressAdapter(arrayListOf(), addressViewModel)
+        addressAdapter = AddressAdapter(arrayListOf(), addressViewModel,requireContext())
         binding.rvAddress.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = addressAdapter

@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -19,6 +21,7 @@ import com.example.shopy.R
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
 import kotlinx.android.synthetic.main.item_order_display.view.*
 import java.lang.ref.WeakReference
+import kotlin.random.Random
 
 
 class OrderDisplayAdapter(context: Context,
@@ -27,6 +30,7 @@ class OrderDisplayAdapter(context: Context,
     private var showOrderDetails: MutableLiveData<Long>,
     private var cancelMutableData: MutableLiveData<GetOrders.Order>
 ) : RecyclerView.Adapter<OrderDisplayAdapter.ViewHolder>() {
+    private var lastPosition = -1
     var list:
             List<GetOrders.Order?> = list
         set(value) {
@@ -50,6 +54,8 @@ class OrderDisplayAdapter(context: Context,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        // Here you apply the animation when the view is bound
+        setAnimation(holder.itemView,position)
         positionA = position
         holder.binding(list[position])
 
@@ -145,6 +151,25 @@ class OrderDisplayAdapter(context: Context,
                 this.adapter = adapter
                 adapter.imageList = list
             }
+        }
+    }
+
+    protected fun setAnimation(viewToAnimate: View, position: Int) {
+        if (position > lastPosition) {
+            val anim = ScaleAnimation(
+                0.0f,
+                1.0f,
+                0.0f,
+                1.0f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f
+            )
+            anim.duration =
+                Random.nextInt(501).toLong() //to make duration random number between [0,501)
+            viewToAnimate.startAnimation(anim)
+            lastPosition = position
         }
     }
 
