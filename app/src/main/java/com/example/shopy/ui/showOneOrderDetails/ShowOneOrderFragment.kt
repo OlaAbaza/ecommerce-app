@@ -7,11 +7,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -107,7 +110,6 @@ class ShowOneOrderFragment : Fragment() {
             fragmentShowOneOrderBinding.totalPriceEditable.text = "EGP"+it.order.total_price
             fragmentShowOneOrderBinding.orderIdEditable.text = "# ${it.order.id}"
             var orderDate = it.order.created_at?.split("T")
-            Log.i("output",it.order.created_at!!)
             var orderTime = orderDate?.get(0)
             Log.i("output",orderTime!!)
             var time = orderDate?.get(1)?.split("+")

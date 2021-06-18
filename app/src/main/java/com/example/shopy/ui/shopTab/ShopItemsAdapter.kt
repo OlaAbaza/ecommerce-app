@@ -25,7 +25,7 @@ class ShopItemsAdapter(private val context: Context, private val itemName: List<
 
 
     override fun onBindViewHolder(holder: ShopItemsAdapter.ViewHolderExample, position: Int) {
-        holder.itemName.text = itemName.get(position).vendor
+        holder.itemName.text = itemName.get(position).title
 
         Glide.with(context)
             .load( itemName.get(position).image.src )
