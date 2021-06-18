@@ -266,7 +266,7 @@ import okhttp3.Response;
                     try {
                         Thread.sleep(1500);
                        // Toast.makeText(activity,"Open Home Activity",Toast.LENGTH_LONG).show();
-                        paymentViewModel.cancelOrder(order.getId());
+                       paymentViewModel.cancelOrder(order.getId());
                         paymentViewModel.createOrderInPayment(order);
 
                         Intent intent = new Intent(mContext, MainActivity.class);

@@ -40,7 +40,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
     var allDiscountCode = MutableLiveData<AllCodes>()
     var prouductDetaild : MutableLiveData<ProductItem> = MutableLiveData()
     var deleteOrder : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    var createOrder = SingleLiveEvent<GetOrders?>()
+    var getCreateOrderResponse = SingleLiveEvent<OneOrderResponce?>()
     var catProducts = MutableLiveData<List<Product>>()
     var allProducts = MutableLiveData<List<com.example.shopy.datalayer.entity.itemPojo.Product>>()
 
@@ -228,10 +228,11 @@ class RemoteDataSourceImpl : RemoteDataSource {
             try {
                 if (response.isSuccessful) {
                     Timber.i("This  " + "isSuccessful")
-                    createOrder.postValue(response.body())
+                    Timber.i("This  " + "isSuccessful"+response.body())
+                    getCreateOrderResponse.postValue(response.body())
                     // return response.body()
                 } else {
-                    createOrder.postValue(null)
+                    getCreateOrderResponse.postValue(null)
                     val jObjError =
                         JSONObject(response.errorBody()!!.string()).getJSONObject("errors")
                     Timber.i("This  " + jObjError)
@@ -245,7 +246,7 @@ class RemoteDataSourceImpl : RemoteDataSource {
 
     }
 
-    override fun getCreateOrderResponse()= createOrder
+    override fun getCreateOrderResponse()= getCreateOrderResponse
 
 
     override fun getWomanProductsList(): MutableLiveData<ProductsList> {
