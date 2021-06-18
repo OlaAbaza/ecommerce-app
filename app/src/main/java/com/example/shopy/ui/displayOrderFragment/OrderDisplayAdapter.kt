@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shopy.R
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import kotlinx.android.synthetic.main.item_order_display.view.*
 import java.lang.ref.WeakReference
 
 
@@ -62,7 +63,7 @@ class OrderDisplayAdapter(context: Context,
             holder.bindingRecycler(context, adapterImages, emptyList())
         }
 
-        holder.seaAllDetails.setOnClickListener {
+        holder.itemView.cv_order.setOnClickListener {
             showOrderDetails.value = list[position]?.id
         }
 
