@@ -107,9 +107,16 @@ class ShowOneOrderFragment : Fragment() {
 
 
 
-            fragmentShowOneOrderBinding.totalPriceEditable.text = it.order.total_price
+            fragmentShowOneOrderBinding.totalPriceEditable.text = "EGP"+it.order.total_price
             fragmentShowOneOrderBinding.orderIdEditable.text = "# ${it.order.id}"
-            fragmentShowOneOrderBinding.createdAtEditable.text = it.order.created_at
+            var orderDate = it.order.created_at?.split("T")
+            Log.i("output",it.order.created_at!!)
+            var orderTime = orderDate?.get(0)
+            Log.i("output",orderTime!!)
+            var time = orderDate?.get(1)?.split("+")
+            Log.i("output",time?.get(0)!!)
+            fragmentShowOneOrderBinding.createdAtEditable.text = orderDate?.get(0)
+            fragmentShowOneOrderBinding.time.text = time?.get(0)
             if(it.order.note == "Cash"){
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = it.order.note
                 fragmentShowOneOrderBinding.payButton.visibility = View.GONE
@@ -196,5 +203,6 @@ class ShowOneOrderFragment : Fragment() {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
     }
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.shopy.ui.showOneOrderDetails
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
@@ -30,11 +31,15 @@ class OrdersListAdapter(line_items: List<OneOrderResponce.Order.LineItem?>,image
         val  variant_Title =itemView.findViewById<TextView>(R.id.variant_Title)
         val  quantityEditable =itemView.findViewById<TextView>(R.id.quantityEditable)
         val  itemImageOrder =itemView.findViewById<ImageView>(R.id.itemImageOrder)
+        val color = itemView.findViewById<TextView>(R.id.color)
         fun binding(lineItem: OneOrderResponce.Order.LineItem?,image :String?) {
             title.text = lineItem?.title ?: "Not Known"
-            priceEdible.text = lineItem?.price ?: "Not Known"
-            variant_Title.text = lineItem?.variant_title ?: "Not Known"
-            quantityEditable.text = lineItem?.quantity.toString()
+            priceEdible.text = lineItem?.price+"EGP"
+            var size = lineItem?.variant_title ?: "Not Known"
+            variant_Title.text = size.split("/").get(0)
+            color.text = size.split("/").get(1)
+            Log.i("output",lineItem?.variant_title ?: "Not Known")
+            quantityEditable.text = lineItem?.quantity.toString()+"X"
             Glide.with(itemImageOrder)
                 .load(image?: "")
                 .fitCenter()

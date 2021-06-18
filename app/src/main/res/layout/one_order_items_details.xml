@@ -2,106 +2,121 @@
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true"
-    android:elevation="10dp"
     android:backgroundTint="@color/white"
-    app:cardCornerRadius="30dp"
-    android:padding="10dp"
-    android:layout_margin="3dp">
+    android:elevation="10dp"
+    app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="@dimen/stripe_3ds2_brand_zone_horizontal_margin"
-        android:layout_height="match_parent">
+        android:layout_height="130dp"
+        android:padding="@dimen/stripe_3ds2_brand_zone_horizontal_margin">
 
         <ImageView
-            android:padding="5dp"
-            android:src="@drawable/abc_vector_test"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@color/gray"
             android:id="@+id/itemImageOrder"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:background="@color/white"
+            android:contentDescription="@string/image"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:contentDescription="@string/image" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:padding="5dp"
-            style="@style/text_style"
+            android:layout_height="26dp"
+            android:layout_marginLeft="10dp"
             android:text="@string/title"
-            android:textSize="15sp"
-            app:layout_constraintTop_toTopOf="@id/itemImageOrder"
+            android:textColor="@color/dark_gray"
+            android:textSize="11sp"
+            android:maxLength="30"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/itemImageOrder"
-            android:textColor="@color/gray"
-            android:id="@+id/title"/>
+            app:layout_constraintTop_toTopOf="@id/itemImageOrder" />
+
 
         <TextView
+            android:id="@+id/priceEdible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:paddingVertical="5dp"
-            android:paddingStart="5dp"
-            style="@style/text_style"
-            android:text="@string/quantity_x"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintStart_toEndOf="@id/itemImageOrder"
-            android:textColor="@color/gray"
-            android:id="@+id/quantity"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            style="@style/text_style"
+            android:layout_marginLeft="10dp"
             android:text="@string/_1"
-            android:textSize="15sp"
-            android:textColor="@color/gray"
-            app:layout_constraintBottom_toBottomOf="@id/quantity"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/itemImageOrder"
             app:layout_constraintTop_toBottomOf="@id/title"
-            app:layout_constraintStart_toEndOf="@id/quantity"
-            android:id="@+id/quantityEditable"/>
+            app:layout_constraintBottom_toTopOf="@id/variant_Title"/>
         <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:padding="5dp"
-            style="@style/text_style"
+            android:text="Size:"
+            android:textSize="13sp"
+            app:layout_constraintStart_toEndOf="@id/itemImageOrder"
+            app:layout_constraintTop_toBottomOf="@id/priceEdible"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/variant_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:text="@string/_5_black"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/quantity"
-            app:layout_constraintStart_toEndOf="@id/itemImageOrder"
-            android:id="@+id/variant_Title"/>
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+             app:layout_constraintStart_toEndOf="@id/size"
+            android:layout_marginBottom="28dp"
+             />
 
         <TextView
+            android:id="@+id/quantityEditable"
+            style="@style/text_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
-            android:padding="5dp"
-            style="@style/text_style"
-            android:text="@string/price"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/variant_Title"
-            app:layout_constraintStart_toEndOf="@id/itemImageOrder"
-            android:id="@+id/price"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:padding="5dp"
-            style="@style/text_style"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/_1"
+            android:textColor="@color/gray"
             android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/variant_Title"
-            app:layout_constraintStart_toEndOf="@id/price"
-            android:id="@+id/priceEdible"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.981"
+            app:layout_constraintStart_toEndOf="@id/variant_Title"
+            app:layout_constraintTop_toBottomOf="@id/priceEdible"
+            app:layout_constraintVertical_bias="0.515"
+            android:layout_marginBottom="15dp" />
+        <TextView
+            android:id="@+id/colortext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Color:"
+            android:textSize="13dp"
+            app:layout_constraintStart_toEndOf="@id/itemImageOrder"
+            app:layout_constraintTop_toBottomOf="@id/size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="10dp"
+            />
+
+        <TextView
+            android:id="@+id/color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:text="llllll"
+            app:layout_constraintStart_toEndOf="@id/colortext"
+            app:layout_constraintTop_toBottomOf="@id/size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="10dp"
+            />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
