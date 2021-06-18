@@ -1,6 +1,8 @@
 package com.example.shopy.ui.showOneOrderDetails
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -33,6 +36,8 @@ import com.example.shopy.ui.displayOrderFragment.DisplayOrderViewModel
 import com.example.shopy.ui.payment.Checkout_Activity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_show_one_order.*
+import kotlinx.android.synthetic.main.fragment_woman_products.*
 import java.io.Serializable
 import java.lang.ref.WeakReference
 
@@ -117,6 +122,12 @@ class ShowOneOrderFragment : Fragment() {
             Log.i("output",time?.get(0)!!)
             fragmentShowOneOrderBinding.createdAtEditable.text = orderDate?.get(0)
             fragmentShowOneOrderBinding.time.text = time?.get(0)
+            copyOrderId.setOnClickListener {
+                val clipboard = ContextCompat.getSystemService(requireContext(), ClipboardManager::class.java)
+                clipboard?.setPrimaryClip(ClipData.newPlainText("",orderIdEditable.text))
+                Toast.makeText(requireContext(),"Copied", Toast.LENGTH_SHORT).show()
+
+            }
             if(it.order.note == "Cash"){
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = it.order.note
                 fragmentShowOneOrderBinding.payButton.visibility = View.GONE
