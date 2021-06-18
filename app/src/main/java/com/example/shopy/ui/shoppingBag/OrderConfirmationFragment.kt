@@ -1,6 +1,8 @@
 package com.example.shopy.ui.shoppingBag
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -57,10 +60,12 @@ class OrderConfirmationFragment : Fragment() {
     private var priceRulesList: List<PriceRule> = arrayListOf()
     private var discountCodesList: List<DiscountCode> = arrayListOf()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         meDataSourceReo = MeDataSharedPrefrenceReposatory(requireActivity())
         binding = FragmentOrderConfirmationBinding.inflate(layoutInflater)
         val args: OrderConfirmationFragmentArgs by navArgs()
@@ -81,15 +86,14 @@ class OrderConfirmationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-      changeToolbar()
+        changeToolbar()
 
         if (isLoged()) {
             customerID = meDataSourceReo.loadUsertId()
             Timber.i("olaaa" + customerID)
             if (NetworkChangeReceiver.isOnline) {
                 orderViewModel.getCustomersAddressList(customerID)
-            }
-            else {
+            } else {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.thereIsNoNetwork),
@@ -98,8 +102,8 @@ class OrderConfirmationFragment : Fragment() {
 
             }
 
-          //  orderViewModel.getPriceRulesList()
-           // orderViewModel.fetchallDiscountCodeList()
+            //  orderViewModel.getPriceRulesList()
+            // orderViewModel.fetchallDiscountCodeList()
         }
 
         orderItemsAdapter = OrderItemsAdapter(arrayListOf(), orderViewModel)
@@ -151,29 +155,39 @@ class OrderConfirmationFragment : Fragment() {
         }
         binding.placeOrderBtn.setOnClickListener {
             if (isDefaultAddress) {
+                binding.placeOrderBtn.startAnimation();
+
+//[do some async task. When it finishes]
+//You can choose the color and the image after the loading is finished
+                var bitmap: Bitmap? =
+                    BitmapFactory.decodeResource(getResources(), R.drawable.ic_baseline_check_24);
+                if (bitmap != null) {
+                    binding.placeOrderBtn.doneLoadingAnimation(Color.WHITE, bitmap)
+                }
+
+//[or just revert de animation]
+                //  binding.placeOrderBtn.revertAnimation();
                 placeOrder()
 
-            }
-            else {
+            } else {
                 Toast.makeText(context, "please, set your address", Toast.LENGTH_SHORT).show()
             }
         }
         orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<GetOrders?> {
-            if (it!=null) {
+            if (it != null) {
+                binding.placeOrderBtn.stopAnimation()
                 Timber.i("order+" + it)
                 orderViewModel.delAllItems()
 //                val action = NavGraphDirections.actionGlobalShopTabFragment2()
 //                findNavController().navigate(action)
                 it?.let {
-                    if(isCash) {
+                    if (isCash) {
 //                        val action = NavGraphDirections.actionGlobalShopTabFragment2()
 //                        findNavController().navigate(action)
                         view.findNavController()
                             .navigate(OrderConfirmationFragmentDirections.actionOrderConfirmationFragmentToShopTabFragment2())
-                    }
-                    else {
-                       // Navigation.findNavController(view).navigate(R.id.Checkout_Activity)
-
+                    } else {
+                        // Navigation.findNavController(view).navigate(R.id.Checkout_Activity)
                         startActivity(
                             Intent(requireActivity(), Checkout_Activity::class.java).putExtra(
                                 "amount",
@@ -182,7 +196,6 @@ class OrderConfirmationFragment : Fragment() {
                                 .putExtra("order", it.orders as? Serializable)
                         )
                     }
-               //  findNavController().backStack.clear()
                 }
 
             } else {
@@ -218,7 +231,7 @@ class OrderConfirmationFragment : Fragment() {
 
     }
 
-//    private fun checkDiscountCode() {
+    //    private fun checkDiscountCode() {
 //        val discount: List<PriceRule> =
 //            priceRulesList.filter {
 //                it.title == binding.discountEdt.text.toString().trim()
@@ -238,23 +251,23 @@ class OrderConfirmationFragment : Fragment() {
     private fun checkDiscountCode() {
         val discount: List<DiscountCode> =
             discountCodesList.filter {
-                Timber.i("olaaa code "+it.code)
+                Timber.i("olaaa code " + it.code)
                 it.code == binding.discountEdt.text.toString().trim()
             }
         if (discount.isEmpty()) {
-            isDiscount=false
+            isDiscount = false
             binding.discountEdt.setError("Sorry, this coupon is invalid")
             binding.totalDiscountTxt.text = "---"
-            binding.totalPriceTxt.text=(totalPrice).toString() + " EGP"
-           // Toast.makeText(context, "Sorry, this coupon is invalid", Toast.LENGTH_SHORT).show()
+            binding.totalPriceTxt.text = (totalPrice).toString() + " EGP"
+            // Toast.makeText(context, "Sorry, this coupon is invalid", Toast.LENGTH_SHORT).show()
         } else {
-            isDiscount=true
+            isDiscount = true
             binding.totalDiscountTxt.text = "10%"
-            discountAmount = ((totalPrice*10)/100)
-            discountCode=discount.get(0).code
-            Timber.i("olaaa discountAmount"+discountAmount+"  "+totalDiscont+"  "+totalPrice)
-            totalPrice=(totalPrice-discountAmount)
-            binding.totalPriceTxt.text=totalPrice.toString() + " EGP"
+            discountAmount = ((totalPrice * 10) / 100)
+            discountCode = discount.get(0).code
+            Timber.i("olaaa discountAmount" + discountAmount + "  " + totalDiscont + "  " + totalPrice)
+            totalPrice = (totalPrice - discountAmount)
+            binding.totalPriceTxt.text = totalPrice.toString() + " EGP"
 
         }
     }
@@ -272,17 +285,16 @@ class OrderConfirmationFragment : Fragment() {
             lineItem.add(LineItem(item?.inventory_quantity, item?.id))
         }
         getPaymentMethod()
-        if(isDiscount)
-            discount?.add(DiscountCodes(discountAmount.toString(),discountCode))
+        if (isDiscount)
+            discount?.add(DiscountCodes(discountAmount.toString(), discountCode))
         else
-            discount=null
+            discount = null
 
-        var order = Order(customerOrder, "pending", lineItem, paymentMethod,discount)
+        var order = Order(customerOrder, "pending", lineItem, paymentMethod, discount)
         var orders = Orders(order)
         if (NetworkChangeReceiver.isOnline) {
             orderViewModel.createOrder(orders)
-        }
-        else {
+        } else {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.thereIsNoNetwork),
@@ -293,14 +305,12 @@ class OrderConfirmationFragment : Fragment() {
     }
 
     private fun getPaymentMethod() {
-        if (binding.radioCash.isChecked){
+        if (binding.radioCash.isChecked) {
             paymentMethod = "Cash"
-            isCash=true
-        }
-
-        else if (binding.radioCredit.isChecked){
+            isCash = true
+        } else if (binding.radioCredit.isChecked) {
             paymentMethod = "Card"
-            isCash=false
+            isCash = false
         }
 
     }
@@ -308,6 +318,7 @@ class OrderConfirmationFragment : Fragment() {
     private fun isLoged(): Boolean {
         return meDataSourceReo.loadUsertstate()
     }
+
     private fun changeToolbar() {
         requireActivity().bottom_nav.visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
@@ -324,4 +335,5 @@ class OrderConfirmationFragment : Fragment() {
         }
         requireActivity().toolbar_title.text = "OrderConfirmation"
     }
+
 }

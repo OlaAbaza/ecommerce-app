@@ -5,6 +5,8 @@ import com.example.shopy.R
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,6 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopy.datalayer.entity.itemPojo.Product
+import kotlin.random.Random
 
 
 class WishListAdapter(
@@ -21,7 +24,7 @@ class WishListAdapter(
 ) : RecyclerView.Adapter<WishListAdapter.ViewHolder>() {
     val intentTOProductDetails: MutableLiveData<Product> = intentTOProductDetails
     val deleteItem: MutableLiveData<Product> = deleteItem
-
+    private var lastPosition = -1
     var productList: List<Product> = ArrayList()
         set(value) {
             field = value
@@ -39,6 +42,7 @@ class WishListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        setAnimation(holder.itemView,position)
         holder.binding(productList[position], position)
         holder.itemView.setOnClickListener {
             intentTOProductDetails.value = productList[position]
@@ -68,6 +72,24 @@ class WishListAdapter(
             itemTitle.text = item.variants?.get(0)?.price.toString()+"EGP"
 
 
+        }
+    }
+    protected fun setAnimation(viewToAnimate: View, position: Int) {
+        if (position > lastPosition) {
+            val anim = ScaleAnimation(
+                0.0f,
+                1.0f,
+                0.0f,
+                1.0f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f
+            )
+            anim.duration =
+                Random.nextInt(501).toLong() //to make duration random number between [0,501)
+            viewToAnimate.startAnimation(anim)
+            lastPosition = position
         }
     }
 

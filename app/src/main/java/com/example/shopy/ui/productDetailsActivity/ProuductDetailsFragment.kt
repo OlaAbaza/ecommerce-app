@@ -28,8 +28,8 @@ import com.example.shopy.databinding.FragmentProuductDetailsBinding
 import com.example.shopy.datalayer.entity.itemPojo.Product
 import com.example.shopy.datalayer.entity.itemPojo.ProductCartModule
 import com.example.shopy.datalayer.localdatabase.room.RoomService
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.shopy.datalayer.sharedprefrence.MeDataSharedPrefrenceReposatory
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.ref.WeakReference
 
@@ -120,7 +120,7 @@ class ProuductDetailsFragment : Fragment() {
             var values : List<String> = emptyList()
             productDetailsViewMode.observeProductDetails().observe(activity, {
                 product = it.product
-                values  = product.options?.get(0)?.values!!
+                values = product.options?.get(0)?.values!!
                 updateUI(product, activity)
                 productDetailsViewMode.progressPar.value = true
 
@@ -201,7 +201,11 @@ class ProuductDetailsFragment : Fragment() {
                         )
                         productDetailsViewMode.optionsMutableLiveData.value = -1
 
-                        Toast.makeText(activity, getString(R.string.item_saved_in_cart), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            activity,
+                            getString(R.string.item_saved_in_cart),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                 } else {
@@ -214,8 +218,8 @@ class ProuductDetailsFragment : Fragment() {
                 }
 
             }
-            productDetailsViewMode.optionsMutableLiveData.observe(activity,{
-                if (it !=-1){
+            productDetailsViewMode.optionsMutableLiveData.observe(activity, {
+                if (it != -1) {
                     optionsSelected = values[it]
                 }
             })

@@ -197,6 +197,9 @@ dependencies {
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0-beta3'
 
+    implementation 'br.com.simplepass:loading-button-android:2.2.0'
+
+
     //Mockk
     testImplementation "io.mockk:mockk:$mockk_version"
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
