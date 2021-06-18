@@ -197,10 +197,10 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         requireActivity().findViewById<View>(R.id.favourite).visibility = View.VISIBLE
         requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
         requireActivity().toolbar_title.setTextColor(Color.BLACK)
-
         requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         requireActivity().toolbar.setNavigationIcon(null)
         requireActivity().toolbar_title.text = "Category"
+
 
     }
 

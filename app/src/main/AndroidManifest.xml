@@ -18,13 +18,14 @@
         android:hardwareAccelerated="false"
         android:largeHeap="true"
         android:theme="@style/Theme.Shopy">
-        <activity android:name=".ui.welcomeScreens.WelcomeActivity" />
+        <activity android:name=".ui.welcomeScreens.WelcomeActivity" android:screenOrientation="portrait"  />
         <activity android:name=".ui.payment.PayTabsActivity" />
-        <activity android:name=".ui.payment.Checkout_Activity" />
+        <activity android:name=".ui.payment.Checkout_Activity" android:screenOrientation="portrait" />
         <activity android:name=".ui.payment.PayPalActivity" />
-        <activity android:name=".ui.mainActivity.MainActivity" />
+        <activity android:name=".ui.mainActivity.MainActivity" android:screenOrientation="portrait"  />
         <activity android:name=".ui.payment.StripeActivity" />
-        <activity android:name=".ui.splash.SplashActivity">
+        <activity android:name=".ui.splash.SplashActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

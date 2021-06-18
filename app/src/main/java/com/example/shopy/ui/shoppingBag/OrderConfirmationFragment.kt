@@ -159,8 +159,8 @@ class OrderConfirmationFragment : Fragment() {
             if (isDefaultAddress) {
                 binding.placeOrderBtn.startAnimation();
 
-//[do some async task. When it finishes]
-//You can choose the color and the image after the loading is finished
+        //[do some async task. When it finishes]
+        //You can choose the color and the image after the loading is finished
                 var bitmap: Bitmap? =
                     BitmapFactory.decodeResource(getResources(), R.drawable.ic_baseline_check_24);
                 if (bitmap != null) {

@@ -21,14 +21,13 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+               android:layout_marginTop="3dp"
                 android:elevation="4dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
@@ -129,7 +128,7 @@
                 android:id="@+id/cv_payment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+          android:layout_marginTop="5dp"
                 android:elevation="4dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
@@ -148,6 +147,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/payment_method"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -193,8 +193,7 @@
                 android:id="@+id/cv_voucher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
                 android:elevation="4dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
@@ -214,6 +213,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:padding="5dp"
+                        android:textStyle="bold"
                         android:gravity="center"
                         android:text="@string/apply_voucher"
                         android:textColor="@color/black"
@@ -272,7 +272,7 @@
                 android:id="@+id/cv_bag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
                 android:elevation="4dp"
                 app:cardCornerRadius="2dp"
                 app:cardUseCompatPadding="true"
@@ -290,6 +290,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="@string/shopping_bag"
+                        android:textStyle="bold"
                         android:textColor="@color/black"
                    android:layout_marginStart="5dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -316,7 +317,7 @@
                 android:id="@+id/cv_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:elevation="4dp"
                 android:padding="5dp"
@@ -328,7 +329,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
 
                     <TextView
                         android:id="@+id/item_total_txt"
