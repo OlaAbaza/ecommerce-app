@@ -107,14 +107,16 @@ class ShowOneOrderFragment : Fragment() {
             ordersListAdapter!!.line_items= it.order?.line_items!!
 
 
+            fragmentShowOneOrderBinding.addressOrder.text = it.order.customer?.default_address!!.city +
+                " ,"+it.order.customer?.default_address.province +" ,"+ it.order.customer?.default_address!!.country
 
             fragmentShowOneOrderBinding.totalPriceEditable.text = "EGP"+it.order.total_price
             fragmentShowOneOrderBinding.orderIdEditable.text = "# ${it.order.id}"
-            var orderDate = it.order.created_at?.split("T")
-            var orderTime = orderDate?.get(0)
-            Log.i("output",orderTime!!)
-            var time = orderDate?.get(1)?.split("+")
-            Log.i("output",time?.get(0)!!)
+            val orderDate = it.order.created_at?.split("T")
+            val orderTime = orderDate?.get(0)
+//            Log.i("output",orderTime!!)
+            val time = orderDate?.get(1)?.split("+")
+//            Log.i("output",time?.get(0)!!)
             fragmentShowOneOrderBinding.createdAtEditable.text = orderDate?.get(0)
             fragmentShowOneOrderBinding.time.text = time?.get(0)
             copyOrderId.setOnClickListener {
@@ -125,7 +127,7 @@ class ShowOneOrderFragment : Fragment() {
             }
             if(it.order.note == "Cash"){
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = it.order.note.toString()
-                fragmentShowOneOrderBinding.payButton.visibility = View.INVISIBLE
+                fragmentShowOneOrderBinding.payButton.visibility = View.GONE
                 if (it.order.financial_status == "paid"){
                     fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
@@ -135,21 +137,18 @@ class ShowOneOrderFragment : Fragment() {
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_circle_shape)
                     fragmentShowOneOrderBinding.cancelButton.visibility = View.VISIBLE
                 }
-
-
             }else{
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = "Credit Card"
-                fragmentShowOneOrderBinding.payButton.visibility = View.VISIBLE
                 if (it.order.financial_status == "paid"){
                     fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
                     fragmentShowOneOrderBinding.cancelButton.visibility = View.GONE
+                    fragmentShowOneOrderBinding.payButton.visibility = View.GONE
                 }else{
                     fragmentShowOneOrderBinding.tvPay.text = resources.getString(R.string.waiting_for_payment)
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_circle_shape)
                     fragmentShowOneOrderBinding.cancelButton.visibility = View.VISIBLE
-
-
+                    fragmentShowOneOrderBinding.payButton.visibility = View.VISIBLE
                 }
             }
 
