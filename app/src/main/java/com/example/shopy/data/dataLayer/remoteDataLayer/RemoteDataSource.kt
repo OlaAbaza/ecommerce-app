@@ -33,7 +33,7 @@ interface RemoteDataSource {
 
     suspend fun updateCustomer(id: String, customer: CustomerProfile): CustomerX?
     fun createOrder(order: Orders)
-    fun getCreateOrderResponse(): SingleLiveEvent<GetOrders?>
+    fun getCreateOrderResponse(): SingleLiveEvent<OneOrderResponce?>
 
      //shopTab
      fun getWomanProductsList() : MutableLiveData<ProductsList>

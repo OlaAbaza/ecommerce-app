@@ -62,7 +62,7 @@ interface IRepository {
 
     /////////////////////create order/////////////////////////////
     fun createOrder(order: Orders)
-    fun getCreateOrderResponse(): SingleLiveEvent<GetOrders?>
+    fun getCreateOrderResponse(): SingleLiveEvent<OneOrderResponce?>
 
     ///////////////////products/////////////////////////
     fun getWomanProductsList(): MutableLiveData<ProductsList>?

@@ -8,12 +8,13 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.Toast
-import androidx.lifecycle.LifecycleObserver
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -25,6 +26,7 @@ import com.example.shopy.base.NetworkChangeReceiver
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
+import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.data.dataLayer.entity.priceRules.PriceRule
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
@@ -173,10 +175,12 @@ class OrderConfirmationFragment : Fragment() {
                 Toast.makeText(context, "please, set your address", Toast.LENGTH_SHORT).show()
             }
         }
-        orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<GetOrders?> {
+        orderViewModel.getPostOrder().observe(viewLifecycleOwner, Observer<OneOrderResponce?> {
+            binding.placeOrderBtn.stopAnimation()
             if (it != null) {
-                binding.placeOrderBtn.stopAnimation()
-                Timber.i("order+" + it)
+               // clearBackStack()
+                Timber.i("ordemm+" + it.order)
+                Timber.i("orderrr+" + it.order)
                 orderViewModel.delAllItems()
 //                val action = NavGraphDirections.actionGlobalShopTabFragment2()
 //                findNavController().navigate(action)
@@ -184,8 +188,9 @@ class OrderConfirmationFragment : Fragment() {
                     if (isCash) {
 //                        val action = NavGraphDirections.actionGlobalShopTabFragment2()
 //                        findNavController().navigate(action)
-                        view.findNavController()
+                       view.findNavController()
                             .navigate(OrderConfirmationFragmentDirections.actionOrderConfirmationFragmentToShopTabFragment2())
+                      //  view?.findNavController()?.popBackStack()
                     } else {
                         // Navigation.findNavController(view).navigate(R.id.Checkout_Activity)
                         startActivity(
@@ -193,7 +198,8 @@ class OrderConfirmationFragment : Fragment() {
                                 "amount",
                                 totalPrice.toString()
                             )
-                                .putExtra("order", it.orders as? Serializable)
+
+                                .putExtra("order", it.order as? Serializable)
                         )
                     }
                 }
@@ -320,7 +326,7 @@ class OrderConfirmationFragment : Fragment() {
     }
 
     private fun changeToolbar() {
-        requireActivity().bottom_nav.visibility = View.GONE
+        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE
         requireActivity().toolbar.cartView.visibility = View.INVISIBLE
@@ -335,5 +341,25 @@ class OrderConfirmationFragment : Fragment() {
         }
         requireActivity().toolbar_title.text = "OrderConfirmation"
     }
-
+//   fun clearBackStack() {
+//        FragmentUtils.sDisableFragmentAnimations = true
+//        getActivity()?.getSupportFragmentManager()?.popBackStackImmediate(
+//            null,
+//            FragmentManager.POP_BACK_STACK_INCLUSIVE
+//        )
+//        FragmentUtils.sDisableFragmentAnimations = false
+//    }
+//
+//    object FragmentUtils {
+//        var sDisableFragmentAnimations = false
+//    }
+//
+//    override fun onCreateAnimation(transit: Int, enter: Boolean, nextAnim: Int): Animation? {
+//        if (FragmentUtils.sDisableFragmentAnimations) {
+//            val a: Animation = object : Animation() {}
+//            a.duration = 0
+//            return a
+//        }
+//        return super.onCreateAnimation(transit, enter, nextAnim)
+//    }
 }
