@@ -25,7 +25,11 @@ import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.fragment_on_sale_product.*
+import kotlinx.android.synthetic.main.fragment_on_sale_product.shimmerFrameLayout1
+import kotlinx.android.synthetic.main.fragment_on_sale_product.shimmerFrameLayout2
+import kotlinx.android.synthetic.main.fragment_woman_products.*
 import kotlinx.android.synthetic.main.fragment_woman_products.ads
 import kotlinx.android.synthetic.main.fragment_woman_products.codeTextView
 import kotlinx.android.synthetic.main.fragment_woman_products.itemsRecView
@@ -68,12 +72,24 @@ class OnSaleProductFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        var shf1 = requireActivity().findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout1)
+        var shf2 = requireActivity().findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout2)
+
+        shf1.startShimmerAnimation()
+        shf2.startShimmerAnimation()
+
         if (NetworkChangeReceiver.isOnline) {
             networkSaleView.visibility = View.GONE
             Sale_lin.visibility = View.VISIBLE
             shopTabViewModel.fetchOnSaleProductsList().observe(viewLifecycleOwner, {
                 Log.i("output", it.toString() + "******************")
                 if (it != null) {
+                    shimmerFrameLayout1.stopShimmerAnimation()
+                    shimmerFrameLayout2.stopShimmerAnimation()
+                    shimmerFrameLayout1.visibility = View.GONE
+                    shimmerFrameLayout2.visibility = View.GONE
+
+                    itemsRecView.visibility = View.VISIBLE
                     bindWomanProductRecyclerView(
                         it.products,
                         shopTabViewModel.intentTOProductDetails
@@ -130,6 +146,11 @@ class OnSaleProductFragment : Fragment() {
     ) {
 
         itemsRecView.adapter= ShopItemsAdapter(requireContext(), itemName, intentTOProductDetails)
+
+    }
+
+    override fun onDetach() {
+        super.onDetach()
 
     }
 

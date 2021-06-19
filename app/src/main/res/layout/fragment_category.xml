@@ -86,12 +86,99 @@
             app:layout_constraintTop_toBottomOf="@id/mainCategoriesRecView"
             tools:listitem="@layout/subcategory_title" />
 
+
+        <LinearLayout
+            android:layout_width="191dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mainCategoriesRecView"
+            app:layout_constraintStart_toEndOf="@id/subcategoriesRecView">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrameLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmer_layout" />
+
+                    <include layout="@layout/shimmer_layout" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrameLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmer_layout" />
+
+                    <include layout="@layout/shimmer_layout" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrameLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmer_layout" />
+
+                    <include layout="@layout/shimmer_layout" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrameLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <include layout="@layout/shimmer_layout" />
+
+                    <include layout="@layout/shimmer_layout" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+        </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/itemsRecView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
             android:padding="15dp"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

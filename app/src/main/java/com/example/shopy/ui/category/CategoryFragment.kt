@@ -18,13 +18,19 @@ import com.example.shopy.databinding.FragmentCategoryBinding
 import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.shopy.NavGraphDirections
 import com.example.shopy.R
 import com.example.shopy.base.NetworkChangeReceiver
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
 import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.fragment_category.shimmerFrameLayout1
+import kotlinx.android.synthetic.main.fragment_category.shimmerFrameLayout2
+import kotlinx.android.synthetic.main.fragment_kids_product.*
+import kotlinx.android.synthetic.main.fragment_woman_products.*
 import kotlinx.android.synthetic.main.list_toolbar_view.view.*
 
 
@@ -58,11 +64,17 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
             ViewModelProvider(
                 this, viewModelFactory
             ).get(CategoriesViewModel::class.java)
+
+        Log.i("output","one")
         return view
     }
 
+
+
+
     override fun onSubClick(position: Int) {
         super.onSubClick(position)
+        Log.i("output","two")
         subCategoryIndex=position
         subList=getSubCategoryItems(position)
         if (subList.size!=0) {
@@ -76,6 +88,8 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
     }
     override fun onMainClick(position: Int) {
         super.onMainClick(position)
+        Log.i("output","three")
+
         binding.subcategoriesRecView.adapter=SubCategoriesAdapter(subcatList,this)
         binding.subcategoriesRecView.adapter!!.notifyDataSetChanged()
         mainCategoryIndex=position
@@ -100,25 +114,47 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         /*binding.mainCategoriesRecView.findViewHolderForAdapterPosition(position)!!.itemView.underLine.background=
             ColorDrawable(Color.parseColor("#ffffff"))*/
     }
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Log.i("output","five")
+
+        binding.shimmerFrameLayout1.startShimmerAnimation()
+        binding.shimmerFrameLayout2.startShimmerAnimation()
+        binding.shimmerFrameLayout3.startShimmerAnimation()
+        binding.shimmerFrameLayout4.startShimmerAnimation()
         changeToolbar()
         subcatList= arrayOf("Shoes","Accessories","T-Shirts")
         var mainCatList= arrayOf("Home","kids","Men","Sales","Women")
         binding.subcategoriesRecView.adapter= SubCategoriesAdapter(subcatList,this)
         binding.mainCategoriesRecView.adapter= MainCategoriesAdapter(mainCatList,this)
         if (NetworkChangeReceiver.isOnline) {
+
             networkCatView.visibility = View.GONE
             category_constraintlayout.visibility = View.VISIBLE
             catViewModel.fetchCatProducts(267715608774).observe(requireActivity(), {
-                products = it
-                binding.itemsRecView.adapter = CategoryItemAdapter(products, requireContext(), this)
+                if(it != null){
+                    shimmerFrameLayout1.stopShimmerAnimation()
+                    shimmerFrameLayout2.stopShimmerAnimation()
+                    shimmerFrameLayout3.stopShimmerAnimation()
+                    shimmerFrameLayout4.stopShimmerAnimation()
+
+                    shimmerFrameLayout1.visibility = View.GONE
+                    shimmerFrameLayout2.visibility = View.GONE
+                    shimmerFrameLayout3.visibility = View.GONE
+                    shimmerFrameLayout4.visibility = View.GONE
+
+                    binding.itemsRecView.visibility = View.VISIBLE
+                    products = it
+                    binding.itemsRecView.adapter = CategoryItemAdapter(products, requireContext(), this)
+                }
+
             })
         }else{
             networkCatView.visibility = View.VISIBLE
             category_constraintlayout.visibility = View.GONE
         }
+
     }
 
     fun getMainCategory(position:Int):Long{
@@ -166,5 +202,9 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
         requireActivity().toolbar.setNavigationIcon(null)
         requireActivity().toolbar_title.text = "Category"
 
+    }
+
+    override fun onDetach() {
+        super.onDetach()
     }
 }

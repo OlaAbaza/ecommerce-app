@@ -25,7 +25,11 @@ import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.fragment_men_products.*
+import kotlinx.android.synthetic.main.fragment_men_products.shimmerFrameLayout1
+import kotlinx.android.synthetic.main.fragment_men_products.shimmerFrameLayout2
+import kotlinx.android.synthetic.main.fragment_woman_products.*
 import kotlinx.android.synthetic.main.fragment_woman_products.ads
 import kotlinx.android.synthetic.main.fragment_woman_products.codeTextView
 import kotlinx.android.synthetic.main.fragment_woman_products.itemsRecView
@@ -65,12 +69,24 @@ class MenProductsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        var shf1 = requireActivity().findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout1)
+        var shf2 = requireActivity().findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout2)
+
+        shf1.startShimmerAnimation()
+        shf2.startShimmerAnimation()
+
         if (NetworkChangeReceiver.isOnline) {
             networkMenView.visibility = View.GONE
             Men_lin.visibility = View.VISIBLE
         shopTabViewModel.fetchMenProductsList().observe(viewLifecycleOwner,{
             Log.i("output",it.toString()+"******************")
             if (it != null){
+                shimmerFrameLayout1.stopShimmerAnimation()
+                shimmerFrameLayout2.stopShimmerAnimation()
+                shimmerFrameLayout1.visibility = View.GONE
+                shimmerFrameLayout2.visibility = View.GONE
+
+                itemsRecView.visibility = View.VISIBLE
                 bindWomanProductRecyclerView(it.products,shopTabViewModel.intentTOProductDetails)
             }
             Log.i("output",it.products.get(0).toString())
@@ -124,5 +140,7 @@ class MenProductsFragment : Fragment() {
         itemsRecView.adapter= ShopItemsAdapter(requireContext(),itemName,intentTOProductDetails)
 
     }
-
+    override fun onDetach() {
+        super.onDetach()
+    }
 }

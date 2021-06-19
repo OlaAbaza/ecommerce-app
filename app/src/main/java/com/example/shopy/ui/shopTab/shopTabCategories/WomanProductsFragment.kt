@@ -2,6 +2,7 @@ package com.example.shopy.ui.shopTab.shopTabCategories
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -26,6 +27,7 @@ import com.example.shopy.datalayer.entity.custom_product.Product
 import com.example.shopy.datalayer.localdatabase.room.RoomService
 import com.example.shopy.ui.shopTab.ShopItemsAdapter
 import com.example.shopy.ui.shopTab.ShopTabViewModel
+import com.facebook.shimmer.ShimmerFrameLayout
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.cart_toolbar_view.view.*
 import kotlinx.android.synthetic.main.fragment_woman_products.*
@@ -35,11 +37,13 @@ import kotlinx.coroutines.*
 
 class WomanProductsFragment : Fragment() {
 
+
     lateinit var  shopTabViewModel : ShopTabViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,12 +68,24 @@ class WomanProductsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        var shf1 = requireActivity().findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout1)
+        var shf2 = requireActivity().findViewById<ShimmerFrameLayout>(R.id.shimmerFrameLayout2)
+
+        shf1.startShimmerAnimation()
+        shf2.startShimmerAnimation()
 
         if (NetworkChangeReceiver.isOnline) {
             networkView.visibility = View.GONE
             woman_linear.visibility = View.VISIBLE
             shopTabViewModel.fetchWomanProductsList()?.observe(viewLifecycleOwner, {
                 if (it != null) {
+                    shimmerFrameLayout1.stopShimmerAnimation()
+                    shimmerFrameLayout2.stopShimmerAnimation()
+                    shimmerFrameLayout1.visibility = View.GONE
+                    shimmerFrameLayout2.visibility = View.GONE
+
+                    itemsRecView.visibility = View.VISIBLE
+
                     bindWomanProductRecyclerView(
                         it.products,
                         shopTabViewModel.intentTOProductDetails
@@ -137,6 +153,11 @@ class WomanProductsFragment : Fragment() {
     ) {
 
         itemsRecView.adapter = ShopItemsAdapter(requireContext(), itemName,intentTOProductDetails)
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
 
     }
 }
