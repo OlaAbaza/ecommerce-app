@@ -101,7 +101,7 @@
     <string name="_8_characters_minimum">8 characters minimum</string>
     <string name="add_address">Add Address</string>
     <string name="my_addresses">My Addresses</string>
-    <string name="register_login">sign in/register</string>
+    <string name="register_login"><u>sign in/register</u></string>
     <string name="imagebutton">ImageButton</string>
     <string name="delete">Delete</string>
     <string name="Delete_Item_From_Wish_List">Delete Item From WishList</string>

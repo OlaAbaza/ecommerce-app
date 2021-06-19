@@ -260,7 +260,7 @@ class MeFragment : Fragment() {
 
         requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         requireActivity().toolbar.setNavigationIcon(null)
-        requireActivity().toolbar_title.text = ""
+        requireActivity().toolbar_title.text = "Me"
 
     }
 

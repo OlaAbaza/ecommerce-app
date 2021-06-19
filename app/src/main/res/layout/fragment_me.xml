@@ -286,7 +286,7 @@
                 android:id="@+id/wishRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@color/white"
                 android:paddingTop="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -298,7 +298,7 @@
                 android:id="@+id/empty_state_group"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:constraint_referenced_ids="goHome_btn,empty_text1" />
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/empty_state_group1"

@@ -86,7 +86,7 @@ class ViewModelFactory(
         else {
             throw IllegalArgumentException("ViewModel Not Found")
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
+
     }
 }
 

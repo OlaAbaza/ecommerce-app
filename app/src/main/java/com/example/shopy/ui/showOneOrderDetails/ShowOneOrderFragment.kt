@@ -127,7 +127,7 @@ class ShowOneOrderFragment : Fragment() {
             }
             if(it.order.note == "Cash"){
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = it.order.note.toString()
-                fragmentShowOneOrderBinding.payButton.visibility = View.GONE
+                fragmentShowOneOrderBinding.payButton.visibility = View.INVISIBLE
                 if (it.order.financial_status == "paid"){
                     fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
