@@ -28,7 +28,7 @@ class ShopItemsAdapter(private val context: Context, private val itemName: List<
         holder.itemName.text = itemName.get(position).title
 
         Glide.with(context)
-            .load( itemName.get(position).image.src )
+            .load( itemName.get(position).image?.src )
             .into(holder.itemIcon)
         holder.itemView.setOnClickListener {
             intentTOProductDetails.value = itemName[position]

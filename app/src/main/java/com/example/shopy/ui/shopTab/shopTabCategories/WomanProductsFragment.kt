@@ -68,7 +68,7 @@ class WomanProductsFragment : Fragment() {
         if (NetworkChangeReceiver.isOnline) {
             networkView.visibility = View.GONE
             woman_linear.visibility = View.VISIBLE
-            shopTabViewModel.fetchWomanProductsList().observe(viewLifecycleOwner, {
+            shopTabViewModel.fetchWomanProductsList()?.observe(viewLifecycleOwner, {
                 if (it != null) {
                     bindWomanProductRecyclerView(
                         it.products,

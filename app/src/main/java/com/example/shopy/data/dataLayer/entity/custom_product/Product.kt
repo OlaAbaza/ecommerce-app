@@ -14,9 +14,9 @@ data class Product(
     val createdAt: String,
     val handle: String,
     val id: Double,
-    val image: Image,
-    val images: List<Image>,
-    val options: List<Option>,
+    val image: Image?,
+    val images: List<Image>?,
+    val options: List<Option>?,
     @SerializedName("product_type")
     val productType: String,
     @SerializedName("published_at")
@@ -30,4 +30,10 @@ data class Product(
     @SerializedName("updated_at")
     val updatedAt: String,
     val vendor: String
-)
+) {
+    constructor(title: String, vendor: String) : this(
+        "",
+        "", "", "", 0.0, null, null, null, "", "", "", "", "",title,"",vendor
+
+    )
+}

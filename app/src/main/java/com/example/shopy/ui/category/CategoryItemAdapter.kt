@@ -24,7 +24,7 @@ class CategoryItemAdapter(var categoryItems:List<Product>, var context: Context,
     }
 
     override fun onBindViewHolder(holder: CategoryItemViewHolder, position: Int) {
-        Glide.with(context).load(categoryItems.get(position).images.get(0).src).into(holder.binding.itemIcon)
+        Glide.with(context).load(categoryItems.get(position).images?.get(0)?.src).into(holder.binding.itemIcon)
         holder.binding.itemTitle.text=""+categoryItems.get(position).title
         holder.itemView.setOnClickListener {
             onClick.itemOnClick(categoryItems.get(position).id.toLong())
