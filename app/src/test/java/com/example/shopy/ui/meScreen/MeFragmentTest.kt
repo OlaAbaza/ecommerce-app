@@ -14,6 +14,7 @@ import io.reactivex.Scheduler
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.schedulers.Schedulers
 import junit.framework.TestCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -26,6 +27,7 @@ class MeFragmentTest : TestCase() {
 
 
 
+    @ExperimentalCoroutinesApi
     @get:Rule
     var mainCoroutineRule = CoroutineTestRule()
 

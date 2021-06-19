@@ -187,4 +187,5 @@
     <string name="faq">FAQ</string>
     <string name="edit_address">Edit Address</string>
     <string name="no_results_found">No results found</string>
+    <string name="address">address</string>
 </resources>

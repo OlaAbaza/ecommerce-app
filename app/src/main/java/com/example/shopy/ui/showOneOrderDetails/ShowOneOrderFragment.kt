@@ -107,14 +107,16 @@ class ShowOneOrderFragment : Fragment() {
             ordersListAdapter!!.line_items= it.order?.line_items!!
 
 
+            fragmentShowOneOrderBinding.addressOrder.text = it.order.customer?.default_address!!.city +
+                " ,"+it.order.customer?.default_address.province +" ,"+ it.order.customer?.default_address!!.country
 
             fragmentShowOneOrderBinding.totalPriceEditable.text = "EGP"+it.order.total_price
             fragmentShowOneOrderBinding.orderIdEditable.text = "# ${it.order.id}"
-            var orderDate = it.order.created_at?.split("T")
-            var orderTime = orderDate?.get(0)
-            Log.i("output",orderTime!!)
-            var time = orderDate?.get(1)?.split("+")
-            Log.i("output",time?.get(0)!!)
+            val orderDate = it.order.created_at?.split("T")
+            val orderTime = orderDate?.get(0)
+//            Log.i("output",orderTime!!)
+            val time = orderDate?.get(1)?.split("+")
+//            Log.i("output",time?.get(0)!!)
             fragmentShowOneOrderBinding.createdAtEditable.text = orderDate?.get(0)
             fragmentShowOneOrderBinding.time.text = time?.get(0)
             copyOrderId.setOnClickListener {
