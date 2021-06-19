@@ -125,7 +125,7 @@ class ShowOneOrderFragment : Fragment() {
             }
             if(it.order.note == "Cash"){
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = it.order.note.toString()
-                fragmentShowOneOrderBinding.payButton.visibility = View.INVISIBLE
+                fragmentShowOneOrderBinding.payButton.visibility = View.GONE
                 if (it.order.financial_status == "paid"){
                     fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
@@ -135,21 +135,18 @@ class ShowOneOrderFragment : Fragment() {
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_circle_shape)
                     fragmentShowOneOrderBinding.cancelButton.visibility = View.VISIBLE
                 }
-
-
             }else{
                 fragmentShowOneOrderBinding.paymentTypeEditable.text = "Credit Card"
-                fragmentShowOneOrderBinding.payButton.visibility = View.VISIBLE
                 if (it.order.financial_status == "paid"){
                     fragmentShowOneOrderBinding.tvPay.text = "Paid Order"
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_paid)
                     fragmentShowOneOrderBinding.cancelButton.visibility = View.GONE
+                    fragmentShowOneOrderBinding.payButton.visibility = View.GONE
                 }else{
                     fragmentShowOneOrderBinding.tvPay.text = resources.getString(R.string.waiting_for_payment)
                     fragmentShowOneOrderBinding.line1.background = resources.getDrawable(R.drawable.state_circle_shape)
                     fragmentShowOneOrderBinding.cancelButton.visibility = View.VISIBLE
-
-
+                    fragmentShowOneOrderBinding.payButton.visibility = View.VISIBLE
                 }
             }
 

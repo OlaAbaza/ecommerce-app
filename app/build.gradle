@@ -46,6 +46,9 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -201,8 +204,10 @@ dependencies {
 
 
     //Mockk
-    testImplementation "io.mockk:mockk:$mockk_version"
+
     androidTestImplementation "io.mockk:mockk-android:$mockk_version"
+    testImplementation "io.mockk:mockk:$mockk_version"
+
     ////////////////abdelrahman/////////////
 
 }
