@@ -7,7 +7,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +22,6 @@ import com.example.shopy.R
 import com.example.shopy.base.ViewModelFactory
 import com.example.shopy.data.dataLayer.RepositoryImpl
 import com.example.shopy.data.dataLayer.entity.orderGet.GetOrders
-import com.example.shopy.data.dataLayer.entity.orderGet.OneOrderResponce
 import com.example.shopy.data.dataLayer.remoteDataLayer.RemoteDataSourceImpl
 import com.example.shopy.data.dataLayer.room.RoomDataSourceImpl
 import com.example.shopy.databinding.FragmentShowOneOrderBinding
@@ -73,6 +71,10 @@ class ShowOneOrderFragment : Fragment() {
             this.adapter = ordersListAdapter
         }
 
+
+        fragmentShowOneOrderBinding.progressShowOrderDetails.visibility=View.VISIBLE
+
+
         fragmentShowOneOrderBinding.cancelButton.setOnClickListener {
             deleteAlert(showOrderViewModel,order.id!!)
         }
@@ -101,6 +103,7 @@ class ShowOneOrderFragment : Fragment() {
 
         showOrderViewModel.getOneOrders(args.productId).observe(viewLifecycleOwner,{
 
+            fragmentShowOneOrderBinding.progressShowOrderDetails.visibility=View.GONE
             total_price= it.order?.total_price.toString()
             order = it.order!!
 
