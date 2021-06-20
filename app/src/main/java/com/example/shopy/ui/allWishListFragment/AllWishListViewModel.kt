@@ -26,7 +26,7 @@ class AllWishListViewModel(val repositoryImpl: IRepository, application: Applica
 
     override fun onCleared() {
         super.onCleared()
-        if (!deleteOneItemFromWish.isCancelled){
+        if (deleteOneItemFromWish != null && !deleteOneItemFromWish.isCancelled){
             deleteOneItemFromWish.cancel()
         }
     }
