@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.content.res.AppCompatResources
@@ -335,6 +336,7 @@ class ProuductDetailsFragment : Fragment() {
     private fun changeToolbar() {
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
+        if (requireActivity().findViewById<View>(R.id.searchIcon) != null){
         requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
 
@@ -342,6 +344,9 @@ class ProuductDetailsFragment : Fragment() {
         requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
 
         requireActivity().toolbar_title.setTextColor(Color.BLACK)
+            requireActivity().toolbar_title.text = ""
+        }
+
 
         requireActivity().toolbar.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         requireActivity().toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.black_arrow))
@@ -349,7 +354,6 @@ class ProuductDetailsFragment : Fragment() {
             view?.findNavController()?.popBackStack()
         }
 
-        requireActivity().toolbar_title.text = ""
     }
 
     override fun onDestroyView() {
