@@ -103,7 +103,6 @@ class ShowOneOrderFragment : Fragment() {
 
         showOrderViewModel.getOneOrders(args.productId).observe(viewLifecycleOwner,{
 
-            fragmentShowOneOrderBinding.progressShowOrderDetails.visibility=View.GONE
             total_price= it.order?.total_price.toString()
             order = it.order!!
 
@@ -163,6 +162,7 @@ class ShowOneOrderFragment : Fragment() {
                 ordersListAdapter.images= images
 
             })
+            fragmentShowOneOrderBinding.progressShowOrderDetails.visibility=View.GONE
 
 
         })
@@ -210,6 +210,12 @@ class ShowOneOrderFragment : Fragment() {
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setBackgroundColor(Color.BLACK)
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.WHITE)
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        fragmentShowOneOrderBinding.progressShowOrderDetails.visibility=View.VISIBLE
+
     }
 
 

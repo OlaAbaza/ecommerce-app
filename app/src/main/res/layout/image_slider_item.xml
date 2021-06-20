@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/image_slider"
         android:foregroundGravity="center_vertical"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/ic_app"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toBottomOf="@id/itemNums"
         app:layout_constraintEnd_toEndOf="parent"
