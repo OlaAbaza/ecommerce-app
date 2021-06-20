@@ -36,7 +36,7 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
     lateinit var sortedProducts:List<allProduct>
     var productFilter=""
     lateinit var  shopTabViewModel : ShopTabViewModel
-
+    var queryText=""
     private var _binding: FragmentShopSearchBinding? = null
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -83,7 +83,6 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
 
 
         shopTabViewModel.fetchallProductsList().observe(viewLifecycleOwner,{
-            Log.i("output","***********"+it.toString())
             products = it.products
             sortedProducts = products
             binding.itemsRecView.adapter=SearchCategoryItemAdapter(it.products,requireContext(),this)
@@ -109,6 +108,9 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                     //binding.itemsRecView.adapter=SearchCategoryItemAdapter(filteredProducts,requireContext())
                 }else if (parent!!.getItemAtPosition(position).equals("none")) {
                     binding.itemsRecView.adapter = SearchCategoryItemAdapter(products, requireContext(),this@ShopSearchFragment)
+                }
+                if (!parent!!.getItemAtPosition(position).equals("SORT")) {
+                    showData()
                 }
             }
 
@@ -137,6 +139,9 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
                 else if (parent!!.getItemAtPosition(position).equals("none")){
                     productFilter=""
                 }
+                if (!parent!!.getItemAtPosition(position).equals("FILTER")) {
+                    showData()
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -147,54 +152,40 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
 
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                Log.i("output","***********iiii")
-
-                var filteredProducts = sortedProducts.filter { it.title!!.contains(query?:"none",true)&& it.productType!!.contains(productFilter,true)}
-                if(filteredProducts.size!=0) {
-                    binding.placeHolder.visibility=View.GONE
-                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(
-                        filteredProducts,
-                        requireContext(),
-                        this@ShopSearchFragment
-                    )
-                }
-                else{
-                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(
-                        filteredProducts,
-                        requireContext(),
-                        this@ShopSearchFragment
-                    )
-                    binding.placeHolder.visibility=View.VISIBLE
-
-                }
+                queryText=query?:""
+                showData()
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                Log.i("output","***********ppp")
-
-                var filteredProducts = sortedProducts.filter { it.title!!.contains(newText?:"none",true)&& it.productType!!.contains(productFilter,true) }//&& it.productType.equals("shoes",true)}
-                if(filteredProducts.size!=0) {
-                    binding.placeHolder.visibility=View.GONE
-                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(
-                        filteredProducts,
-                        requireContext(),
-                        this@ShopSearchFragment
-                    )
-                }
-                else{
-                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(
-                        filteredProducts,
-                        requireContext(),
-                        this@ShopSearchFragment
-                    )
-                    binding.placeHolder.visibility=View.VISIBLE
-                }
+                queryText=newText?:""
+                showData()
                 return true
             }
 
         })
 
+    }
+
+    private fun showData(){
+        var filteredProducts = sortedProducts.filter { it.title!!.contains(queryText?:"none",true)&& it.productType!!.contains(productFilter,true)}
+        if(filteredProducts.size!=0) {
+            binding.placeHolder.visibility=View.GONE
+            binding.itemsRecView.adapter = SearchCategoryItemAdapter(
+                filteredProducts,
+                requireContext(),
+                this@ShopSearchFragment
+            )
+        }
+        else{
+            binding.itemsRecView.adapter = SearchCategoryItemAdapter(
+                filteredProducts,
+                requireContext(),
+                this@ShopSearchFragment
+            )
+            binding.placeHolder.visibility=View.VISIBLE
+
+        }
     }
 
     override fun itemOnClick(itemId: Long) {
