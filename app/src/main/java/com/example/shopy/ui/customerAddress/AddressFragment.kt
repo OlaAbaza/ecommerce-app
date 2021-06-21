@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -149,6 +150,7 @@ class AddressFragment : Fragment() {
     }
 
     private fun changeToolbar() {
+        requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility=View.GONE
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE

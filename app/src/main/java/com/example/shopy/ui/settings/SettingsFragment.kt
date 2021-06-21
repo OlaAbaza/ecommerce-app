@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -102,7 +103,8 @@ class SettingsFragment : Fragment() {
     }
 
      fun changeToolbar() {
-        requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
+         requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility=View.GONE
+         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().toolbar.settingIcon.visibility = View.INVISIBLE
         requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE

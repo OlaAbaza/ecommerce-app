@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -224,6 +225,7 @@ class ProfileFragment : Fragment() {
         return isEmpty
     }
     private fun changeToolbar() {
+        requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility=View.GONE
         requireActivity().bottom_nav.visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().toolbar.searchIcon.visibility = View.INVISIBLE

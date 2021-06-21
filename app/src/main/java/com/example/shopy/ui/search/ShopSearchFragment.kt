@@ -28,10 +28,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
 
-    init {
-        setHasOptionsMenu(true)
-
-    }
+//    init {
+//        setHasOptionsMenu(true)
+//
+//    }
     lateinit var products:List<allProduct>
     lateinit var sortedProducts:List<allProduct>
     var productFilter=""
@@ -41,7 +41,7 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
+    private lateinit var menu: Menu
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,20 +66,10 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+      val mainSearchView=  requireActivity().findViewById<SearchView>(R.id.mainSearchView)
 
-    }
-
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-
-        menu.clear()
-        inflater.inflate(R.menu.fragment_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-        val searchItem: MenuItem? = menu?.findItem(R.id.fragmentsearch)
-        val searchView : SearchView? = searchItem?.actionView as SearchView
-        searchView?.setFocusable(true)
-        searchView?.setIconified(false)
+        mainSearchView?.isFocusable = true
+        mainSearchView?.isIconified = false
 
 
         shopTabViewModel.fetchallProductsList().observe(viewLifecycleOwner,{
@@ -150,7 +140,7 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
 
         }
 
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        mainSearchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 queryText=query?:""
                 showData()
@@ -164,8 +154,107 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
             }
 
         })
-
     }
+
+
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        super.onCreateOptionsMenu(menu, inflater)
+//
+//
+//        menu.clear()
+//        this.menu=menu
+//        inflater.inflate(R.menu.fragment_menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//        val searchItem: MenuItem? = menu?.findItem(R.id.fragmentsearch)
+//        val searchView : SearchView? = searchItem?.actionView as SearchView
+//        searchView?.setFocusable(true)
+//        searchView?.setIconified(false)
+//
+//
+//        shopTabViewModel.fetchallProductsList().observe(viewLifecycleOwner,{
+//            products = it.products
+//            sortedProducts = products
+//            binding.itemsRecView.adapter=SearchCategoryItemAdapter(it.products,requireContext(),this)
+//
+//        })
+//
+//
+//        binding.sortSpinner.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                if (parent!!.getItemAtPosition(position).equals("Alphabetically")){
+//                    sortedProducts = products.sortedBy { it.title }
+//                    // binding.itemsRecView.adapter=SearchCategoryItemAdapter(filteredProducts,requireContext())
+//                }else if (parent!!.getItemAtPosition(position).equals("price: Low to High")){
+//                    sortedProducts = products.sortedBy { it.variants!!.get(0).price}
+//                    //binding.itemsRecView.adapter=SearchCategoryItemAdapter(filteredProducts,requireContext())
+//                }else if(parent!!.getItemAtPosition(position).equals("price: High to Low")){
+//                    sortedProducts = products.sortedByDescending { it.variants!!.get(0).price }
+//                    //binding.itemsRecView.adapter=SearchCategoryItemAdapter(filteredProducts,requireContext())
+//                }else if (parent!!.getItemAtPosition(position).equals("none")) {
+//                    binding.itemsRecView.adapter = SearchCategoryItemAdapter(products, requireContext(),this@ShopSearchFragment)
+//                }
+//                if (!parent!!.getItemAtPosition(position).equals("SORT")) {
+//                    showData()
+//                }
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//                Log.d("hitler","NOTHING")
+//            }
+//
+//        }
+//
+//        binding.filterSpinner.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
+//            override fun onItemSelected(
+//                parent: AdapterView<*>?,
+//                view: View?,
+//                position: Int,
+//                id: Long
+//            ) {
+//                if (parent!!.getItemAtPosition(position).equals("shoes")){
+//                    productFilter="shoes"
+//                }
+//                else if (parent!!.getItemAtPosition(position).equals("t-shirts")){
+//                    productFilter="t-shirts"
+//                }
+//                else if (parent!!.getItemAtPosition(position).equals("accessories")){
+//                    productFilter="accessories"
+//                }
+//                else if (parent!!.getItemAtPosition(position).equals("none")){
+//                    productFilter=""
+//                }
+//                if (!parent!!.getItemAtPosition(position).equals("FILTER")) {
+//                    showData()
+//                }
+//            }
+//
+//            override fun onNothingSelected(parent: AdapterView<*>?) {
+//
+//            }
+//
+//        }
+//
+//        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                queryText=query?:""
+//                showData()
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                queryText=newText?:""
+//                showData()
+//                return true
+//            }
+//
+//        })
+//
+//    }
 
     private fun showData(){
         var filteredProducts = sortedProducts.filter { it.title!!.contains(queryText?:"none",true)&& it.productType!!.contains(productFilter,true)}
@@ -193,6 +282,7 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
         findNavController().navigate(action)
     }
     private fun changeToolbar() {
+        requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility=View.VISIBLE
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
 
@@ -201,11 +291,12 @@ class ShopSearchFragment : Fragment(),ItemsRecyclerClick {
             view?.findNavController()?.popBackStack()
         }
         //requireActivity().bottom_nav.visibility = View.VISIBLE
-        requireActivity().toolbar_title.text = "Search"
+        requireActivity().toolbar_title.text = ""
         requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.favourite).visibility = View.INVISIBLE
         requireActivity().findViewById<View>(R.id.cartView).visibility = View.INVISIBLE
     }
+
 }
 
 

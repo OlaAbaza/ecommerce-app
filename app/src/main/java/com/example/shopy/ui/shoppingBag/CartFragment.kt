@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -266,6 +267,7 @@ class CartFragment : Fragment() {
     }
 
     private fun changeToolbar() {
+        requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility=View.GONE
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
 

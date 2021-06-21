@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.*
 import com.example.shopy.base.ViewModelFactory
@@ -187,6 +188,7 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
 
 
     private fun changeToolbar() {
+        requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility=View.GONE
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.VISIBLE
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(getResources().getColor(R.color.black))

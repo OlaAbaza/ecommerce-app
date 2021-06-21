@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.example.shopy.R
 import com.example.shopy.ui.shopTab.shopTabCategories.KidsProductFragment
@@ -49,6 +50,7 @@ class ShopTabFragment : Fragment() {
 
 
     private fun changeToolbar() {
+        requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility=View.GONE
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.VISIBLE
         requireActivity().toolbar.visibility = View.VISIBLE
         requireActivity().findViewById<View>(R.id.favourite).favouriteButton.setColorFilter(getResources().getColor(R.color.black))
