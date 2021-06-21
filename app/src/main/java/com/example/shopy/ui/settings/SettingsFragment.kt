@@ -82,23 +82,27 @@ class SettingsFragment : Fragment() {
             findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFAQFragment())
 
         }
-        binding.signout.setOnClickListener {
-            if (NetworkChangeReceiver.isOnline) {
-                meDataSourceReo.saveUsertState(false)
-                meDataSourceReo.saveUsertName("")
-                meDataSourceReo.saveUsertId("")
-                settingsViewModel.clearRoom()
-                findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToMeFragment())
-            }
-            else {
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.thereIsNoNetwork),
-                    Toast.LENGTH_SHORT
-                ).show()
+        if (meDataSourceReo.loadUsertstate()) {
+            binding.signout.setOnClickListener {
+                if (NetworkChangeReceiver.isOnline) {
+                    meDataSourceReo.saveUsertState(false)
+                    meDataSourceReo.saveUsertName("")
+                    meDataSourceReo.saveUsertId("")
+                    settingsViewModel.clearRoom()
+                    findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToMeFragment())
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.thereIsNoNetwork),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
 
             }
-
+            binding.signout.visibility=View.VISIBLE
+        }else{
+            binding.signout.visibility=View.GONE
         }
     }
 
