@@ -58,17 +58,16 @@ class ProuductDetailsFragment : Fragment() {
         navBar.visibility = View.GONE
 
         bindingProductDetailsFragment.decreaseButton.setOnClickListener {
-             num =((bindingProductDetailsFragment.itemCountText.text.toString().toInt())-1)
-            if(num>0){
-                bindingProductDetailsFragment.itemCountText.text=num.toString()
-            }
-            else{
+            num = ((bindingProductDetailsFragment.itemCountText.text.toString().toInt()) - 1)
+            if (num > 0) {
+                bindingProductDetailsFragment.itemCountText.text = num.toString()
+            } else {
                 num = 1
             }
         }
         bindingProductDetailsFragment.increaseButton.setOnClickListener {
-             num =((bindingProductDetailsFragment.itemCountText.text.toString().toInt())+1)
-            bindingProductDetailsFragment.itemCountText.text=num.toString()
+            num = ((bindingProductDetailsFragment.itemCountText.text.toString().toInt()) + 1)
+            bindingProductDetailsFragment.itemCountText.text = num.toString()
         }
 
 
@@ -119,7 +118,7 @@ class ProuductDetailsFragment : Fragment() {
             bindingProductDetailsFragment.viewPagerMain.adapter = imageSliderAdaper
 
 
-            var values : List<String> = emptyList()
+            var values: List<String> = emptyList()
             productDetailsViewMode.observeProductDetails().observe(activity, {
                 product = it.product
                 values = product.options?.get(0)?.values!!
@@ -256,7 +255,8 @@ class ProuductDetailsFragment : Fragment() {
         bindingProductDetailsFragment.prise.text =
             "${product.variants?.get(0)?.price.toString()} EGP"
         bindingProductDetailsFragment.productTitle.text = product.title ?: "null"
-        bindingProductDetailsFragment.prise.text = "${product.variants?.get(0)?.price.toString()} EGP"
+        bindingProductDetailsFragment.prise.text =
+            "${product.variants?.get(0)?.price.toString()} EGP"
 
         bindingProductDetailsFragment.descriptionEditable.text = product.body_html
         bindingProductDetailsFragment.stateEditable.text = product.status ?: "not known"
@@ -275,12 +275,17 @@ class ProuductDetailsFragment : Fragment() {
         bindingProductDetailsFragment.colorEditable.apply {
             this.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            this.adapter = product.options?.get(1)?.values?.let {
-                OptionsAdapter(
-                    it,
-                    productDetailsViewMode.optionsMutableLiveData
-                )
+            if (product.options?.size ?: 0 >= 2) {
+
+                this.adapter = product.options!!.get(1).values?.let {
+                    OptionsAdapter(
+                        it,
+                        productDetailsViewMode.optionsMutableLiveData
+                    )
+                }
+
             }
+
         }
 
 
@@ -296,7 +301,7 @@ class ProuductDetailsFragment : Fragment() {
             if (bindingProductDetailsFragment.descriptionEditable.visibility == View.GONE) {
                 bindingProductDetailsFragment.descriptionEditable.visibility = View.VISIBLE
                 bindingProductDetailsFragment.descriptionBtn.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_up_24)
-            }else{
+            } else {
                 bindingProductDetailsFragment.descriptionEditable.visibility = View.GONE
                 bindingProductDetailsFragment.descriptionBtn.setBackgroundResource(R.drawable.ic_baseline_keyboard_arrow_down_24)
             }
@@ -335,18 +340,18 @@ class ProuductDetailsFragment : Fragment() {
 
 
     private fun changeToolbar() {
-        requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility=View.GONE
+        requireActivity().findViewById<SearchView>(R.id.mainSearchView).visibility = View.GONE
 
         requireActivity().findViewById<View>(R.id.bottom_nav).visibility = View.GONE
         requireActivity().toolbar.visibility = View.VISIBLE
-        if (requireActivity().findViewById<View>(R.id.searchIcon) != null){
-        requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
-        requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
+        if (requireActivity().findViewById<View>(R.id.searchIcon) != null) {
+            requireActivity().findViewById<View>(R.id.searchIcon).visibility = View.INVISIBLE
+            requireActivity().findViewById<View>(R.id.settingIcon).visibility = View.INVISIBLE
 
-        requireActivity().findViewById<View>(R.id.favourite).visibility = View.INVISIBLE
-        requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
+            requireActivity().findViewById<View>(R.id.favourite).visibility = View.INVISIBLE
+            requireActivity().findViewById<View>(R.id.cartView).visibility = View.VISIBLE
 
-        requireActivity().toolbar_title.setTextColor(Color.BLACK)
+            requireActivity().toolbar_title.setTextColor(Color.BLACK)
             requireActivity().toolbar_title.text = ""
         }
 
