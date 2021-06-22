@@ -142,6 +142,7 @@ class ProfileFragment : Fragment() {
                 var cust = CustomerXXX(name, customerID.toLong(), customerPassword, phone)
                 var customerProfile = CustomerProfile(cust)
                 if (NetworkChangeReceiver.isOnline) {
+                    meDataSourceReo.saveUsertName(name)
                     profileViewModel.UpdateCustomers(customerID, customerProfile)
                 }
                 else {

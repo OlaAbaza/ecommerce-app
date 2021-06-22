@@ -24,4 +24,5 @@
     <color name="grey">#EBEBEB</color>
     <color name="redLight">#F40606</color>
     <color name="background">#E8E2DC</color>
+    <color name="darkRed">#EEFF0000</color>
 </resources>
