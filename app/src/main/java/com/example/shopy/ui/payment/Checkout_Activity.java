@@ -225,7 +225,7 @@ import okhttp3.Response;
 
                 activity.runOnUiThread(() ->
                         Toast.makeText(
-                                activity, "Error: " + e.toString(), Toast.LENGTH_LONG
+                                activity, "Some Error Happened, Please try again...", Toast.LENGTH_LONG
                         ).show()
                 );
             }
@@ -241,7 +241,7 @@ import okhttp3.Response;
                 if (!response.isSuccessful()) {
                     activity.runOnUiThread(() ->
                             Toast.makeText(
-                                    activity, "Error: " + response.toString(), Toast.LENGTH_LONG
+                                    activity, "Some Error Happened, Please try again...", Toast.LENGTH_LONG
                             ).show()
                     );
                 } else {
