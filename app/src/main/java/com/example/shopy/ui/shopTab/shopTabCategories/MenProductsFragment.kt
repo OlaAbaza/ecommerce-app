@@ -94,9 +94,13 @@ class MenProductsFragment : Fragment() {
         })
 
         shopTabViewModel.intentTOProductDetails.observe(requireActivity(),{
-            shopTabViewModel.intentTOProductDetails= MutableLiveData()
+            if (NetworkChangeReceiver.isOnline){
+                shopTabViewModel.intentTOProductDetails= MutableLiveData()
             val action = NavGraphDirections.actionGlobalProuductDetailsFragment(it.id.toLong())
             findNavController().navigate(action)
+            }else{
+                Toast.makeText(requireContext(),requireContext().resources.getString(R.string.no_internet_connection),Toast.LENGTH_SHORT).show()
+            }
         })
 
         shopTabViewModel.fetchallDiscountCodeList().observe(viewLifecycleOwner, {

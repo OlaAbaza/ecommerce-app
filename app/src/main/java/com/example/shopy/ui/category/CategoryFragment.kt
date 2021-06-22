@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.*
 import com.example.shopy.base.ViewModelFactory
@@ -182,8 +184,13 @@ class CategoryFragment : Fragment(), MainCategoryRecyclerClick, SubCategoryRecyc
     }
 
     override fun itemOnClick(itemId: Long) {
-        val action = NavGraphDirections.actionGlobalProuductDetailsFragment(itemId)
-        findNavController().navigate(action)
+        if (NetworkChangeReceiver.isOnline){
+            val action = NavGraphDirections.actionGlobalProuductDetailsFragment(itemId)
+            findNavController().navigate(action)
+        }else{
+            Toast.makeText(requireContext(),requireContext().resources.getString(R.string.no_internet_connection),
+                Toast.LENGTH_SHORT).show()
+        }
     }
 
 
